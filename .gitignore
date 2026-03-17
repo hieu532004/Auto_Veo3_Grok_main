@@ -1,0 +1,53 @@
+# Build output
+dist/
+dist2/
+build/
+build2/
+*.spec
+
+# Large release files
+*.zip
+*.rar
+*.7z
+*.tar.gz
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual env
+.venv/
+venv/
+
+# User data & runtime
+data_general/user_data.txt
+data_general/license_checker.lock
+data_general/license_state.json
+data_general/config.json
+data_general/gemini_api_key.txt
+data_general/grok_config.json
+
+# Downloads & workflow output
+downloads/
+Workflows/*/Download/
+Workflows/*/state.json
+Workflows/*/request.json
+
+# IDE
+.vscode/
+.idea/
+
+# Chrome user data (runtime)
+chrome_user_data/
+chrome_user_data_grok/
+
+# Log files
+log.txt
+*.log
+
+# Runtime/temp files
+license_changes_log.txt
+src_chunk1.txt
+SourceCode.txt
