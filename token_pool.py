@@ -60,7 +60,7 @@ class TokenPool:
 		self.close_chrome_after_token = close_chrome_after_token
 
 		self._collectors = []
-		self._token_queue = asyncio.Queue(maxsize=8)
+		self._token_queue = asyncio.Queue(maxsize=16)
 		self._harvest_tasks = []
 		self._started = False
 		self._stop_flag = False
@@ -347,11 +347,10 @@ class TokenPool:
 
 		while not self._should_stop():
 			try:
-				# Image mode xử lý tuần tự → chỉ cần ít token trong queue
-				# Video mode xử lý song song → cần nhiều token hơn
-				queue_limit = 2 if self.mode == "generate_image" else 6
+				# Cả image mode và video mode đều xử lý song song → cần nhiều token
+				queue_limit = 10
 				if self._token_queue.qsize() >= queue_limit:
-					await asyncio.sleep(3 if self.mode == "generate_image" else 2)
+					await asyncio.sleep(2)
 					continue
 
 				clear_storage = (
@@ -442,7 +441,7 @@ class TokenPool:
 				if isinstance(token_data, tuple) and len(token_data) == 2:
 					token, ts = token_data
 					token_age = time.time() - ts
-					if token_age < 15:
+					if token_age < 25:
 						return token
 					else:
 						self._log(f"♻️ Loại bỏ token quá hạn ({int(time.time() - ts)}s)")
@@ -500,6 +499,32 @@ class TokenPool:
 		return None
 
 	async def stop(self):
+		"""Dừng harvest tasks nhưng GIỮ Chrome mở để tái sử dụng."""
+		self._stop_flag = True
+		for task in self._harvest_tasks:
+			try:
+				task.cancel()
+			except Exception:
+				pass
+
+		# Xóa token queue cũ
+		while not self._token_queue.empty():
+			try:
+				self._token_queue.get_nowait()
+			except Exception:
+				break
+
+		self._harvest_tasks.clear()
+		# KHÔNG clear collectors, KHÔNG đóng Chrome → giữ để tái sử dụng
+		self._started = False
+		self._log("🛑 TokenPool: đã dừng harvest (Chrome vẫn mở)")
+
+	async def close_after_workflow(self):
+		"""Cleanup nhẹ sau workflow - KHÔNG đóng Chrome."""
+		await self.stop()
+
+	async def force_close(self):
+		"""Đóng hoàn toàn Chrome - chỉ dùng khi cần reload thủ công."""
 		self._stop_flag = True
 		for task in self._harvest_tasks:
 			try:
@@ -516,10 +541,7 @@ class TokenPool:
 		self._harvest_tasks.clear()
 		self._collectors.clear()
 		self._started = False
-		self._log("🛑 TokenPool: đã dừng tất cả Chrome instances")
-
-	async def close_after_workflow(self):
-		await self.stop()
+		self._log("🛑 TokenPool: đã đóng hoàn toàn Chrome instances")
 
 	async def restart_browser(self):
 		await self.reload_all_chrome()

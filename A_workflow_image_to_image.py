@@ -816,19 +816,27 @@ class GenerateImageWorkflow(QThread):
 					prompt_reference_names[str(prompt_id)] = ref_names
 
 			tasks = []
+			prompt_delay = 2  # Delay ngắn thay vì wait_between_effective dài
 			for idx_prompt, prompt in enumerate(prompts):
 				if self._should_stop():
 					self._log("🛑 STOP trong vòng lặp prompt")
 					break
 
-				if idx_prompt > 0:
-					if not await self._sleep_with_stop(wait_between_effective):
-						break
-
 				prompt_id = prompt.get("id", idx_prompt + 1)
 				prompt_text = prompt.get("description", "") or prompt.get("prompt", "") or ""
 				aspect_ratio = self._resolve_aspect_ratio(self.project_data)
 				reference_input_names = prompt_reference_names.get(str(prompt_id), [])
+
+				# Chờ nếu đã đạt giới hạn in-flight
+				wait_start = time.time()
+				while self._count_in_progress() >= max_in_flight:
+					if self._should_stop():
+						break
+					elapsed = int(time.time() - wait_start)
+					self._log(f"⏳ Đang tạo ảnh đủ giới hạn {max_in_flight}, chờ {elapsed}s...")
+					await asyncio.sleep(3)
+				if self._should_stop():
+					break
 
 				tasks.append(
 					asyncio.create_task(
@@ -859,9 +867,15 @@ class GenerateImageWorkflow(QThread):
 					)
 				)
 
+				# Delay ngắn giữa các lần gửi để token pool kịp tạo token
+				if idx_prompt < len(prompts) - 1:
+					if not await self._sleep_with_stop(prompt_delay):
+						break
+
 			if tasks:
+				self._log(f"⏳ Đang chờ {len(tasks)} prompt hoàn thành...")
 				try:
-					await asyncio.gather(*tasks)
+					await asyncio.gather(*tasks, return_exceptions=True)
 				except Exception:
 					pass
 
@@ -1101,7 +1115,7 @@ class GenerateImageWorkflow(QThread):
 					return
 
 				# ✅ Handle retryable errors (403, 401, 3, 13, 53)
-				retryable_errors = {"403", "401", "3", "13", "53"}
+				retryable_errors = {"403", "401", "3", "13", "53", "16", "429", "400", "500", "503"}
 				is_retryable = not response.get("ok", True) and (
 					error_code_str in retryable_errors or http_status in retryable_errors
 				)

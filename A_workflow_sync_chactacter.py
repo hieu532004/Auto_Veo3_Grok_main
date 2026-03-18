@@ -108,10 +108,8 @@ class CharacterSyncWorkflow(QThread):
                     self._upload_executor = None
             except Exception:
                 pass
-            try:
-                ChromeProcessManager.close_chrome_gracefully(stop_check=self._should_stop)
-            except Exception:
-                pass
+            # Chrome giữ mở để tái sử dụng
+            self._log("✅ Workflow kết thúc (Chrome vẫn mở để tái sử dụng)")
             self.automation_complete.emit()
 
     def _collect_audio_filtered_failures(self):
@@ -299,180 +297,159 @@ class CharacterSyncWorkflow(QThread):
 
         retry_token_counter = 0
         timeout_streak = 0
+        max_retries = self._resolve_int_config(config, "RETRY_WITH_ERROR", 3)
+        wait_resend_video = self._resolve_int_config(config, "WAIT_RESEND_VIDEO", 15)
+        max_in_flight = self._resolve_worker_max_in_flight(self._resolve_int_config(config, "MULTI_VIDEO", 1))
+
+        async def _process_one_prompt(plan_item, plan_index):
+            """Xử lý 1 prompt sync character song song."""
+            nonlocal retry_token_counter, timeout_streak
+
+            prompt_id = str(plan_item["id"])
+            prompt_text = str(plan_item["prompt"])
+            profiles = list(plan_item.get("profiles") or [])[:3]
+            if not profiles:
+                self._mark_prompt_failed(prompt_id, prompt_text, "NO_CHARACTER", "Prompt không nhắc đến nhân vật nào")
+                return
+
+            ref_media_ids = []
+            for prof in profiles:
+                mid = media_cache.get(str(prof["name_key"]), "")
+                if mid:
+                    ref_media_ids.append(mid)
+            if not ref_media_ids:
+                self._mark_prompt_failed(prompt_id, prompt_text, "UPLOAD", "Không có mediaId ảnh nhân vật")
+                return
+
+            self.video_updated.emit({
+                "prompt_idx": f"{prompt_id}_1", "status": "ACTIVE",
+                "scene_id": "", "prompt": prompt_text, "_prompt_id": prompt_id,
+            })
+
+            for retry_attempt in range(max_retries + 1):
+                if self._should_stop():
+                    return
+
+                # ── Lấy token ──
+                token = ""
+                for attempt in range(token_retry):
+                    if self._should_stop():
+                        return
+                    try:
+                        retry_token_counter += 1
+                        clear_storage = False
+                        clear_every = self._resolve_int_config(config, "CLEAR_DATA", 0)
+                        if clear_every > 0 and (retry_token_counter % clear_every == 0):
+                            clear_storage = True
+                        token = await asyncio.wait_for(
+                            collector.get_token(clear_storage=clear_storage),
+                            timeout=get_token_timeout,
+                        )
+                        if token:
+                            self._log(f"✅ Prompt {prompt_id}: Lấy token thành công")
+                            timeout_streak = 0
+                            break
+                    except asyncio.TimeoutError:
+                        self._log(f"⏱️ Timeout lấy token (prompt {prompt_id}, lần {attempt + 1})")
+                        timeout_streak += 1
+                        if timeout_streak >= 2:
+                            self._log("⚠️ Timeout liên tiếp, restart Chrome...")
+                            await collector.restart_browser()
+                            timeout_streak = 0
+                    except Exception as exc:
+                        self._log(f"⚠️ Lỗi lấy token (prompt {prompt_id}): {exc}")
+                    if attempt < token_retry - 1:
+                        await self._sleep_with_stop(token_retry_delay)
+
+                if not token:
+                    self._mark_prompt_failed(prompt_id, prompt_text, "TOKEN", "Không lấy được token")
+                    return
+
+                # ── Build payload & gửi request ──
+                video_aspect_ratio = self._resolve_video_aspect_ratio()
+                model_key = sync_api.select_video_model_key(
+                    video_aspect_ratio, self.project_data.get("veo_model"),
+                )
+                payload = sync_api.build_payload_generate_video_reference(
+                    token=token, session_id=auth["sessionId"], project_id=auth["projectId"],
+                    prompt=prompt_text, seed=self._resolve_seed(config, plan_index),
+                    video_model_key=model_key, reference_media_ids=ref_media_ids,
+                    scene_id=None, aspect_ratio=video_aspect_ratio, output_count=output_count,
+                )
+                scene_ids = self._assign_scene_ids_to_payload(payload, prompt_id)
+                self._save_request_json(payload, prompt_id, prompt_text, flow="character_sync")
+                self._log(f"🚀 Gửi request sync character prompt {prompt_id} ({plan_index + 1}/{len(plans)})")
+
+                response = await sync_api.request_create_video(payload, token, cookie=auth.get("cookie"))
+
+                response_body = response.get("body", "")
+                operations = self._parse_operations(response_body)
+                err_code, err_msg = self._extract_error_info(response_body)
+
+                # ── Xử lý lỗi ──
+                if (not response.get("ok", True)) and err_msg and not operations:
+                    is_auth_error = err_code in ("16", "401") or "authentication credentials" in str(err_msg).lower()
+                    retryable = err_code in ("13", "403", "429", "500", "503", "16", "401")
+                    retryable = retryable or is_auth_error or any(k in str(err_msg).upper() for k in ["HIGH_TRAFFIC", "RECAPTCHA", "CAPTCHA"])
+
+                    if retryable:
+                        if is_auth_error:
+                            import auth_helper
+                            self._log("⚠️ Token OAuth hết hạn, tự động lấy mới...")
+                            new_access = auth_helper.get_valid_access_token(auth.get("cookie", ""), auth.get("projectId", ""), force_refresh=True)
+                            if new_access and new_access != auth.get("access_token", ""):
+                                self._log("✅ Đã renew OAuth token")
+                                auth["access_token"] = new_access
+
+                        if retry_attempt < max_retries:
+                            backoff = min(15, 5 * (retry_attempt + 1))
+                            self._log(f"⚠️ Prompt {prompt_id}: {err_msg} → retry {retry_attempt + 1}/{max_retries} sau {backoff}s")
+                            await self._sleep_with_stop(backoff)
+                            continue
+                    self._mark_prompt_failed(prompt_id, prompt_text, err_code or "REQUEST", err_msg)
+                    return
+
+                if not operations:
+                    self._mark_prompt_failed(prompt_id, prompt_text, "REQUEST", "Không có operations trả về")
+                    return
+
+                # ── Thành công ──
+                self._handle_create_response(prompt_id, prompt_text, scene_ids, operations)
+                return
+
+        # ✅ Xử lý SONG SONG: gửi nhiều prompt cùng lúc
         async with collector:
+            pending_tasks = []
+
             for i, plan in enumerate(plans):
                 if self._should_stop():
                     break
 
-                if i > 0:
-                    # ✅ Delay thông minh: chưa đủ max_in_flight → delay ngắn 3s
-                    current_running = self._count_in_progress()
-                    max_in_flight = self._resolve_worker_max_in_flight(self._resolve_int_config(config, "MULTI_VIDEO", 1))
-                    if current_running < max_in_flight:
-                        if not await self._sleep_with_stop(3):
-                            break
-                    else:
-                        self._log(f"⏳ Đủ giới hạn {max_in_flight} luồng, chờ {wait_gen_video}s...")
-                        if not await self._sleep_with_stop(wait_gen_video):
-                            break
-
-                prompt_id = str(plan["id"])
-                prompt_text = str(plan["prompt"])
-                profiles = list(plan.get("profiles") or [])[:3]
-                if not profiles:
-                    self._mark_prompt_failed(prompt_id, prompt_text, "NO_CHARACTER", "Prompt không nhắc đến nhân vật nào")
-                    continue
-
-                ref_media_ids = []
-                for prof in profiles:
-                    media_id = media_cache.get(str(prof["name_key"]), "")
-                    if media_id:
-                        ref_media_ids.append(media_id)
-
-                if not ref_media_ids:
-                    self._mark_prompt_failed(prompt_id, prompt_text, "UPLOAD", "Không có mediaId ảnh nhân vật")
-                    continue
-
-                self.video_updated.emit(
-                    {
-                        "prompt_idx": f"{prompt_id}_1",
-                        "status": "ACTIVE",
-                        "scene_id": "",
-                        "prompt": prompt_text,
-                        "_prompt_id": prompt_id,
-                    }
-                )
-
-                retry_count = 0
-                max_retries = self._resolve_int_config(config, "RETRY_WITH_ERROR", 3)
-                wait_resend_video = self._resolve_int_config(config, "WAIT_RESEND_VIDEO", 15)
-                max_in_flight = self._resolve_worker_max_in_flight(self._resolve_int_config(config, "MULTI_VIDEO", 1))
-
+                # Chờ slot trống nếu đạt giới hạn
                 wait_start_ts = time.time()
                 while self._count_in_progress() >= max_in_flight:
                     if self.STOP:
                         break
-                    if not self._check_in_flight_block():
-                        break
                     elapsed = int(time.time() - wait_start_ts)
-                    self._log(f"⏳ Đang tạo video đủ giới hạn, chờ {elapsed}s...")
+                    self._log(f"⏳ Đang chờ {self._count_in_progress()} video hoàn thành... ({elapsed}s)")
                     if not await self._sleep_with_stop(5):
                         break
                 if self.STOP:
                     break
-                if self._count_in_progress() < max_in_flight:
-                    self._in_flight_block_start_ts = 0
 
-                self._log(f"🔐 Prompt {prompt_id}: Đang lấy token")
+                # Tạo task song song
+                task = asyncio.create_task(_process_one_prompt(plan, i))
+                pending_tasks.append(task)
 
-                submitted = False
-                for retry_attempt in range(max_retries + 1):
-                    if self._should_stop():
+                # Delay ngắn giữa mỗi task
+                if i < len(plans) - 1:
+                    if not await self._sleep_with_stop(2):
                         break
 
-                    token = ""
-                    for attempt in range(token_retry):
-                        if self._should_stop():
-                            break
-                        try:
-                            retry_token_counter += 1
-                            clear_storage = False
-                            clear_every = self._resolve_int_config(config, "CLEAR_DATA", 0)
-                            if clear_every > 0 and (retry_token_counter % clear_every == 0):
-                                clear_storage = True
-                            token = await asyncio.wait_for(
-                                collector.get_token(clear_storage=clear_storage),
-                                timeout=get_token_timeout,
-                            )
-                            if token:
-                                self._log(f"✅ Prompt {prompt_id}: Lấy token thành công")
-                                timeout_streak = 0
-                                break
-                        except asyncio.TimeoutError:
-                            self._log(f"⏱️ Timeout lấy token (prompt {prompt_id}, lần {attempt + 1})")
-                            timeout_streak += 1
-                            if timeout_streak >= 2:
-                                self._log("⚠️ Timeout lấy token liên tiếp, khởi động lại Chrome...")
-                                await collector.restart_browser()
-                                timeout_streak = 0
-                        except Exception as exc:
-                            self._log(f"⚠️ Lấy token lỗi (prompt {prompt_id}, lần {attempt + 1}): {exc}")
-                        if attempt < token_retry - 1:
-                            await self._sleep_with_stop(token_retry_delay)
-
-                    if not token:
-                        self._mark_prompt_failed(prompt_id, prompt_text, "TOKEN", "Không lấy được token")
-                        break
-
-                    video_aspect_ratio = self._resolve_video_aspect_ratio()
-                    model_key = sync_api.select_video_model_key(
-                        video_aspect_ratio,
-                        self.project_data.get("veo_model"),
-                    )
-
-                    payload = sync_api.build_payload_generate_video_reference(
-                        token=token,
-                        session_id=auth["sessionId"],
-                        project_id=auth["projectId"],
-                        prompt=prompt_text,
-                        seed=self._resolve_seed(config, i),
-                        video_model_key=model_key,
-                        reference_media_ids=ref_media_ids,
-                        scene_id=None,
-                        aspect_ratio=video_aspect_ratio,
-                        output_count=output_count,
-                    )
-
-                    scene_ids = self._assign_scene_ids_to_payload(payload, prompt_id)
-                    self._save_request_json(payload, prompt_id, prompt_text, flow="character_sync")
-                    self._log(f"🚀 Gửi request sync character prompt {prompt_id} ({i + 1}/{len(plans)})")
-
-                    token_option = "Option 1"
-                    self._log(f"🔧 Token Option: {token_option}")
-
-                    if token_option == "Option 2":
-                        response = await sync_api.request_create_video_via_browser(
-                            collector.page,
-                            payload,
-                            auth.get("cookie"),
-                            auth["access_token"],
-                        )
-                    else:
-                        response = await sync_api.request_create_video(payload, token, cookie=auth.get("cookie"))
-
-                    response_body = response.get("body", "")
-                    operations = self._parse_operations(response_body)
-                    err_code, err_msg = self._extract_error_info(response_body)
-
-                    if (not response.get("ok", True)) and err_msg and not operations:
-                        is_auth_error = err_code in ("16", "401") or "authentication credentials" in str(err_msg).lower()
-                        retryable = err_code in ("13", "403", "429", "500", "503", "16", "401")
-                        retryable = retryable or is_auth_error or any(k in str(err_msg).upper() for k in ["HIGH_TRAFFIC", "RECAPTCHA", "CAPTCHA"])
-                        
-                        if retryable:
-                            if is_auth_error:
-                                import auth_helper
-                                self._log(f"⚠️ Token OAuth có thể đã hết hạn, tự động lấy token mới...")
-                                new_access = auth_helper.get_valid_access_token(auth.get("cookie", ""), auth.get("projectId", ""), force_refresh=True)
-                                if new_access and new_access != auth.get("access_token", ""):
-                                    self._log(f"✅ Đã renew OAuth token thành công")
-                                    auth["access_token"] = new_access
-                                
-                            if retry_attempt < max_retries:
-                                backoff = min(30, 10 * (retry_attempt + 1))
-                                self._log(f"⚠️ Prompt {prompt_id}: {err_msg} → retry {retry_attempt + 1}/{max_retries} sau {backoff}s")
-                                await self._sleep_with_stop(backoff)
-                                continue
-                        self._mark_prompt_failed(prompt_id, prompt_text, err_code or "REQUEST", err_msg)
-                        break
-
-                    if not operations:
-                        self._mark_prompt_failed(prompt_id, prompt_text, "REQUEST", "Không có operations trả về")
-                        break
-
-                    self._handle_create_response(prompt_id, prompt_text, scene_ids, operations)
-                    submitted = True
-                    break
+            # Chờ tất cả task hoàn tất
+            if pending_tasks:
+                self._log(f"⏳ Đang chờ {len(pending_tasks)} prompt hoàn thành...")
+                await asyncio.gather(*pending_tasks, return_exceptions=True)
 
         self._all_prompts_submitted = True
         self._complete_wait_start_ts = time.time()

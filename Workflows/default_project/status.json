@@ -1,27 +1,29 @@
 {
   "project_name": "default_project",
-  "updated_at": 1773817728,
+  "updated_at": 1773838611,
   "rows": [
     {
       "row": 0,
       "stt": "001",
       "prompt_id": "1",
       "prompt": "A cinematic wide shot of a businessman standing at the peak of a modern glass skyscraper looking over a glowing city at night, representing success and vision, 8k resolution, highly detailed.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "description": "A cinematic wide shot of a businessman standing at the peak of a modern glass skyscraper looking over a glowing city at night, representing success and vision, 8k resolution, highly detailed."
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/12_1_18032026_195123.jpg",
+        "prompt": "A cinematic wide shot of a businessman standing at the peak of a modern glass skyscraper looking over a glowing city at night, representing success and vision, 8k resolution, highly detailed.",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/12_1_18032026_195123.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_18032026_135836.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\1_1_18032026_195404.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_18032026_135836.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_18032026_195412.jpg"
       }
     },
     {
@@ -29,21 +31,23 @@
       "stt": "002",
       "prompt_id": "2",
       "prompt": "A cozy, warmly lit study room with a vintage leather chair, a glowing laptop on an oak desk, and stacks of gold coins merging into an open glowing book, magical realism, storytelling concept, 4k.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "description": "A cozy, warmly lit study room with a vintage leather chair, a glowing laptop on an oak desk, and stacks of gold coins merging into an open glowing book, magical realism, storytelling concept, 4k."
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/2_1_18032026_195106.jpg",
+        "prompt": "A cozy, warmly lit study room with a vintage leather chair, a glowing laptop on an oak desk, and stacks of gold coins merging into an open glowing book, magical realism, storytelling concept, 4k.",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/2_1_18032026_195106.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_18032026_135927.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\2_1_18032026_195354.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_18032026_135927.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_18032026_195403.jpg"
       }
     },
     {
@@ -51,21 +55,23 @@
       "stt": "003",
       "prompt_id": "3",
       "prompt": "An abstract representation of financial growth, golden arrows soaring upwards breaking through a glass ceiling against a dramatic sunrise sky, photorealistic, cinematic lighting.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "description": "An abstract representation of financial growth, golden arrows soaring upwards breaking through a glass ceiling against a dramatic sunrise sky, photorealistic, cinematic lighting."
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/1_1_18032026_195051.jpg",
+        "prompt": "An abstract representation of financial growth, golden arrows soaring upwards breaking through a glass ceiling against a dramatic sunrise sky, photorealistic, cinematic lighting.",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/1_1_18032026_195051.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_18032026_140825.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\3_1_18032026_195447.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_18032026_140825.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_18032026_195456.jpg"
       }
     },
     {
@@ -73,21 +79,23 @@
       "stt": "004",
       "prompt_id": "4",
       "prompt": "A spooky abandoned theme park at midnight in a 1930s rubber hose cartoon style, eerie fog, vintage black and white animation aesthetic with glowing red eyes in the shadows.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "description": "A spooky abandoned theme park at midnight in a 1930s rubber hose cartoon style, eerie fog, vintage black and white animation aesthetic with glowing red eyes in the shadows."
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/3_1_18032026_195018.jpg",
+        "prompt": "A spooky abandoned theme park at midnight in a 1930s rubber hose cartoon style, eerie fog, vintage black and white animation aesthetic with glowing red eyes in the shadows.",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/3_1_18032026_195018.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_18032026_140117.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\4_1_18032026_195412.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_18032026_140117.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_18032026_195421.jpg"
       }
     },
     {
@@ -95,75 +103,95 @@
       "stt": "005",
       "prompt_id": "5",
       "prompt": "A creepy cartoon ghost ship sailing on a sea of dark purple ink, whimsical but scary, twisted masts, glowing green lanterns, highly detailed 2D illustration.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "description": "A creepy cartoon ghost ship sailing on a sea of dark purple ink, whimsical but scary, twisted masts, glowing green lanterns, highly detailed 2D illustration."
-      },
-      "status_code": "ACTIVE",
-      "status_text": "Đang tạo",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 5,
-      "stt": "006",
-      "prompt_id": "6",
-      "prompt": "A sinister cartoon pumpkin patch under a full blood moon, stylized bats flying in the sky, expressive terrifying jack-o-lanterns with glowing yellow eyes, cel shaded, dark fantasy.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "A sinister cartoon pumpkin patch under a full blood moon, stylized bats flying in the sky, expressive terrifying jack-o-lanterns with glowing yellow eyes, cel shaded, dark fantasy."
-      },
-      "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 1)",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 6,
-      "stt": "007",
-      "prompt_id": "7",
-      "prompt": "A beautiful grand piano glowing with ethereal blue light in a dark, atmospheric concert hall, musical notes made of stardust floating up from the keys, magical, inspiring.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "A beautiful grand piano glowing with ethereal blue light in a dark, atmospheric concert hall, musical notes made of stardust floating up from the keys, magical, inspiring."
-      },
-      "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 2)",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 7,
-      "stt": "008",
-      "prompt_id": "8",
-      "prompt": "A modern home music studio with dual monitors, acoustic foam, a MIDI keyboard, lo-fi anime art style, warm lighting, cozy atmosphere, pastel colors.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "A modern home music studio with dual monitors, acoustic foam, a MIDI keyboard, lo-fi anime art style, warm lighting, cozy atmosphere, pastel colors."
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/12_1_18032026_193849.jpg",
+        "prompt": "A creepy cartoon ghost ship sailing on a sea of dark purple ink, whimsical but scary, twisted masts, glowing green lanterns, highly detailed 2D illustration.",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/12_1_18032026_193849.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_18032026_140515.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\5_1_18032026_195505.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_18032026_140515.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_18032026_195511.jpg"
+      }
+    },
+    {
+      "row": 5,
+      "stt": "006",
+      "prompt_id": "6",
+      "prompt": "A sinister cartoon pumpkin patch under a full blood moon, stylized bats flying in the sky, expressive terrifying jack-o-lanterns with glowing yellow eyes, cel shaded, dark fantasy.",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_payload": {
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/4_1_18032026_193836.jpg",
+        "prompt": "A sinister cartoon pumpkin patch under a full blood moon, stylized bats flying in the sky, expressive terrifying jack-o-lanterns with glowing yellow eyes, cel shaded, dark fantasy.",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/4_1_18032026_193836.jpg"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\6_1_18032026_195456.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_18032026_195504.jpg"
+      }
+    },
+    {
+      "row": 6,
+      "stt": "007",
+      "prompt_id": "7",
+      "prompt": "A beautiful grand piano glowing with ethereal blue light in a dark, atmospheric concert hall, musical notes made of stardust floating up from the keys, magical, inspiring.",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_payload": {
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/11_1_18032026_193755.jpg",
+        "prompt": "A beautiful grand piano glowing with ethereal blue light in a dark, atmospheric concert hall, musical notes made of stardust floating up from the keys, magical, inspiring.",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/11_1_18032026_193755.jpg"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\7_1_18032026_195512.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_18032026_195520.jpg"
+      }
+    },
+    {
+      "row": 7,
+      "stt": "008",
+      "prompt_id": "8",
+      "prompt": "A modern home music studio with dual monitors, acoustic foam, a MIDI keyboard, lo-fi anime art style, warm lighting, cozy atmosphere, pastel colors.",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_payload": {
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/10_1_18032026_193745.jpg",
+        "prompt": "A modern home music studio with dual monitors, acoustic foam, a MIDI keyboard, lo-fi anime art style, warm lighting, cozy atmosphere, pastel colors.",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/10_1_18032026_193745.jpg"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\8_1_18032026_195520.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_18032026_195527.jpg"
       }
     },
     {
@@ -171,43 +199,119 @@
       "stt": "009",
       "prompt_id": "9",
       "prompt": "A futuristic neon-lit street food market in Tokyo, cyberpunk aesthetic, raining, reflections on the wet pavement, vivid colors, highly detailed, Unreal Engine 5 render.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "description": "A futuristic neon-lit street food market in Tokyo, cyberpunk aesthetic, raining, reflections on the wet pavement, vivid colors, highly detailed, Unreal Engine 5 render."
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/6_1_18032026_193729.jpg",
+        "prompt": "A futuristic neon-lit street food market in Tokyo, cyberpunk aesthetic, raining, reflections on the wet pavement, vivid colors, highly detailed, Unreal Engine 5 render.",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/6_1_18032026_193729.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_18032026_140608.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\9_1_18032026_195554.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_18032026_140608.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_18032026_195607.jpg"
       }
     },
     {
       "row": 9,
       "stt": "010",
       "prompt_id": "10",
-      "prompt": "A majestic golden dragon flying through a canyon made of floating glowing crystals, fantasy concept art, epic scale, cinematic lighting, masterpiece.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "A majestic golden dragon flying through a canyon made of floating glowing crystals, fantasy concept art, epic scale, cinematic lighting, masterpiece.A cinematic wide shot of a businessman standing at the peak of a modern glass skyscraper looking over a glowing city at night, representing success and vision, 8k resolution, highly detailed.",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "description": "A majestic golden dragon flying through a canyon made of floating glowing crystals, fantasy concept art, epic scale, cinematic lighting, masterpiece."
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/5_1_18032026_193717.jpg",
+        "prompt": "A majestic golden dragon flying through a canyon made of floating glowing crystals, fantasy concept art, epic scale, cinematic lighting, masterpiece.A cinematic wide shot of a businessman standing at the peak of a modern glass skyscraper looking over a glowing city at night, representing success and vision, 8k resolution, highly detailed.",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/5_1_18032026_193717.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_18032026_140656.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\10_1_18032026_195632.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_18032026_140656.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_18032026_195639.jpg"
+      }
+    },
+    {
+      "row": 10,
+      "stt": "011",
+      "prompt_id": "11",
+      "prompt": "A cozy, warmly lit study room with a vintage leather chair, a glowing laptop on an oak desk, and stacks of gold coins merging into an open glowing book, magical realism, storytelling concept, 4k.",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_payload": {
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/2_1_18032026_193709.jpg",
+        "prompt": "A cozy, warmly lit study room with a vintage leather chair, a glowing laptop on an oak desk, and stacks of gold coins merging into an open glowing book, magical realism, storytelling concept, 4k.",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/2_1_18032026_193709.jpg"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\11_1_18032026_195608.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\11_1_18032026_195617.jpg"
+      }
+    },
+    {
+      "row": 11,
+      "stt": "012",
+      "prompt_id": "12",
+      "prompt": "An abstract representation of financial growth, golden arrows soaring upwards breaking through a glass ceiling against a dramatic sunrise sky, photorealistic, cinematic lighting.",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_payload": {
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/9_1_18032026_193626.jpg",
+        "prompt": "An abstract representation of financial growth, golden arrows soaring upwards breaking through a glass ceiling against a dramatic sunrise sky, photorealistic, cinematic lighting.",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/9_1_18032026_193626.jpg"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\12_1_18032026_195618.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_18032026_195631.jpg"
+      }
+    },
+    {
+      "row": 12,
+      "stt": "013",
+      "prompt_id": "13",
+      "prompt": "A spooky abandoned theme park at midnight in a 1930s rubber hose cartoon style, eerie fog, vintage black and white animation aesthetic with glowing red eyes in the shadows.",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_payload": {
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/8_1_18032026_193610.jpg",
+        "prompt": "A spooky abandoned theme park at midnight in a 1930s rubber hose cartoon style, eerie fog, vintage black and white animation aesthetic with glowing red eyes in the shadows.",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/8_1_18032026_193610.jpg"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\13_1_18032026_195640.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\13_1_18032026_195651.jpg"
       }
     }
   ]

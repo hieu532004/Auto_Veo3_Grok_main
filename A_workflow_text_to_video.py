@@ -76,8 +76,7 @@ class TextToVideoWorkflow(QThread):
 			worker.join(timeout=60)
 			# Ensure thread is stopped and Chrome is closed
 			if worker.is_alive() and (not self._worker_controls_lifecycle):
-				self._log("⚠️ Thread workflow vẫn chưa thoát, đang force terminate và cleanup Chrome...")
-				ChromeProcessManager.close_chrome_gracefully()
+				self._log("⚠️ Thread workflow vẫn chưa thoát (Chrome vẫn mở)")
 			return
 
 		self._run_with_new_loop()
@@ -109,12 +108,8 @@ class TextToVideoWorkflow(QThread):
 				loop.close()
 			except Exception:
 				pass
-			if not self._worker_controls_lifecycle:
-				try:
-					ChromeProcessManager.close_chrome_gracefully()
-					self._log("✅ Đã cleanup Chrome sau workflow")
-				except Exception as e:
-					self._log(f"⚠️ Lỗi cleanup Chrome sau workflow: {e}")
+			# Chrome giữ nguyên mở để tái sử dụng cho lần tạo tiếp theo
+			self._log("✅ Workflow kết thúc (Chrome vẫn mở để tái sử dụng)")
 			# Xóa các file lock trong profile để tránh block, KHÔNG xóa profile, giữ login
 			try:
 				chrome_userdata_root = self.project_data.get("chrome_userdata_root")
@@ -166,11 +161,8 @@ class TextToVideoWorkflow(QThread):
 			return []
 
 	def _close_token_chrome_later(self):
-		try:
-			self._log("⏳ Workflow chính đã thoát, đang tắt Chrome luồng token ở nền...")
-			ChromeProcessManager.close_chrome_gracefully()
-		except Exception as e:
-			self._log(f"⚠️  Lỗi Thoát luồng lấy token {e}")
+		# Chrome giữ mở để tái sử dụng
+		self._log("ℹ️ Chrome vẫn mở để tái sử dụng cho lần tạo tiếp theo")
 
 	def _log(self, message):
 		try:
@@ -234,17 +226,8 @@ class TextToVideoWorkflow(QThread):
 			pass
 		self._log("🛑 Nhận lệnh dừng: set STOP=1")
 
-		def _close_chrome_async():
-			try:
-				ChromeProcessManager.close_chrome_gracefully(stop_check=self._should_stop)
-				self._log("✅ Đã gửi lệnh tắt Chrome")
-			except Exception as e:
-				self._log(f"⚠️ Lỗi tắt Chrome khi dừng: {e}")
-
-		try:
-			threading.Thread(target=_close_chrome_async, daemon=True).start()
-		except Exception:
-			pass
+		# Chrome giữ mở, không đóng khi dừng
+		self._log("🛑 Đã dừng workflow (Chrome vẫn mở)")
 
 	def _should_stop(self):
 		return bool(self.STOP)
@@ -260,6 +243,180 @@ class TextToVideoWorkflow(QThread):
 			remain = end_ts - time.time()
 			await asyncio.sleep(max(0.01, min(float(step), remain)))
 		return not self._should_stop()
+
+	async def _process_video_prompt(
+		self, collector, prompt_id, prompt_text,
+		session_id, project_id, access_token, cookie, auth,
+		video_model_key, video_aspect_ratio, output_count,
+		token_option, max_token_retries, token_retry_delay,
+		get_token_timeout, clear_data_every, retry_with_error,
+		wait_resend, prompt_retry_counts,
+	):
+		"""Xử lý 1 prompt video song song — lấy token, gửi request, retry nếu lỗi."""
+		retry_count = prompt_retry_counts.get(prompt_id, 0)
+		token_request_count = 0
+
+		# ✅ Emit ACTIVE status để UI cập nhật cột status
+		self.video_updated.emit({
+			"prompt_idx": f"{prompt_id}_1",
+			"status": "ACTIVE",
+			"scene_id": "",
+			"prompt": prompt_text,
+			"_prompt_id": prompt_id,
+		})
+
+		while True:
+			if self.STOP:
+				return
+
+			# ── Lấy token ──
+			token = None
+			for attempt in range(max_token_retries):
+				if self.STOP:
+					return
+				try:
+					self._log(f"🔐 Đang lấy token... prompt {prompt_id} | lần {attempt + 1}/{max_token_retries}")
+					token_request_count += 1
+					clear_storage = clear_data_every > 0 and (token_request_count % clear_data_every == 0)
+					token = await asyncio.wait_for(
+						collector.get_token(clear_storage=clear_storage),
+						timeout=get_token_timeout,
+					)
+					if token:
+						break
+				except asyncio.TimeoutError:
+					self._log(f"⏱️ Timeout lấy token (prompt {prompt_id}, lần {attempt + 1})")
+					timeout_key = f"_token_timeout_{prompt_id}"
+					streak = prompt_retry_counts.get(timeout_key, 0) + 1
+					prompt_retry_counts[timeout_key] = streak
+					if streak >= 2:
+						self._log("⚠️ Timeout liên tiếp, restart Chrome...")
+						await collector.restart_browser()
+						prompt_retry_counts[timeout_key] = 0
+				except Exception as e:
+					self._log(f"⚠️ Lỗi lấy token: {e}")
+				if attempt < max_token_retries - 1:
+					if self.STOP:
+						return
+					await self._sleep_with_stop(token_retry_delay)
+
+			if not token:
+				self._log(f"❌ Không lấy được token (prompt {prompt_id})")
+				fail_scene_ids = [str(uuid.uuid4()) for _ in range(output_count)]
+				for idx, scene_id in enumerate(fail_scene_ids):
+					self._update_state_entry(prompt_id, prompt_text, scene_id, idx, "FAILED", error="TOKEN", message="Token timeout")
+					self.video_updated.emit({
+						"prompt_idx": f"{prompt_id}_{idx + 1}", "status": "FAILED",
+						"scene_id": scene_id, "prompt": prompt_text, "_prompt_id": prompt_id,
+						"error_code": "TOKEN", "error_message": "Token timeout",
+					})
+				return
+			if self._should_stop():
+				return
+
+			# ── Build payload & gửi request ──
+			payload = t2v_api.build_create_payload(
+				prompt_text, session_id, project_id, token,
+				model_key=video_model_key, aspect_ratio=video_aspect_ratio, output_count=output_count,
+			)
+			if self._should_stop():
+				return
+
+			scene_ids = self._assign_scene_ids(payload, prompt_id, output_count)
+			self._last_submit_ts = time.time()
+			self._save_request_json(payload, prompt_id, prompt_text, flow="text_to_video")
+			self._log(f"🚀 [{time.strftime('%H:%M:%S')}] Gửi request tạo video (prompt {prompt_id})...")
+
+			if token_option == "Option 2":
+				response = await t2v_api.request_create_video_via_browser(
+					collector.page, t2v_api.URL_GENERATE_TEXT_TO_VIDEO, payload, access_token,
+				)
+			else:
+				response = await t2v_api.request_create_video(payload, access_token, cookie=cookie)
+
+			if self._should_stop():
+				return
+
+			response_body = response.get("body", "")
+			error_code, error_message = self._extract_error_info(response_body)
+			retryable_errors = {"403", "3", "13", "53", "16", "401", "429", "400", "500", "503"}
+			error_code_str = str(error_code or "").strip()
+			is_auth_error = error_code_str in ("16", "401") or "authentication credentials" in str(error_message).lower()
+
+			# ── Xử lý lỗi retryable ──
+			if not response.get("ok", True) and (error_code_str in retryable_errors or is_auth_error):
+				if is_auth_error:
+					import auth_helper
+					self._log("⚠️ Token OAuth hết hạn, tự động lấy mới...")
+					new_access = auth_helper.get_valid_access_token(cookie, project_id, force_refresh=True)
+					if new_access and new_access != access_token:
+						self._log("✅ Đã renew OAuth token")
+						auth["access_token"] = new_access
+				if self.STOP:
+					return
+
+				if error_code_str == "403":
+					consecutive = prompt_retry_counts.get(f"{prompt_id}_403_count", 0) + 1
+					prompt_retry_counts[f"{prompt_id}_403_count"] = consecutive
+				else:
+					prompt_retry_counts[f"{prompt_id}_403_count"] = 0
+					consecutive = 0
+
+				retry_count += 1
+				prompt_retry_counts[prompt_id] = retry_count
+				self._discard_scene_ids(prompt_id, scene_ids)
+
+				if retry_count >= retry_with_error:
+					self._log(f"❌ Đạt giới hạn retry ({retry_with_error}) cho '{error_code_str}', FAILED")
+					for idx, sid in enumerate(scene_ids):
+						self._update_state_entry(prompt_id, prompt_text, sid, idx, "FAILED", error=error_code_str, message=error_message)
+						self.video_updated.emit({
+							"prompt_idx": f"{prompt_id}_{idx + 1}", "status": "FAILED",
+							"scene_id": sid, "prompt": prompt_text, "_prompt_id": prompt_id,
+							"error_code": error_code_str, "error_message": error_message,
+						})
+					return
+
+				if error_code_str == "403" and consecutive >= 3:
+					self._log("⚠️ 403 liên tiếp, restart Chrome...")
+					await collector.restart_browser()
+					prompt_retry_counts[f"{prompt_id}_403_count"] = 0
+					retry_count = 0
+					prompt_retry_counts[prompt_id] = 0
+					continue
+
+				# 429 quota exhausted → chờ lâu hơn
+				if error_code_str == "429":
+					backoff = min(60, 20 * retry_count)
+					self._log(f"⚠️ Quota exhausted (429), chờ {backoff}s rồi retry ({retry_count}/{retry_with_error})")
+					if not await self._sleep_with_stop(backoff):
+						return
+				else:
+					self._log(f"⚠️ Lỗi {error_code_str}, chờ {wait_resend}s retry ({retry_count}/{retry_with_error})")
+					if not await self._sleep_with_stop(wait_resend):
+						return
+				continue
+
+			# ── Xử lý response thành công ──
+			operations = self._parse_operations(response_body)
+			if not operations and error_message:
+				self._log(f"❌ API lỗi: {error_message[:100]}")
+				for idx, sid in enumerate(scene_ids):
+					self._update_state_entry(prompt_id, prompt_text, sid, idx, "FAILED", error=error_code, message=error_message)
+					self.video_updated.emit({
+						"prompt_idx": f"{prompt_id}_{idx + 1}", "status": "FAILED",
+						"scene_id": sid, "prompt": prompt_text, "_prompt_id": prompt_id,
+						"error_code": error_code_str, "error_message": error_message,
+					})
+				self._discard_scene_ids(prompt_id, scene_ids)
+				return
+
+			self._log(f"📨 Đã gửi video (prompt {prompt_id}), operations: {len(operations)}")
+			self._handle_create_response(
+				prompt_id, prompt_text, scene_ids, operations,
+				access_token, session_id, project_id, response=response,
+			)
+			return  # Thành công, thoát
 
 	async def _run_workflow(self):
 		if self._should_stop():
@@ -390,6 +547,9 @@ class TextToVideoWorkflow(QThread):
 				return
 			# ✅ TokenCollector đã startup thành công, chạy workflow
 			async with collector:
+				# ✅ Xử lý SONG SONG: gửi nhiều prompt video cùng lúc
+				pending_tasks = []
+				
 				for idx_prompt, prompt in enumerate(prompts):
 					if self.STOP:
 						self._log("🛑 STOP trong vòng lặp prompt, dừng workflow")
@@ -398,292 +558,46 @@ class TextToVideoWorkflow(QThread):
 						self._log("⏳ Workflow timeout, dừng Text to Video")
 						break
 
-					try:
-						prompt_id = prompt["id"]
-						prompt_text = prompt["prompt"]
-						self._log(f"📝 Gửi prompt {prompt_id},(đầu vào {idx_prompt + 1}/{len(prompts)})")
+					prompt_id = prompt["id"]
+					prompt_text = prompt["prompt"]
+					self._log(f"📝 Gửi prompt {prompt_id},(đầu vào {idx_prompt + 1}/{len(prompts)})")
 
-						retry_count = prompt_retry_counts.get(prompt_id, 0)
-						while True:
-							if self.STOP:
-								self._log("🛑 STOP trong prompt, dừng workflow")
-								break
-							wait_start_ts = time.time()
-							while self._count_in_progress() >= max_in_flight:
-								if self.STOP:
-									self._log("🛑 STOP trong lúc chờ, dừng workflow")
-									break
-								if not self._check_in_flight_block():
-									break
-								elapsed = int(time.time() - wait_start_ts)
-								self._log(f"⏳ Đang tạo video đủ giới hạn, chờ {elapsed}s...")
-								if not await self._sleep_with_stop(5):
-									break
-							if self.STOP:
-								break
-							if self._count_in_progress() < max_in_flight:
-								self._in_flight_block_start_ts = 0
-
-							token = None
-							for attempt in range(max_token_retries):
-								if self.STOP:
-									self._log(f"🛑 STOP trong lấy token prompt {prompt_id}, dừng workflow")
-									break
-								try:
-									self._log(
-										f"🔐 Đang lấy token... prompt {prompt_id} | mode=video | lần {attempt + 1}/{max_token_retries}"
-									)
-									# ✅ Timeout get_token() để tránh treo vô thời hạn
-									token_request_count += 1
-									clear_storage = (
-										clear_data_every > 0
-										and (token_request_count % clear_data_every == 0)
-									)
-									token = await asyncio.wait_for(
-										collector.get_token(clear_storage=clear_storage),
-										timeout=get_token_timeout
-									)
-									if token:
-										break
-								except asyncio.TimeoutError:
-									self._log(f"⏱️ Timeout lấy token (prompt {prompt_id}, lần {attempt + 1})")
-									timeout_streak = prompt_retry_counts.get("_token_timeout_streak", 0) + 1
-									prompt_retry_counts["_token_timeout_streak"] = timeout_streak
-									if timeout_streak >= 2:
-										self._log("⚠️ Timeout lấy token liên tiếp, khởi động lại Chrome...")
-										await collector.restart_browser()
-										prompt_retry_counts["_token_timeout_streak"] = 0
-								except Exception as e:
-									self._log(f"⚠️ Lỗi lấy token: {e}")
-								if attempt < max_token_retries - 1:
-									if self.STOP:
-										break
-									if not await self._sleep_with_stop(token_retry_delay):
-										break
-							
-							# ✅ Kiểm tra token
-							if not token:
-								self._log(f"❌ Không lấy được token recaptcha (prompt {prompt_id})")
-								fail_scene_ids = [str(uuid.uuid4()) for _ in range(output_count)]
-								for idx, scene_id in enumerate(fail_scene_ids):
-									self._update_state_entry(
-										prompt_id,
-										prompt_text,
-										scene_id,
-										idx,
-										"FAILED",
-										error="TOKEN",
-										message="Token timeout",
-									)
-									self.video_updated.emit({
-										"prompt_idx": f"{prompt_id}_{idx + 1}",
-										"status": "FAILED",
-										"scene_id": scene_id,
-										"prompt": prompt_text,
-										"_prompt_id": prompt_id,
-										"error_code": "TOKEN",
-										"error_message": "Token timeout",
-									})
-								break
-							if self._should_stop():
-								self._log(f"🛑 STOP sau khi lấy token (prompt {prompt_id})")
-								break
-
-							# ✅ CÓ TOKEN RỒI, KHỞI TẠO PAYLOAD
-							payload = t2v_api.build_create_payload(
-								prompt_text,
-								session_id,
-								project_id,
-								token,
-								model_key=video_model_key,
-								aspect_ratio=video_aspect_ratio,
-								output_count=output_count,
-							)
-							if self._should_stop():
-								self._log(f"🛑 STOP trước khi gửi request (prompt {prompt_id})")
-								break
-
-							# ✅ GỬI REQUEST
-							scene_ids = self._assign_scene_ids(payload, prompt_id, output_count)
-							self._last_submit_ts = time.time()
-							self._save_request_json(payload, prompt_id, prompt_text, flow="text_to_video")
-
-							self._log(f"🚀 [{time.strftime('%H:%M:%S')}] Bắt đầu gửi request tạo video (prompt {prompt_id})...")
-							
-							self._log(f"🔧 Token Option: {token_option}")
-							
-							if token_option == "Option 2":
-								response = await t2v_api.request_create_video_via_browser(
-									collector.page,
-									t2v_api.URL_GENERATE_TEXT_TO_VIDEO,
-									payload,
-									access_token
-								)
-							else:
-								response = await t2v_api.request_create_video(payload, access_token, cookie=cookie)
-							
-							if self._should_stop():
-								self._log(f"🛑 STOP sau khi gửi request (prompt {prompt_id})")
-								break
-							response_body = response.get("body", "")
-							error_code, error_message = self._extract_error_info(response_body)
-							retryable_errors = {"403", "3", "13", "53", "16", "401"}
-							error_code_str = str(error_code or "").strip()
-							
-							is_auth_error = error_code_str in ("16", "401") or "authentication credentials" in str(error_message).lower()
-						
-							# ✅ Handle 403 error: 2 lần = clear storage, 3+ lần = restart chrome
-							if not response.get("ok", True) and (error_code_str in retryable_errors or is_auth_error):
-								if is_auth_error:
-									import auth_helper
-									self._log(f"⚠️ Token OAuth có thể đã hết hạn, tự động lấy token mới...")
-									new_access = auth_helper.get_valid_access_token(cookie, project_id, force_refresh=True)
-									if new_access and new_access != access_token:
-										self._log(f"✅ Đã renew OAuth token thành công")
-										access_token = new_access
-										auth["access_token"] = new_access
-								if self.STOP:
-									self._log(f"🛑 STOP, không retry prompt {prompt_id}")
-									break
-								
-								# Track consecutive 403
-								if error_code_str == "403":
-									consecutive_403_count = prompt_retry_counts.get(f"{prompt_id}_403_count", 0) + 1
-									prompt_retry_counts[f"{prompt_id}_403_count"] = consecutive_403_count
-								else:
-									# Reset 403 count nếu error khác
-									prompt_retry_counts[f"{prompt_id}_403_count"] = 0
-									consecutive_403_count = 0
-								
-								retry_count += 1
-								prompt_retry_counts[prompt_id] = retry_count
-								self._discard_scene_ids(prompt_id, scene_ids)
-
-								if retry_count >= retry_with_error:
-									self._log(f"❌ Đạt giới hạn retry ({retry_with_error}) cho lỗi '{error_code_str}', đánh dấu FAILED")
-									for idx, scene_id in enumerate(scene_ids):
-										self._update_state_entry(
-											prompt_id, prompt_text, scene_id, idx, "FAILED",
-											error=error_code_str, message=error_message
-										)
-										self.video_updated.emit({
-											"prompt_idx": f"{prompt_id}_{idx + 1}",
-											"status": "FAILED",
-											"scene_id": scene_id,
-											"prompt": prompt_text,
-											"_prompt_id": prompt_id,
-											"error_code": error_code_str,
-											"error_message": error_message,
-										})
-									break
-								
-								# 🔧 Lần 2 consecutive 403: clear storage (có cooldown để tránh clear liên tục)
-								if error_code_str == "403" and consecutive_403_count == 2:
-									cooldown_key = f"{prompt_id}_403_clear_cooldown_until"
-									cooldown_until = float(prompt_retry_counts.get(cooldown_key, 0) or 0)
-									now_ts = time.time()
-									if now_ts < cooldown_until:
-										self._log("⚠️ Vừa clear storage gần đây, bỏ qua clear và restart Chrome...")
-										await collector.restart_browser()
-										prompt_retry_counts[f"{prompt_id}_403_count"] = 0
-										retry_count = 0
-										prompt_retry_counts[prompt_id] = 0
-										continue
-									self._log(f"⚠️ Lỗi 403 lần {consecutive_403_count}, chạy clear storage...")
-									try:
-										await asyncio.wait_for(
-											collector.get_token(clear_storage=True),
-											timeout=60
-										)
-										prompt_retry_counts[f"{prompt_id}_403_count"] = 0
-										# ✅ Cooldown 2 phút để tránh clear liên tục ngay sau khi vừa clear xong
-										prompt_retry_counts[cooldown_key] = time.time() + 120
-										# ✅ Reset bộ đếm clear theo chu kỳ để tránh vừa clear xong lại clear tiếp
-										token_request_count = 0
-										retry_count = 0
-										prompt_retry_counts[prompt_id] = 0
-										self._log("✅ Clear storage xong, retry prompt")
-									except Exception as e:
-										self._log(f"⚠️ Clear storage lỗi: {e}")
-										if not await self._sleep_with_stop(wait_resend):
-											break
-									continue
-								
-								# 🔧 Lần 3+ consecutive 403: restart chrome
-								if error_code_str == "403" and consecutive_403_count >= 3:
-									self._log("⚠️ Lỗi 403 liên tiếp, khởi động lại Chrome...")
-									await collector.restart_browser()
-									prompt_retry_counts[f"{prompt_id}_403_count"] = 0
-									retry_count = 0
-									prompt_retry_counts[prompt_id] = 0
-									continue
-								
-								# Other retryable errors
-								self._log(
-									f"⚠️ Lỗi {error_code_str or 'UNKNOWN'}, chờ {wait_resend}s rồi retry prompt {prompt_id} ({retry_count}/{retry_with_error})"
-								)
-								if not await self._sleep_with_stop(wait_resend):
-									break
-								continue
-
-							operations = self._parse_operations(response_body)
-							
-							# If API returned error (0 operations + error message), mark as FAILED and skip
-							if not operations and error_message:
-								self._log(f"❌ API lỗi, không tạo được video: {error_message[:100]}")
-								for idx, scene_id in enumerate(scene_ids):
-									self._update_state_entry(
-										prompt_id,
-										prompt_text,
-										scene_id,
-										idx,
-										"FAILED",
-										error=error_code,
-										message=error_message,
-									)
-									self.video_updated.emit({
-										"prompt_idx": f"{prompt_id}_{idx + 1}",
-										"status": "FAILED",
-										"scene_id": scene_id,
-										"prompt": prompt_text,
-										"_prompt_id": prompt_id,
-										"error_code": error_code_str,
-										"error_message": error_message,
-									})
-								self._discard_scene_ids(prompt_id, scene_ids)
-								break
-							
-							self._log(f"📨 Đã gửi create video (prompt {prompt_id}), operations: {len(operations)}")
-							self._handle_create_response(
-								prompt_id,
-								prompt_text,
-								scene_ids,
-								operations,
-								access_token,
-								session_id,
-								project_id,
-								response=response,
-							)
-							if idx_prompt == len(prompts) - 1:
-								if not self._auto_noi_canh:
-									self._log("✅ Hết tất cả prompts, chờ video hoàn thành...")
-								self._all_prompts_submitted = True
-							
-							# ✅ Delay thông minh: chưa đủ max_in_flight → delay ngắn 3s, đủ rồi → chờ slot trống
-							current_running = self._count_in_progress()
-							if current_running < max_in_flight:
-								if not await self._sleep_with_stop(3):
-									break
-							else:
-								if not await self._sleep_with_stop(wait_between_prompts):
-									break
+					# Chờ slot trống nếu đạt giới hạn in-flight
+					wait_start_ts = time.time()
+					while self._count_in_progress() >= max_in_flight:
+						if self.STOP:
 							break
-					
-					except Exception as e:
-						self._log(f"❌ Lỗi xử lý prompt {prompt_id}: {e}")
-						import traceback
-						self._log(f"Traceback: {traceback.format_exc()}")
-						continue
+						elapsed = int(time.time() - wait_start_ts)
+						self._log(f"⏳ Đang chờ {self._count_in_progress()} video hoàn thành... ({elapsed}s)")
+						if not await self._sleep_with_stop(5):
+							break
+					if self.STOP:
+						break
+
+					# Tạo task song song cho prompt này
+					task = asyncio.create_task(self._process_video_prompt(
+						collector, prompt_id, prompt_text,
+						session_id, project_id, access_token, cookie, auth,
+						video_model_key, video_aspect_ratio, output_count,
+						token_option, max_token_retries, token_retry_delay,
+						get_token_timeout, clear_data_every, retry_with_error,
+						wait_resend, prompt_retry_counts,
+					))
+					pending_tasks.append(task)
+
+					# Delay ngắn giữa các lần gửi
+					if idx_prompt < len(prompts) - 1:
+						if not await self._sleep_with_stop(2):
+							break
+
+				# Đánh dấu đã gửi hết prompts
+				if not self._auto_noi_canh:
+					self._log("✅ Đã gửi hết prompts của workflow hiện tại, tiếp tục chờ video hoàn thành...")
+				self._all_prompts_submitted = True
+
+				# Chờ tất cả task gửi request hoàn tất
+				if pending_tasks:
+					await asyncio.gather(*pending_tasks, return_exceptions=True)
 							
 		except RuntimeError as exc:
 			message = str(exc)
@@ -787,15 +701,15 @@ class TextToVideoWorkflow(QThread):
 
 			await asyncio.sleep(3)
 
-		# ✅ LUÔN TẮT CHROME SAU KHI GỬI HẾT PROMPTS + INLINE RETRIES
+		# ✅ Dừng harvest token nhưng GIỮ Chrome mở
 		chrome_closed = False
 		if (not self._auto_noi_canh) and (not self._worker_controls_lifecycle):
 			try:
 				await collector.close_after_workflow()
-				self._log("🔒 Đã đóng Chrome sau khi gửi hết prompts")
+				self._log("🔒 Đã đóng Chrome của workflow hiện tại.")
 				chrome_closed = True
 			except Exception:
-				self._log("⚠️ Lỗi đóng Chrome sau khi gửi hết prompts")
+				self._log("⚠️ Lỗi dừng harvest token")
 		# ✅ Kiểm tra hoàn thành video và thoát luồng ngay khi xong
 		try:
 			await self._wait_for_completion()
@@ -1028,7 +942,7 @@ class TextToVideoWorkflow(QThread):
 							break
 						response_body = response.get("body", "")
 						error_code, error_message = self._extract_error_info(response_body)
-						retryable_errors = {"403", "3", "13", "53"}
+						retryable_errors = {"403", "3", "13", "53", "16", "401", "429", "400", "500", "503"}
 						error_code_str = str(error_code or "").strip()
 
 						# ✅ Handle 403 error: 2 lần = clear storage, 3+ lần = restart chrome
@@ -1135,14 +1049,16 @@ class TextToVideoWorkflow(QThread):
 								self._scene_status_change_ts[scene_id] = time.time()
 
 						current_running = self._count_in_progress()
-					# ✅ Delay thông minh: chưa đủ max_in_flight → delay ngắn 3s
-					if current_running < max_in_flight:
-						if not await self._sleep_with_stop(3):
-							break
-					else:
-						if not await self._sleep_with_stop(wait_between_prompts):
-							break
+					# ✅ Delay ngắn 2s giữa các prompt, chờ slot trống nếu đạt giới hạn
+					if not await self._sleep_with_stop(2):
 						break
+					while self._count_in_progress() >= max_in_flight:
+						if self._should_stop():
+							break
+						self._log(f"⏳ Đang chờ {self._count_in_progress()} video hoàn thành...")
+						if not await self._sleep_with_stop(5):
+							break
+					break
 
 		except RuntimeError as exc:
 			message = str(exc)
@@ -1206,11 +1122,7 @@ class TextToVideoWorkflow(QThread):
 			except Exception:
 				pass
 			if self.STOP:
-				try:
-					self._log("🛑 Stop, Thoát luồng lấy token...")
-					ChromeProcessManager.close_chrome_gracefully(stop_check=self._should_stop)
-				except Exception:
-					pass
+				self._log("🛑 Stop (Chrome vẫn mở để tái sử dụng)")
 			self.automation_complete.emit()
 
 	def _resolve_output_count(self, config):

@@ -639,23 +639,33 @@ class GenerateImageWorkflow(QThread):
 		token_counter = {"count": 0}
 
 		async with collector:
-			# ✅ Xử lý TUẦN TỰ: lấy token → gửi request → delay → prompt tiếp
-			# Tránh 403 reCAPTCHA do nhiều task lấy token cùng lúc
+			# ✅ Xử lý SONG SONG: gửi nhiều prompt cùng lúc (giới hạn bởi max_in_flight)
+			# Token được lấy và dùng ngay → tránh hết hạn, tăng tốc đáng kể
+			pending_tasks = []
+			prompt_delay = 2  # Delay ngắn giữa các lần gửi để tránh nghẽn token pool
+
 			for idx_prompt, prompt in enumerate(prompts):
 				if self._should_stop():
 					self._log("🛑 STOP trong vòng lặp prompt")
 					break
 
-				if idx_prompt > 0:
-					if not await self._sleep_with_stop(wait_between_effective):
-						break
-
 				prompt_id = prompt.get("id", idx_prompt + 1)
 				prompt_text = prompt.get("description", "") or prompt.get("prompt", "") or ""
 				aspect_ratio = self._resolve_aspect_ratio(self.project_data)
 
-				# Xử lý từng prompt tuần tự (lấy token + gửi request)
-				await self._process_prompt(
+				# Chờ nếu đã đạt giới hạn in-flight
+				wait_start = time.time()
+				while self._count_in_progress() >= max_in_flight:
+					if self._should_stop():
+						break
+					elapsed = int(time.time() - wait_start)
+					self._log(f"⏳ Đang tạo ảnh đủ giới hạn {max_in_flight}, chờ {elapsed}s...")
+					await asyncio.sleep(3)
+				if self._should_stop():
+					break
+
+				# Tạo task song song cho prompt này
+				task = asyncio.create_task(self._process_prompt(
 					collector,
 					prompt_id,
 					prompt_text,
@@ -676,7 +686,18 @@ class GenerateImageWorkflow(QThread):
 					get_token_timeout,
 					retry_with_error,
 					wait_resend_image,
-				)
+				))
+				pending_tasks.append(task)
+
+				# Delay ngắn giữa các lần gửi để token pool kịp tạo token mới
+				if idx_prompt < len(prompts) - 1:
+					if not await self._sleep_with_stop(prompt_delay):
+						break
+
+			# Chờ tất cả task hoàn tất
+			if pending_tasks:
+				self._log(f"⏳ Đang chờ {len(pending_tasks)} prompt hoàn thành...")
+				await asyncio.gather(*pending_tasks, return_exceptions=True)
 
 		# Sau khi gửi hết prompt, chủ động đóng collector (Chrome + thread token)
 		try:
@@ -897,7 +918,7 @@ class GenerateImageWorkflow(QThread):
 					return  # Skip ngay, không retry
 
 				# ✅ Handle retryable errors (403, 401, 3, 13, 53)
-				retryable_errors = {"403", "401", "3", "13", "53"}
+				retryable_errors = {"403", "401", "3", "13", "53", "16", "429", "400", "500", "503"}
 				is_retryable = not response.get("ok", True) and (
 					error_code_str in retryable_errors or http_status in retryable_errors
 				)
