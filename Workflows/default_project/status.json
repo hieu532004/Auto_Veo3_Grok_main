@@ -1,100 +1,108 @@
 {
   "project_name": "default_project",
-  "updated_at": 1773783616,
+  "updated_at": 1773817728,
   "rows": [
     {
       "row": 0,
       "stt": "001",
       "prompt_id": "1",
-      "prompt": "hieu",
+      "prompt": "A cinematic wide shot of a businessman standing at the peak of a modern glass skyscraper looking over a glowing city at night, representing success and vision, 8k resolution, highly detailed.",
       "mode_key": "create_image_prompt",
       "mode_label": "VEO3 - Tạo ảnh từ prompt",
       "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "description": "hieu"
+        "description": "A cinematic wide shot of a businessman standing at the peak of a modern glass skyscraper looking over a glowing city at night, representing success and vision, 8k resolution, highly detailed."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_18032026_043049.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_18032026_135836.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_18032026_043049.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_18032026_135836.jpg"
       }
     },
     {
       "row": 1,
       "stt": "002",
       "prompt_id": "2",
-      "prompt": "hiue'",
+      "prompt": "A cozy, warmly lit study room with a vintage leather chair, a glowing laptop on an oak desk, and stacks of gold coins merging into an open glowing book, magical realism, storytelling concept, 4k.",
       "mode_key": "create_image_prompt",
       "mode_label": "VEO3 - Tạo ảnh từ prompt",
       "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "description": "hiue'"
-      },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 2,
-      "stt": "003",
-      "prompt_id": "3",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 3,
-      "stt": "004",
-      "prompt_id": "4",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
+        "description": "A cozy, warmly lit study room with a vintage leather chair, a glowing laptop on an oak desk, and stacks of gold coins merging into an open glowing book, magical realism, storytelling concept, 4k."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_18032026_043211.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_18032026_135927.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_18032026_043211.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_18032026_135927.jpg"
+      }
+    },
+    {
+      "row": 2,
+      "stt": "003",
+      "prompt_id": "3",
+      "prompt": "An abstract representation of financial growth, golden arrows soaring upwards breaking through a glass ceiling against a dramatic sunrise sky, photorealistic, cinematic lighting.",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "An abstract representation of financial growth, golden arrows soaring upwards breaking through a glass ceiling against a dramatic sunrise sky, photorealistic, cinematic lighting."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_18032026_140825.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_18032026_140825.jpg"
+      }
+    },
+    {
+      "row": 3,
+      "stt": "004",
+      "prompt_id": "4",
+      "prompt": "A spooky abandoned theme park at midnight in a 1930s rubber hose cartoon style, eerie fog, vintage black and white animation aesthetic with glowing red eyes in the shadows.",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "A spooky abandoned theme park at midnight in a 1930s rubber hose cartoon style, eerie fog, vintage black and white animation aesthetic with glowing red eyes in the shadows."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_18032026_140117.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_18032026_140117.jpg"
       }
     },
     {
       "row": 4,
       "stt": "005",
       "prompt_id": "5",
-      "prompt": "hiue'",
+      "prompt": "A creepy cartoon ghost ship sailing on a sea of dark purple ink, whimsical but scary, twisted masts, glowing green lanterns, highly detailed 2D illustration.",
       "mode_key": "create_image_prompt",
       "mode_label": "VEO3 - Tạo ảnh từ prompt",
       "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "description": "hiue'"
+        "description": "A creepy cartoon ghost ship sailing on a sea of dark purple ink, whimsical but scary, twisted masts, glowing green lanterns, highly detailed 2D illustration."
       },
-      "status_code": "FAILED",
-      "status_text": "Lỗi (mã lỗi: 400 | message: Request contains an invalid argument.)",
+      "status_code": "ACTIVE",
+      "status_text": "Đang tạo",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -104,603 +112,103 @@
       "row": 5,
       "stt": "006",
       "prompt_id": "6",
-      "prompt": "hieu",
+      "prompt": "A sinister cartoon pumpkin patch under a full blood moon, stylized bats flying in the sky, expressive terrifying jack-o-lanterns with glowing yellow eyes, cel shaded, dark fantasy.",
       "mode_key": "create_image_prompt",
       "mode_label": "VEO3 - Tạo ảnh từ prompt",
       "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "description": "hieu"
+        "description": "A sinister cartoon pumpkin patch under a full blood moon, stylized bats flying in the sky, expressive terrifying jack-o-lanterns with glowing yellow eyes, cel shaded, dark fantasy."
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_18032026_043208.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_18032026_043208.jpg"
-      }
-    },
-    {
-      "row": 6,
-      "stt": "007",
-      "prompt_id": "7",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_18032026_043220.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_18032026_043220.jpg"
-      }
-    },
-    {
-      "row": 7,
-      "stt": "008",
-      "prompt_id": "8",
-      "prompt": "hiue'",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hiue'"
-      },
-      "status_code": "FAILED",
-      "status_text": "Lỗi (mã lỗi: 400 | message: Request contains an invalid argument.)",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 1)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
       "preview_map": {}
     },
     {
-      "row": 8,
-      "stt": "009",
-      "prompt_id": "9",
-      "prompt": "hieu",
+      "row": 6,
+      "stt": "007",
+      "prompt_id": "7",
+      "prompt": "A beautiful grand piano glowing with ethereal blue light in a dark, atmospheric concert hall, musical notes made of stardust floating up from the keys, magical, inspiring.",
       "mode_key": "create_image_prompt",
       "mode_label": "VEO3 - Tạo ảnh từ prompt",
       "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "description": "hieu"
+        "description": "A beautiful grand piano glowing with ethereal blue light in a dark, atmospheric concert hall, musical notes made of stardust floating up from the keys, magical, inspiring."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 2)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 7,
+      "stt": "008",
+      "prompt_id": "8",
+      "prompt": "A modern home music studio with dual monitors, acoustic foam, a MIDI keyboard, lo-fi anime art style, warm lighting, cozy atmosphere, pastel colors.",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "A modern home music studio with dual monitors, acoustic foam, a MIDI keyboard, lo-fi anime art style, warm lighting, cozy atmosphere, pastel colors."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_18032026_043314.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_18032026_140515.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_18032026_043314.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_18032026_140515.jpg"
+      }
+    },
+    {
+      "row": 8,
+      "stt": "009",
+      "prompt_id": "9",
+      "prompt": "A futuristic neon-lit street food market in Tokyo, cyberpunk aesthetic, raining, reflections on the wet pavement, vivid colors, highly detailed, Unreal Engine 5 render.",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "A futuristic neon-lit street food market in Tokyo, cyberpunk aesthetic, raining, reflections on the wet pavement, vivid colors, highly detailed, Unreal Engine 5 render."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_18032026_140608.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_18032026_140608.jpg"
       }
     },
     {
       "row": 9,
       "stt": "010",
       "prompt_id": "10",
-      "prompt": "hieu",
+      "prompt": "A majestic golden dragon flying through a canyon made of floating glowing crystals, fantasy concept art, epic scale, cinematic lighting, masterpiece.",
       "mode_key": "create_image_prompt",
       "mode_label": "VEO3 - Tạo ảnh từ prompt",
       "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "description": "hieu"
+        "description": "A majestic golden dragon flying through a canyon made of floating glowing crystals, fantasy concept art, epic scale, cinematic lighting, masterpiece."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_18032026_043336.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_18032026_140656.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_18032026_043336.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_18032026_140656.jpg"
       }
-    },
-    {
-      "row": 10,
-      "stt": "011",
-      "prompt_id": "11",
-      "prompt": "hiue'",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hiue'"
-      },
-      "status_code": "FAILED",
-      "status_text": "Lỗi (mã lỗi: 400 | message: Request contains an invalid argument.)",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 11,
-      "stt": "012",
-      "prompt_id": "12",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_18032026_043338.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_18032026_043338.jpg"
-      }
-    },
-    {
-      "row": 12,
-      "stt": "013",
-      "prompt_id": "13",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\13_1_18032026_043509.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\13_1_18032026_043509.jpg"
-      }
-    },
-    {
-      "row": 13,
-      "stt": "014",
-      "prompt_id": "14",
-      "prompt": "hiue'",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hiue'"
-      },
-      "status_code": "FAILED",
-      "status_text": "Lỗi (mã lỗi: 400 | message: Request contains an invalid argument.)",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 14,
-      "stt": "015",
-      "prompt_id": "15",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\15_1_18032026_043602.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\15_1_18032026_043602.jpg"
-      }
-    },
-    {
-      "row": 15,
-      "stt": "016",
-      "prompt_id": "16",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\16_1_18032026_043554.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\16_1_18032026_043554.jpg"
-      }
-    },
-    {
-      "row": 16,
-      "stt": "017",
-      "prompt_id": "17",
-      "prompt": "hiue'",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hiue'"
-      },
-      "status_code": "FAILED",
-      "status_text": "Lỗi (mã lỗi: 400 | message: Request contains an invalid argument.)",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 17,
-      "stt": "018",
-      "prompt_id": "18",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\18_1_18032026_043616.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\18_1_18032026_043616.jpg"
-      }
-    },
-    {
-      "row": 18,
-      "stt": "019",
-      "prompt_id": "19",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\19_1_18032026_043628.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\19_1_18032026_043628.jpg"
-      }
-    },
-    {
-      "row": 19,
-      "stt": "020",
-      "prompt_id": "20",
-      "prompt": "hiue'",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hiue'"
-      },
-      "status_code": "FAILED",
-      "status_text": "Lỗi (mã lỗi: 400 | message: Request contains an invalid argument.)",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 20,
-      "stt": "021",
-      "prompt_id": "21",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 21,
-      "stt": "022",
-      "prompt_id": "22",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "FAILED",
-      "status_text": "Lỗi (mã lỗi: 400 | message: Request contains an invalid argument.)",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 22,
-      "stt": "023",
-      "prompt_id": "23",
-      "prompt": "hiue'",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hiue'"
-      },
-      "status_code": "FAILED",
-      "status_text": "Lỗi (mã lỗi: 400 | message: Request contains an invalid argument.)",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 23,
-      "stt": "024",
-      "prompt_id": "24",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 24,
-      "stt": "025",
-      "prompt_id": "25",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\25_1_18032026_043910.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\25_1_18032026_043910.jpg"
-      }
-    },
-    {
-      "row": 25,
-      "stt": "026",
-      "prompt_id": "26",
-      "prompt": "hiue'",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hiue'"
-      },
-      "status_code": "FAILED",
-      "status_text": "Lỗi (mã lỗi: 403 | message: reCAPTCHA evaluation failed)",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 26,
-      "stt": "027",
-      "prompt_id": "27",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 27,
-      "stt": "028",
-      "prompt_id": "28",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 28,
-      "stt": "029",
-      "prompt_id": "29",
-      "prompt": "hiue'",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hiue'"
-      },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 29,
-      "stt": "030",
-      "prompt_id": "30",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 30,
-      "stt": "031",
-      "prompt_id": "31",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 31,
-      "stt": "032",
-      "prompt_id": "32",
-      "prompt": "hiue'",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hiue'"
-      },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 32,
-      "stt": "033",
-      "prompt_id": "33",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 33,
-      "stt": "034",
-      "prompt_id": "34",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 34,
-      "stt": "035",
-      "prompt_id": "35",
-      "prompt": "hiue'",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hiue'"
-      },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 35,
-      "stt": "036",
-      "prompt_id": "36",
-      "prompt": "hieu",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
-      "mode_payload": {
-        "description": "hieu"
-      },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
     }
   ]
 }

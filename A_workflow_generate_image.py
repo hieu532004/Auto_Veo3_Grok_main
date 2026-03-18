@@ -492,13 +492,21 @@ class GenerateImageWorkflow(QThread):
 		try:
 			body_json = json.loads(response_body)
 		except Exception:
-			return "", ""
+			return "", "", ""
 		error = body_json.get("error") if isinstance(body_json, dict) else None
 		if not isinstance(error, dict):
-			return "", ""
+			return "", "", ""
 		code = str(error.get("code", "")) if error.get("code") is not None else ""
 		message = str(error.get("message", "")) if error.get("message") is not None else ""
-		return code, message
+		# Trích xuất reason từ error.details (vd: PUBLIC_ERROR_UNSAFE_GENERATION)
+		error_reason = ""
+		details = error.get("details")
+		if isinstance(details, list):
+			for detail in details:
+				if isinstance(detail, dict) and detail.get("reason"):
+					error_reason = str(detail["reason"])
+					break
+		return code, message, error_reason
 
 	async def _init_token_collector(self, project_link, chrome_userdata_root, profile_name, clear_data_interval, idle_timeout, token_timeout):
 		from settings_manager import SettingsManager
@@ -621,7 +629,7 @@ class GenerateImageWorkflow(QThread):
 			project_link,
 			chrome_userdata_root,
 			profile_name,
-			clear_data_wait,
+			clear_data_token_image,
 			40,
 			get_token_timeout,
 		)
@@ -858,12 +866,43 @@ class GenerateImageWorkflow(QThread):
 					return
 
 				response_body = response.get("body", "")
-				error_code, error_message = self._extract_error_info(response_body)
-				error_code_str = str(response.get("status") or error_code or "").strip()
+				error_code, error_message, error_reason = self._extract_error_info(response_body)
+				http_status = str(response.get("status") or "").strip()
+				body_error_code = str(error_code or "").strip()
+				# Dùng body error code nếu có, nếu không thì dùng HTTP status
+				error_code_str = body_error_code if body_error_code else http_status
 
-				# ✅ Handle retryable errors (403, 400, 3, 13, 53)
-				if not response.get("ok", True) and error_code_str in {"403", "400", "3", "13", "53"}:
-					if error_code_str == "403":
+				# ✅ Lỗi nội dung (UNSAFE/CENSORED): KHÔNG retry, skip prompt ngay
+				non_retryable_reasons = {
+					"PUBLIC_ERROR_UNSAFE_GENERATION",
+					"PUBLIC_ERROR_SOMETHING_WENT_WRONG_UNSAFE",
+					"SAFETY_FILTER",
+					"CONTENT_FILTERED",
+				}
+				if error_reason and error_reason.upper() in {r.upper() for r in non_retryable_reasons}:
+					msg = error_message or error_reason
+					self._log(f"🚫 Prompt {prompt_id} bị chặn bởi bộ lọc nội dung: {error_reason}")
+					self._log(f"   → Bỏ qua prompt này (không retry)")
+					for idx, scene_id in enumerate(scene_ids or []):
+						self._update_state_entry(prompt_id, prompt_text, scene_id, idx, "FAILED", error=error_reason, message=msg)
+						self.video_updated.emit({
+							"prompt_idx": f"{prompt_id}_{idx + 1}",
+							"status": "FAILED",
+							"scene_id": scene_id,
+							"prompt": prompt_text,
+							"_prompt_id": prompt_id,
+							"error_code": error_reason,
+							"error_message": msg,
+						})
+					return  # Skip ngay, không retry
+
+				# ✅ Handle retryable errors (403, 401, 3, 13, 53)
+				retryable_errors = {"403", "401", "3", "13", "53"}
+				is_retryable = not response.get("ok", True) and (
+					error_code_str in retryable_errors or http_status in retryable_errors
+				)
+				if is_retryable:
+					if error_code_str == "403" or http_status == "403":
 						consecutive_403_count += 1
 					else:
 						consecutive_403_count = 0
@@ -887,15 +926,34 @@ class GenerateImageWorkflow(QThread):
 							"error_message": msg,
 						})
 
+					# 🔧 Handle 401 - refresh OAuth token
+					if error_code_str == "401" or http_status == "401":
+						self._log("🔄 Token OAuth hết hạn, đang làm mới...")
+						try:
+							import auth_helper
+							new_token = auth_helper.get_valid_access_token(cookie, project_id)
+							if new_token and new_token != access_token:
+								access_token = new_token
+								self._log("✅ Token OAuth đã được làm mới")
+							else:
+								self._log("⚠️ Không thể làm mới token OAuth")
+						except Exception as e:
+							self._log(f"⚠️ Lỗi refresh OAuth: {e}")
+						if retry_count < retry_with_error - 1:
+							if not await self._sleep_with_stop(5):
+								return
+							continue
+						return
+
 					# 🔧 403 lần đầu: chờ 10s rồi retry (clear storage nhẹ)
-					if error_code_str == "403" and consecutive_403_count == 1:
+					if (error_code_str == "403" or http_status == "403") and consecutive_403_count == 1:
 						self._log(f"⚠️ Lỗi 403 lần 1, chờ 10s rồi retry...")
 						if not await self._sleep_with_stop(10):
 							return
 						continue
 
 					# 🔧 Lần 2 consecutive 403: clear storage (có cooldown để tránh clear liên tục)
-					if error_code_str == "403" and consecutive_403_count == 2:
+					if (error_code_str == "403" or http_status == "403") and consecutive_403_count == 2:
 						now_ts = time.time()
 						if now_ts < clear_403_cooldown_until:
 							self._log("⚠️ Vừa clear storage gần đây, bỏ qua clear và restart Chrome...")
@@ -922,7 +980,7 @@ class GenerateImageWorkflow(QThread):
 						continue
 
 					# 🔧 Lần 3+ consecutive 403: restart chrome
-					if error_code_str == "403" and consecutive_403_count >= 3:
+					if (error_code_str == "403" or http_status == "403") and consecutive_403_count >= 3:
 						self._log("⚠️ Lỗi 403 liên tiếp, khởi động lại Chrome...")
 						try:
 							await collector.restart_browser()

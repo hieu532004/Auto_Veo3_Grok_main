@@ -347,8 +347,11 @@ class TokenPool:
 
 		while not self._should_stop():
 			try:
-				if self._token_queue.qsize() >= 6:
-					await asyncio.sleep(2)
+				# Image mode xử lý tuần tự → chỉ cần ít token trong queue
+				# Video mode xử lý song song → cần nhiều token hơn
+				queue_limit = 2 if self.mode == "generate_image" else 6
+				if self._token_queue.qsize() >= queue_limit:
+					await asyncio.sleep(3 if self.mode == "generate_image" else 2)
 					continue
 
 				clear_storage = (
@@ -439,7 +442,7 @@ class TokenPool:
 				if isinstance(token_data, tuple) and len(token_data) == 2:
 					token, ts = token_data
 					token_age = time.time() - ts
-					if token_age < 25:
+					if token_age < 15:
 						return token
 					else:
 						self._log(f"♻️ Loại bỏ token quá hạn ({int(time.time() - ts)}s)")
