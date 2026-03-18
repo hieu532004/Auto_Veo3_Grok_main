@@ -60,6 +60,8 @@ class TextToVideoWorkflow(QThread):
 		self._state_status_logged = set()
 		self._active_prompt_ids = set()
 		self._worker_controls_lifecycle = bool(self.project_data.get("_worker_controls_lifecycle", False))
+		self._inline_retry_queue = []  # ✅ Queue cho inline retry AUDIO_FILTERED
+		self._inline_retry_counts = {}  # ✅ {prompt_id: count} đếm số lần retry
 
 	def run(self):
 		try:
@@ -95,23 +97,7 @@ class TextToVideoWorkflow(QThread):
 				self._log("📝 Chạy workflow Tạo Video Từ TEXT")
 				loop.run_until_complete(self._run_workflow())
 			
-			# ✅ AUTO-RETRY cho lỗi AUDIO_FILTERED (error code 3) — tối đa 3 lần
-			max_audio_retries = 3
-			for retry_round in range(max_audio_retries):
-				if self.STOP:
-					break
-				audio_failures = self._collect_audio_filtered_failures()
-				if not audio_failures:
-					break
-				self._log(f"🔁 Auto-retry AUDIO_FILTERED ({retry_round + 1}/{max_audio_retries}): {len(audio_failures)} video bị lỗi âm thanh")
-				# Reset state cho retry
-				self._all_prompts_submitted = False
-				self._status_poll_fail_streak = 0
-				self._scene_status = {}
-				self._scene_to_prompt = {}
-				self._scene_next_check_at = {}
-				self._scene_status_change_ts = {}
-				loop.run_until_complete(self._run_resend_workflow(audio_failures))
+			# ✅ Inline retry AUDIO_FILTERED đã được xử lý bên trong _run_workflow
 			
 		except asyncio.CancelledError:
 			self._log("🛑 Workflow bị cancel")
@@ -683,10 +669,14 @@ class TextToVideoWorkflow(QThread):
 									self._log("✅ Hết tất cả prompts, chờ video hoàn thành...")
 								self._all_prompts_submitted = True
 							
+							# ✅ Delay thông minh: chưa đủ max_in_flight → delay ngắn 3s, đủ rồi → chờ slot trống
 							current_running = self._count_in_progress()
-							delay = wait_between_prompts if current_running < max_in_flight else wait_gen_video
-							if not await self._sleep_with_stop(delay):
-								break
+							if current_running < max_in_flight:
+								if not await self._sleep_with_stop(3):
+									break
+							else:
+								if not await self._sleep_with_stop(wait_between_prompts):
+									break
 							break
 					
 					except Exception as e:
@@ -712,7 +702,92 @@ class TextToVideoWorkflow(QThread):
 				self._log("✅ Hết tất cả prompts, chờ video hoàn thành...")
 			self._all_prompts_submitted = True
 			self._complete_wait_start_ts = time.time()
-		# ✅ LUÔN TẮT CHROME SAU KHI GỬI HẾT PROMPTS (trừ khi auto_noi_canh)
+
+		# ✅ INLINE RETRY CONSUMER: xử lý retry AUDIO_FILTERED ngay trong tiến trình
+		# Giữ Chrome mở để lấy token cho retry
+		inline_retry_deadline = time.time() + 600  # Tối đa 10 phút chờ retry
+		while time.time() < inline_retry_deadline and not self.STOP:
+			# Chờ có items trong retry queue hoặc tất cả video hoàn thành
+			if not self._inline_retry_queue:
+				# Kiểm tra xem còn video đang xử lý không
+				in_progress = self._count_in_progress()
+				if in_progress == 0:
+					break  # Không còn video đang xử lý và queue trống → thoát
+				await asyncio.sleep(5)
+				continue
+
+			# Lấy item từ queue
+			retry_item = self._inline_retry_queue.pop(0)
+			r_prompt_id = retry_item["prompt_id"]
+			r_prompt_text = retry_item["prompt_text"]
+			r_scene_id = retry_item["scene_id"]
+			r_idx = retry_item["idx"]
+			retry_count = self._inline_retry_counts.get(str(r_prompt_id), 1)
+
+			self._log(f"🔁 Inline retry: gửi lại prompt {r_prompt_id} (lần {retry_count})...")
+
+			# Lấy token mới
+			token = None
+			try:
+				token = await asyncio.wait_for(
+					collector.get_token(clear_storage=False),
+					timeout=get_token_timeout,
+				)
+			except Exception as e:
+				self._log(f"⚠️ Inline retry: không lấy được token cho prompt {r_prompt_id}: {e}")
+
+			if not token:
+				self._log(f"⚠️ Inline retry: token rỗng cho prompt {r_prompt_id}, đánh FAILED")
+				self._scene_status.setdefault(r_scene_id, {})["status"] = "MEDIA_GENERATION_STATUS_FAILED"
+				self._update_state_entry(r_prompt_id, r_prompt_text, r_scene_id, r_idx, "FAILED",
+					error="TOKEN", message="Không lấy được token cho retry")
+				self.video_updated.emit({
+					"prompt_idx": f"{r_prompt_id}_{r_idx + 1}", "status": "FAILED",
+					"scene_id": r_scene_id, "prompt": r_prompt_text, "_prompt_id": r_prompt_id,
+					"error_code": "TOKEN", "error_message": "Không lấy được token cho retry",
+				})
+				continue
+
+			# Build payload và gửi lại (giống main loop)
+			try:
+				payload = t2v_api.build_create_payload(
+					r_prompt_text, session_id, project_id, token,
+					model_key=video_model_key, aspect_ratio=video_aspect_ratio,
+					output_count=output_count,
+				)
+				new_scene_ids = self._assign_scene_ids(payload, r_prompt_id, output_count)
+				self._save_request_json(payload, r_prompt_id, r_prompt_text, flow="text_to_video_retry")
+
+				self._log(f"🚀 Inline retry: gửi request tạo video prompt {r_prompt_id}...")
+				response = await t2v_api.request_create_video(payload, access_token, cookie=cookie)
+
+				response_body = response.get("body", "")
+				operations = self._parse_operations(response_body)
+				err_code, err_msg = self._extract_error_info(response_body)
+
+				if operations:
+					self._handle_create_response(
+						r_prompt_id, r_prompt_text, new_scene_ids, operations,
+						access_token, session_id, project_id, response=response,
+					)
+					self._log(f"✅ Inline retry: đã gửi lại prompt {r_prompt_id} thành công")
+				else:
+					self._log(f"❌ Inline retry: prompt {r_prompt_id} thất bại: {err_msg}")
+					for idx2, sid in enumerate(new_scene_ids):
+						self._scene_status.setdefault(sid, {})["status"] = "MEDIA_GENERATION_STATUS_FAILED"
+						self._update_state_entry(r_prompt_id, r_prompt_text, sid, idx2, "FAILED",
+							error=err_code, message=err_msg)
+						self.video_updated.emit({
+							"prompt_idx": f"{r_prompt_id}_{idx2 + 1}", "status": "FAILED",
+							"scene_id": sid, "prompt": r_prompt_text, "_prompt_id": r_prompt_id,
+							"error_code": err_code, "error_message": err_msg,
+						})
+			except Exception as e:
+				self._log(f"❌ Inline retry: lỗi gửi lại prompt {r_prompt_id}: {e}")
+
+			await asyncio.sleep(3)
+
+		# ✅ LUÔN TẮT CHROME SAU KHI GỬI HẾT PROMPTS + INLINE RETRIES
 		chrome_closed = False
 		if (not self._auto_noi_canh) and (not self._worker_controls_lifecycle):
 			try:
@@ -1060,8 +1135,12 @@ class TextToVideoWorkflow(QThread):
 								self._scene_status_change_ts[scene_id] = time.time()
 
 						current_running = self._count_in_progress()
-						delay = wait_between_prompts if current_running < max_in_flight else wait_gen_video
-						if not await self._sleep_with_stop(delay):
+					# ✅ Delay thông minh: chưa đủ max_in_flight → delay ngắn 3s
+					if current_running < max_in_flight:
+						if not await self._sleep_with_stop(3):
+							break
+					else:
+						if not await self._sleep_with_stop(wait_between_prompts):
 							break
 						break
 
@@ -1657,6 +1736,30 @@ class TextToVideoWorkflow(QThread):
 				if error_message:
 					log_msg += f" {error_message}"
 				self._log(log_msg)
+
+				# ✅ INLINE RETRY: TẤT CẢ lỗi → retry ngay trong tiến trình (theo RETRY_WITH_ERROR)
+				max_retries = self._resolve_int_config(
+					SettingsManager.load_config(), "RETRY_WITH_ERROR", 3
+				)
+				retry_key = str(prompt_id)
+				current_count = self._inline_retry_counts.get(retry_key, 0)
+				if current_count < max_retries:
+					self._inline_retry_counts[retry_key] = current_count + 1
+					self._log(
+						f"🔁 Auto-retry prompt {prompt_id} "
+						f"({current_count + 1}/{max_retries}) — lỗi: {error_code} {error_message[:60]}"
+					)
+					# Reset scene về PENDING để không bị đếm là FAILED
+					self._scene_status[scene_id]["status"] = "MEDIA_GENERATION_STATUS_PENDING"
+					self._scene_status_change_ts[scene_id] = time.time()
+					self._scene_next_check_at[scene_id] = time.time() + 999999
+					self._inline_retry_queue.append({
+						"prompt_id": prompt_id,
+						"prompt_text": prompt_text,
+						"scene_id": scene_id,
+						"idx": idx,
+					})
+					continue  # Không đánh FAILED, đợi retry
 
 			message_to_store = error_message
 			if status == "MEDIA_GENERATION_STATUS_FAILED" and not message_to_store:

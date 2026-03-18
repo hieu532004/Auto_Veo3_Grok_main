@@ -75,28 +75,7 @@ class GenerateImageWorkflow(QThread):
 		asyncio.set_event_loop(loop)
 		try:
 			loop.run_until_complete(self._run_workflow())
-			
-			# ✅ AUTO-RETRY cho lỗi AUDIO_FILTERED (error code 3) — tối đa 3 lần
-			max_audio_retries = 3
-			for retry_round in range(max_audio_retries):
-				if self.STOP:
-					break
-				audio_failures = self._collect_audio_filtered_failures()
-				if not audio_failures:
-					break
-				failed_prompt_ids = list(set(str(item[0]) for item in audio_failures))
-				self._log(f"🔁 Auto-retry lỗi code 3 ({retry_round + 1}/{max_audio_retries}): {len(audio_failures)} ảnh bị lỗi (prompts: {', '.join(failed_prompt_ids)})")
-				# Retry chỉ cho prompts bị lỗi
-				self._in_flight_block_start_ts = 0
-				orig_filter = getattr(self, '_prompt_ids_filter', None)
-				orig_preserve = getattr(self, '_preserve_existing_data', False)
-				self._prompt_ids_filter = set(failed_prompt_ids)
-				self._preserve_existing_data = True
-				try:
-					loop.run_until_complete(self._run_workflow())
-				finally:
-					self._prompt_ids_filter = orig_filter
-					self._preserve_existing_data = orig_preserve
+			# ✅ Inline retry ALL errors đã được xử lý bên trong _run_workflow (retry_with_error)
 			
 		except asyncio.CancelledError:
 			self._log("🛑 Workflow bị cancel")
@@ -652,7 +631,8 @@ class GenerateImageWorkflow(QThread):
 		token_counter = {"count": 0}
 
 		async with collector:
-			tasks = []
+			# ✅ Xử lý TUẦN TỰ: lấy token → gửi request → delay → prompt tiếp
+			# Tránh 403 reCAPTCHA do nhiều task lấy token cùng lúc
 			for idx_prompt, prompt in enumerate(prompts):
 				if self._should_stop():
 					self._log("🛑 STOP trong vòng lặp prompt")
@@ -666,38 +646,29 @@ class GenerateImageWorkflow(QThread):
 				prompt_text = prompt.get("description", "") or prompt.get("prompt", "") or ""
 				aspect_ratio = self._resolve_aspect_ratio(self.project_data)
 
-				tasks.append(
-					asyncio.create_task(
-						self._process_prompt(
-							collector,
-							prompt_id,
-							prompt_text,
-							aspect_ratio,
-							session_id,
-							project_id,
-							access_token,
-							cookie,
-							output_count,
-							response_timeout,
-							max_token_retries,
-							token_retry_delay,
-							max_in_flight,
-							inflight_lock,
-							token_lock,
-							token_counter,
-							clear_data_token_image,
-							get_token_timeout,
-							retry_with_error,
-							wait_resend_image,
-						)
-					)
+				# Xử lý từng prompt tuần tự (lấy token + gửi request)
+				await self._process_prompt(
+					collector,
+					prompt_id,
+					prompt_text,
+					aspect_ratio,
+					session_id,
+					project_id,
+					access_token,
+					cookie,
+					output_count,
+					response_timeout,
+					max_token_retries,
+					token_retry_delay,
+					max_in_flight,
+					inflight_lock,
+					token_lock,
+					token_counter,
+					clear_data_token_image,
+					get_token_timeout,
+					retry_with_error,
+					wait_resend_image,
 				)
-
-			if tasks:
-				try:
-					await asyncio.gather(*tasks)
-				except Exception:
-					pass
 
 		# Sau khi gửi hết prompt, chủ động đóng collector (Chrome + thread token)
 		try:
@@ -890,8 +861,8 @@ class GenerateImageWorkflow(QThread):
 				error_code, error_message = self._extract_error_info(response_body)
 				error_code_str = str(response.get("status") or error_code or "").strip()
 
-				# ✅ Handle 403 error: 2 lần liên tiếp = clear storage, 3+ lần = restart chrome
-				if not response.get("ok", True) and error_code_str in {"403", "3", "13", "53"}:
+				# ✅ Handle retryable errors (403, 400, 3, 13, 53)
+				if not response.get("ok", True) and error_code_str in {"403", "400", "3", "13", "53"}:
 					if error_code_str == "403":
 						consecutive_403_count += 1
 					else:
@@ -900,6 +871,10 @@ class GenerateImageWorkflow(QThread):
 					msg = error_message or response.get("reason") or response.get("error") or "Unknown error"
 					last_error_msg = msg
 					self._log(f"⚠️ Lỗi {error_code_str} (prompt {prompt_id}): {msg}")
+					# Debug: log response body ngắn gọn
+					body_preview = str(response_body or "")[:300]
+					if body_preview:
+						self._log(f"[DEBUG] Response body: {body_preview}")
 					for idx, scene_id in enumerate(scene_ids or []):
 						self._update_state_entry(prompt_id, prompt_text, scene_id, idx, "FAILED", error=error_code_str, message=msg)
 						self.video_updated.emit({
@@ -911,6 +886,13 @@ class GenerateImageWorkflow(QThread):
 							"error_code": error_code_str,
 							"error_message": msg,
 						})
+
+					# 🔧 403 lần đầu: chờ 10s rồi retry (clear storage nhẹ)
+					if error_code_str == "403" and consecutive_403_count == 1:
+						self._log(f"⚠️ Lỗi 403 lần 1, chờ 10s rồi retry...")
+						if not await self._sleep_with_stop(10):
+							return
+						continue
 
 					# 🔧 Lần 2 consecutive 403: clear storage (có cooldown để tránh clear liên tục)
 					if error_code_str == "403" and consecutive_403_count == 2:
@@ -949,7 +931,7 @@ class GenerateImageWorkflow(QThread):
 						consecutive_403_count = 0
 						continue
 
-					# Other retryable errors
+					# Other retryable errors (400, 3, 13, 53)
 					if retry_count < retry_with_error - 1:
 						self._log(f"⚠️ Chờ {wait_resend_image}s rồi retry prompt {prompt_id} ({retry_count + 1}/{retry_with_error})")
 						if not await self._sleep_with_stop(wait_resend_image):

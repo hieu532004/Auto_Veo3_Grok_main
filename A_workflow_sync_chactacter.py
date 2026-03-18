@@ -65,6 +65,8 @@ class CharacterSyncWorkflow(QThread):
         self._upload_failed = False
         self._in_flight_block_start_ts = 0
         self._active_prompt_ids = set()
+        self._inline_retry_queue = []  # ✅ Queue cho inline retry ALL errors
+        self._inline_retry_counts = {}  # ✅ {prompt_id: count}
 
     def _resolve_int_config(self, config, key, default_value):
         try:
@@ -90,31 +92,7 @@ class CharacterSyncWorkflow(QThread):
         asyncio.set_event_loop(loop)
         try:
             loop.run_until_complete(self._run_workflow())
-            
-            # ✅ AUTO-RETRY cho lỗi AUDIO_FILTERED (error code 3) — tối đa 3 lần
-            max_audio_retries = 3
-            for retry_round in range(max_audio_retries):
-                if self.STOP:
-                    break
-                audio_failures = self._collect_audio_filtered_failures()
-                if not audio_failures:
-                    break
-                failed_prompt_ids = list(set(str(item[0]) for item in audio_failures))
-                self._log(f"🔁 Auto-retry AUDIO_FILTERED ({retry_round + 1}/{max_audio_retries}): {len(audio_failures)} video bị lỗi âm thanh (prompts: {', '.join(failed_prompt_ids)})")
-                # Reset state cho retry — giữ nguyên project_data nhưng chỉ chạy prompts bị lỗi
-                self._all_prompts_submitted = False
-                self._status_poll_fail_streak = 0
-                self._scene_status = {}
-                self._scene_to_prompt = {}
-                self._scene_next_check_at = {}
-                self._scene_status_change_ts = {}
-                # Lưu filter prompt IDs để _run_workflow chỉ xử lý prompts bị lỗi
-                orig_filter = getattr(self, '_retry_prompt_ids_filter', None)
-                self._retry_prompt_ids_filter = set(failed_prompt_ids)
-                try:
-                    loop.run_until_complete(self._run_workflow())
-                finally:
-                    self._retry_prompt_ids_filter = orig_filter
+            # ✅ Inline retry ALL errors đã được xử lý bên trong _run_workflow
             
         except Exception as exc:
             self._log(f"❌ Lỗi workflow sync character: {exc}")
@@ -326,10 +304,17 @@ class CharacterSyncWorkflow(QThread):
                 if self._should_stop():
                     break
 
-                if i > 0 and wait_gen_video > 0:
-                    self._log(f"⏳ Chờ {wait_gen_video}s trước khi gửi prompt tiếp theo...")
-                    if not await self._sleep_with_stop(wait_gen_video):
-                        break
+                if i > 0:
+                    # ✅ Delay thông minh: chưa đủ max_in_flight → delay ngắn 3s
+                    current_running = self._count_in_progress()
+                    max_in_flight = self._resolve_worker_max_in_flight(self._resolve_int_config(config, "MULTI_VIDEO", 1))
+                    if current_running < max_in_flight:
+                        if not await self._sleep_with_stop(3):
+                            break
+                    else:
+                        self._log(f"⏳ Đủ giới hạn {max_in_flight} luồng, chờ {wait_gen_video}s...")
+                        if not await self._sleep_with_stop(wait_gen_video):
+                            break
 
                 prompt_id = str(plan["id"])
                 prompt_text = str(plan["prompt"])
@@ -491,6 +476,96 @@ class CharacterSyncWorkflow(QThread):
 
         self._all_prompts_submitted = True
         self._complete_wait_start_ts = time.time()
+
+        # ✅ INLINE RETRY CONSUMER: xử lý retry lỗi ngay trong tiến trình
+        inline_retry_deadline = time.time() + 600
+        while time.time() < inline_retry_deadline and not self._should_stop():
+            if not self._inline_retry_queue:
+                in_progress = self._count_in_progress()
+                if in_progress == 0:
+                    break
+                await asyncio.sleep(5)
+                continue
+
+            retry_item = self._inline_retry_queue.pop(0)
+            r_prompt_id = retry_item["prompt_id"]
+            r_prompt_text = retry_item["prompt_text"]
+            r_scene_id = retry_item["scene_id"]
+            r_idx = retry_item["idx"]
+            retry_count = self._inline_retry_counts.get(str(r_prompt_id), 1)
+
+            self._log(f"🔁 Inline retry: gửi lại prompt {r_prompt_id} (lần {retry_count})...")
+
+            # Lấy token mới
+            token = None
+            try:
+                token = await asyncio.wait_for(
+                    collector.get_token(clear_storage=False),
+                    timeout=get_token_timeout,
+                )
+            except Exception as e:
+                self._log(f"⚠️ Inline retry: không lấy được token: {e}")
+
+            if not token:
+                self._log(f"⚠️ Inline retry: token rỗng, đánh FAILED prompt {r_prompt_id}")
+                self._mark_prompt_failed(r_prompt_id, r_prompt_text, "TOKEN", "Không lấy được token cho retry")
+                continue
+
+            # Lấy lại plan info
+            plan_info = None
+            for plan in plans:
+                if str(plan.get("id")) == str(r_prompt_id):
+                    plan_info = plan
+                    break
+
+            try:
+                # Build lại reference media IDs từ plan profiles + media_cache
+                profiles = list((plan_info or {}).get("profiles", []))[:3]
+                ref_media_ids = []
+                for prof in profiles:
+                    pk = str(prof.get("name_key", ""))
+                    mid = media_cache.get(pk)
+                    if mid:
+                        ref_media_ids.append(mid)
+
+                video_aspect_ratio = self._resolve_video_aspect_ratio()
+                r_model_key = sync_api.select_video_model_key(
+                    video_aspect_ratio, self.project_data.get("veo_model"),
+                )
+
+                payload = sync_api.build_payload_generate_video_reference(
+                    token=token,
+                    session_id=auth["sessionId"],
+                    project_id=auth["projectId"],
+                    prompt=r_prompt_text,
+                    seed=self._resolve_seed(config, 0),
+                    video_model_key=r_model_key,
+                    reference_media_ids=ref_media_ids,
+                    scene_id=None,
+                    aspect_ratio=video_aspect_ratio,
+                    output_count=output_count,
+                )
+                scene_ids_new = self._assign_scene_ids_to_payload(payload, r_prompt_id)
+                self._save_request_json(payload, r_prompt_id, r_prompt_text, flow="character_sync_retry")
+
+                self._log(f"🚀 Inline retry: gửi request tạo video prompt {r_prompt_id}...")
+                response = await sync_api.request_create_video(payload, token, cookie=auth.get("cookie"))
+
+                response_body = response.get("body", "")
+                operations = self._parse_operations(response_body)
+                err_code, err_msg = self._extract_error_info(response_body)
+
+                if operations:
+                    self._handle_create_response(r_prompt_id, r_prompt_text, scene_ids_new, operations)
+                    self._log(f"✅ Inline retry: đã gửi lại prompt {r_prompt_id} thành công")
+                else:
+                    self._log(f"❌ Inline retry: prompt {r_prompt_id} thất bại: {err_msg}")
+                    self._mark_prompt_failed(r_prompt_id, r_prompt_text, err_code or "RETRY", err_msg or "Retry thất bại")
+            except Exception as e:
+                self._log(f"❌ Inline retry: lỗi gửi lại prompt {r_prompt_id}: {e}")
+
+            await asyncio.sleep(3)
+
         await self._wait_for_completion()
         status_task.cancel()
 
@@ -846,6 +921,30 @@ class CharacterSyncWorkflow(QThread):
                     if error_message:
                         log_msg += f" {error_message}"
                     self._log(log_msg)
+
+                # ✅ INLINE RETRY: TẤT CẢ lỗi → retry ngay trong tiến trình
+                if error:
+                    max_retries = self._resolve_int_config(
+                        SettingsManager.load_config(), "RETRY_WITH_ERROR", 3
+                    )
+                    retry_key = str(prompt_id)
+                    current_count = self._inline_retry_counts.get(retry_key, 0)
+                    if current_count < max_retries:
+                        self._inline_retry_counts[retry_key] = current_count + 1
+                        self._log(
+                            f"🔁 Auto-retry prompt {prompt_id} "
+                            f"({current_count + 1}/{max_retries}) — lỗi: {error_code} {error_message[:60]}"
+                        )
+                        self._scene_status[scene_id]["status"] = "MEDIA_GENERATION_STATUS_PENDING"
+                        self._scene_status_change_ts[scene_id] = time.time()
+                        self._scene_next_check_at[scene_id] = time.time() + 999999
+                        self._inline_retry_queue.append({
+                            "prompt_id": prompt_id,
+                            "prompt_text": prompt_text,
+                            "scene_id": scene_id,
+                            "idx": idx,
+                        })
+                        continue  # Không đánh FAILED, đợi retry
 
             if status == "MEDIA_GENERATION_STATUS_SUCCESSFUL":
                 self.video_updated.emit(

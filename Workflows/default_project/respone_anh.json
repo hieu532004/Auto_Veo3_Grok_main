@@ -1,0 +1,50 @@
+[
+  {
+    "timestamp": 1773783550,
+    "project_name": "default_project",
+    "flow": "generate_image",
+    "prompt_id": "25",
+    "prompt_text": "hieu",
+    "ok": true,
+    "status": 200,
+    "reason": "OK",
+    "error": null,
+    "body": "{\n  \"media\": [\n    {\n      \"name\": \"69a40274-27b6-4556-9da1-fe75f2af329a\",\n      \"workflowId\": \"5b89702d-05d1-4e61-abc2-334f9f611af5\",\n      \"image\": {\n        \"generatedImage\": {\n          \"seed\": 193782957,\n          \"mediaGenerationId\": \"CAMSJDQyN2QxZDVhLTFlMzEtNGRjNC1hM2YxLThmOWQ0YTk3ZWJlMxokYjY2ZTg2YjgtMDAyYi00YTA1LWE5ZTAtMjRjZDY1ZmEwYTI5IgNDQUUqJDY5YTQwMjc0LTI3YjYtNDU1Ni05ZGExLWZlNzVmMmFmMzI5YQ\",\n          \"mediaVisibility\": \"PRIVATE\",\n          \"prompt\": \"understand\",\n          \"modelNameType\": \"NARWHAL\",\n          \"workflowId\": \"5b89702d-05d1-4e61-abc2-334f9f611af5\",\n          \"fifeUrl\": \"https://storage.googleapis.com/ai-sandbox-videofx/image/69a40274-27b6-4556-9da1-fe75f2af329a?GoogleAccessId=labs-ai-sandbox-videoserver-prod@system.gserviceaccount.com&Expires=1773805149&Signature=KzqFOgMsWKp1Ci8M7ZDJc0vOEkfkrXuB8x3wHpquGajVZD9%2Bl%2BkcPZXH6mZl4hsCdydDw0shV0QhJ6n9cSyCVv6X%2BJRZoZaxVt2hiqR3byCbXQmfLdw0mKmw1imBefszeP%2Fl9WbtQS%2BtnrzKBoQmisUwYzaEZ502ckkkknQ90HuOjDjBotA6viYxy4iI%2BG%2FaNptuVLbWggDukPXnAqdAcvJRKQXjlx1tHXLLisjSiclAm30SaddjTuNYeS0uCOGXK4Jz7shAGNIfsXX1Hbu%2FyQ9A%2F3q7H9d7g1vtzet5VDI0DP67GpssEzAd1Q7Z3i%2F%2FNh3egFpo23uqwh89JW%2BtnA%3D%3D\",\n          \"aspectRatio\": \"IMAGE_ASPECT_RATIO_LANDSCAPE\",\n          \"requestData\": {\n            \"promptInputs\": [\n              {\n                \"textInput\": \"hieu\"\n              }\n            ],\n            \"imageGenerationRequestData\": {}\n          }\n        },\n        \"dimensions\": {\n          \"width\": 1376,\n          \"height\": 768\n        }\n      }\n    }\n  ],\n  \"workflows\": [\n    {\n      \"name\": \"5b89702d-05d1-4e61-abc2-334f9f611af5\",\n      \"metadata\": {\n        \"displayName\": \"hieu\",\n        \"createTime\": \"2026-03-17T21:38:42.708167Z\",\n        \"primaryMediaId\": \"69a40274-27b6-4556-9da1-fe75f2af329a\",\n        \"batchId\": \"9bdd602e-e6d5-4e13-9ce1-9ae188242e3b\"\n      },\n      \"projectId\": \"427d1d5a-1e31-4dc4-a3f1-8f9d4a97ebe3\"\n    }\n  ]\n}\n"
+  },
+  {
+    "timestamp": 1773783575,
+    "project_name": "default_project",
+    "flow": "generate_image",
+    "prompt_id": "26",
+    "prompt_text": "hiue'",
+    "ok": false,
+    "status": 400,
+    "reason": "Bad Request",
+    "error": null,
+    "body": "{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"Request contains an invalid argument.\",\n    \"status\": \"INVALID_ARGUMENT\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n        \"reason\": \"PUBLIC_ERROR_UNSAFE_GENERATION\"\n      }\n    ]\n  }\n}\n"
+  },
+  {
+    "timestamp": 1773783588,
+    "project_name": "default_project",
+    "flow": "generate_image",
+    "prompt_id": "26",
+    "prompt_text": "hiue'",
+    "ok": false,
+    "status": 403,
+    "reason": "Forbidden",
+    "error": null,
+    "body": "{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"reCAPTCHA evaluation failed\",\n    \"status\": \"PERMISSION_DENIED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n        \"reason\": \"PUBLIC_ERROR_SOMETHING_WENT_WRONG\"\n      }\n    ]\n  }\n}\n"
+  },
+  {
+    "timestamp": 1773783601,
+    "project_name": "default_project",
+    "flow": "generate_image",
+    "prompt_id": "26",
+    "prompt_text": "hiue'",
+    "ok": false,
+    "status": 403,
+    "reason": "Forbidden",
+    "error": null,
+    "body": "{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"reCAPTCHA evaluation failed\",\n    \"status\": \"PERMISSION_DENIED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n        \"reason\": \"PUBLIC_ERROR_SOMETHING_WENT_WRONG\"\n      }\n    ]\n  }\n}\n"
+  }
+]

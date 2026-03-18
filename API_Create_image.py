@@ -116,6 +116,10 @@ payload_generate_image = {
 		"projectId": "",
 		"tool": "PINHOLE",
 	},
+	"mediaGenerationContext": {
+		"batchId": "",
+	},
+	"useNewMedia": True,
 	"requests": [
 		{
 			"clientContext": {
@@ -169,10 +173,16 @@ def build_generate_image_payload(
 	payload["clientContext"]["recaptchaContext"]["token"] = recaptcha_token
 	payload["clientContext"]["sessionId"] = session_id
 	payload["clientContext"]["projectId"] = project_id
+	payload["clientContext"]["userPaygateTier"] = USER_PAYGATE_TIER
+	payload["mediaGenerationContext"] = {
+		"batchId": str(uuid.uuid4()),
+	}
+	payload["useNewMedia"] = True
 
 	request_item = payload["requests"][0]
 	request_item["clientContext"] = json.loads(json.dumps(payload["clientContext"]))
 	request_item["clientContext"]["recaptchaContext"]["token"] = recaptcha_token
+	request_item["clientContext"]["userPaygateTier"] = USER_PAYGATE_TIER
 	request_item["prompt"] = prompt
 	if aspect_ratio:
 		request_item["imageAspectRatio"] = aspect_ratio

@@ -1,226 +1,706 @@
 {
   "project_name": "default_project",
-  "updated_at": 1773776822,
+  "updated_at": 1773783616,
   "rows": [
     {
       "row": 0,
       "stt": "001",
       "prompt_id": "1",
-      "prompt": "{\"scene_id\": \"1\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, light blue button-down shirt, sleeves casually rolled up\", \"outfit_bottom\": \"Dark wash, tailored jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Stylish white sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"standing\", \"orientation\": \"facing forward\", \"pose\": \"standing, stretching arms languidly\", \"foot_placement\": \"feet shoulder-width apart\", \"hand_detail\": \"arms extended upwards\", \"expression\": \"peaceful, content, slight smile\", \"action_flow\": {\"pre_action\": \"standing relaxed\", \"main_action\": \"stretching arms upwards and outwards\", \"post_action\": \"lowering arms slowly\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hieu's Apartment Balcony\", \"setting\": \"Urban residential\", \"scenery\": \"A modern apartment balcony overlooking a city skyline at sunrise, potted green plants\", \"props\": \"A small, sleek metal table and chair\", \"lighting\": \"Soft, warm sunrise light, casting long shadows\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye level\", \"movement\": \"slow pan from city to Hieu\", \"focus\": \"Hieu\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"distant city hum\", \"gentle breeze\"], \"fx\": [\"birds chirping\"], \"music\": \"soft, uplifting morning theme\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"language\": \"vi-VN\", \"line\": \"[Chào buổi sáng, thế giới.]\"}], \"lip_sync_director_note\": \"Mouth movements should match the spoken phrase, a relaxed and natural tone. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hieu enjoys a serene sunrise from his apartment balcony, stretching and breathing in the morning air. The dawn light highlights his handsome features as he greets the new day.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"1\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, light blue button-down shirt, sleeves casually rolled up\", \"outfit_bottom\": \"Dark wash, tailored jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Stylish white sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"standing\", \"orientation\": \"facing forward\", \"pose\": \"standing, stretching arms languidly\", \"foot_placement\": \"feet shoulder-width apart\", \"hand_detail\": \"arms extended upwards\", \"expression\": \"peaceful, content, slight smile\", \"action_flow\": {\"pre_action\": \"standing relaxed\", \"main_action\": \"stretching arms upwards and outwards\", \"post_action\": \"lowering arms slowly\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hieu's Apartment Balcony\", \"setting\": \"Urban residential\", \"scenery\": \"A modern apartment balcony overlooking a city skyline at sunrise, potted green plants\", \"props\": \"A small, sleek metal table and chair\", \"lighting\": \"Soft, warm sunrise light, casting long shadows\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye level\", \"movement\": \"slow pan from city to Hieu\", \"focus\": \"Hieu\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"distant city hum\", \"gentle breeze\"], \"fx\": [\"birds chirping\"], \"music\": \"soft, uplifting morning theme\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"language\": \"vi-VN\", \"line\": \"[Chào buổi sáng, thế giới.]\"}], \"lip_sync_director_note\": \"Mouth movements should match the spoken phrase, a relaxed and natural tone. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hieu enjoys a serene sunrise from his apartment balcony, stretching and breathing in the morning air. The dawn light highlights his handsome features as he greets the new day.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "description": "hieu"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\1_1_18032026_024201.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_18032026_043049.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_18032026_024227.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_18032026_043049.jpg"
       }
     },
     {
       "row": 1,
       "stt": "002",
       "prompt_id": "2",
-      "prompt": "{\"scene_id\": \"2\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, light blue button-down shirt, sleeves casually rolled up\", \"outfit_bottom\": \"Dark wash, tailored jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Stylish white sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"walking\", \"orientation\": \"facing forward\", \"pose\": \"walking with a relaxed gait, occasionally nodding\", \"foot_placement\": \"natural walking stride\", \"hand_detail\": \"hands by his sides, relaxed\", \"expression\": \"friendly, approachable, polite smile\", \"action_flow\": {\"pre_action\": \"walking naturally\", \"main_action\": \"walking, making brief eye contact and nodding at passersby\", \"post_action\": \"continuing to walk forward\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_2\": {\"id\": \"BACKGROUND_2\", \"name\": \"City Park\", \"setting\": \"Urban public space\", \"scenery\": \"A city park with well-maintained paths, lush green trees, and people engaged in morning activities.\", \"props\": \"Park benches, lampposts, flower beds\", \"lighting\": \"Bright, dappled sunlight filtering through the trees.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"following Hieu\", \"focus\": \"Hieu\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"park sounds\", \"distant traffic\", \"chatter\"], \"fx\": [\"footsteps\"], \"music\": \"light, cheerful instrumental\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hieu strolls through a busy park, receiving subtle admiring glances from passersby. He responds with polite nods and a friendly smile, exuding effortless charm.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hiue'",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"2\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, light blue button-down shirt, sleeves casually rolled up\", \"outfit_bottom\": \"Dark wash, tailored jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Stylish white sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"walking\", \"orientation\": \"facing forward\", \"pose\": \"walking with a relaxed gait, occasionally nodding\", \"foot_placement\": \"natural walking stride\", \"hand_detail\": \"hands by his sides, relaxed\", \"expression\": \"friendly, approachable, polite smile\", \"action_flow\": {\"pre_action\": \"walking naturally\", \"main_action\": \"walking, making brief eye contact and nodding at passersby\", \"post_action\": \"continuing to walk forward\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_2\": {\"id\": \"BACKGROUND_2\", \"name\": \"City Park\", \"setting\": \"Urban public space\", \"scenery\": \"A city park with well-maintained paths, lush green trees, and people engaged in morning activities.\", \"props\": \"Park benches, lampposts, flower beds\", \"lighting\": \"Bright, dappled sunlight filtering through the trees.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"following Hieu\", \"focus\": \"Hieu\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"park sounds\", \"distant traffic\", \"chatter\"], \"fx\": [\"footsteps\"], \"music\": \"light, cheerful instrumental\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hieu strolls through a busy park, receiving subtle admiring glances from passersby. He responds with polite nods and a friendly smile, exuding effortless charm.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "description": "hiue'"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\2_1_18032026_024114.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_18032026_024146.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 2,
       "stt": "003",
       "prompt_id": "3",
-      "prompt": "{\"scene_id\": \"3\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, light blue button-down shirt, sleeves casually rolled up\", \"outfit_bottom\": \"Dark wash, tailored jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Stylish white sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"standing at counter\", \"orientation\": \"facing the barista\", \"pose\": \"standing, approaching counter to order\", \"foot_placement\": \"feet planted firmly\", \"hand_detail\": \"hands relaxed at sides or gently resting on counter\", \"expression\": \"polite, charming, slight smile\", \"action_flow\": {\"pre_action\": \"walking towards the counter\", \"main_action\": \"standing at the counter, looking at the barista and speaking\", \"post_action\": \"waiting for order\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_3\": {\"id\": \"BACKGROUND_3\", \"name\": \"Modern Cafe\", \"setting\": \"Commercial interior\", \"scenery\": \"A cozy, modern cafe with warm lighting, minimalist decor, a counter with an espresso machine and pastry display.\", \"props\": \"Espresso machine, coffee cups, pastries, menu board\", \"lighting\": \"Warm, ambient cafe lighting.\"}}, \"camera\": {\"framing\": \"close-up on Hieu and barista\", \"angle\": \"eye-level\", \"movement\": \"slight push-in on Hieu's face\", \"focus\": \"Hieu and the barista's reaction\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"cafe chatter\", \"espresso machine hum\"], \"fx\": [\"cash register chime (optional)\"], \"music\": \"smooth jazz, soft background\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"language\": \"vi-VN\", \"line\": \"[Cho tôi một ly cà phê đen, làm ơn.]\"}, {\"speaker\": \"CHAR_BARISTA\", \"voice\": \"Young woman; gentle, slightly flustered; locale=vi-VN\", \"language\": \"vi-VN\", \"line\": \"[V-vâng, anh đợi chút.]\"}], \"lip_sync_director_note\": \"Hieu's lips move smoothly for his order. The barista's initial reaction is a slight gasp/pause, followed by a slightly flustered response. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"At a chic cafe, Hieu orders a coffee, momentarily charming the barista who is taken aback by his appearance. Her reaction is one of surprised delight.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"3\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, light blue button-down shirt, sleeves casually rolled up\", \"outfit_bottom\": \"Dark wash, tailored jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Stylish white sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"standing at counter\", \"orientation\": \"facing the barista\", \"pose\": \"standing, approaching counter to order\", \"foot_placement\": \"feet planted firmly\", \"hand_detail\": \"hands relaxed at sides or gently resting on counter\", \"expression\": \"polite, charming, slight smile\", \"action_flow\": {\"pre_action\": \"walking towards the counter\", \"main_action\": \"standing at the counter, looking at the barista and speaking\", \"post_action\": \"waiting for order\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_3\": {\"id\": \"BACKGROUND_3\", \"name\": \"Modern Cafe\", \"setting\": \"Commercial interior\", \"scenery\": \"A cozy, modern cafe with warm lighting, minimalist decor, a counter with an espresso machine and pastry display.\", \"props\": \"Espresso machine, coffee cups, pastries, menu board\", \"lighting\": \"Warm, ambient cafe lighting.\"}}, \"camera\": {\"framing\": \"close-up on Hieu and barista\", \"angle\": \"eye-level\", \"movement\": \"slight push-in on Hieu's face\", \"focus\": \"Hieu and the barista's reaction\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"cafe chatter\", \"espresso machine hum\"], \"fx\": [\"cash register chime (optional)\"], \"music\": \"smooth jazz, soft background\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"language\": \"vi-VN\", \"line\": \"[Cho tôi một ly cà phê đen, làm ơn.]\"}, {\"speaker\": \"CHAR_BARISTA\", \"voice\": \"Young woman; gentle, slightly flustered; locale=vi-VN\", \"language\": \"vi-VN\", \"line\": \"[V-vâng, anh đợi chút.]\"}], \"lip_sync_director_note\": \"Hieu's lips move smoothly for his order. The barista's initial reaction is a slight gasp/pause, followed by a slightly flustered response. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"At a chic cafe, Hieu orders a coffee, momentarily charming the barista who is taken aback by his appearance. Her reaction is one of surprised delight.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "description": "hieu"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\3_1_18032026_024228.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_18032026_024247.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 3,
       "stt": "004",
       "prompt_id": "4",
-      "prompt": "{\"scene_id\": \"4\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, light blue button-down shirt, sleeves casually rolled up\", \"outfit_bottom\": \"Dark wash, tailored jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Stylish white sneakers\", \"props\": [\"book\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"sitting\", \"orientation\": \"facing the window\", \"pose\": \"sitting by the window, engrossed in reading a book\", \"foot_placement\": \"feet resting on the floor\", \"hand_detail\": \"one hand holding the book open, the other resting on his lap\", \"expression\": \"focused, thoughtful, slightly furrowed brow\", \"action_flow\": {\"pre_action\": \"sitting down\", \"main_action\": \"reading the book intently, occasional subtle shift in posture\", \"post_action\": \"turning a page slowly\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_3\": {\"id\": \"BACKGROUND_3\", \"name\": \"Modern Cafe\", \"setting\": \"Commercial interior\", \"scenery\": \"A cozy, modern cafe interior, with a window view of the street. Warm lighting and minimalist decor.\", \"props\": \"Small cafe table, coffee cup, chair\", \"lighting\": \"Bright window light, warm cafe lighting.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"slightly from the side\", \"movement\": \"slow drift towards Hieu\", \"focus\": \"Hieu's face and book\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"quiet cafe murmurs\", \"distant street noise\"], \"fx\": [\"page turning\"], \"music\": \"mellow, ambient instrumental\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hieu reads a book by a cafe window, bathed in sunlight. His focused and contemplative expression appears particularly attractive, enhancing his appeal.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"4\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, light blue button-down shirt, sleeves casually rolled up\", \"outfit_bottom\": \"Dark wash, tailored jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Stylish white sneakers\", \"props\": [\"book\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"sitting\", \"orientation\": \"facing the window\", \"pose\": \"sitting by the window, engrossed in reading a book\", \"foot_placement\": \"feet resting on the floor\", \"hand_detail\": \"one hand holding the book open, the other resting on his lap\", \"expression\": \"focused, thoughtful, slightly furrowed brow\", \"action_flow\": {\"pre_action\": \"sitting down\", \"main_action\": \"reading the book intently, occasional subtle shift in posture\", \"post_action\": \"turning a page slowly\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_3\": {\"id\": \"BACKGROUND_3\", \"name\": \"Modern Cafe\", \"setting\": \"Commercial interior\", \"scenery\": \"A cozy, modern cafe interior, with a window view of the street. Warm lighting and minimalist decor.\", \"props\": \"Small cafe table, coffee cup, chair\", \"lighting\": \"Bright window light, warm cafe lighting.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"slightly from the side\", \"movement\": \"slow drift towards Hieu\", \"focus\": \"Hieu's face and book\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"quiet cafe murmurs\", \"distant street noise\"], \"fx\": [\"page turning\"], \"music\": \"mellow, ambient instrumental\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hieu reads a book by a cafe window, bathed in sunlight. His focused and contemplative expression appears particularly attractive, enhancing his appeal.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "description": "hieu"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\4_1_18032026_024259.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_18032026_043211.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_18032026_024326.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_18032026_043211.jpg"
       }
     },
     {
       "row": 4,
       "stt": "005",
       "prompt_id": "5",
-      "prompt": "{\"scene_id\": \"5\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, light blue button-down shirt, sleeves casually rolled up\", \"outfit_bottom\": \"Dark wash, tailored jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Stylish white sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"standing\", \"orientation\": \"facing a painting\", \"pose\": \"standing, observing a striking painting with contemplation\", \"foot_placement\": \"feet planted comfortably\", \"hand_detail\": \"hands clasped loosely in front or by sides\", \"expression\": \"thoughtful, appreciative, engaged\", \"action_flow\": {\"pre_action\": \"walking into view\", \"main_action\": \"standing and observing the artwork, head tilted slightly\", \"post_action\": \"slowly turning away from the painting\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_4\": {\"id\": \"BACKGROUND_4\", \"name\": \"Art Gallery\", \"setting\": \"Cultural institution\", \"scenery\": \"A spacious, well-lit art gallery with clean lines, white walls, and various artworks displayed.\", \"props\": \"Large painting, other artworks, gallery lighting fixtures\", \"lighting\": \"Bright, even gallery lighting.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"from an angle to show Hieu and the painting\", \"movement\": \"static shot, focusing on Hieu's engagement\", \"focus\": \"Hieu and his interaction with the art\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"quiet gallery echoes\", \"soft footsteps\"], \"fx\": [], \"music\": \"subtle, classical ambient\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hieu appreciates a painting in a modern art gallery. His contemplative gaze and elegant posture are highlighted by the gallery's sophisticated setting.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hiue'",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"5\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, light blue button-down shirt, sleeves casually rolled up\", \"outfit_bottom\": \"Dark wash, tailored jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Stylish white sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"standing\", \"orientation\": \"facing a painting\", \"pose\": \"standing, observing a striking painting with contemplation\", \"foot_placement\": \"feet planted comfortably\", \"hand_detail\": \"hands clasped loosely in front or by sides\", \"expression\": \"thoughtful, appreciative, engaged\", \"action_flow\": {\"pre_action\": \"walking into view\", \"main_action\": \"standing and observing the artwork, head tilted slightly\", \"post_action\": \"slowly turning away from the painting\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_4\": {\"id\": \"BACKGROUND_4\", \"name\": \"Art Gallery\", \"setting\": \"Cultural institution\", \"scenery\": \"A spacious, well-lit art gallery with clean lines, white walls, and various artworks displayed.\", \"props\": \"Large painting, other artworks, gallery lighting fixtures\", \"lighting\": \"Bright, even gallery lighting.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"from an angle to show Hieu and the painting\", \"movement\": \"static shot, focusing on Hieu's engagement\", \"focus\": \"Hieu and his interaction with the art\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"quiet gallery echoes\", \"soft footsteps\"], \"fx\": [], \"music\": \"subtle, classical ambient\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hieu appreciates a painting in a modern art gallery. His contemplative gaze and elegant posture are highlighted by the gallery's sophisticated setting.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "description": "hiue'"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: 400 | message: Request contains an invalid argument.)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\5_1_18032026_024337.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_18032026_024355.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 5,
       "stt": "006",
       "prompt_id": "6",
-      "prompt": "{\"scene_id\": \"6\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, light blue button-down shirt, sleeves casually rolled up\", \"outfit_bottom\": \"Dark wash, tailored jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Stylish white sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\", \"position\": \"center\", \"orientation\": \"facing camera\", \"pose\": \"performing light stretching, arms extended upwards, legs slightly apart\", \"foot_placement\": \"feet shoulder-width apart, grounded\", \"hand_detail\": \"palms facing upwards, fingers extended\", \"expression\": \"Focused, serene, with a slight determined set to the jaw\", \"action_flow\": {\"pre_action\": \"Standing tall\", \"main_action\": \"Smoothly stretching arms upwards, then to the sides\", \"post_action\": \"Returning to a neutral standing position\"}}}, \"background_lock\": {\"BACKGROUND_5\": {\"id\": \"BACKGROUND_5\", \"name\": \"Public Gym\", \"setting\": \"Fitness facility\", \"scenery\": \"A bright, modern gym interior with various exercise equipment, mirrored walls, and other patrons engaged in workouts.\", \"props\": \"Dumbbells, weight machines, treadmills, yoga mats\", \"lighting\": \"Bright, energetic gym lighting, with natural light filtering in.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"dynamic angles\", \"movement\": \"tracking Hieu's movements fluidly\", \"focus\": \"Hieu's form and physique during his exercises\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"gym sounds\", \"workout music\"], \"fx\": [\"light weights clanking (distant)\", \"breathing\"], \"music\": \"upbeat, motivational track\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hieu engages in light exercises and stretches within a bright, modern gym. His lean, athletic build and controlled movements are highlighted by the dynamic camera work.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"6\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, light blue button-down shirt, sleeves casually rolled up\", \"outfit_bottom\": \"Dark wash, tailored jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Stylish white sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\", \"position\": \"center\", \"orientation\": \"facing camera\", \"pose\": \"performing light stretching, arms extended upwards, legs slightly apart\", \"foot_placement\": \"feet shoulder-width apart, grounded\", \"hand_detail\": \"palms facing upwards, fingers extended\", \"expression\": \"Focused, serene, with a slight determined set to the jaw\", \"action_flow\": {\"pre_action\": \"Standing tall\", \"main_action\": \"Smoothly stretching arms upwards, then to the sides\", \"post_action\": \"Returning to a neutral standing position\"}}}, \"background_lock\": {\"BACKGROUND_5\": {\"id\": \"BACKGROUND_5\", \"name\": \"Public Gym\", \"setting\": \"Fitness facility\", \"scenery\": \"A bright, modern gym interior with various exercise equipment, mirrored walls, and other patrons engaged in workouts.\", \"props\": \"Dumbbells, weight machines, treadmills, yoga mats\", \"lighting\": \"Bright, energetic gym lighting, with natural light filtering in.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"dynamic angles\", \"movement\": \"tracking Hieu's movements fluidly\", \"focus\": \"Hieu's form and physique during his exercises\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"gym sounds\", \"workout music\"], \"fx\": [\"light weights clanking (distant)\", \"breathing\"], \"music\": \"upbeat, motivational track\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hieu engages in light exercises and stretches within a bright, modern gym. His lean, athletic build and controlled movements are highlighted by the dynamic camera work.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "description": "hieu"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\6_1_18032026_024457.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_18032026_043208.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_18032026_024509.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_18032026_043208.jpg"
       }
     },
     {
       "row": 6,
       "stt": "007",
       "prompt_id": "7",
-      "prompt": "{\"scene_id\": \"7\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, light blue button-down shirt, sleeves casually rolled up\", \"outfit_bottom\": \"Dark wash, tailored jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Stylish white sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\", \"position\": \"center\", \"orientation\": \"walking along the promenade, slightly angled towards the river\", \"pose\": \"walking with an easy, relaxed stride\", \"foot_placement\": \"natural walking gait\", \"hand_detail\": \"arms relaxed at sides, swinging gently\", \"expression\": \"Relaxed, contemplative, with a slight, soft smile as he takes in the view\", \"action_flow\": {\"pre_action\": \"Standing at the start of the promenade\", \"main_action\": \"Walking leisurely along the riverside, gazing at the scenery\", \"post_action\": \"Continuing to walk into the distance\"}}}, \"background_lock\": {\"BACKGROUND_6\": {\"id\": \"BACKGROUND_6\", \"name\": \"Riverside Promenade\", \"setting\": \"Urban waterfront\", \"scenery\": \"A picturesque riverside promenade at sunset, with a view of a city skyline across the water.\", \"props\": \"Benches, lampposts, railings\", \"lighting\": \"Golden hour sunset light, casting long shadows and warm hues.\"}}, \"camera\": {\"framing\": \"wide shot, then medium shot\", \"angle\": \"eye-level\", \"movement\": \"slow tracking shot along the promenade, following Hieu\", \"focus\": \"Hieu against the scenic backdrop, capturing the ambiance\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"river sounds\", \"distant city noise\", \"evening birds\"], \"fx\": [\"footsteps\"], \"music\": \"warm, melodic evening theme\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"As the sun sets, Hieu strolls along a riverside promenade, enjoying the golden hour light and the scenic view. His relaxed demeanor complements the tranquil atmosphere.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"7\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, light blue button-down shirt, sleeves casually rolled up\", \"outfit_bottom\": \"Dark wash, tailored jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Stylish white sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\", \"position\": \"center\", \"orientation\": \"walking along the promenade, slightly angled towards the river\", \"pose\": \"walking with an easy, relaxed stride\", \"foot_placement\": \"natural walking gait\", \"hand_detail\": \"arms relaxed at sides, swinging gently\", \"expression\": \"Relaxed, contemplative, with a slight, soft smile as he takes in the view\", \"action_flow\": {\"pre_action\": \"Standing at the start of the promenade\", \"main_action\": \"Walking leisurely along the riverside, gazing at the scenery\", \"post_action\": \"Continuing to walk into the distance\"}}}, \"background_lock\": {\"BACKGROUND_6\": {\"id\": \"BACKGROUND_6\", \"name\": \"Riverside Promenade\", \"setting\": \"Urban waterfront\", \"scenery\": \"A picturesque riverside promenade at sunset, with a view of a city skyline across the water.\", \"props\": \"Benches, lampposts, railings\", \"lighting\": \"Golden hour sunset light, casting long shadows and warm hues.\"}}, \"camera\": {\"framing\": \"wide shot, then medium shot\", \"angle\": \"eye-level\", \"movement\": \"slow tracking shot along the promenade, following Hieu\", \"focus\": \"Hieu against the scenic backdrop, capturing the ambiance\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"river sounds\", \"distant city noise\", \"evening birds\"], \"fx\": [\"footsteps\"], \"music\": \"warm, melodic evening theme\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"As the sun sets, Hieu strolls along a riverside promenade, enjoying the golden hour light and the scenic view. His relaxed demeanor complements the tranquil atmosphere.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "description": "hieu"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\7_1_18032026_024522.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_18032026_043220.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_18032026_024536.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_18032026_043220.jpg"
       }
     },
     {
       "row": 7,
       "stt": "008",
       "prompt_id": "8",
-      "prompt": "{\"scene_id\": \"8\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, light blue button-down shirt, sleeves casually rolled up\", \"outfit_bottom\": \"Dark wash, tailored jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Stylish white sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\", \"position\": \"center\", \"orientation\": \"facing the friend, slightly angled\", \"pose\": \"standing, engaged in animated conversation and gesturing\", \"foot_placement\": \"grounded, with slight shifting for emphasis\", \"hand_detail\": \"gesturing naturally during conversation\", \"expression\": \"Joyful, friendly, with a broad, infectious smile that reaches his eyes\", \"action_flow\": {\"pre_action\": \"Approaching the friend at the market\", \"main_action\": \"Greeting the friend warmly, engaging in animated conversation and laughter\", \"post_action\": \"Continuing to converse with energetic gestures\"}}}, \"background_lock\": {\"BACKGROUND_7\": {\"id\": \"BACKGROUND_7\", \"name\": \"Outdoor Market\", \"setting\": \"Bustling marketplace\", \"scenery\": \"A vibrant outdoor market filled with colorful stalls selling various goods, with a lively crowd of people and vendors.\", \"props\": \"Produce stalls, craft booths, food vendors, baskets\", \"lighting\": \"Bright, natural market light, with some areas in dappled shade.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slight movement between Hieu and his friend, focusing on their interaction\", \"focus\": \"their interaction and expressions\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"market noise\", \"chatter\", \"laughter\"], \"fx\": [\"footsteps\", \"vendors calling out\"], \"music\": \"upbeat, folksy market music\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"language\": \"vi-VN\", \"line\": \"Chào cậu! Cậu đợi lâu chưa?\"}], \"lip_sync_director_note\": \"Hieu's lips move in sync with his friendly greeting. His smile should be prominent throughout the dialogue. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"At a bustling outdoor market, Hieu joyfully greets a friend, his infectious smile and animated conversation highlighting his charm and genuine connection. The vibrant market setting adds to the lively atmosphere.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hiue'",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"8\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, light blue button-down shirt, sleeves casually rolled up\", \"outfit_bottom\": \"Dark wash, tailored jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Stylish white sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\", \"position\": \"center\", \"orientation\": \"facing the friend, slightly angled\", \"pose\": \"standing, engaged in animated conversation and gesturing\", \"foot_placement\": \"grounded, with slight shifting for emphasis\", \"hand_detail\": \"gesturing naturally during conversation\", \"expression\": \"Joyful, friendly, with a broad, infectious smile that reaches his eyes\", \"action_flow\": {\"pre_action\": \"Approaching the friend at the market\", \"main_action\": \"Greeting the friend warmly, engaging in animated conversation and laughter\", \"post_action\": \"Continuing to converse with energetic gestures\"}}}, \"background_lock\": {\"BACKGROUND_7\": {\"id\": \"BACKGROUND_7\", \"name\": \"Outdoor Market\", \"setting\": \"Bustling marketplace\", \"scenery\": \"A vibrant outdoor market filled with colorful stalls selling various goods, with a lively crowd of people and vendors.\", \"props\": \"Produce stalls, craft booths, food vendors, baskets\", \"lighting\": \"Bright, natural market light, with some areas in dappled shade.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slight movement between Hieu and his friend, focusing on their interaction\", \"focus\": \"their interaction and expressions\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"market noise\", \"chatter\", \"laughter\"], \"fx\": [\"footsteps\", \"vendors calling out\"], \"music\": \"upbeat, folksy market music\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"language\": \"vi-VN\", \"line\": \"Chào cậu! Cậu đợi lâu chưa?\"}], \"lip_sync_director_note\": \"Hieu's lips move in sync with his friendly greeting. His smile should be prominent throughout the dialogue. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"At a bustling outdoor market, Hieu joyfully greets a friend, his infectious smile and animated conversation highlighting his charm and genuine connection. The vibrant market setting adds to the lively atmosphere.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "description": "hiue'"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: 400 | message: Request contains an invalid argument.)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\8_1_18032026_024547.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_18032026_024601.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 8,
       "stt": "009",
       "prompt_id": "9",
-      "prompt": "{\"scene_id\": \"9\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, dark blue V-neck sweater\", \"outfit_bottom\": \"Charcoal grey tailored trousers\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Polished dark leather loafers\", \"props\": [\"a sophisticated cocktail glass with a golden liquid\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\", \"position\": \"center of a small group\", \"orientation\": \"facing slightly away from camera, engaged in conversation\", \"pose\": \"standing, holding a drink, relaxed posture\", \"foot_placement\": \"feet planted naturally, relaxed stance\", \"hand_detail\": \"one hand holding a cocktail glass with a subtle grip\", \"expression\": \"Relaxed, sophisticated, with a calm, observant gaze and a subtle, thoughtful smile\", \"action_flow\": {\"pre_action\": \"Standing amidst the gathering\", \"main_action\": \"Engaging in relaxed conversation, occasionally sipping from his drink\", \"post_action\": \"Turning slightly to address another person in the group\"}}}, \"background_lock\": {\"BACKGROUND_8\": {\"id\": \"BACKGROUND_8\", \"name\": \"Rooftop Gathering\", \"setting\": \"Urban social event\", \"scenery\": \"A sophisticated rooftop gathering overlooking a glittering city skyline at twilight. Soft mood lighting and other guests are visible.\", \"props\": \"Cocktail tables, lounge seating, ambient lights\", \"lighting\": \"Dusk/night city lights, soft mood lighting from the gathering.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slow pan across the gathering, focusing on Hieu\", \"focus\": \"Hieu's relaxed posture and engagement in conversation\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"city night sounds\", \"low chatter\", \"ambient music\"], \"fx\": [\"clinking glasses\"], \"music\": \"smooth, downtempo electronic or lounge music\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"language\": \"vi-VN\", \"line\": \"Buổi tối tuyệt đẹp, đúng không?\"}], \"lip_sync_director_note\": \"Hieu's lips move smoothly as he makes a comment about the evening, his expression calm and appreciative. His gaze is directed towards the view. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hieu attends a sophisticated rooftop gathering, holding a drink and engaged in relaxed conversation. The twinkling city lights below and the ambient mood lighting enhance his refined and attractive appearance.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"9\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, dark blue V-neck sweater\", \"outfit_bottom\": \"Charcoal grey tailored trousers\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Polished dark leather loafers\", \"props\": [\"a sophisticated cocktail glass with a golden liquid\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\", \"position\": \"center of a small group\", \"orientation\": \"facing slightly away from camera, engaged in conversation\", \"pose\": \"standing, holding a drink, relaxed posture\", \"foot_placement\": \"feet planted naturally, relaxed stance\", \"hand_detail\": \"one hand holding a cocktail glass with a subtle grip\", \"expression\": \"Relaxed, sophisticated, with a calm, observant gaze and a subtle, thoughtful smile\", \"action_flow\": {\"pre_action\": \"Standing amidst the gathering\", \"main_action\": \"Engaging in relaxed conversation, occasionally sipping from his drink\", \"post_action\": \"Turning slightly to address another person in the group\"}}}, \"background_lock\": {\"BACKGROUND_8\": {\"id\": \"BACKGROUND_8\", \"name\": \"Rooftop Gathering\", \"setting\": \"Urban social event\", \"scenery\": \"A sophisticated rooftop gathering overlooking a glittering city skyline at twilight. Soft mood lighting and other guests are visible.\", \"props\": \"Cocktail tables, lounge seating, ambient lights\", \"lighting\": \"Dusk/night city lights, soft mood lighting from the gathering.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slow pan across the gathering, focusing on Hieu\", \"focus\": \"Hieu's relaxed posture and engagement in conversation\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"city night sounds\", \"low chatter\", \"ambient music\"], \"fx\": [\"clinking glasses\"], \"music\": \"smooth, downtempo electronic or lounge music\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"language\": \"vi-VN\", \"line\": \"Buổi tối tuyệt đẹp, đúng không?\"}], \"lip_sync_director_note\": \"Hieu's lips move smoothly as he makes a comment about the evening, his expression calm and appreciative. His gaze is directed towards the view. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hieu attends a sophisticated rooftop gathering, holding a drink and engaged in relaxed conversation. The twinkling city lights below and the ambient mood lighting enhance his refined and attractive appearance.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "description": "hieu"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\9_1_18032026_024611.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_18032026_043314.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_18032026_024622.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_18032026_043314.jpg"
       }
     },
     {
       "row": 9,
       "stt": "010",
       "prompt_id": "10",
-      "prompt": "{\"scene_id\": \"10\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, dark blue V-neck sweater\", \"outfit_bottom\": \"Charcoal grey tailored trousers\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Polished dark leather loafers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\", \"position\": \"center of the frame\", \"orientation\": \"walking towards the camera, then past it\", \"pose\": \"walking home with a relaxed, steady pace\", \"foot_placement\": \"even, steady footsteps\", \"hand_detail\": \"arms relaxed at sides, swinging gently\", \"expression\": \"Content, pleasant smile, conveying a sense of peace and satisfaction\", \"action_flow\": {\"pre_action\": \"Starting at the end of the street\", \"main_action\": \"Walking home, bathed in the warm glow of streetlights\", \"post_action\": \"Continuing down the street and out of frame\"}}}, \"background_lock\": {\"BACKGROUND_9\": {\"id\": \"BACKGROUND_9\", \"name\": \"City Street at Night\", \"setting\": \"Urban residential street\", \"scenery\": \"A quiet, clean city street at night, with residential buildings lining the sidewalks and warm streetlights illuminating the path.\", \"props\": \"Streetlights, trash bins, parked cars (in distance)\", \"lighting\": \"Soft, warm glow from streetlights, creating a peaceful ambiance.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye level\", \"movement\": \"following Hieu as he walks\", \"focus\": \"Hieu's peaceful expression and the warm lighting\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"quiet night sounds\", \"distant city hum\"], \"fx\": [\"footsteps\"], \"music\": \"calm, reflective instrumental theme\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hieu walks home on a quiet street illuminated by warm streetlights, a contented smile on his face. The scene conveys a sense of peace and a pleasant end to his day.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"10\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hieu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Warm, friendly, confident; gender=Male; locale=vi-VN; accent=Northern Vietnamese accent, clear articulation\", \"body_build\": \"Lean, athletic, well-proportioned\", \"face_shape\": \"Oval, with defined jawline and high cheekbones\", \"hair\": \"Neatly styled, dark brown, slightly tousled at the front\", \"skin_or_fur_color\": \"Fair, with a healthy, natural tone\", \"signature_feature\": \"Expressive, sparkling dark eyes with long lashes, a charming smile\", \"outfit_top\": \"A well-fitting, dark blue V-neck sweater\", \"outfit_bottom\": \"Charcoal grey tailored trousers\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Polished dark leather loafers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=24; abs.shoulder=45; abs.torso=55; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\", \"position\": \"center of the frame\", \"orientation\": \"walking towards the camera, then past it\", \"pose\": \"walking home with a relaxed, steady pace\", \"foot_placement\": \"even, steady footsteps\", \"hand_detail\": \"arms relaxed at sides, swinging gently\", \"expression\": \"Content, pleasant smile, conveying a sense of peace and satisfaction\", \"action_flow\": {\"pre_action\": \"Starting at the end of the street\", \"main_action\": \"Walking home, bathed in the warm glow of streetlights\", \"post_action\": \"Continuing down the street and out of frame\"}}}, \"background_lock\": {\"BACKGROUND_9\": {\"id\": \"BACKGROUND_9\", \"name\": \"City Street at Night\", \"setting\": \"Urban residential street\", \"scenery\": \"A quiet, clean city street at night, with residential buildings lining the sidewalks and warm streetlights illuminating the path.\", \"props\": \"Streetlights, trash bins, parked cars (in distance)\", \"lighting\": \"Soft, warm glow from streetlights, creating a peaceful ambiance.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye level\", \"movement\": \"following Hieu as he walks\", \"focus\": \"Hieu's peaceful expression and the warm lighting\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"quiet night sounds\", \"distant city hum\"], \"fx\": [\"footsteps\"], \"music\": \"calm, reflective instrumental theme\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hieu walks home on a quiet street illuminated by warm streetlights, a contented smile on his face. The scene conveys a sense of peace and a pleasant end to his day.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "description": "hieu"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\10_1_18032026_024633.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_18032026_043336.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_18032026_024700.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_18032026_043336.jpg"
       }
+    },
+    {
+      "row": 10,
+      "stt": "011",
+      "prompt_id": "11",
+      "prompt": "hiue'",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hiue'"
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: 400 | message: Request contains an invalid argument.)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 11,
+      "stt": "012",
+      "prompt_id": "12",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hieu"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_18032026_043338.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_18032026_043338.jpg"
+      }
+    },
+    {
+      "row": 12,
+      "stt": "013",
+      "prompt_id": "13",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hieu"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\13_1_18032026_043509.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\13_1_18032026_043509.jpg"
+      }
+    },
+    {
+      "row": 13,
+      "stt": "014",
+      "prompt_id": "14",
+      "prompt": "hiue'",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hiue'"
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: 400 | message: Request contains an invalid argument.)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 14,
+      "stt": "015",
+      "prompt_id": "15",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hieu"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\15_1_18032026_043602.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\15_1_18032026_043602.jpg"
+      }
+    },
+    {
+      "row": 15,
+      "stt": "016",
+      "prompt_id": "16",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hieu"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\16_1_18032026_043554.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\16_1_18032026_043554.jpg"
+      }
+    },
+    {
+      "row": 16,
+      "stt": "017",
+      "prompt_id": "17",
+      "prompt": "hiue'",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hiue'"
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: 400 | message: Request contains an invalid argument.)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 17,
+      "stt": "018",
+      "prompt_id": "18",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hieu"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\18_1_18032026_043616.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\18_1_18032026_043616.jpg"
+      }
+    },
+    {
+      "row": 18,
+      "stt": "019",
+      "prompt_id": "19",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hieu"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\19_1_18032026_043628.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\19_1_18032026_043628.jpg"
+      }
+    },
+    {
+      "row": 19,
+      "stt": "020",
+      "prompt_id": "20",
+      "prompt": "hiue'",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hiue'"
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: 400 | message: Request contains an invalid argument.)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 20,
+      "stt": "021",
+      "prompt_id": "21",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hieu"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 21,
+      "stt": "022",
+      "prompt_id": "22",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hieu"
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: 400 | message: Request contains an invalid argument.)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 22,
+      "stt": "023",
+      "prompt_id": "23",
+      "prompt": "hiue'",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hiue'"
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: 400 | message: Request contains an invalid argument.)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 23,
+      "stt": "024",
+      "prompt_id": "24",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hieu"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 24,
+      "stt": "025",
+      "prompt_id": "25",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hieu"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\25_1_18032026_043910.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\25_1_18032026_043910.jpg"
+      }
+    },
+    {
+      "row": 25,
+      "stt": "026",
+      "prompt_id": "26",
+      "prompt": "hiue'",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hiue'"
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: 403 | message: reCAPTCHA evaluation failed)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 26,
+      "stt": "027",
+      "prompt_id": "27",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hieu"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 27,
+      "stt": "028",
+      "prompt_id": "28",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hieu"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 28,
+      "stt": "029",
+      "prompt_id": "29",
+      "prompt": "hiue'",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hiue'"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 29,
+      "stt": "030",
+      "prompt_id": "30",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hieu"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 30,
+      "stt": "031",
+      "prompt_id": "31",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hieu"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 31,
+      "stt": "032",
+      "prompt_id": "32",
+      "prompt": "hiue'",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hiue'"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 32,
+      "stt": "033",
+      "prompt_id": "33",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hieu"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 33,
+      "stt": "034",
+      "prompt_id": "34",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hieu"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 34,
+      "stt": "035",
+      "prompt_id": "35",
+      "prompt": "hiue'",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hiue'"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 35,
+      "stt": "036",
+      "prompt_id": "36",
+      "prompt": "hieu",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "hieu"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
     }
   ]
 }
