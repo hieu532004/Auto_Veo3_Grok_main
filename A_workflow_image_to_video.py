@@ -535,6 +535,30 @@ class ImageToVideoWorkflow(QThread):
 			
 			# ✅ TokenCollector đã startup thành công, chạy workflow
 			async with collector:
+				# ✅ QUAN TRỌNG: Refresh auth từ Chrome browser ngay sau khi Chrome khởi động
+				self._collector_ref = collector
+				try:
+					if hasattr(collector, 'refresh_auth_from_browser'):
+						fresh_token, fresh_cookie = await collector.refresh_auth_from_browser(project_id)
+						if fresh_token:
+							access_token = fresh_token
+							auth["access_token"] = fresh_token
+							self._log("✅ Đã lấy access_token mới từ Chrome browser")
+						if fresh_cookie:
+							cookie = fresh_cookie
+							auth["cookie"] = fresh_cookie
+				except Exception as e:
+					self._log(f"⚠️ Không refresh được auth từ Chrome: {e}")
+
+				# ✅ Restart status_task với token mới
+				if status_task:
+					status_task.cancel()
+					try:
+						await status_task
+					except (asyncio.CancelledError, Exception):
+						pass
+				status_task = asyncio.create_task(self._status_poll_loop(access_token, session_id, cookie))
+
 				# ✅ Xử lý SONG SONG: gửi nhiều prompt video cùng lúc
 				pending_tasks = []
 				
@@ -1752,16 +1776,48 @@ class ImageToVideoWorkflow(QThread):
 						"⚠️ Check status thất bại "
 						f"(lần {self._status_poll_fail_streak}/4, status={status_code}, reason={reason}, body={body_err})"
 					)
-					# ✅ Nếu 401 (token expired), thử refresh token
+					# ✅ Nếu 401 (token expired), thử refresh token từ Chrome browser
 					if status_code == 401:
+						old_token = access_token
+						old_cookie = cookie
 						try:
-							auth = self._load_auth_config()
-							if auth:
-								access_token = auth["access_token"]
-								cookie = auth.get("cookie")
-								self._log("🔄 Đã refresh access_token cho status poll")
-						except Exception:
-							pass
+							collector_ref = getattr(self, '_collector_ref', None)
+							if collector_ref and hasattr(collector_ref, 'refresh_auth_from_browser'):
+								auth = self._load_auth_config()
+								pid = auth.get("projectId", "") if auth else ""
+								fresh_token, fresh_cookie = await collector_ref.refresh_auth_from_browser(pid)
+								if fresh_token:
+									access_token = fresh_token
+									if fresh_cookie:
+										cookie = fresh_cookie
+							if access_token == old_token and cookie == old_cookie:
+								auth = self._load_auth_config()
+								if auth and (auth.get("access_token") != old_token or auth.get("cookie") != old_cookie):
+									access_token = auth.get("access_token", access_token)
+									cookie = auth.get("cookie", cookie)
+							if access_token != old_token or cookie != old_cookie:
+								self._log("✅ Đã refresh thông tin xác thực cho status poll (token hoặc cookie mới)")
+								self._status_poll_fail_streak = 0
+							else:
+								self._log("⚠️ Không lấy được thông tin xác thực mới cho status poll")
+								if self._status_poll_fail_streak >= 2 and collector_ref and hasattr(collector_ref, 'force_auto_login'):
+									self._log("🛑 HTTP refresh liên tục thất bại. RELOAD Chrome để lấy token MỚI!")
+									result = await collector_ref.force_auto_login()
+									if isinstance(result, tuple) and len(result) == 2:
+										forced_token, forced_cookie = result
+										if forced_token:
+											access_token = forced_token
+											self._status_poll_fail_streak = 0
+											self._log("✅ Force refresh thành công! Tiếp tục poll status...")
+										if forced_cookie:
+											cookie = forced_cookie
+						except Exception as e:
+							self._log(f"⚠️ Lỗi refresh token trong status poll: {e}")
+					# ✅ Cap fail streak: tăng lên 15 để cho auto-recovery thêm thời gian
+					if self._status_poll_fail_streak >= 15:
+						self._log("❌ Status poll thất bại 15 lần liên tiếp, đánh FAILED tất cả video đang chờ")
+						self._mark_pending_failed("Status poll failed liên tiếp")
+						break
 					await asyncio.sleep(5)
 					continue
 

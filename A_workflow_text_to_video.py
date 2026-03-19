@@ -346,12 +346,28 @@ class TextToVideoWorkflow(QThread):
 			# ── Xử lý lỗi retryable ──
 			if not response.get("ok", True) and (error_code_str in retryable_errors or is_auth_error):
 				if is_auth_error:
-					import auth_helper
-					self._log("⚠️ Token OAuth hết hạn, tự động lấy mới...")
-					new_access = auth_helper.get_valid_access_token(cookie, project_id, force_refresh=True)
-					if new_access and new_access != access_token:
-						self._log("✅ Đã renew OAuth token")
-						auth["access_token"] = new_access
+					self._log("⚠️ Token OAuth hết hạn, tự động lấy mới từ Chrome browser...")
+					# ✅ Ưu tiên: Lấy auth từ Chrome browser (có cookie hợp lệ)
+					try:
+						if hasattr(collector, 'refresh_auth_from_browser'):
+							fresh_token, fresh_cookie = await collector.refresh_auth_from_browser(project_id)
+							if fresh_token:
+								access_token = fresh_token
+								auth["access_token"] = fresh_token
+								self._log("✅ Đã renew OAuth token từ Chrome browser")
+							if fresh_cookie:
+								cookie = fresh_cookie
+								auth["cookie"] = fresh_cookie
+						else:
+							# Fallback: auth_helper với cookie cũ
+							import auth_helper
+							new_access = auth_helper.get_valid_access_token(cookie, project_id, force_refresh=True)
+							if new_access and new_access != access_token:
+								self._log("✅ Đã renew OAuth token")
+								auth["access_token"] = new_access
+								access_token = new_access
+					except Exception as e:
+						self._log(f"⚠️ Lỗi refresh auth: {e}")
 				if self.STOP:
 					return
 
@@ -547,6 +563,31 @@ class TextToVideoWorkflow(QThread):
 				return
 			# ✅ TokenCollector đã startup thành công, chạy workflow
 			async with collector:
+				# ✅ QUAN TRỌNG: Refresh auth từ Chrome browser ngay sau khi Chrome khởi động
+				# Chrome có cookie hợp lệ, cập nhật config.json để tất cả API request dùng cookie mới
+				self._collector_ref = collector  # Lưu reference cho status poll
+				try:
+					if hasattr(collector, 'refresh_auth_from_browser'):
+						fresh_token, fresh_cookie = await collector.refresh_auth_from_browser(project_id)
+						if fresh_token:
+							access_token = fresh_token
+							auth["access_token"] = fresh_token
+							self._log("✅ Đã lấy access_token mới từ Chrome browser")
+						if fresh_cookie:
+							cookie = fresh_cookie
+							auth["cookie"] = fresh_cookie
+				except Exception as e:
+					self._log(f"⚠️ Không refresh được auth từ Chrome: {e}")
+
+				# ✅ Restart status_task với token mới (cancel cũ, tạo mới)
+				if status_task:
+					status_task.cancel()
+					try:
+						await status_task
+					except (asyncio.CancelledError, Exception):
+						pass
+				status_task = asyncio.create_task(self._status_poll_loop(access_token, session_id, cookie))
+
 				# ✅ Xử lý SONG SONG: gửi nhiều prompt video cùng lúc
 				pending_tasks = []
 				
@@ -673,6 +714,15 @@ class TextToVideoWorkflow(QThread):
 				self._save_request_json(payload, r_prompt_id, r_prompt_text, flow="text_to_video_retry")
 
 				self._log(f"🚀 Inline retry: gửi request tạo video prompt {r_prompt_id}...")
+				# ✅ Lấy access_token mới nhất từ config trước khi retry
+				try:
+					retry_auth = self._load_auth_config()
+					if retry_auth and retry_auth.get("access_token"):
+						access_token = retry_auth["access_token"]
+					if retry_auth and retry_auth.get("cookie"):
+						cookie = retry_auth["cookie"]
+				except Exception:
+					pass
 				response = await t2v_api.request_create_video(payload, access_token, cookie=cookie)
 
 				response_body = response.get("body", "")
@@ -1565,16 +1615,55 @@ class TextToVideoWorkflow(QThread):
 					"⚠️ Check status thất bại "
 					f"(lần {self._status_poll_fail_streak}/4, status={status_code}, reason={reason}, body={body_err})"
 				)
-				# ✅ Nếu 401 (token expired), thử refresh token
+				# ✅ Nếu 401 (token expired), thử refresh token từ Chrome browser trước
 				if status_code == 401:
+					old_token = access_token
+					old_cookie = cookie
 					try:
-						auth = self._load_auth_config()
-						if auth:
-							access_token = auth["access_token"]
-							cookie = auth.get("cookie")
-							self._log("🔄 Đã refresh access_token cho status poll")
-					except Exception:
-						pass
+						# Ưu tiên: Refresh từ Chrome browser
+						collector_ref = getattr(self, '_collector_ref', None)
+						if collector_ref and hasattr(collector_ref, 'refresh_auth_from_browser'):
+							auth = self._load_auth_config()
+							pid = auth.get("projectId", "") if auth else ""
+							fresh_token, fresh_cookie = await collector_ref.refresh_auth_from_browser(pid)
+							if fresh_token:
+								access_token = fresh_token
+								if fresh_cookie:
+									cookie = fresh_cookie
+						
+						# Fallback: đọc từ config (có thể workflow đã update)
+						if access_token == old_token and cookie == old_cookie:
+							auth = self._load_auth_config()
+							if auth and (auth.get("access_token") != old_token or auth.get("cookie") != old_cookie):
+								access_token = auth.get("access_token", access_token)
+								cookie = auth.get("cookie", cookie)
+
+						# ✅ Reset fail streak nếu token HOẶC cookie THỰC SỰ thay đổi
+						if access_token != old_token or cookie != old_cookie:
+							self._log("✅ Đã refresh thông tin xác thực cho status poll (token hoặc cookie mới)")
+							self._status_poll_fail_streak = 0
+						else:
+							self._log("⚠️ Không lấy được thông tin xác thực mới cho status poll")
+							# Force reload Chrome page + đọc token từ JS DOM
+							if self._status_poll_fail_streak >= 2 and collector_ref and hasattr(collector_ref, 'force_auto_login'):
+								self._log("🛑 HTTP refresh liên tục thất bại. RELOAD Chrome để lấy token MỚI!")
+								result = await collector_ref.force_auto_login()
+								if isinstance(result, tuple) and len(result) == 2:
+									forced_token, forced_cookie = result
+									if forced_token:
+										access_token = forced_token
+										self._status_poll_fail_streak = 0
+										self._log("✅ Force refresh thành công! Tiếp tục poll status...")
+									if forced_cookie:
+										cookie = forced_cookie
+					except Exception as e:
+						self._log(f"⚠️ Lỗi refresh token trong status poll: {e}")
+				# ✅ Cap fail streak: nếu thất bại liên tiếp quá 15 lần, mark all pending failed
+				# (tăng từ 8 lên 15 để cho phép auto-recovery có thêm thời gian)
+				if self._status_poll_fail_streak >= 15:
+					self._log("❌ Status poll thất bại 15 lần liên tiếp, đánh FAILED tất cả video đang chờ")
+					self._mark_pending_failed("Status poll failed liên tiếp")
+					break
 				if not await self._sleep_with_stop(5):
 					break
 				continue

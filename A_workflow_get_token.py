@@ -1281,6 +1281,10 @@ class TokenCollector:
             if not web_stable:
                 self._log(f"❌ Reload {max_reload_attempts} lần vẫn chưa ổn định để lấy token")
                 return False
+
+
+
+        # --- FALLBACK UI CHECK ---
         detected_mode, detected_text = await self._detect_current_mode(timeout_ms=2000, preferred_mode=self.mode)
         if detected_mode:
             self._log(f"ℹ️ Mode detect : {detected_mode}")
@@ -1319,7 +1323,7 @@ class TokenCollector:
         self._log("➡️ Correctly mode, next step")
 
         try:
-            # ✅ Chờ textarea với check stop flag mỗi 0.5s
+            # ✅ Fallback: Chờ textarea với check stop flag mỗi 0.5s
             timeout_start = time.time()
             textarea_timeout = max(self.token_timeout, 60)
             last_wait_log_ts = 0.0
@@ -1337,6 +1341,16 @@ class TokenCollector:
                         waited = int(time.time() - timeout_start)
                         self._log(f"⏳ Đang chờ ô nhập text... ({waited}s)")
                         last_wait_log_ts = time.time()
+                        
+                        # ✅ Chỉ check url nhẹ, KHÔNG dùng _verify_project_accessible (tránh reload page)
+                        try:
+                            curr_url = self.page.url if self.page else ""
+                            if "accounts.google.com" in curr_url or "signin" in curr_url.lower():
+                                self._login_required = True
+                                self._log("⚠️ Page đang ở màn hình Đăng Nhập (Sign in) -> Abort chờ textarea!")
+                                return False
+                        except Exception:
+                            pass
                 except Exception:
                     await asyncio.sleep(0.5)
             else:

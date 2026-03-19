@@ -251,22 +251,8 @@ def build_payload_generate_video_start_end(
 
 
 def _send_request_with_token(url, payload, token, method="POST", cookie=None):
-	try:
-		import auth_helper
-		project_id = ""
-		if payload and "clientContext" in payload and "projectId" in payload["clientContext"]:
-			project_id = payload["clientContext"]["projectId"]
-		if not project_id:
-			try:
-				from settings_manager import SettingsManager
-				config = SettingsManager.load_config()
-				project_id = config.get("account1", {}).get("projectId", "")
-			except Exception:
-				pass
-		if cookie and project_id:
-			token = auth_helper.get_valid_access_token(cookie, project_id)
-	except Exception:
-		pass
+	# ✅ Sử dụng token trực tiếp từ workflow (không ghi đè bằng auth_helper)
+	# Workflow đã quản lý token refresh khi gặp 401
 
 	data = json.dumps(payload).encode("utf-8")
 	headers = {

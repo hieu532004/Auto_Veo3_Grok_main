@@ -816,6 +816,30 @@ class CharacterSyncWorkflow(QThread):
                 self._log(
                     f"⚠️ Check status thất bại (lần {self._status_poll_fail_streak}/4, status={status_code}, reason={reason}, body={body_err})"
                 )
+                # ✅ Nếu 401 (token expired), thử refresh token bằng auth_helper
+                if status_code == 401:
+                    try:
+                        import auth_helper
+                        auth = self._load_auth_config()
+                        if auth:
+                            new_token = auth_helper.get_valid_access_token(
+                                auth.get("cookie", ""), auth.get("projectId", ""), force_refresh=True
+                            )
+                            if new_token and new_token != access_token:
+                                access_token = new_token
+                                self._log("✅ Đã refresh access_token cho status poll (auth_helper)")
+                                self._status_poll_fail_streak = 0
+                            else:
+                                access_token = auth["access_token"]
+                                cookie = auth.get("cookie")
+                                self._log("🔄 Đã reload access_token từ config cho status poll")
+                    except Exception as e:
+                        self._log(f"⚠️ Lỗi refresh token trong status poll: {e}")
+                # ✅ Cap fail streak
+                if self._status_poll_fail_streak >= 8:
+                    self._log("❌ Status poll thất bại 8 lần liên tiếp, đánh FAILED tất cả video đang chờ")
+                    self._mark_pending_failed("Status poll failed liên tiếp")
+                    break
                 await asyncio.sleep(5)
                 continue
 
@@ -1017,7 +1041,38 @@ class CharacterSyncWorkflow(QThread):
                 }
             )
 
+    def _mark_pending_failed(self, message):
+        """Đánh dấu tất cả pending/active là FAILED."""
+        for scene_id, info in list(self._scene_status.items()):
+            status = str(info.get("status") or "")
+            if status not in {
+                "MEDIA_GENERATION_STATUS_ACTIVE",
+                "MEDIA_GENERATION_STATUS_PENDING",
+                "ACTIVE",
+                "PENDING",
+            }:
+                continue
+            prompt_info = self._scene_to_prompt.get(scene_id)
+            if not prompt_info:
+                continue
+            prompt_id = str(prompt_info.get("prompt_id") or "")
+            idx = int(prompt_info.get("index", 0))
+            prompt_text = self._get_prompt_text(prompt_id)
+            self._scene_status[scene_id]["status"] = "MEDIA_GENERATION_STATUS_FAILED"
+            self._update_state_entry(
+                prompt_id, prompt_text, scene_id, idx, "FAILED",
+                error="STATUS", message=message,
+            )
+            self.video_updated.emit({
+                "prompt_idx": f"{prompt_id}_{idx + 1}",
+                "status": "FAILED",
+                "scene_id": scene_id,
+                "prompt": prompt_text,
+                "_prompt_id": prompt_id,
+            })
+
     def _mark_prompt_failed(self, prompt_id, prompt_text, error_code, message):
+        """Đánh dấu 1 prompt là FAILED."""
         scene_id = str(uuid.uuid4())
         self._update_state_entry(
             prompt_id,
