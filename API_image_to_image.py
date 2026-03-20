@@ -250,6 +250,9 @@ def _send_request_with_token(url, payload, token, method="POST", cookie=None):
 	headers = {
 		"Content-Type": "application/json",
 		"Authorization": f"Bearer {token}",
+		"Origin": "https://labs.google",
+		"Referer": "https://labs.google/",
+		"X-Goog-AuthUser": "0",
 	}
 	if cookie:
 		headers["Cookie"] = cookie
