@@ -559,6 +559,31 @@ class ImageToVideoWorkflow(QThread):
 						pass
 				status_task = asyncio.create_task(self._status_poll_loop(access_token, session_id, cookie))
 
+				# ✅ Proactive token refresh background task
+				async def _proactive_token_refresh():
+					refresh_interval = 180  # 3 phút
+					while not self._should_stop():
+						await asyncio.sleep(refresh_interval)
+						if self._should_stop():
+							break
+						try:
+							if hasattr(collector, 'refresh_auth_from_browser'):
+								self._log("🔄 [Proactive] Đang refresh access_token định kỳ...")
+								ft, fc = await collector.refresh_auth_from_browser(project_id)
+								if ft:
+									access_token = ft
+									auth["access_token"] = ft
+									self._log("✅ [Proactive] access_token đã được refresh!")
+								if fc:
+									cookie = fc
+									auth["cookie"] = fc
+						except asyncio.CancelledError:
+							return
+						except Exception as e:
+							self._log(f"⚠️ [Proactive] Lỗi refresh token: {e}")
+
+				proactive_refresh_task = asyncio.create_task(_proactive_token_refresh())
+
 				# ✅ Xử lý SONG SONG: gửi nhiều prompt video cùng lúc
 				pending_tasks = []
 				
@@ -599,14 +624,21 @@ class ImageToVideoWorkflow(QThread):
 
 					# Delay ngắn giữa các lần gửi
 					if idx_prompt < len(prompts) - 1:
-						if not await self._sleep_with_stop(2):
+						if not await self._sleep_with_stop(wait_between_prompts):
 							break
 
 				# Chờ tất cả task hoàn tất
 				if pending_tasks:
 					self._log(f"⏳ Đang chờ {len(pending_tasks)} prompt hoàn thành...")
 					await asyncio.gather(*pending_tasks, return_exceptions=True)
-							
+
+				# ✅ Cancel proactive refresh task
+				if proactive_refresh_task:
+					proactive_refresh_task.cancel()
+					try:
+						await proactive_refresh_task
+					except (asyncio.CancelledError, Exception):
+						pass
 		except RuntimeError as exc:
 			message = str(exc)
 			if "URL GEN TOKEN" in message:

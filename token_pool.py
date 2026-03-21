@@ -66,6 +66,8 @@ class TokenPool:
 		self._stop_flag = False
 		self._base_port = 9222
 		self._lock = asyncio.Lock()
+		self._auth_refresh_lock = asyncio.Lock()
+		self._last_auth_refresh = 0
 		self._total_tokens = 0
 		self._token_request_counts = {}
 
@@ -376,153 +378,207 @@ class TokenPool:
 					if fail_streak >= 3:
 						if getattr(collector, "_login_required", False):
 							self._log(f"[Chrome-{idx}] ⚠️ Phát hiện mất phiên đăng nhập! Chrome sẽ tự động reload để bạn login!...")
-						else:
-							self._log(f"[Chrome-{idx}] 🔄 Restart Chrome sau {fail_streak} lần thất bại")
-						
-						try:
-							await collector.restart_browser()
-							if idx > 0:
-								await self._resync_cookies_to_instance(idx)
-						except Exception:
-							pass
-						fail_streak = 0
-					await asyncio.sleep(3)
-
-				wait_time = max(1, self.clear_data_wait)
-				for _ in range(int(wait_time * 2)):
-					if self._should_stop():
-						return
-					await asyncio.sleep(0.5)
-
-			except asyncio.TimeoutError:
-				fail_streak += 1
-				self._log(f"[Chrome-{idx}] ⏱️ Timeout lấy token")
-				if fail_streak >= 2:
-					if getattr(collector, "_login_required", False):
-						self._log(f"[Chrome-{idx}] ⚠️ Phát hiện màn hình Sign In. Hãy tự đăng nhập! Chrome sẽ tự động reload...")
-					try:
-						await collector.restart_browser()
-						if idx > 0:
-							await self._resync_cookies_to_instance(idx)
-					except Exception:
-						pass
-					fail_streak = 0
-				await asyncio.sleep(3)
-			except asyncio.CancelledError:
-				return
-			except Exception as e:
-				self._log(f"[Chrome-{idx}] ❌ Lỗi harvest: {e}")
-				err_str = str(e).lower()
-				if "target closed" in err_str or "connection closed" in err_str or "disconnected" in err_str:
-					fail_streak += 3
-				await asyncio.sleep(2)
-
-	async def _resync_cookies_to_instance(self, target_idx):
-		"""Re-inject cookies tu Chrome-0 vao Chrome-{target_idx} sau restart."""
-		if target_idx == 0 or not self._collectors:
-			return
-		try:
-			cookies = await self._export_cookies_from_collector(0)
-			if cookies:
-				await self._inject_cookies_to_collector(target_idx, cookies)
-				self._log(f"🍪 Re-sync cookies cho Chrome-{target_idx} OK")
-		except Exception as e:
-			self._log(f"⚠️ Re-sync cookies Chrome-{target_idx} loi: {e}")
-
-	async def get_token(self, timeout=120, **kwargs):
-		if not self._started:
-			await self.start()
-		start_wait = time.time()
-		while time.time() - start_wait < timeout:
-			if self._should_stop():
-				return None
-			try:
-				token_data = await asyncio.wait_for(self._token_queue.get(), timeout=2.0)
-				if isinstance(token_data, tuple) and len(token_data) == 2:
-					token, ts = token_data
-					token_age = time.time() - ts
-					if token_age < 120:
-						return token
-					else:
-						self._log(f"♻️ Loai bo token qua han ({int(time.time() - ts)}s)")
-						continue
-				else:
-					return token_data
-			except asyncio.TimeoutError:
-				pass
-			except Exception as e:
-				self._log(f"Loi lay token tu queue: {e}")
-				await asyncio.sleep(1)
-		self._log(f"⏱️ TokenPool: timeout {timeout}s cho token")
-		return None
-
-	async def force_auto_login(self):
-		"""Duoc goi khi 401 fail lien tuc. Dung Chrome-0 fetch() lay token moi."""
-		self._log("🚨 Token het han. Dang fetch access_token MOI tu Google...")
-		new_token = None
-		new_cookie = ""
-		try:
-			drained = 0
-			while not self._token_queue.empty():
-				try:
-					self._token_queue.get_nowait()
-					drained += 1
-				except Exception:
-					break
-			if drained:
-				self._log(f"🗑️ Da loai bo {drained} recaptcha token cu")
-			new_cookie = await self.get_browser_cookie_string()
-			if self._collectors and len(self._collectors) > 0:
-				collector0 = self._collectors[0]
-				if collector0 and getattr(collector0, 'page', None) and not collector0.page.is_closed():
-					try:
-						fetch_result = await asyncio.wait_for(
-							collector0.page.evaluate("""() => {
-								return fetch(window.location.href, {
-									credentials: 'include',
-									headers: {'Accept':'text/html','Cache-Control':'no-cache,no-store','Pragma':'no-cache'}
-								}).then(r => r.text()).then(html => {
-									const m = html.match(/"access_token":"([^"]+)"/);
-									return m ? m[1] : null;
-								}).catch(e => null);
-							}"""),
-							timeout=15
-						)
-						if fetch_result and len(str(fetch_result)) > 20:
-							new_token = fetch_result
-							self._log("✅ Da fetch access_token MOI tu Google server!")
-						else:
-							self._log("⚠️ fetch() khong tim thay access_token trong HTML")
-					except asyncio.TimeoutError:
-						self._log("⚠️ fetch() timeout 15s")
-					except Exception as e:
-						self._log(f"⚠️ Loi fetch token: {e}")
-			if not new_token and new_cookie:
-				from auth_helper import invalidate_cache
-				invalidate_cache()
-				import auth_helper
-				new_token = auth_helper.get_valid_access_token(new_cookie, self._get_project_id(), force_refresh=True)
-				if new_token:
-					self._log("✅ Fallback: lay token tu HTTP request")
-			if new_token or new_cookie:
-				config = SettingsManager.load_config()
-				if "account1" not in config:
-					config["account1"] = {}
-				if new_token:
-					config["account1"]["access_token"] = new_token
-				if new_cookie:
-					config["account1"]["cookie"] = new_cookie
-				SettingsManager.save_config(config)
-			if new_token:
-				self._log("✅ Force refresh thanh cong! Token moi san sang.")
-			else:
-				self._log("⚠️ Force refresh that bai")
-			return new_token, new_cookie
-		except Exception as e:
-			self._log(f"⚠️ Loi force_auto_login: {e}")
-			return new_token, new_cookie
-
-	
+						else:
+							self._log(f"[Chrome-{idx}] 🔄 Restart Chrome sau {fail_streak} lần thất bại")
+						try:
+							await collector.restart_browser()
+							if idx > 0:
+								await self._resync_cookies_to_instance(idx)
+						except Exception:
+							pass
+						fail_streak = 0
+					await asyncio.sleep(3)
+
+				wait_time = max(1, self.clear_data_wait)
+				for _ in range(int(wait_time * 2)):
+					if self._should_stop():
+						return
+					await asyncio.sleep(0.5)
+
+			except asyncio.TimeoutError:
+				fail_streak += 1
+				self._log(f"[Chrome-{idx}] ⏱️ Timeout lấy token")
+				if fail_streak >= 2:
+					if getattr(collector, "_login_required", False):
+						self._log(f"[Chrome-{idx}] ⚠️ Phát hiện màn hình Sign In. Hãy tự đăng nhập! Chrome sẽ tự động reload...")
+					try:
+						await collector.restart_browser()
+						if idx > 0:
+							await self._resync_cookies_to_instance(idx)
+					except Exception:
+						pass
+					fail_streak = 0
+				await asyncio.sleep(3)
+			except asyncio.CancelledError:
+				return
+			except Exception as e:
+				self._log(f"[Chrome-{idx}] ❌ Lỗi harvest: {e}")
+				err_str = str(e).lower()
+				if "target closed" in err_str or "connection closed" in err_str or "disconnected" in err_str:
+					fail_streak += 3
+				await asyncio.sleep(2)
+
+	async def _resync_cookies_to_instance(self, target_idx):
+		"""Re-inject cookies từ Chrome-0 vào Chrome-{target_idx} sau restart."""
+		if target_idx == 0 or not self._collectors:
+			return
+		try:
+			cookies = await self._export_cookies_from_collector(0)
+			if cookies:
+				await self._inject_cookies_to_collector(target_idx, cookies)
+				self._log(f"🍪 Re-sync cookies cho Chrome-{target_idx} OK")
+		except Exception as e:
+			self._log(f"⚠️ Re-sync cookies Chrome-{target_idx} lỗi: {e}")
+
+	async def get_token(self, timeout=120, **kwargs):
+		if not self._started:
+			await self.start()
+		start_wait = time.time()
+		while time.time() - start_wait < timeout:
+			if self._should_stop():
+				return None
+			try:
+				token_data = await asyncio.wait_for(self._token_queue.get(), timeout=2.0)
+				if isinstance(token_data, tuple) and len(token_data) == 2:
+					token, ts = token_data
+					token_age = time.time() - ts
+					if token_age < 120:
+						return token
+					else:
+						self._log(f"♻️ Loại bỏ token quá hạn ({int(time.time() - ts)}s)")
+						continue
+				else:
+					return token_data
+			except asyncio.TimeoutError:
+				pass
+			except Exception as e:
+				self._log(f"Lỗi lấy token từ queue: {e}")
+				await asyncio.sleep(1)
+		self._log(f"⏱️ TokenPool: timeout {timeout}s cho token")
+		return None
+
+	async def force_auto_login(self):
+		"""Được gọi khi 401 fail liên tục. RESTART Chrome-0 hoàn toàn để lấy token mới."""
+		self._log("🚨 Token hết hạn. RESTART Chrome-0 để lấy access_token MỚI...")
+		new_token = None
+		new_cookie = ""
+		try:
+			# 1. Xóa tất cả token cũ trong queue
+			drained = 0
+			while not self._token_queue.empty():
+				try:
+					self._token_queue.get_nowait()
+					drained += 1
+				except Exception:
+					break
+			if drained:
+				self._log(f"🗑️ Đã loại bỏ {drained} token cũ")
+
+			# 2. RESTART Chrome-0 hoàn toàn
+			if self._collectors and len(self._collectors) > 0:
+				collector0 = self._collectors[0]
+				try:
+					self._log("🔄 Đang restart Chrome-0...")
+					await collector0.restart_browser()
+					self._log("✅ Chrome-0 đã restart xong")
+					await asyncio.sleep(3)
+				except Exception as e:
+					self._log(f"⚠️ Lỗi restart Chrome-0: {e}")
+
+			# 3. Lấy cookies mới từ Chrome-0
+			new_cookie = await self.get_browser_cookie_string()
+
+			# 4. Thử lấy token qua NextAuth session API
+			if self._collectors and len(self._collectors) > 0:
+				collector0 = self._collectors[0]
+				if collector0 and getattr(collector0, 'page', None) and not collector0.page.is_closed():
+					try:
+						session_data = await asyncio.wait_for(
+							collector0.page.evaluate("""() => {
+								return fetch('/fx/api/auth/session', {
+									credentials: 'include',
+									headers: { 'Accept': 'application/json' }
+								})
+								.then(r => r.json())
+								.catch(e => null);
+							}"""),
+							timeout=15
+						)
+						if session_data and isinstance(session_data, dict):
+							token = (session_data.get("accessToken")
+							         or session_data.get("access_token")
+							         or "")
+							if token and len(token) > 20:
+								new_token = token
+								self._log("✅ Đã lấy access_token MỚI từ NextAuth session API!")
+					except asyncio.TimeoutError:
+						self._log("⚠️ NextAuth session API timeout")
+					except Exception as e:
+						self._log(f"⚠️ Lỗi gọi session API: {e}")
+
+			# 5. Fallback: fetch token từ HTML
+			if not new_token and self._collectors and len(self._collectors) > 0:
+				collector0 = self._collectors[0]
+				if collector0 and getattr(collector0, 'page', None) and not collector0.page.is_closed():
+					try:
+						fetch_result = await asyncio.wait_for(
+							collector0.page.evaluate("""() => {
+								return fetch(window.location.href, {
+									credentials: 'include',
+									headers: {'Accept':'text/html','Cache-Control':'no-cache,no-store','Pragma':'no-cache'}
+								}).then(r => r.text()).then(html => {
+									const m = html.match(/"access_token":"([^"]+)"/);
+									return m ? m[1] : null;
+								}).catch(e => null);
+							}"""),
+							timeout=15
+						)
+						if fetch_result and len(str(fetch_result)) > 20:
+							new_token = fetch_result
+							self._log("✅ Đã fetch access_token MỚI từ HTML!")
+					except Exception:
+						pass
+
+			# 6. Fallback cuối: auth_helper HTTP
+			if not new_token and new_cookie:
+				from auth_helper import invalidate_cache
+				invalidate_cache()
+				import auth_helper
+				new_token = auth_helper.get_valid_access_token(new_cookie, self._get_project_id(), force_refresh=True)
+				if new_token:
+					self._log("✅ Fallback: lấy token từ HTTP request")
+
+			# 7. Lưu vào config.json
+			if new_token or new_cookie:
+				config = SettingsManager.load_config()
+				if "account1" not in config:
+					config["account1"] = {}
+				if new_token:
+					config["account1"]["access_token"] = new_token
+				if new_cookie:
+					config["account1"]["cookie"] = new_cookie
+				SettingsManager.save_config(config)
+
+			# 8. Re-sync cookies cho pool instances
+			if self.num_chrome > 1:
+				try:
+					cookies = await self._export_cookies_from_collector(0)
+					if cookies:
+						for i in range(1, len(self._collectors)):
+							await self._inject_cookies_to_collector(i, cookies)
+						self._log(f"🍪 Re-sync cookies cho {self.num_chrome - 1} pool instances")
+				except Exception:
+					pass
+
+			if new_token:
+				self._log("✅ Force refresh thành công! Token mới sẵn sàng.")
+			else:
+				self._log("⚠️ Force refresh thất bại — không lấy được token mới")
+			return new_token, new_cookie
+		except Exception as e:
+			self._log(f"⚠️ Lỗi force_auto_login: {e}")
+			return new_token, new_cookie
+
 	def _get_project_id(self):
 		"""Helper: lấy project_id từ config."""
 		try:
@@ -602,89 +658,114 @@ class TokenPool:
 	async def refresh_auth_from_browser(self, project_id=""):
 		"""Lấy access_token MỚI từ Google Labs session API.
 		
-		Gọi /fx/api/auth/session qua Chrome browser (NextAuth endpoint)
-		→ trả về JSON chứa access_token mới nhất
+		QUAN TRỌNG: RELOAD trang trước để Google cấp OAuth token MỚI,
+		rồi mới gọi /fx/api/auth/session qua Chrome browser (NextAuth endpoint)
 		"""
-		access_token = None
-		cookie_str = ""
-
-		try:
-			# 1. Lấy cookies từ Chrome browser
-			cookie_str = await self.get_browser_cookie_string()
-			if not cookie_str:
-				self._log("⚠️ Không lấy được cookies từ Chrome browser")
-				return None, ""
-
-			# 2. ƯU TIÊN: Gọi NextAuth session API qua Chrome để lấy token mới
-			if self._collectors and len(self._collectors) > 0:
-				collector0 = self._collectors[0]
-				if collector0 and getattr(collector0, 'page', None) and not collector0.page.is_closed():
-					try:
-						session_data = await collector0.page.evaluate("""() => {
-							return fetch('/fx/api/auth/session', {
-								credentials: 'include',
-								headers: { 'Accept': 'application/json' }
-							})
-							.then(r => r.json())
-							.catch(e => null);
-						}""")
-						
-						if session_data and isinstance(session_data, dict):
-							# NextAuth session trả về accessToken hoặc access_token
-							token = (session_data.get("accessToken") 
-							         or session_data.get("access_token")
-							         or "")
-							if token and len(token) > 20:
-								access_token = token
-								self._log("✅ Đã lấy access_token MỚI từ NextAuth session API!")
-							else:
-								self._log(f"Session API response keys: {list(session_data.keys())}")
-					except Exception as e:
-						self._log(f"⚠️ Lỗi gọi session API: {e}")
-
-			# 3. Fallback: Đọc từ DOM (có thể cũ)
-			if not access_token and self._collectors and len(self._collectors) > 0:
-				collector0 = self._collectors[0]
-				if collector0 and getattr(collector0, 'page', None) and not collector0.page.is_closed():
-					try:
-						js_token = await collector0.page.evaluate("""() => {
-							try {
-								const html = document.documentElement.innerHTML;
-								const m = html.match(/"access_token":"([^"]+)"/);
-								return m ? m[1] : null;
-							} catch(e) { return null; }
-						}""")
-						if js_token and len(js_token) > 20:
-							access_token = js_token
-							self._log("ℹ️ Fallback: lấy token từ Chrome DOM (có thể cũ)")
-					except Exception:
-						pass
-
-			# 4. Fallback cuối: HTTP fetch
-			if not access_token and cookie_str and project_id:
-				import auth_helper
-				auth_helper.invalidate_cache()
-				access_token = auth_helper.get_valid_access_token(
-					cookie_str, project_id, force_refresh=True
-				)
-				if access_token:
-					self._log("✅ Fallback: lấy token từ HTTP (dùng browser cookies)")
-
-			# 5. Lưu vào config.json
-			if access_token or cookie_str:
+		async with self._auth_refresh_lock:
+			# Kiểm tra xem có token mới được refresh gần đây (e.g., 30s) không
+			if time.time() - getattr(self, '_last_auth_refresh', 0) < 30:
+				self._log("ℹ️ Bỏ qua refresh trang vì token vừa được cấp mới bởi tiến trình khác")
 				config = SettingsManager.load_config()
-				if "account1" not in config:
-					config["account1"] = {}
-				if access_token:
-					config["account1"]["access_token"] = access_token
-				if cookie_str:
-					config["account1"]["cookie"] = cookie_str
-				SettingsManager.save_config(config)
+				cached_token = config.get("account1", {}).get("access_token")
+				cached_cookie = config.get("account1", {}).get("cookie")
+				if cached_token:
+					return cached_token, cached_cookie
 
-			return access_token, cookie_str
-		except Exception as e:
-			self._log(f"⚠️ refresh_auth_from_browser error: {e}")
-			return access_token, cookie_str
+			access_token = None
+			cookie_str = ""
+
+			try:
+				# 1. Lấy cookies từ Chrome browser
+				cookie_str = await self.get_browser_cookie_string()
+				if not cookie_str:
+					self._log("⚠️ Không lấy được cookies từ Chrome browser")
+					return None, ""
+
+				# 2. RELOAD trang để force Google cấp OAuth token MỚI
+				if self._collectors and len(self._collectors) > 0:
+					collector0 = self._collectors[0]
+					if collector0 and getattr(collector0, 'page', None) and not collector0.page.is_closed():
+						try:
+							self._log("🔄 Reload trang để lấy OAuth token mới...")
+							await collector0.page.reload(wait_until="domcontentloaded", timeout=15000)
+							try:
+								await collector0.page.wait_for_load_state("networkidle", timeout=10000)
+							except Exception:
+								pass
+							await asyncio.sleep(2)  # Chờ session cập nhật
+						except Exception as e:
+							self._log(f"⚠️ Reload trang lỗi: {e}")
+
+				# 3. ƯU TIÊN: Gọi NextAuth session API qua Chrome để lấy token mới
+				if self._collectors and len(self._collectors) > 0:
+					collector0 = self._collectors[0]
+					if collector0 and getattr(collector0, 'page', None) and not collector0.page.is_closed():
+						try:
+							session_data = await collector0.page.evaluate("""() => {
+								return fetch('/fx/api/auth/session', {
+									credentials: 'include',
+									headers: { 'Accept': 'application/json' }
+								})
+								.then(r => r.json())
+								.catch(e => null);
+							}""")
+							
+							if session_data and isinstance(session_data, dict):
+								token = (session_data.get("accessToken") 
+										 or session_data.get("access_token")
+										 or "")
+								if token and len(token) > 20:
+									access_token = token
+									self._log("✅ Đã lấy access_token MỚI từ NextAuth session API!")
+								else:
+									self._log(f"Session API response keys: {list(session_data.keys())}")
+						except Exception as e:
+							self._log(f"⚠️ Lỗi gọi session API: {e}")
+
+				# 3. Fallback: Đọc từ DOM (có thể cũ)
+				if not access_token and self._collectors and len(self._collectors) > 0:
+					collector0 = self._collectors[0]
+					if collector0 and getattr(collector0, 'page', None) and not collector0.page.is_closed():
+						try:
+							js_token = await collector0.page.evaluate("""() => {
+								try {
+									const html = document.documentElement.innerHTML;
+									const m = html.match(/"access_token":"([^"]+)"/);
+									return m ? m[1] : null;
+								} catch(e) { return null; }
+							}""")
+							if js_token and len(js_token) > 20:
+								access_token = js_token
+								self._log("ℹ️ Fallback: lấy token từ Chrome DOM (có thể cũ)")
+						except Exception:
+							pass
+
+				# 4. Fallback cuối: HTTP fetch
+				if not access_token and cookie_str and project_id:
+					import auth_helper
+					auth_helper.invalidate_cache()
+					access_token = auth_helper.get_valid_access_token(
+						cookie_str, project_id, force_refresh=True
+					)
+					if access_token:
+						self._log("✅ Fallback: lấy token từ HTTP (dùng browser cookies)")
+
+				# 5. Lưu vào config.json
+				if access_token or cookie_str:
+					config = SettingsManager.load_config()
+					if "account1" not in config:
+						config["account1"] = {}
+					if access_token:
+						config["account1"]["access_token"] = access_token
+						self._last_auth_refresh = time.time()
+					if cookie_str:
+						config["account1"]["cookie"] = cookie_str
+					SettingsManager.save_config(config)
+
+				return access_token, cookie_str
+			except Exception as e:
+				self._log(f"⚠️ refresh_auth_from_browser error: {e}")
+				return access_token, cookie_str
 
 	async def stop(self):
 		"""Dừng harvest tasks nhưng GIỮ Chrome mở để tái sử dụng."""

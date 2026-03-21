@@ -1,196 +1,192 @@
 {
   "project_name": "default_project",
-  "updated_at": 1773972554,
+  "updated_at": 1774065428,
   "rows": [
     {
       "row": 0,
       "stt": "001",
       "prompt_id": "1",
-      "prompt": "{\"scene_id\": \"1\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid light blue color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual white sneakers\", \"props\": [\"A small, unobtrusive smartphone held loosely in his hand\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center\", \"orientation\": \"facing forward\", \"pose\": \"walking_friendly\", \"foot_placement\": \"standard walking stride\", \"hand_detail\": \"right hand holding smartphone, left arm swinging naturally\", \"expression\": \"smiling_warmly\", \"action_flow\": {\"pre_action\": \"walking forward\", \"main_action\": \"waving warmly to a shopkeeper\", \"post_action\": \"continuing to walk\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Urban residential street\", \"scenery\": \"Tree-lined sidewalks, small shops and cafes, apartment buildings with balconies, parked bicycles and scooters\", \"props\": \"Streetlights, benches, small potted plants outside shops, awnings\", \"lighting\": \"Bright, sunny daytime with warm, inviting light\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slight pan to follow Hiếu\", \"focus\": \"Hiếu\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"neighborhood street sounds\", \"distant traffic\"], \"fx\": [\"footsteps on pavement\"], \"music\": \"upbeat, cheerful instrumental\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"language\": \"vi-VN\", \"line\": \"[Chào buổi sáng ạ!]\"}], \"lip_sync_director_note\": \"Mouth movements should match the spoken greeting, ending with a slight upward curve of the lips. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu walks down his sunny neighborhood street, radiating charm. He exchanges a friendly wave and greeting with a shopkeeper.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
+      "prompt": "Cận cảnh khuôn mặt một người thợ rèn lớn tuổi, mồ hôi nhễ nhại, ánh sáng màu cam từ lò lửa hắt lên mặt, độ phân giải 4K, siêu thực.",
       "mode_key": "text_to_video",
       "mode_label": "VEO3 - Tạo video từ văn bản",
       "mode_name": "VEO3 - Tạo video từ văn bản",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"1\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid light blue color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual white sneakers\", \"props\": [\"A small, unobtrusive smartphone held loosely in his hand\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center\", \"orientation\": \"facing forward\", \"pose\": \"walking_friendly\", \"foot_placement\": \"standard walking stride\", \"hand_detail\": \"right hand holding smartphone, left arm swinging naturally\", \"expression\": \"smiling_warmly\", \"action_flow\": {\"pre_action\": \"walking forward\", \"main_action\": \"waving warmly to a shopkeeper\", \"post_action\": \"continuing to walk\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Urban residential street\", \"scenery\": \"Tree-lined sidewalks, small shops and cafes, apartment buildings with balconies, parked bicycles and scooters\", \"props\": \"Streetlights, benches, small potted plants outside shops, awnings\", \"lighting\": \"Bright, sunny daytime with warm, inviting light\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slight pan to follow Hiếu\", \"focus\": \"Hiếu\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"neighborhood street sounds\", \"distant traffic\"], \"fx\": [\"footsteps on pavement\"], \"music\": \"upbeat, cheerful instrumental\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"language\": \"vi-VN\", \"line\": \"[Chào buổi sáng ạ!]\"}], \"lip_sync_director_note\": \"Mouth movements should match the spoken greeting, ending with a slight upward curve of the lips. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu walks down his sunny neighborhood street, radiating charm. He exchanges a friendly wave and greeting with a shopkeeper.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "prompt": "Cận cảnh khuôn mặt một người thợ rèn lớn tuổi, mồ hôi nhễ nhại, ánh sáng màu cam từ lò lửa hắt lên mặt, độ phân giải 4K, siêu thực."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\1_1_20032026_090728.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\1_1_21032026_104557.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_20032026_090740.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_21032026_104610.jpg"
       }
     },
     {
       "row": 1,
       "stt": "002",
       "prompt_id": "2",
-      "prompt": "{\"scene_id\": \"2\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid light blue color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual white sneakers\", \"props\": [\"A small, unobtrusive smartphone held loosely in his hand\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center\", \"orientation\": \"facing the florist shop\", \"pose\": \"standing_admiring\", \"foot_placement\": \"stable stance\", \"hand_detail\": \"both hands at his sides, relaxed\", \"expression\": \"radiant_smile\", \"action_flow\": {\"pre_action\": \"stopping his walk\", \"main_action\": \"looking at the flower display\", \"post_action\": \"holding the pose\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Urban residential street with shops\", \"scenery\": \"Tree-lined sidewalks, small shops and cafes, apartment buildings with balconies, parked bicycles and scooters\", \"props\": \"Streetlights, benches, small potted plants outside shops, awnings, florist shop window, vibrant flower display, street sign\", \"lighting\": \"Bright, sunny daytime with warm, inviting light\"}}, \"camera\": {\"framing\": \"close-up on Hiếu's face, with flowers in the background\", \"angle\": \"eye level\", \"movement\": \"none\", \"focus\": \"Hiếu's smiling face\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"light street noise\", \"distant birdsong\"], \"fx\": [\"gentle rustling of leaves\"], \"music\": \"light, whimsical melody\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu stops to admire the colorful flowers outside a florist shop. His smile is bright and genuine as he takes in the beautiful display.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
+      "prompt": "Góc quay drone lướt trên một thành phố cyberpunk dưới cơn mưa rào, ánh đèn neon phản chiếu lấp lánh trên vũng nước, ban đêm.",
       "mode_key": "text_to_video",
       "mode_label": "VEO3 - Tạo video từ văn bản",
       "mode_name": "VEO3 - Tạo video từ văn bản",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"2\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid light blue color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual white sneakers\", \"props\": [\"A small, unobtrusive smartphone held loosely in his hand\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center\", \"orientation\": \"facing the florist shop\", \"pose\": \"standing_admiring\", \"foot_placement\": \"stable stance\", \"hand_detail\": \"both hands at his sides, relaxed\", \"expression\": \"radiant_smile\", \"action_flow\": {\"pre_action\": \"stopping his walk\", \"main_action\": \"looking at the flower display\", \"post_action\": \"holding the pose\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Urban residential street with shops\", \"scenery\": \"Tree-lined sidewalks, small shops and cafes, apartment buildings with balconies, parked bicycles and scooters\", \"props\": \"Streetlights, benches, small potted plants outside shops, awnings, florist shop window, vibrant flower display, street sign\", \"lighting\": \"Bright, sunny daytime with warm, inviting light\"}}, \"camera\": {\"framing\": \"close-up on Hiếu's face, with flowers in the background\", \"angle\": \"eye level\", \"movement\": \"none\", \"focus\": \"Hiếu's smiling face\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"light street noise\", \"distant birdsong\"], \"fx\": [\"gentle rustling of leaves\"], \"music\": \"light, whimsical melody\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu stops to admire the colorful flowers outside a florist shop. His smile is bright and genuine as he takes in the beautiful display.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "prompt": "Góc quay drone lướt trên một thành phố cyberpunk dưới cơn mưa rào, ánh đèn neon phản chiếu lấp lánh trên vũng nước, ban đêm."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\2_1_20032026_090718.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\2_1_21032026_104625.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_20032026_090727.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_21032026_104641.jpg"
       }
     },
     {
       "row": 2,
       "stt": "003",
       "prompt_id": "3",
-      "prompt": "{\"scene_id\": \"3\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid light blue color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual white sneakers\", \"props\": [\"A small, unobtrusive smartphone held loosely in his hand\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center\", \"orientation\": \"facing forward at crosswalk\", \"pose\": \"standing_waiting_calm\", \"foot_placement\": \"feet shoulder-width apart\", \"hand_detail\": \"arms relaxed at sides\", \"expression\": \"neutral_confident\", \"action_flow\": {\"pre_action\": \"standing at crosswalk\", \"main_action\": \"waiting for signal, exchanging a nod\", \"post_action\": \"continuing to wait\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Urban street intersection\", \"scenery\": \"Tree-lined sidewalks, small shops and cafes, apartment buildings with balconies, parked bicycles and scooters\", \"props\": \"Traffic light, crosswalk lines, building facades, streetlights\", \"lighting\": \"Bright, sunny daytime with warm, inviting light\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"static, then a subtle zoom-in on the nod\", \"focus\": \"Hiếu and the other pedestrian\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"city street sounds\", \"car passing\"], \"fx\": [\"gentle footsteps\"], \"music\": \"subtle, steady beat\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"While waiting at a crosswalk, Hiếu exchanges a discreet nod with another pedestrian, showcasing his calm and confident demeanor.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
+      "prompt": "Một võ sĩ samurai đứng giữa cánh đồng cỏ lau trắng muốt lộng gió, mặt trời đang lặn phía đường chân trời, phong cách điện ảnh.",
       "mode_key": "text_to_video",
       "mode_label": "VEO3 - Tạo video từ văn bản",
       "mode_name": "VEO3 - Tạo video từ văn bản",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"3\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid light blue color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual white sneakers\", \"props\": [\"A small, unobtrusive smartphone held loosely in his hand\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center\", \"orientation\": \"facing forward at crosswalk\", \"pose\": \"standing_waiting_calm\", \"foot_placement\": \"feet shoulder-width apart\", \"hand_detail\": \"arms relaxed at sides\", \"expression\": \"neutral_confident\", \"action_flow\": {\"pre_action\": \"standing at crosswalk\", \"main_action\": \"waiting for signal, exchanging a nod\", \"post_action\": \"continuing to wait\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Urban street intersection\", \"scenery\": \"Tree-lined sidewalks, small shops and cafes, apartment buildings with balconies, parked bicycles and scooters\", \"props\": \"Traffic light, crosswalk lines, building facades, streetlights\", \"lighting\": \"Bright, sunny daytime with warm, inviting light\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"static, then a subtle zoom-in on the nod\", \"focus\": \"Hiếu and the other pedestrian\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"city street sounds\", \"car passing\"], \"fx\": [\"gentle footsteps\"], \"music\": \"subtle, steady beat\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"While waiting at a crosswalk, Hiếu exchanges a discreet nod with another pedestrian, showcasing his calm and confident demeanor.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "prompt": "Một võ sĩ samurai đứng giữa cánh đồng cỏ lau trắng muốt lộng gió, mặt trời đang lặn phía đường chân trời, phong cách điện ảnh."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\3_1_20032026_090818.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\3_1_21032026_104642.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_20032026_090829.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_21032026_104656.jpg"
       }
     },
     {
       "row": 3,
       "stt": "004",
       "prompt_id": "4",
-      "prompt": "{\"scene_id\": \"4\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid light blue color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual white sneakers\", \"props\": [\"A coffee cup held in his right hand\", \"A small, unobtrusive smartphone on the table\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"seated at a table\", \"orientation\": \"facing forward, slightly to the side\", \"pose\": \"sitting_relaxed\", \"foot_placement\": \"feet resting comfortably on the ground\", \"hand_detail\": \"right hand holding a coffee cup, left hand resting on the table\", \"expression\": \"content_peaceful\", \"action_flow\": {\"pre_action\": \"sitting at the cafe table\", \"main_action\": \"taking a slow, contented sip of coffee\", \"post_action\": \"holding the cup, looking out at the street\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Outdoor cafe area\", \"scenery\": \"Tree-lined sidewalks, small shops and cafes, apartment buildings with balconies, parked bicycles and scooters\", \"props\": \"Cafe tables, umbrellas, shopfronts, sidewalk, potted plants\", \"lighting\": \"Bright, sunny daytime with dappled shade\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slow, sweeping arc around Hiếu\", \"focus\": \"Hiếu and his immediate surroundings\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"cafe chatter\", \"street sounds\", \"distant music\"], \"fx\": [\"clinking of cup\"], \"music\": \"smooth, mellow jazz\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu enjoys a peaceful moment at an outdoor cafe, sipping coffee and observing the calm street life with a satisfied expression.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
+      "prompt": "Một người phụ nữ mặc váy lụa đỏ đang múa trong một căn phòng bỏ hoang, ánh sáng mặt trời chiếu xuyên qua cửa sổ bám bụi, quay chậm (slow-motion).",
       "mode_key": "text_to_video",
       "mode_label": "VEO3 - Tạo video từ văn bản",
       "mode_name": "VEO3 - Tạo video từ văn bản",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"4\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid light blue color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual white sneakers\", \"props\": [\"A coffee cup held in his right hand\", \"A small, unobtrusive smartphone on the table\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"seated at a table\", \"orientation\": \"facing forward, slightly to the side\", \"pose\": \"sitting_relaxed\", \"foot_placement\": \"feet resting comfortably on the ground\", \"hand_detail\": \"right hand holding a coffee cup, left hand resting on the table\", \"expression\": \"content_peaceful\", \"action_flow\": {\"pre_action\": \"sitting at the cafe table\", \"main_action\": \"taking a slow, contented sip of coffee\", \"post_action\": \"holding the cup, looking out at the street\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Outdoor cafe area\", \"scenery\": \"Tree-lined sidewalks, small shops and cafes, apartment buildings with balconies, parked bicycles and scooters\", \"props\": \"Cafe tables, umbrellas, shopfronts, sidewalk, potted plants\", \"lighting\": \"Bright, sunny daytime with dappled shade\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slow, sweeping arc around Hiếu\", \"focus\": \"Hiếu and his immediate surroundings\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"cafe chatter\", \"street sounds\", \"distant music\"], \"fx\": [\"clinking of cup\"], \"music\": \"smooth, mellow jazz\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu enjoys a peaceful moment at an outdoor cafe, sipping coffee and observing the calm street life with a satisfied expression.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "prompt": "Một người phụ nữ mặc váy lụa đỏ đang múa trong một căn phòng bỏ hoang, ánh sáng mặt trời chiếu xuyên qua cửa sổ bám bụi, quay chậm (slow-motion)."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\4_1_20032026_090741.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\4_1_21032026_104714.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_20032026_090752.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_21032026_104728.jpg"
       }
     },
     {
       "row": 4,
       "stt": "005",
       "prompt_id": "5",
-      "prompt": "{\"scene_id\": \"5\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid light blue color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual white sneakers\", \"props\": [\"A small grocery bag offered to the neighbor\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center\", \"orientation\": \"facing the elderly neighbor\", \"pose\": \"helping_kindly\", \"foot_placement\": \"one foot slightly forward, balanced\", \"hand_detail\": \"reaching out to take the grocery bag\", \"expression\": \"smiling_helpful\", \"action_flow\": {\"pre_action\": \"noticing the neighbor\", \"main_action\": \"stepping forward to offer help and take the bag\", \"post_action\": \"holding the bag, ready to assist\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Residential street with a few steps\", \"scenery\": \"Tree-lined sidewalks, small shops and cafes, apartment buildings with balconies, parked bicycles and scooters\", \"props\": \"Apartment building entrance, steps, potted plants, streetlights\", \"lighting\": \"Bright, sunny daytime with warm, inviting light\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slight push-in\", \"focus\": \"Hiếu and the neighbor's interaction\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"neighborhood street sounds\"], \"fx\": [\"footsteps\", \"slight rustle of a bag\"], \"music\": \"warm, gentle melody\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"language\": \"vi-VN\", \"line\": \"[Để cháu giúp bác ạ!]\"}], \"lip_sync_director_note\": \"Mouth movements should be clear and reassuring for the offer of help. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu demonstrates his helpful nature by assisting an elderly neighbor with her groceries. His demeanor is kind and his smile reassuring.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
+      "prompt": "Góc quay theo chân (tracking shot) một người đàn ông mặc áo măng tô đen đi dạo dưới trời tuyết rơi tại New York vào thập niên 1950.",
       "mode_key": "text_to_video",
       "mode_label": "VEO3 - Tạo video từ văn bản",
       "mode_name": "VEO3 - Tạo video từ văn bản",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"5\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid light blue color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual white sneakers\", \"props\": [\"A small grocery bag offered to the neighbor\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center\", \"orientation\": \"facing the elderly neighbor\", \"pose\": \"helping_kindly\", \"foot_placement\": \"one foot slightly forward, balanced\", \"hand_detail\": \"reaching out to take the grocery bag\", \"expression\": \"smiling_helpful\", \"action_flow\": {\"pre_action\": \"noticing the neighbor\", \"main_action\": \"stepping forward to offer help and take the bag\", \"post_action\": \"holding the bag, ready to assist\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Residential street with a few steps\", \"scenery\": \"Tree-lined sidewalks, small shops and cafes, apartment buildings with balconies, parked bicycles and scooters\", \"props\": \"Apartment building entrance, steps, potted plants, streetlights\", \"lighting\": \"Bright, sunny daytime with warm, inviting light\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slight push-in\", \"focus\": \"Hiếu and the neighbor's interaction\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"neighborhood street sounds\"], \"fx\": [\"footsteps\", \"slight rustle of a bag\"], \"music\": \"warm, gentle melody\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"language\": \"vi-VN\", \"line\": \"[Để cháu giúp bác ạ!]\"}], \"lip_sync_director_note\": \"Mouth movements should be clear and reassuring for the offer of help. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu demonstrates his helpful nature by assisting an elderly neighbor with her groceries. His demeanor is kind and his smile reassuring.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "prompt": "Góc quay theo chân (tracking shot) một người đàn ông mặc áo măng tô đen đi dạo dưới trời tuyết rơi tại New York vào thập niên 1950."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\5_1_20032026_090830.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\5_1_21032026_104729.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_20032026_090839.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_21032026_104742.jpg"
       }
     },
     {
       "row": 5,
       "stt": "006",
       "prompt_id": "6",
-      "prompt": "{\"scene_id\": \"6\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid color (e.g., light blue or grey)\", \"outfit_bottom\": \"Comfortable, dark wash jeans or casual chinos\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual sneakers\", \"props\": [\"smartphone\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center\", \"orientation\": \"facing forward\", \"pose\": \"walking_through_market\", \"foot_placement\": \"natural stride\", \"hand_detail\": \"natural arm swing, holding smartphone casually\", \"expression\": \"pleasant_observant, with subtle smiles at sights\", \"action_flow\": {\"pre_action\": \"walking into the market scene\", \"main_action\": \"navigating through the crowded market, looking around with interest\", \"post_action\": \"continuing to walk deeper into the market\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Bustling local market\", \"scenery\": \"Colorful stalls overflowing with fresh produce, artisanal goods, and local crafts. Tree-lined sidewalks can be seen at the edges, with small shops and cafes.\", \"props\": \"Market stalls, awnings, small potted plants, streetlights (off during day)\", \"lighting\": \"Bright, sunny daytime with varied light and shadow from stalls and awnings, creating a vibrant and dynamic feel.\"}}, \"camera\": {\"framing\": \"wide shot, then moves to follow Hiếu\", \"angle\": \"slightly elevated\", \"movement\": \"dynamic tracking shot through the market, keeping Hiếu centered\", \"focus\": \"Hiếu amidst the lively market scene, with the background elements slightly softer\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"market hubbub\", \"vendors calling out\", \"chatter of shoppers\"], \"fx\": [\"footsteps on varied surfaces (cobblestone/dirt)\"], \"music\": \"energetic, folksy tune that evokes a lively marketplace\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu navigates through a vibrant local market, his cheerful mood reflecting the lively atmosphere and colorful stalls around him. He appears engaged and observant of his surroundings.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
+      "prompt": "Cận cảnh đôi mắt của một người lính đầy bùn đất đang nhìn lên bầu trời, trời đang mưa to, cảm xúc sâu lắng.",
       "mode_key": "text_to_video",
       "mode_label": "VEO3 - Tạo video từ văn bản",
       "mode_name": "VEO3 - Tạo video từ văn bản",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"6\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid color (e.g., light blue or grey)\", \"outfit_bottom\": \"Comfortable, dark wash jeans or casual chinos\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual sneakers\", \"props\": [\"smartphone\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center\", \"orientation\": \"facing forward\", \"pose\": \"walking_through_market\", \"foot_placement\": \"natural stride\", \"hand_detail\": \"natural arm swing, holding smartphone casually\", \"expression\": \"pleasant_observant, with subtle smiles at sights\", \"action_flow\": {\"pre_action\": \"walking into the market scene\", \"main_action\": \"navigating through the crowded market, looking around with interest\", \"post_action\": \"continuing to walk deeper into the market\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Bustling local market\", \"scenery\": \"Colorful stalls overflowing with fresh produce, artisanal goods, and local crafts. Tree-lined sidewalks can be seen at the edges, with small shops and cafes.\", \"props\": \"Market stalls, awnings, small potted plants, streetlights (off during day)\", \"lighting\": \"Bright, sunny daytime with varied light and shadow from stalls and awnings, creating a vibrant and dynamic feel.\"}}, \"camera\": {\"framing\": \"wide shot, then moves to follow Hiếu\", \"angle\": \"slightly elevated\", \"movement\": \"dynamic tracking shot through the market, keeping Hiếu centered\", \"focus\": \"Hiếu amidst the lively market scene, with the background elements slightly softer\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"market hubbub\", \"vendors calling out\", \"chatter of shoppers\"], \"fx\": [\"footsteps on varied surfaces (cobblestone/dirt)\"], \"music\": \"energetic, folksy tune that evokes a lively marketplace\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu navigates through a vibrant local market, his cheerful mood reflecting the lively atmosphere and colorful stalls around him. He appears engaged and observant of his surroundings.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "prompt": "Cận cảnh đôi mắt của một người lính đầy bùn đất đang nhìn lên bầu trời, trời đang mưa to, cảm xúc sâu lắng."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\6_1_20032026_090840.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\6_1_21032026_104743.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_20032026_090850.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_21032026_104756.jpg"
       }
     },
     {
       "row": 6,
       "stt": "007",
       "prompt_id": "7",
-      "prompt": "{\"scene_id\": \"7\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid color (e.g., light blue or grey)\", \"outfit_bottom\": \"Comfortable, dark wash jeans or casual chinos\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual sneakers\", \"props\": [\"smartphone\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center\", \"orientation\": \"facing the friend\", \"pose\": \"greeting_friend\", \"foot_placement\": \"slightly staggered, dynamic for greeting\", \"hand_detail\": \"gesturing animatedly, possibly a friendly pat on the shoulder or arm\", \"expression\": \"joyful_laughing, eyes sparkling, broad smile\", \"action_flow\": {\"pre_action\": \"approaching friend at park entrance\", \"main_action\": \"greeting friend warmly, engaging in animated conversation and laughter\", \"post_action\": \"continuing the conversation, gesturing as they walk or stand\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Park entrance area\", \"scenery\": \"Lush green trees, a clear walking path, a park entrance sign, and perhaps a nearby park bench. The sidewalk from the neighborhood street leads into the park.\", \"props\": \"Park entrance sign, trees, park bench, lamppost\", \"lighting\": \"Bright, sunny daytime, creating a cheerful and welcoming atmosphere.\"}}, \"camera\": {\"framing\": \"medium shot, capturing both Hiếu and his friend\", \"angle\": \"eye-level\", \"movement\": \"slight drift to capture both characters' interactions and expressions\", \"focus\": \"Hiếu and his friend, highlighting their connection and animated exchange\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"park sounds\", \"distant children playing\", \"birds chirping\"], \"fx\": [\"hearty laughter\", \"friendly greetings\"], \"music\": \"upbeat, friendly tune that emphasizes camaraderie and joy\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"language\": \"vi-VN\", \"line\": \"[Cậu thấy không, tớ đã bảo rồi mà!]\"}], \"lip_sync_director_note\": \"Mouth movements should reflect energetic laughter and speech, with natural pauses and intonation corresponding to the dialogue line. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu joyfully greets a friend near a park entrance, their conversation filled with animated gestures and hearty laughter. Their interaction highlights a strong, friendly bond.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
+      "prompt": "Một đoàn tàu hơi nước cổ điển chạy xuyên qua khu rừng phủ đầy tuyết trắng, khói trắng cuộn trào lên bầu trời xanh.",
       "mode_key": "text_to_video",
       "mode_label": "VEO3 - Tạo video từ văn bản",
       "mode_name": "VEO3 - Tạo video từ văn bản",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"7\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid color (e.g., light blue or grey)\", \"outfit_bottom\": \"Comfortable, dark wash jeans or casual chinos\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual sneakers\", \"props\": [\"smartphone\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center\", \"orientation\": \"facing the friend\", \"pose\": \"greeting_friend\", \"foot_placement\": \"slightly staggered, dynamic for greeting\", \"hand_detail\": \"gesturing animatedly, possibly a friendly pat on the shoulder or arm\", \"expression\": \"joyful_laughing, eyes sparkling, broad smile\", \"action_flow\": {\"pre_action\": \"approaching friend at park entrance\", \"main_action\": \"greeting friend warmly, engaging in animated conversation and laughter\", \"post_action\": \"continuing the conversation, gesturing as they walk or stand\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Park entrance area\", \"scenery\": \"Lush green trees, a clear walking path, a park entrance sign, and perhaps a nearby park bench. The sidewalk from the neighborhood street leads into the park.\", \"props\": \"Park entrance sign, trees, park bench, lamppost\", \"lighting\": \"Bright, sunny daytime, creating a cheerful and welcoming atmosphere.\"}}, \"camera\": {\"framing\": \"medium shot, capturing both Hiếu and his friend\", \"angle\": \"eye-level\", \"movement\": \"slight drift to capture both characters' interactions and expressions\", \"focus\": \"Hiếu and his friend, highlighting their connection and animated exchange\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"park sounds\", \"distant children playing\", \"birds chirping\"], \"fx\": [\"hearty laughter\", \"friendly greetings\"], \"music\": \"upbeat, friendly tune that emphasizes camaraderie and joy\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"language\": \"vi-VN\", \"line\": \"[Cậu thấy không, tớ đã bảo rồi mà!]\"}], \"lip_sync_director_note\": \"Mouth movements should reflect energetic laughter and speech, with natural pauses and intonation corresponding to the dialogue line. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu joyfully greets a friend near a park entrance, their conversation filled with animated gestures and hearty laughter. Their interaction highlights a strong, friendly bond.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "prompt": "Một đoàn tàu hơi nước cổ điển chạy xuyên qua khu rừng phủ đầy tuyết trắng, khói trắng cuộn trào lên bầu trời xanh."
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "FAILED",
+      "status_text": "Lỗi",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\7_1_20032026_090851.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_20032026_090902.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 7,
       "stt": "008",
       "prompt_id": "8",
-      "prompt": "{\"scene_id\": \"8\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid color (e.g., light blue or grey)\", \"outfit_bottom\": \"Comfortable, dark wash jeans or casual chinos\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual sneakers\", \"props\": [\"smartphone\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center\", \"orientation\": \"facing the vista\", \"pose\": \"standing_contemplative\", \"foot_placement\": \"grounded, stable stance\", \"hand_detail\": \"relaxed at his sides, perhaps one hand in pocket\", \"expression\": \"thoughtful_serene, looking out with a calm, appreciative gaze\", \"action_flow\": {\"pre_action\": \"walking up to the scenic overlook\", \"main_action\": \"standing and absorbing the peaceful view of the town below\", \"post_action\": \"turning slightly or taking a deep breath, still immersed in the scenery\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Scenic overlook\", \"scenery\": \"A beautiful, expansive vista of the town spread out below, featuring rolling hills, charming rooftops, and potentially a distant body of water or mountain range. The sky is clear.\", \"props\": \"Overlook railing, signage (optional)\", \"lighting\": \"Bright, sunny daytime with clear visibility, casting long shadows from the elevated perspective. The light is warm and inviting.\"}}, \"camera\": {\"framing\": \"wide shot showing Hiếu against the vista, then a closer shot on Hiếu\", \"angle\": \"slightly high angle, emphasizing the scale of the view\", \"movement\": \"slow zoom out to reveal the scale of the view, then a gentle pan to follow Hiếu's gaze\", \"focus\": \"Hiếu and the landscape, ensuring both are clear but with the vista being prominent\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"gentle breeze\", \"distant natural sounds (e.g., birds, faint traffic)\", \"the quiet hush of a high place\"], \"fx\": [], \"music\": \"calm, expansive orchestral piece that evokes a sense of peace and awe\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu stands at a scenic overlook, thoughtfully absorbing the peaceful, panoramic view of his town. His serene expression reflects a moment of quiet contemplation.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
+      "prompt": "Góc quay từ dưới lên (low angle) một tòa nhà chọc trời bằng kính đang phản chiếu những đám mây trôi nhanh, video time-lapse.",
       "mode_key": "text_to_video",
       "mode_label": "VEO3 - Tạo video từ văn bản",
       "mode_name": "VEO3 - Tạo video từ văn bản",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"8\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid color (e.g., light blue or grey)\", \"outfit_bottom\": \"Comfortable, dark wash jeans or casual chinos\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual sneakers\", \"props\": [\"smartphone\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center\", \"orientation\": \"facing the vista\", \"pose\": \"standing_contemplative\", \"foot_placement\": \"grounded, stable stance\", \"hand_detail\": \"relaxed at his sides, perhaps one hand in pocket\", \"expression\": \"thoughtful_serene, looking out with a calm, appreciative gaze\", \"action_flow\": {\"pre_action\": \"walking up to the scenic overlook\", \"main_action\": \"standing and absorbing the peaceful view of the town below\", \"post_action\": \"turning slightly or taking a deep breath, still immersed in the scenery\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Scenic overlook\", \"scenery\": \"A beautiful, expansive vista of the town spread out below, featuring rolling hills, charming rooftops, and potentially a distant body of water or mountain range. The sky is clear.\", \"props\": \"Overlook railing, signage (optional)\", \"lighting\": \"Bright, sunny daytime with clear visibility, casting long shadows from the elevated perspective. The light is warm and inviting.\"}}, \"camera\": {\"framing\": \"wide shot showing Hiếu against the vista, then a closer shot on Hiếu\", \"angle\": \"slightly high angle, emphasizing the scale of the view\", \"movement\": \"slow zoom out to reveal the scale of the view, then a gentle pan to follow Hiếu's gaze\", \"focus\": \"Hiếu and the landscape, ensuring both are clear but with the vista being prominent\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"gentle breeze\", \"distant natural sounds (e.g., birds, faint traffic)\", \"the quiet hush of a high place\"], \"fx\": [], \"music\": \"calm, expansive orchestral piece that evokes a sense of peace and awe\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu stands at a scenic overlook, thoughtfully absorbing the peaceful, panoramic view of his town. His serene expression reflects a moment of quiet contemplation.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "prompt": "Góc quay từ dưới lên (low angle) một tòa nhà chọc trời bằng kính đang phản chiếu những đám mây trôi nhanh, video time-lapse."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\8_1_20032026_090903.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\8_1_21032026_104838.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_20032026_090913.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_21032026_104852.jpg"
       }
     },
     {
       "row": 8,
       "stt": "009",
       "prompt_id": "9",
-      "prompt": "{\"scene_id\": \"9\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid color (e.g., light blue or grey)\", \"outfit_bottom\": \"Comfortable, dark wash jeans or casual chinos\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual sneakers\", \"props\": [\"book\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center\", \"orientation\": \"slightly turned towards a bookshelf, holding book\", \"pose\": \"browsing_book\", \"foot_placement\": \"standing, balanced\", \"hand_detail\": \"gently holding an open book, fingers lightly touching pages\", \"expression\": \"thoughtful_focused, brow slightly furrowed in concentration, eyes scanning the text\", \"action_flow\": {\"pre_action\": \"walking into the bookstore and finding a spot to browse\", \"main_action\": \"engrossed in browsing a book, holding it open and reading intently\", \"post_action\": \"turning a page or closing the book slightly to ponder\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Quiet bookstore interior\", \"scenery\": \"Walls lined with tall, well-stocked bookshelves. A cozy reading nook or a quiet aisle with soft lighting. The atmosphere is tranquil and inviting, filled with the scent of paper.\", \"props\": \"Bookshelves, books, reading lamps, comfortable chairs (optional)\", \"lighting\": \"Soft, warm indoor lighting that creates a cozy and inviting ambiance, with gentle highlights on the books.\"}}, \"camera\": {\"framing\": \"medium close-up on Hiếu\", \"angle\": \"eye-level\", \"movement\": \"slight rack focus from the book to Hiếu's face, then a slow zoom in on his expression\", \"focus\": \"Hiếu's face and the book he is holding, emphasizing his engagement\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"quiet rustling of pages\", \"soft ambient music (e.g., classical piano)\", \"distant, muffled sounds from outside\"], \"fx\": [\"gentle footsteps on carpet or wooden floor\"], \"music\": \"calm, classical piano music that enhances the tranquil and intellectual atmosphere\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Inside a quiet, cozy bookstore, Hiếu is deeply engrossed in browsing a book. The tranquil atmosphere and soft lighting accentuate his thoughtful and focused expression.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
+      "prompt": "Một đầu bếp đang tung chảo lửa xào thức ăn trong một nhà bếp ánh sáng lờ mờ, lửa bùng lên mạnh mẽ, quay siêu chậm 120fps.",
       "mode_key": "text_to_video",
       "mode_label": "VEO3 - Tạo video từ văn bản",
       "mode_name": "VEO3 - Tạo video từ văn bản",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"9\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid color (e.g., light blue or grey)\", \"outfit_bottom\": \"Comfortable, dark wash jeans or casual chinos\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual sneakers\", \"props\": [\"book\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center\", \"orientation\": \"slightly turned towards a bookshelf, holding book\", \"pose\": \"browsing_book\", \"foot_placement\": \"standing, balanced\", \"hand_detail\": \"gently holding an open book, fingers lightly touching pages\", \"expression\": \"thoughtful_focused, brow slightly furrowed in concentration, eyes scanning the text\", \"action_flow\": {\"pre_action\": \"walking into the bookstore and finding a spot to browse\", \"main_action\": \"engrossed in browsing a book, holding it open and reading intently\", \"post_action\": \"turning a page or closing the book slightly to ponder\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Quiet bookstore interior\", \"scenery\": \"Walls lined with tall, well-stocked bookshelves. A cozy reading nook or a quiet aisle with soft lighting. The atmosphere is tranquil and inviting, filled with the scent of paper.\", \"props\": \"Bookshelves, books, reading lamps, comfortable chairs (optional)\", \"lighting\": \"Soft, warm indoor lighting that creates a cozy and inviting ambiance, with gentle highlights on the books.\"}}, \"camera\": {\"framing\": \"medium close-up on Hiếu\", \"angle\": \"eye-level\", \"movement\": \"slight rack focus from the book to Hiếu's face, then a slow zoom in on his expression\", \"focus\": \"Hiếu's face and the book he is holding, emphasizing his engagement\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"quiet rustling of pages\", \"soft ambient music (e.g., classical piano)\", \"distant, muffled sounds from outside\"], \"fx\": [\"gentle footsteps on carpet or wooden floor\"], \"music\": \"calm, classical piano music that enhances the tranquil and intellectual atmosphere\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Inside a quiet, cozy bookstore, Hiếu is deeply engrossed in browsing a book. The tranquil atmosphere and soft lighting accentuate his thoughtful and focused expression.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "prompt": "Một đầu bếp đang tung chảo lửa xào thức ăn trong một nhà bếp ánh sáng lờ mờ, lửa bùng lên mạnh mẽ, quay siêu chậm 120fps."
       },
       "status_code": "FAILED",
-      "status_text": "Lỗi (mã lỗi: 401 | message: Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.)",
+      "status_text": "Lỗi",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -200,69 +196,81 @@
       "row": 9,
       "stt": "010",
       "prompt_id": "10",
-      "prompt": "{\"scene_id\": \"10\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid color (e.g., light blue or grey)\", \"outfit_bottom\": \"Comfortable, dark wash jeans or casual chinos\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual sneakers\", \"props\": [\"bicycle\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"moving along path\", \"orientation\": \"forward, along the path\", \"pose\": \"cycling_gracefully\", \"foot_placement\": \"pedaling rhythmically\", \"hand_detail\": \"gripping handlebars with relaxed posture\", \"expression\": \"pleasant_free, a slight smile and relaxed, happy demeanor\", \"action_flow\": {\"pre_action\": \"starting to cycle along the park path\", \"main_action\": \"riding a bicycle smoothly along a scenic path, sunlight filtering through trees\", \"post_action\": \"continuing to cycle, the scenery passing by\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Park path\", \"scenery\": \"A scenic path winding through a park, lined with lush green trees. Sunlight filters through the leaves, creating a dappled light effect on the path.\", \"props\": \"Trees, park path, possibly benches or lamp posts in the distance\", \"lighting\": \"Bright, sunny daytime with dappled light filtering through the trees, creating a dynamic and lively visual. Warm and inviting.\"}}, \"camera\": {\"framing\": \"tracking shot, following Hiếu on his bike\", \"angle\": \"eye level\", \"movement\": \"smooth, fluid motion alongside the path, keeping pace with the bicycle\", \"focus\": \"Hiếu and the motion of cycling, with the park scenery gently blurred in the background\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"wind sounds\", \"birds chirping\", \"distant park sounds\"], \"fx\": [\"bicycle chain and wheels turning\", \"gentle whoosh of wind\", \"leaves rustling\"], \"music\": \"uplifting, airy melody that evokes a sense of freedom and enjoyment\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu enjoys a leisurely and graceful bicycle ride along a scenic park path. The sunlight filtering through the trees and the gentle wind in his hair create a feeling of freedom and contentment.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
+      "prompt": "Cảnh rượt đuổi bằng ô tô trên con đường đèo quanh co bên bờ biển, góc quay từ trực thăng, ánh sáng bình minh.",
       "mode_key": "text_to_video",
       "mode_label": "VEO3 - Tạo video từ văn bản",
       "mode_name": "VEO3 - Tạo video từ văn bản",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"10\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid color (e.g., light blue or grey)\", \"outfit_bottom\": \"Comfortable, dark wash jeans or casual chinos\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual sneakers\", \"props\": [\"bicycle\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"moving along path\", \"orientation\": \"forward, along the path\", \"pose\": \"cycling_gracefully\", \"foot_placement\": \"pedaling rhythmically\", \"hand_detail\": \"gripping handlebars with relaxed posture\", \"expression\": \"pleasant_free, a slight smile and relaxed, happy demeanor\", \"action_flow\": {\"pre_action\": \"starting to cycle along the park path\", \"main_action\": \"riding a bicycle smoothly along a scenic path, sunlight filtering through trees\", \"post_action\": \"continuing to cycle, the scenery passing by\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Park path\", \"scenery\": \"A scenic path winding through a park, lined with lush green trees. Sunlight filters through the leaves, creating a dappled light effect on the path.\", \"props\": \"Trees, park path, possibly benches or lamp posts in the distance\", \"lighting\": \"Bright, sunny daytime with dappled light filtering through the trees, creating a dynamic and lively visual. Warm and inviting.\"}}, \"camera\": {\"framing\": \"tracking shot, following Hiếu on his bike\", \"angle\": \"eye level\", \"movement\": \"smooth, fluid motion alongside the path, keeping pace with the bicycle\", \"focus\": \"Hiếu and the motion of cycling, with the park scenery gently blurred in the background\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"wind sounds\", \"birds chirping\", \"distant park sounds\"], \"fx\": [\"bicycle chain and wheels turning\", \"gentle whoosh of wind\", \"leaves rustling\"], \"music\": \"uplifting, airy melody that evokes a sense of freedom and enjoyment\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu enjoys a leisurely and graceful bicycle ride along a scenic park path. The sunlight filtering through the trees and the gentle wind in his hair create a feeling of freedom and contentment.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "prompt": "Cảnh rượt đuổi bằng ô tô trên con đường đèo quanh co bên bờ biển, góc quay từ trực thăng, ánh sáng bình minh."
       },
-      "status_code": "ACTIVE",
-      "status_text": "Đang tạo",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\10_1_21032026_104812.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_21032026_104828.jpg"
+      }
     },
     {
       "row": 10,
       "stt": "011",
       "prompt_id": "11",
-      "prompt": "{\"scene_id\": \"11\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid light blue color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual white sneakers\", \"props\": [\"A small, unobtrusive brown leather wallet\", \"A small, colorful sweet pastry held in hand\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center frame, approaching food cart\", \"orientation\": \"facing food cart\", \"pose\": \"standing, reaching out slightly\", \"foot_placement\": \"feet shoulder-width apart\", \"hand_detail\": \"one hand holding wallet, other gesturing towards pastry\", \"expression\": \"warm, engaged, smiling, eyes bright with interest\", \"action_flow\": {\"pre_action\": \"walking towards food cart\", \"main_action\": \"approaching and gesturing to order\", \"post_action\": \"receiving pastry, pulling out wallet\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Urban residential street\", \"scenery\": \"Tree-lined sidewalks, small shops and cafes, apartment buildings with balconies, parked bicycles and scooters\", \"props\": \"Streetlights, benches, small potted plants outside shops, awnings, a small, colorful food cart\", \"lighting\": \"Bright, sunny daytime with warm, inviting light\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slight push-in\", \"focus\": \"Hiếu and the vendor at the food cart\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"street sounds\", \"chatter of people\", \"distant traffic\"], \"fx\": [\"coin clinking\", \"paper bag rustling\"], \"music\": \"upbeat, light instrumental\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"language\": \"vi-VN\", \"line\": \"[Chào cô ạ! Cho cháu cái này nhé.]\"}], \"lip_sync_director_note\": \"Mouth movements for CHAR_1 should be soft and natural, matching the friendly greeting and request. Ensure clear pronunciation for 'Chào cô ạ! Cho cháu cái này nhé.' Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu, with his characteristic easy smile, approaches a bustling street corner food cart. He warmly interacts with the vendor, ordering a small sweet pastry and preparing to pay.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
+      "prompt": "Một cô gái đang ngồi đọc sách bên cửa sổ kính lớn trên xe lửa, phong cảnh núi non lướt qua nhanh chóng.",
       "mode_key": "text_to_video",
       "mode_label": "VEO3 - Tạo video từ văn bản",
       "mode_name": "VEO3 - Tạo video từ văn bản",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"11\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid light blue color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual white sneakers\", \"props\": [\"A small, unobtrusive brown leather wallet\", \"A small, colorful sweet pastry held in hand\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center frame, approaching food cart\", \"orientation\": \"facing food cart\", \"pose\": \"standing, reaching out slightly\", \"foot_placement\": \"feet shoulder-width apart\", \"hand_detail\": \"one hand holding wallet, other gesturing towards pastry\", \"expression\": \"warm, engaged, smiling, eyes bright with interest\", \"action_flow\": {\"pre_action\": \"walking towards food cart\", \"main_action\": \"approaching and gesturing to order\", \"post_action\": \"receiving pastry, pulling out wallet\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Urban residential street\", \"scenery\": \"Tree-lined sidewalks, small shops and cafes, apartment buildings with balconies, parked bicycles and scooters\", \"props\": \"Streetlights, benches, small potted plants outside shops, awnings, a small, colorful food cart\", \"lighting\": \"Bright, sunny daytime with warm, inviting light\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slight push-in\", \"focus\": \"Hiếu and the vendor at the food cart\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"street sounds\", \"chatter of people\", \"distant traffic\"], \"fx\": [\"coin clinking\", \"paper bag rustling\"], \"music\": \"upbeat, light instrumental\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"language\": \"vi-VN\", \"line\": \"[Chào cô ạ! Cho cháu cái này nhé.]\"}], \"lip_sync_director_note\": \"Mouth movements for CHAR_1 should be soft and natural, matching the friendly greeting and request. Ensure clear pronunciation for 'Chào cô ạ! Cho cháu cái này nhé.' Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu, with his characteristic easy smile, approaches a bustling street corner food cart. He warmly interacts with the vendor, ordering a small sweet pastry and preparing to pay.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "prompt": "Một cô gái đang ngồi đọc sách bên cửa sổ kính lớn trên xe lửa, phong cảnh núi non lướt qua nhanh chóng."
       },
-      "status_code": "ACTIVE",
-      "status_text": "Đang tạo",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\11_1_21032026_104902.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\11_1_21032026_104913.jpg"
+      }
     },
     {
       "row": 11,
       "stt": "012",
       "prompt_id": "12",
-      "prompt": "{\"scene_id\": \"12\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid grey color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual grey sneakers\", \"props\": [\"A spiral-bound sketchbook, open to a drawing\", \"A sharpened graphite pencil held in hand\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"seated, angled towards a desk/table\", \"orientation\": \"facing sketchbook\", \"pose\": \"seated, comfortably leaning forward slightly\", \"foot_placement\": \"feet resting on floor or tucked comfortably\", \"hand_detail\": \"one hand holding pencil, lightly touching sketchbook page\", \"expression\": \"focused, content, brow slightly furrowed in concentration, small, focused smile\", \"action_flow\": {\"pre_action\": \"settling into comfortable position\", \"main_action\": \"delicately sketching in sketchbook\", \"post_action\": \"pausing to observe work, ready to continue\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Cozy Room\", \"setting\": \"Indoor, residential\", \"scenery\": \"A cozy room with a window letting in natural light, a desk or table with art supplies, books on a shelf, perhaps a comfortable chair.\", \"props\": \"Desk, art supplies, books, a lamp\", \"lighting\": \"Warm, natural sunlight streaming through a window, creating a bright and inviting atmosphere\"}}, \"camera\": {\"framing\": \"close-up to medium shot\", \"angle\": \"slightly above eye-level\", \"movement\": \"slow, subtle orbit around Hiếu\", \"focus\": \"Hiếu's hands and face as he sketches\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"quiet room ambiance\"], \"fx\": [\"pencil scratching on paper\"], \"music\": \"calm, melodic instrumental\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Inside a cozy, sunlit room, Hiếu is deeply engrossed in his hobby of sketching. His focused expression and fluid movements convey a sense of peaceful concentration and quiet contentment.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
+      "prompt": "Góc nhìn thứ nhất (POV) đang chạy xuyên qua một khu rừng sương mù dày đặc, ánh sáng mờ ảo, không khí rùng rợn.",
       "mode_key": "text_to_video",
       "mode_label": "VEO3 - Tạo video từ văn bản",
       "mode_name": "VEO3 - Tạo video từ văn bản",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"12\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid grey color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual grey sneakers\", \"props\": [\"A spiral-bound sketchbook, open to a drawing\", \"A sharpened graphite pencil held in hand\"], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"seated, angled towards a desk/table\", \"orientation\": \"facing sketchbook\", \"pose\": \"seated, comfortably leaning forward slightly\", \"foot_placement\": \"feet resting on floor or tucked comfortably\", \"hand_detail\": \"one hand holding pencil, lightly touching sketchbook page\", \"expression\": \"focused, content, brow slightly furrowed in concentration, small, focused smile\", \"action_flow\": {\"pre_action\": \"settling into comfortable position\", \"main_action\": \"delicately sketching in sketchbook\", \"post_action\": \"pausing to observe work, ready to continue\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Cozy Room\", \"setting\": \"Indoor, residential\", \"scenery\": \"A cozy room with a window letting in natural light, a desk or table with art supplies, books on a shelf, perhaps a comfortable chair.\", \"props\": \"Desk, art supplies, books, a lamp\", \"lighting\": \"Warm, natural sunlight streaming through a window, creating a bright and inviting atmosphere\"}}, \"camera\": {\"framing\": \"close-up to medium shot\", \"angle\": \"slightly above eye-level\", \"movement\": \"slow, subtle orbit around Hiếu\", \"focus\": \"Hiếu's hands and face as he sketches\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"quiet room ambiance\"], \"fx\": [\"pencil scratching on paper\"], \"music\": \"calm, melodic instrumental\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Inside a cozy, sunlit room, Hiếu is deeply engrossed in his hobby of sketching. His focused expression and fluid movements convey a sense of peaceful concentration and quiet contentment.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "prompt": "Góc nhìn thứ nhất (POV) đang chạy xuyên qua một khu rừng sương mù dày đặc, ánh sáng mờ ảo, không khí rùng rợn."
       },
-      "status_code": "ACTIVE",
-      "status_text": "Đang tạo",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\12_1_21032026_104924.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_21032026_104940.jpg"
+      }
     },
     {
       "row": 12,
       "stt": "013",
       "prompt_id": "13",
-      "prompt": "{\"scene_id\": \"13\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid dark blue color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual dark sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"walking down sidewalk, mid-frame\", \"orientation\": \"walking away from camera, slightly angled\", \"pose\": \"walking, relaxed, hands in pockets\", \"foot_placement\": \"natural walking stride\", \"hand_detail\": \"hands in pockets\", \"expression\": \"thoughtful, content, handsome features highlighted by warm light\", \"action_flow\": {\"pre_action\": \"strolling along the sidewalk\", \"main_action\": \"walking home at a relaxed pace\", \"post_action\": \"continuing his walk, disappearing into the distance\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Urban residential street\", \"scenery\": \"Tree-lined sidewalks, apartment buildings with balconies, streetlights\", \"props\": \"Streetlights, trees, apartment balconies\", \"lighting\": \"Golden hour, warm sunset glow casting long shadows\"}}, \"camera\": {\"framing\": \"wide shot, then medium shot\", \"angle\": \"eye level\", \"movement\": \"tracking shot following Hiếu\", \"focus\": \"Hiếu, with the sunset visible behind him\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"evening street sounds\", \"distant birds\"], \"fx\": [\"footsteps on pavement\"], \"music\": \"nostalgic, gentle melody\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"As the sun sets, Hiếu walks home along a tree-lined sidewalk, his silhouette partially defined against the warm, golden light. He ambles at a relaxed pace, his expression one of thoughtful contentment.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
+      "prompt": "Hai người ôm nhau khóc dưới cơn mưa nặng hạt giữa ngã tư đường phố vắng lặng, ánh đèn đường màu vàng ấm áp.",
       "mode_key": "text_to_video",
       "mode_label": "VEO3 - Tạo video từ văn bản",
       "mode_name": "VEO3 - Tạo video từ văn bản",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"13\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid dark blue color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual dark sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"walking down sidewalk, mid-frame\", \"orientation\": \"walking away from camera, slightly angled\", \"pose\": \"walking, relaxed, hands in pockets\", \"foot_placement\": \"natural walking stride\", \"hand_detail\": \"hands in pockets\", \"expression\": \"thoughtful, content, handsome features highlighted by warm light\", \"action_flow\": {\"pre_action\": \"strolling along the sidewalk\", \"main_action\": \"walking home at a relaxed pace\", \"post_action\": \"continuing his walk, disappearing into the distance\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Urban residential street\", \"scenery\": \"Tree-lined sidewalks, apartment buildings with balconies, streetlights\", \"props\": \"Streetlights, trees, apartment balconies\", \"lighting\": \"Golden hour, warm sunset glow casting long shadows\"}}, \"camera\": {\"framing\": \"wide shot, then medium shot\", \"angle\": \"eye level\", \"movement\": \"tracking shot following Hiếu\", \"focus\": \"Hiếu, with the sunset visible behind him\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"evening street sounds\", \"distant birds\"], \"fx\": [\"footsteps on pavement\"], \"music\": \"nostalgic, gentle melody\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"As the sun sets, Hiếu walks home along a tree-lined sidewalk, his silhouette partially defined against the warm, golden light. He ambles at a relaxed pace, his expression one of thoughtful contentment.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "prompt": "Hai người ôm nhau khóc dưới cơn mưa nặng hạt giữa ngã tư đường phố vắng lặng, ánh đèn đường màu vàng ấm áp."
       },
       "status_code": "FAILED",
-      "status_text": "Lỗi (mã lỗi: 401 | message: Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.)",
+      "status_text": "Lỗi",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -272,12 +280,404 @@
       "row": 13,
       "stt": "014",
       "prompt_id": "14",
-      "prompt": "{\"scene_id\": \"14\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid yellow color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual brown sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center frame, on sidewalk\", \"orientation\": \"facing slightly away from camera, towards where friend would be\", \"pose\": \"standing, raising hand to wave goodbye\", \"foot_placement\": \"feet shoulder-width apart\", \"hand_detail\": \"one hand raised in a friendly wave\", \"expression\": \"warm, friendly, lingering warmth and a touch of wistfulness, eyes bright and friendly\", \"action_flow\": {\"pre_action\": \"concluding conversation\", \"main_action\": \"offering a warm smile and waving goodbye\", \"post_action\": \"watching friend depart, smile softening\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Urban residential street\", \"scenery\": \"Tree-lined sidewalks, small shops and cafes, apartment buildings with balconies.\", \"props\": \"A park bench, a street sign, shop awnings\", \"lighting\": \"Late afternoon light, warm and soft\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"static\", \"focus\": \"Hiếu's face and waving hand\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"neighborhood street sounds\"], \"fx\": [\"gentle footsteps receding\"], \"music\": \"light, warm, and fading\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"language\": \"vi-VN\", \"line\": \"[Chào bạn nhé! Hẹn gặp lại!]\"}], \"lip_sync_director_note\": \"Hiếu's lip movements for the goodbye should be clear and friendly, matching the vocal tone. Ensure clear pronunciation for 'Chào bạn nhé! Hẹn gặp lại!'. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu stands on the sidewalk, offering a warm, genuine smile and a friendly wave goodbye to a friend. His expression conveys lingering warmth and a touch of wistfulness after their pleasant conversation.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
+      "prompt": "Một nhạc công đang chơi đàn cello trên đỉnh một vách đá mờ sương, sóng biển vỗ dữ dội phía dưới.",
       "mode_key": "text_to_video",
       "mode_label": "VEO3 - Tạo video từ văn bản",
       "mode_name": "VEO3 - Tạo video từ văn bản",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"14\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid yellow color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual brown sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"center frame, on sidewalk\", \"orientation\": \"facing slightly away from camera, towards where friend would be\", \"pose\": \"standing, raising hand to wave goodbye\", \"foot_placement\": \"feet shoulder-width apart\", \"hand_detail\": \"one hand raised in a friendly wave\", \"expression\": \"warm, friendly, lingering warmth and a touch of wistfulness, eyes bright and friendly\", \"action_flow\": {\"pre_action\": \"concluding conversation\", \"main_action\": \"offering a warm smile and waving goodbye\", \"post_action\": \"watching friend depart, smile softening\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Neighborhood Street\", \"setting\": \"Urban residential street\", \"scenery\": \"Tree-lined sidewalks, small shops and cafes, apartment buildings with balconies.\", \"props\": \"A park bench, a street sign, shop awnings\", \"lighting\": \"Late afternoon light, warm and soft\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"static\", \"focus\": \"Hiếu's face and waving hand\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"neighborhood street sounds\"], \"fx\": [\"gentle footsteps receding\"], \"music\": \"light, warm, and fading\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"language\": \"vi-VN\", \"line\": \"[Chào bạn nhé! Hẹn gặp lại!]\"}], \"lip_sync_director_note\": \"Hiếu's lip movements for the goodbye should be clear and friendly, matching the vocal tone. Ensure clear pronunciation for 'Chào bạn nhé! Hẹn gặp lại!'. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu stands on the sidewalk, offering a warm, genuine smile and a friendly wave goodbye to a friend. His expression conveys lingering warmth and a touch of wistfulness after their pleasant conversation.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "prompt": "Một nhạc công đang chơi đàn cello trên đỉnh một vách đá mờ sương, sóng biển vỗ dữ dội phía dưới."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\14_1_21032026_105012.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\14_1_21032026_105024.jpg"
+      }
+    },
+    {
+      "row": 14,
+      "stt": "015",
+      "prompt_id": "15",
+      "prompt": "Cận cảnh giọt cà phê espresso từ từ rơi xuống lớp bọt sữa nóng, ánh sáng studio, phong cách quảng cáo.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Cận cảnh giọt cà phê espresso từ từ rơi xuống lớp bọt sữa nóng, ánh sáng studio, phong cách quảng cáo."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\15_1_21032026_105034.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\15_1_21032026_105047.jpg"
+      }
+    },
+    {
+      "row": 15,
+      "stt": "016",
+      "prompt_id": "16",
+      "prompt": "Góc quay rộng một đoàn xe du mục đang băng qua sa mạc Sahara bạt ngàn dưới cái nắng chói chang.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Góc quay rộng một đoàn xe du mục đang băng qua sa mạc Sahara bạt ngàn dưới cái nắng chói chang."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\16_1_21032026_105101.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\16_1_21032026_105111.jpg"
+      }
+    },
+    {
+      "row": 16,
+      "stt": "017",
+      "prompt_id": "17",
+      "prompt": "Một người thợ mộc đang bào gỗ, những mạt gỗ bay lơ lửng trong không trung bắt được tia nắng mặt trời.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Một người thợ mộc đang bào gỗ, những mạt gỗ bay lơ lửng trong không trung bắt được tia nắng mặt trời."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\17_1_21032026_105112.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\17_1_21032026_105127.jpg"
+      }
+    },
+    {
+      "row": 17,
+      "stt": "018",
+      "prompt_id": "18",
+      "prompt": "Trẻ em đang chơi đùa với pháo hoa cầm tay trên bãi biển vào ban đêm, nụ cười rạng rỡ, ánh sáng chân thực.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Trẻ em đang chơi đùa với pháo hoa cầm tay trên bãi biển vào ban đêm, nụ cười rạng rỡ, ánh sáng chân thực."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\18_1_21032026_105141.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\18_1_21032026_105156.jpg"
+      }
+    },
+    {
+      "row": 18,
+      "stt": "019",
+      "prompt_id": "19",
+      "prompt": "Cận cảnh bàn tay gân guốc của một nghệ nhân đang nhào nặn đất sét trên bàn xoay, bùn đất ướt át.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Cận cảnh bàn tay gân guốc của một nghệ nhân đang nhào nặn đất sét trên bàn xoay, bùn đất ướt át."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\19_1_21032026_105156.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\19_1_21032026_105210.jpg"
+      }
+    },
+    {
+      "row": 19,
+      "stt": "020",
+      "prompt_id": "20",
+      "prompt": "Góc quay ngang lướt qua những người mẫu đang sải bước trên sàn catwalk, ánh đèn flash chớp liên tục.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Góc quay ngang lướt qua những người mẫu đang sải bước trên sàn catwalk, ánh đèn flash chớp liên tục."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\20_1_21032026_105220.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\20_1_21032026_105234.jpg"
+      }
+    },
+    {
+      "row": 20,
+      "stt": "021",
+      "prompt_id": "21",
+      "prompt": "🚀 Chủ đề 2: Viễn tưởng & Kỳ ảo (Sci-Fi & Fantasy)",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "🚀 Chủ đề 2: Viễn tưởng & Kỳ ảo (Sci-Fi & Fantasy)"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\21_1_21032026_105250.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\21_1_21032026_105307.jpg"
+      }
+    },
+    {
+      "row": 21,
+      "stt": "022",
+      "prompt_id": "22",
+      "prompt": "Một con rồng vảy đen khổng lồ đang bay lượn qua những đám mây giông bão, tia chớp lóe sáng làm lộ rõ đôi cánh.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Một con rồng vảy đen khổng lồ đang bay lượn qua những đám mây giông bão, tia chớp lóe sáng làm lộ rõ đôi cánh."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\22_1_21032026_105331.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\22_1_21032026_105345.jpg"
+      }
+    },
+    {
+      "row": 22,
+      "stt": "023",
+      "prompt_id": "23",
+      "prompt": "Phi hành gia đang trôi dạt vô định trong không gian tĩnh lặng, kính mũ bảo hiểm phản chiếu hình ảnh Trái Đất rực rỡ.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Phi hành gia đang trôi dạt vô định trong không gian tĩnh lặng, kính mũ bảo hiểm phản chiếu hình ảnh Trái Đất rực rỡ."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\23_1_21032026_105307.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\23_1_21032026_105321.jpg"
+      }
+    },
+    {
+      "row": 23,
+      "stt": "024",
+      "prompt_id": "24",
+      "prompt": "Một thành phố nổi trên không trung với những thác nước đổ xuống những đám mây trắng xốp, phong cách kỳ ảo.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Một thành phố nổi trên không trung với những thác nước đổ xuống những đám mây trắng xốp, phong cách kỳ ảo."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\24_1_21032026_105355.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\24_1_21032026_105409.jpg"
+      }
+    },
+    {
+      "row": 24,
+      "stt": "025",
+      "prompt_id": "25",
+      "prompt": "Cận cảnh một sinh vật ngoài hành tinh có đôi mắt phát sáng đang tò mò chạm vào một bông hoa của Trái Đất.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Cận cảnh một sinh vật ngoài hành tinh có đôi mắt phát sáng đang tò mò chạm vào một bông hoa của Trái Đất."
+      },
+      "status_code": "TOKEN",
+      "status_text": "Đang tạo",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 25,
+      "stt": "026",
+      "prompt_id": "26",
+      "prompt": "Những chiếc xe bay (hovercar) đang len lỏi qua các luồng giao thông trên không trong một siêu đô thị tương lai năm 3000.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Những chiếc xe bay (hovercar) đang len lỏi qua các luồng giao thông trên không trong một siêu đô thị tương lai năm 3000."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\26_1_21032026_105641.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\26_1_21032026_105655.jpg"
+      }
+    },
+    {
+      "row": 26,
+      "stt": "027",
+      "prompt_id": "27",
+      "prompt": "Một phù thủy mặc áo choàng đen đang niệm chú, phép thuật màu xanh lục bùng nổ từ đầu đũa phép.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Một phù thủy mặc áo choàng đen đang niệm chú, phép thuật màu xanh lục bùng nổ từ đầu đũa phép."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\27_1_21032026_105447.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\27_1_21032026_105500.jpg"
+      }
+    },
+    {
+      "row": 27,
+      "stt": "028",
+      "prompt_id": "28",
+      "prompt": "Khu rừng phát sáng sinh học (bioluminescent) vào ban đêm với những cây nấm khổng lồ và bướm dạ quang bay lượn.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Khu rừng phát sáng sinh học (bioluminescent) vào ban đêm với những cây nấm khổng lồ và bướm dạ quang bay lượn."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\28_1_21032026_105511.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\28_1_21032026_105525.jpg"
+      }
+    },
+    {
+      "row": 28,
+      "stt": "029",
+      "prompt_id": "29",
+      "prompt": "Một chiến binh robot bị rỉ sét đang từ từ thức tỉnh sau hàng ngàn năm trong một hang động băng giá.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Một chiến binh robot bị rỉ sét đang từ từ thức tỉnh sau hàng ngàn năm trong một hang động băng giá."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\29_1_21032026_105608.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\29_1_21032026_105622.jpg"
+      }
+    },
+    {
+      "row": 29,
+      "stt": "030",
+      "prompt_id": "30",
+      "prompt": "Cổng dịch chuyển không gian bằng năng lượng lượng tử đang mở ra giữa một cánh đồng lúa mì hoang sơ.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Cổng dịch chuyển không gian bằng năng lượng lượng tử đang mở ra giữa một cánh đồng lúa mì hoang sơ."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\30_1_21032026_105623.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\30_1_21032026_105640.jpg"
+      }
+    },
+    {
+      "row": 30,
+      "stt": "031",
+      "prompt_id": "31",
+      "prompt": "Tàu vũ trụ khổng lồ đang từ từ tiến vào bầu khí quyển của một hành tinh màu đỏ rực lửa.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Tàu vũ trụ khổng lồ đang từ từ tiến vào bầu khí quyển của một hành tinh màu đỏ rực lửa."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\31_1_21032026_105535.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\31_1_21032026_105546.jpg"
+      }
+    },
+    {
+      "row": 31,
+      "stt": "032",
+      "prompt_id": "32",
+      "prompt": "Một người máy có khuôn mặt giống con người đang khóc, một giọt nước mắt lăn xuống gò má kim loại.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Một người máy có khuôn mặt giống con người đang khóc, một giọt nước mắt lăn xuống gò má kim loại."
       },
       "status_code": "ACTIVE",
       "status_text": "Đang tạo",
@@ -287,18 +687,1296 @@
       "preview_map": {}
     },
     {
-      "row": 14,
-      "stt": "015",
-      "prompt_id": "15",
-      "prompt": "{\"scene_id\": \"15\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid navy blue color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual black sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"standing at his doorstep\", \"orientation\": \"facing slightly back towards the street, then turning towards the door\", \"pose\": \"standing, pausing, looking back thoughtfully\", \"foot_placement\": \"feet planted firmly\", \"hand_detail\": \"one hand might rest on his hip or adjust his shirt subtly\", \"expression\": \"satisfied, content, handsome demeanor, eyes holding a gentle sparkle\", \"action_flow\": {\"pre_action\": \"approaching his doorstep\", \"main_action\": \"pausing to look back down the street, reflecting\", \"post_action\": \"turning to enter his home\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Residence Entrance\", \"setting\": \"Urban residential entrance\", \"scenery\": \"The front door of an apartment building or house, with a porch light or nearby lamp.\", \"props\": \"Front door, porch light, street lamp visible in the distance\", \"lighting\": \"Warm, inviting evening light from lamps, illuminating his face\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slow zoom out\", \"focus\": \"Hiếu's face as he turns\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"quiet evening street sounds\"], \"fx\": [\"gentle sigh\"], \"music\": \"warm, reflective, peaceful\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral. A subtle exhale might be conveyed through posture. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu stands at his doorstep, bathed in the warm glow of evening light. He pauses to look back down the street, a satisfied and handsome expression reflecting a day well spent.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
+      "row": 32,
+      "stt": "033",
+      "prompt_id": "33",
+      "prompt": "Lâu đài gothic tối tăm nằm trên đỉnh ngọn núi lửa đang hoạt động, dung nham chảy đỏ rực bên dưới.",
       "mode_key": "text_to_video",
       "mode_label": "VEO3 - Tạo video từ văn bản",
       "mode_name": "VEO3 - Tạo video từ văn bản",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"15\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Hiếu\", \"species\": \"Fictional Human\", \"gender\": \"Male\", \"age\": \"Young Adult\", \"voice_personality\": \"Male; vi-VN; warm, friendly, with a slight playful lilt\", \"body_build\": \"Lean and athletic, with good posture\", \"face_shape\": \"Oval with defined cheekbones and a strong jawline\", \"hair\": \"Neatly styled, slightly tousled dark brown hair that frames his face\", \"skin_or_fur_color\": \"Fair complexion with a healthy glow\", \"signature_feature\": \"A charming, genuine smile that crinkles the corners of his eyes\", \"outfit_top\": \"A simple, well-fitting short-sleeved t-shirt in a solid navy blue color\", \"outfit_bottom\": \"Comfortable, dark wash jeans\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"Clean, casual black sneakers\", \"props\": [], \"body_metrics\": \"u=cm; abs.height=178; abs.head=23; abs.shoulder=45; abs.torso=52; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=20; cons=no-auto-rescale,lock-proportions\", \"position\": \"standing at his doorstep\", \"orientation\": \"facing slightly back towards the street, then turning towards the door\", \"pose\": \"standing, pausing, looking back thoughtfully\", \"foot_placement\": \"feet planted firmly\", \"hand_detail\": \"one hand might rest on his hip or adjust his shirt subtly\", \"expression\": \"satisfied, content, handsome demeanor, eyes holding a gentle sparkle\", \"action_flow\": {\"pre_action\": \"approaching his doorstep\", \"main_action\": \"pausing to look back down the street, reflecting\", \"post_action\": \"turning to enter his home\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Hiếu's Residence Entrance\", \"setting\": \"Urban residential entrance\", \"scenery\": \"The front door of an apartment building or house, with a porch light or nearby lamp.\", \"props\": \"Front door, porch light, street lamp visible in the distance\", \"lighting\": \"Warm, inviting evening light from lamps, illuminating his face\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slow zoom out\", \"focus\": \"Hiếu's face as he turns\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"quiet evening street sounds\"], \"fx\": [\"gentle sigh\"], \"music\": \"warm, reflective, peaceful\"}, \"dialogue\": [], \"lip_sync_director_note\": \"mouth_locked=true, no_lip_sync, keep mouth closed and neutral. A subtle exhale might be conveyed through posture. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"Hiếu stands at his doorstep, bathed in the warm glow of evening light. He pauses to look back down the street, a satisfied and handsome expression reflecting a day well spent.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "prompt": "Lâu đài gothic tối tăm nằm trên đỉnh ngọn núi lửa đang hoạt động, dung nham chảy đỏ rực bên dưới."
       },
       "status_code": "ACTIVE",
       "status_text": "Đang tạo",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 33,
+      "stt": "034",
+      "prompt_id": "34",
+      "prompt": "Một tiên nữ nhỏ bé có cánh trong suốt đang ngủ say trong một bông hoa sen nở rộ.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Một tiên nữ nhỏ bé có cánh trong suốt đang ngủ say trong một bông hoa sen nở rộ."
+      },
+      "status_code": "ACTIVE",
+      "status_text": "Đang tạo",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 34,
+      "stt": "035",
+      "prompt_id": "35",
+      "prompt": "Khung cảnh sao hỏa với những cơn bão cát khổng lồ đang quét qua một khu định cư mái vòm bằng kính.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Khung cảnh sao hỏa với những cơn bão cát khổng lồ đang quét qua một khu định cư mái vòm bằng kính."
+      },
+      "status_code": "ACTIVE",
+      "status_text": "Đang tạo",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 35,
+      "stt": "036",
+      "prompt_id": "36",
+      "prompt": "Một cuốn sách cổ nạm ngọc đang tự mở ra, những ký tự vàng bay lơ lửng xung quanh người đọc.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Một cuốn sách cổ nạm ngọc đang tự mở ra, những ký tự vàng bay lơ lửng xung quanh người đọc."
+      },
+      "status_code": "ACTIVE",
+      "status_text": "Đang tạo",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 36,
+      "stt": "037",
+      "prompt_id": "37",
+      "prompt": "Giao tranh bằng kiếm laser giữa hai hiệp sĩ không gian trong một lò phản ứng năng lượng khổng lồ.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Giao tranh bằng kiếm laser giữa hai hiệp sĩ không gian trong một lò phản ứng năng lượng khổng lồ."
+      },
+      "status_code": "ACTIVE",
+      "status_text": "Đang tạo",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 37,
+      "stt": "038",
+      "prompt_id": "38",
+      "prompt": "Nàng tiên cá bơi lội uyển chuyển qua một thành phố Atlantis ngập chìm dưới đáy biển sâu.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Nàng tiên cá bơi lội uyển chuyển qua một thành phố Atlantis ngập chìm dưới đáy biển sâu."
+      },
+      "status_code": "TOKEN",
+      "status_text": "Đang lấy token",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 38,
+      "stt": "039",
+      "prompt_id": "39",
+      "prompt": "Một cái cây khổng lồ ôm trọn cả một hành tinh nhỏ, rễ cây tỏa ra ánh sáng rực rỡ.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Một cái cây khổng lồ ôm trọn cả một hành tinh nhỏ, rễ cây tỏa ra ánh sáng rực rỡ."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 1)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 39,
+      "stt": "040",
+      "prompt_id": "40",
+      "prompt": "Người ngoài hành tinh khổng lồ bước đi giữa các tòa nhà chọc trời, sương mù che khuất nửa thân trên.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Người ngoài hành tinh khổng lồ bước đi giữa các tòa nhà chọc trời, sương mù che khuất nửa thân trên."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 2)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 40,
+      "stt": "041",
+      "prompt_id": "41",
+      "prompt": "Một nhà khoa học điên đang cấy ghép các bộ phận cơ khí màu đồng vào cơ thể, phong cách Steampunk.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Một nhà khoa học điên đang cấy ghép các bộ phận cơ khí màu đồng vào cơ thể, phong cách Steampunk."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 3)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 41,
+      "stt": "042",
+      "prompt_id": "42",
+      "prompt": "🎨 Chủ đề 3: Hoạt hình & 3D (Animation & 3D)",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "🎨 Chủ đề 3: Hoạt hình & 3D (Animation & 3D)"
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 4)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 42,
+      "stt": "043",
+      "prompt_id": "43",
+      "prompt": "Phong cách Pixar: Một chú chó Corgi mập mạp đang cố gắng nhảy lên ghế sofa nhưng bị trượt chân ngã lộn nhào.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Phong cách Pixar: Một chú chó Corgi mập mạp đang cố gắng nhảy lên ghế sofa nhưng bị trượt chân ngã lộn nhào."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 5)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 43,
+      "stt": "044",
+      "prompt_id": "44",
+      "prompt": "Hoạt hình 2D phong cách Studio Ghibli: Một cô gái đang đạp xe trên con đường ven biển vào mùa hè, hoa anh đào bay lác đác.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Hoạt hình 2D phong cách Studio Ghibli: Một cô gái đang đạp xe trên con đường ven biển vào mùa hè, hoa anh đào bay lác đác."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 6)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 44,
+      "stt": "045",
+      "prompt_id": "45",
+      "prompt": "3D Render: Quái vật nhỏ bằng len màu hồng đang vui vẻ nhảy múa dưới ánh đèn disco nhiều màu.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "3D Render: Quái vật nhỏ bằng len màu hồng đang vui vẻ nhảy múa dưới ánh đèn disco nhiều màu."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 7)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 45,
+      "stt": "046",
+      "prompt_id": "46",
+      "prompt": "Phong cách Stop-motion: Một tách trà bằng đất sét tự động rót nước vào ly, có khói bốc lên sống động.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Phong cách Stop-motion: Một tách trà bằng đất sét tự động rót nước vào ly, có khói bốc lên sống động."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 8)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 46,
+      "stt": "047",
+      "prompt_id": "47",
+      "prompt": "Anime style: Nhân vật nam chính tung đòn đánh mạnh mẽ, vụn đá văng tung tóe, hiệu ứng đường nét tốc độ rực rỡ.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Anime style: Nhân vật nam chính tung đòn đánh mạnh mẽ, vụn đá văng tung tóe, hiệu ứng đường nét tốc độ rực rỡ."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 9)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 47,
+      "stt": "048",
+      "prompt_id": "48",
+      "prompt": "Đồ họa Low-poly: Khung cảnh cắm trại trong rừng với ngọn lửa trại lấp lánh và bầu trời đầy sao.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Đồ họa Low-poly: Khung cảnh cắm trại trong rừng với ngọn lửa trại lấp lánh và bầu trời đầy sao."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 10)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 48,
+      "stt": "049",
+      "prompt_id": "49",
+      "prompt": "Phong cách Cyberpunk 2D: Một cô gái có cánh tay robot đang ăn mì ramen tại một quán vỉa hè đầy đèn neon.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Phong cách Cyberpunk 2D: Một cô gái có cánh tay robot đang ăn mì ramen tại một quán vỉa hè đầy đèn neon."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 11)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 49,
+      "stt": "050",
+      "prompt_id": "50",
+      "prompt": "Hoạt hình cắt giấy (Paper cut animation): Một con thuyền giấy lênh đênh trên những lớp sóng biển bằng giấy màu xanh.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Hoạt hình cắt giấy (Paper cut animation): Một con thuyền giấy lênh đênh trên những lớp sóng biển bằng giấy màu xanh."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 12)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 50,
+      "stt": "051",
+      "prompt_id": "51",
+      "prompt": "3D Unreal Engine: Một con báo máy móc chuyển động mượt mà xuyên qua khu rừng rậm rạp nhiệt đới.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "3D Unreal Engine: Một con báo máy móc chuyển động mượt mà xuyên qua khu rừng rậm rạp nhiệt đới."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 13)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 51,
+      "stt": "052",
+      "prompt_id": "52",
+      "prompt": "Phong cách màu nước (Watercolor): Bức tranh một khu phố cổ Paris đang trời mưa bắt đầu chuyển động chân thực.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Phong cách màu nước (Watercolor): Bức tranh một khu phố cổ Paris đang trời mưa bắt đầu chuyển động chân thực."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 14)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 52,
+      "stt": "053",
+      "prompt_id": "53",
+      "prompt": "Phong cách hoạt hình cổ điển 1930s (Rubber hose): Nhân vật đi qua lại với điệu bộ hài hước, màn hình đen trắng có nhiễu hạt.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Phong cách hoạt hình cổ điển 1930s (Rubber hose): Nhân vật đi qua lại với điệu bộ hài hước, màn hình đen trắng có nhiễu hạt."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 15)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 53,
+      "stt": "054",
+      "prompt_id": "54",
+      "prompt": "Chibi style: Một nhóm các nhân vật nhỏ bé dễ thương đang tranh nhau một chiếc bánh quy khổng lồ.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Chibi style: Một nhóm các nhân vật nhỏ bé dễ thương đang tranh nhau một chiếc bánh quy khổng lồ."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 16)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 54,
+      "stt": "055",
+      "prompt_id": "55",
+      "prompt": "3D Isometric: Một căn phòng làm việc thu nhỏ (diorama) tự động xây dựng lên từ các viên gạch lơ lửng.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "3D Isometric: Một căn phòng làm việc thu nhỏ (diorama) tự động xây dựng lên từ các viên gạch lơ lửng."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 17)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 55,
+      "stt": "056",
+      "prompt_id": "56",
+      "prompt": "Hoạt hình vector (Flat design): Biểu đồ nhịp tim chuyển thành hình dáng một chiếc ô tô đang chạy trên đường cong.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Hoạt hình vector (Flat design): Biểu đồ nhịp tim chuyển thành hình dáng một chiếc ô tô đang chạy trên đường cong."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 18)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 56,
+      "stt": "057",
+      "prompt_id": "57",
+      "prompt": "Hoạt hình tranh cát: Đôi bàn tay họa sĩ đang vẽ nên hình ảnh một gia đình hạnh phúc, cát bay theo gió.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Hoạt hình tranh cát: Đôi bàn tay họa sĩ đang vẽ nên hình ảnh một gia đình hạnh phúc, cát bay theo gió."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 19)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 57,
+      "stt": "058",
+      "prompt_id": "58",
+      "prompt": "Đồ họa 8-bit Pixel Art: Hiệp sĩ cầm kiếm đi ngang qua màn hình, chém những con quái vật chất nhầy màu xanh lá.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Đồ họa 8-bit Pixel Art: Hiệp sĩ cầm kiếm đi ngang qua màn hình, chém những con quái vật chất nhầy màu xanh lá."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 20)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 58,
+      "stt": "059",
+      "prompt_id": "59",
+      "prompt": "Phong cách Cel-shading: Cảnh đua xe mô tô trên đường cao tốc với những nét viền đen đậm mang đậm chất truyện tranh comic.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Phong cách Cel-shading: Cảnh đua xe mô tô trên đường cao tốc với những nét viền đen đậm mang đậm chất truyện tranh comic."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 21)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 59,
+      "stt": "060",
+      "prompt_id": "60",
+      "prompt": "3D đáng yêu: Một đám mây trắng có mắt mũi đang khóc ra những giọt mưa cầu vồng.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "3D đáng yêu: Một đám mây trắng có mắt mũi đang khóc ra những giọt mưa cầu vồng."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 22)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 60,
+      "stt": "061",
+      "prompt_id": "61",
+      "prompt": "Hoạt hình tĩnh vật: Các loại trái cây trên bàn bỗng dưng mọc chân và nhảy điệu cha-cha-cha.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Hoạt hình tĩnh vật: Các loại trái cây trên bàn bỗng dưng mọc chân và nhảy điệu cha-cha-cha."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 23)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 61,
+      "stt": "062",
+      "prompt_id": "62",
+      "prompt": "Phong cách vẽ chì (Pencil sketch animation): Một bức phác họa chân dung một người mỉm cười và nháy mắt với người xem.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Phong cách vẽ chì (Pencil sketch animation): Một bức phác họa chân dung một người mỉm cười và nháy mắt với người xem."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 24)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 62,
+      "stt": "063",
+      "prompt_id": "63",
+      "prompt": "🌿 Chủ đề 4: Thiên nhiên & Phong cảnh (Nature & Landscapes)",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "🌿 Chủ đề 4: Thiên nhiên & Phong cảnh (Nature & Landscapes)"
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 25)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 63,
+      "stt": "064",
+      "prompt_id": "64",
+      "prompt": "Video time-lapse hoa mẫu đơn từ từ nở rộ từ nụ hoa thành bông hoa rực rỡ dưới ánh sáng bình minh.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Video time-lapse hoa mẫu đơn từ từ nở rộ từ nụ hoa thành bông hoa rực rỡ dưới ánh sáng bình minh."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 26)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 64,
+      "stt": "065",
+      "prompt_id": "65",
+      "prompt": "Góc quay cận cảnh siêu thực (Macro shot): Giọt sương ban mai lăn từ từ trên gân một chiếc lá xanh mướt.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Góc quay cận cảnh siêu thực (Macro shot): Giọt sương ban mai lăn từ từ trên gân một chiếc lá xanh mướt."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 27)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 65,
+      "stt": "066",
+      "prompt_id": "66",
+      "prompt": "Quay chậm (Slow-motion) một con chim bói cá lao vút xuống mặt hồ tĩnh lặng để bắt cá, nước bắn tung tóe.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Quay chậm (Slow-motion) một con chim bói cá lao vút xuống mặt hồ tĩnh lặng để bắt cá, nước bắn tung tóe."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 28)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 66,
+      "stt": "067",
+      "prompt_id": "67",
+      "prompt": "Góc nhìn từ trên cao (Top-down): Sóng biển xanh ngọc bích vỗ nhẹ nhàng vào bờ cát trắng xóa, không có người.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Góc nhìn từ trên cao (Top-down): Sóng biển xanh ngọc bích vỗ nhẹ nhàng vào bờ cát trắng xóa, không có người."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 29)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 67,
+      "stt": "068",
+      "prompt_id": "68",
+      "prompt": "Camera bay lướt qua một hẻm núi hùng vĩ, những đàn chim đại bàng đang chao liệng giữa không trung.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Camera bay lướt qua một hẻm núi hùng vĩ, những đàn chim đại bàng đang chao liệng giữa không trung."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 30)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 68,
+      "stt": "069",
+      "prompt_id": "69",
+      "prompt": "Cảnh cực quang (Aurora Borealis) màu xanh lá và tím nhảy múa trên bầu trời đêm trên một túp lều tuyết ở Bắc Cực.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Cảnh cực quang (Aurora Borealis) màu xanh lá và tím nhảy múa trên bầu trời đêm trên một túp lều tuyết ở Bắc Cực."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 31)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 69,
+      "stt": "070",
+      "prompt_id": "70",
+      "prompt": "Hàng ngàn con đom đóm thắp sáng một khu rừng tối tăm bám rêu xanh, tạo cảm giác thần tiên.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Hàng ngàn con đom đóm thắp sáng một khu rừng tối tăm bám rêu xanh, tạo cảm giác thần tiên."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 32)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 70,
+      "stt": "071",
+      "prompt_id": "71",
+      "prompt": "Dung nham núi lửa phun trào vào đại dương, tạo ra những cột khói trắng khổng lồ bốc lên trời.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Dung nham núi lửa phun trào vào đại dương, tạo ra những cột khói trắng khổng lồ bốc lên trời."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 33)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 71,
+      "stt": "072",
+      "prompt_id": "72",
+      "prompt": "Cơn bão lốc xoáy (Tornado) khổng lồ đang quét qua một cánh đồng hoang, bầu trời xám xịt và u ám.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Cơn bão lốc xoáy (Tornado) khổng lồ đang quét qua một cánh đồng hoang, bầu trời xám xịt và u ám."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 34)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 72,
+      "stt": "073",
+      "prompt_id": "73",
+      "prompt": "Cảnh dưới nước (Underwater): Rùa biển bơi lội thong thả qua một rạn san hô rực rỡ màu sắc.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Cảnh dưới nước (Underwater): Rùa biển bơi lội thong thả qua một rạn san hô rực rỡ màu sắc."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 35)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 73,
+      "stt": "074",
+      "prompt_id": "74",
+      "prompt": "Đàn ngựa hoang đang phi nước đại tung bụi mù mịt trên một thảo nguyên rộng lớn, ánh nắng vàng hắt ngược.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Đàn ngựa hoang đang phi nước đại tung bụi mù mịt trên một thảo nguyên rộng lớn, ánh nắng vàng hắt ngược."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 36)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 74,
+      "stt": "075",
+      "prompt_id": "75",
+      "prompt": "Thác nước khổng lồ đổ ầm ầm xuống vách đá, một chiếc cầu vồng xuất hiện trong làn sương mù do nước tạo ra.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Thác nước khổng lồ đổ ầm ầm xuống vách đá, một chiếc cầu vồng xuất hiện trong làn sương mù do nước tạo ra."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 37)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 75,
+      "stt": "076",
+      "prompt_id": "76",
+      "prompt": "Cảnh tuyết rơi dày đặc, gió thổi những bông tuyết phủ kín một nhánh thông gai góc.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Cảnh tuyết rơi dày đặc, gió thổi những bông tuyết phủ kín một nhánh thông gai góc."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 38)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 76,
+      "stt": "077",
+      "prompt_id": "77",
+      "prompt": "Video tua nhanh (Time-lapse) bầu trời đầy sao chuyển động xoay quanh sao Bắc Đẩu, có sao băng rơi.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Video tua nhanh (Time-lapse) bầu trời đầy sao chuyển động xoay quanh sao Bắc Đẩu, có sao băng rơi."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 39)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 77,
+      "stt": "078",
+      "prompt_id": "78",
+      "prompt": "Cận cảnh một con tắc kè hoa đang từ từ đổi màu da để hòa mình vào cành cây khô.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Cận cảnh một con tắc kè hoa đang từ từ đổi màu da để hòa mình vào cành cây khô."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 40)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 78,
+      "stt": "079",
+      "prompt_id": "79",
+      "prompt": "Ánh nắng xuyên qua những tán cây cổ thụ cao vút (God rays), sương mù bảng lảng trên mặt đất rừng.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Ánh nắng xuyên qua những tán cây cổ thụ cao vút (God rays), sương mù bảng lảng trên mặt đất rừng."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 41)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 79,
+      "stt": "080",
+      "prompt_id": "80",
+      "prompt": "Đàn cá heo nhảy vọt lên khỏi mặt nước biển trong xanh, đi theo mũi của một con tàu.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Đàn cá heo nhảy vọt lên khỏi mặt nước biển trong xanh, đi theo mũi của một con tàu."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 42)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 80,
+      "stt": "081",
+      "prompt_id": "81",
+      "prompt": "Cận cảnh móng vuốt của một con báo tuyết bước đi lặng lẽ trên nền tuyết xốp.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Cận cảnh móng vuốt của một con báo tuyết bước đi lặng lẽ trên nền tuyết xốp."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 43)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 81,
+      "stt": "082",
+      "prompt_id": "82",
+      "prompt": "Biển mây trôi bồng bềnh ôm quanh những đỉnh núi đá nhọn hoắt vào buổi sáng sớm tinh mơ.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Biển mây trôi bồng bềnh ôm quanh những đỉnh núi đá nhọn hoắt vào buổi sáng sớm tinh mơ."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 44)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 82,
+      "stt": "083",
+      "prompt_id": "83",
+      "prompt": "Mạng nhện giăng giữa hai cành cây, lấp lánh những giọt sương và đung đưa nhẹ trong gió.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Mạng nhện giăng giữa hai cành cây, lấp lánh những giọt sương và đung đưa nhẹ trong gió."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 45)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 83,
+      "stt": "084",
+      "prompt_id": "84",
+      "prompt": "🔮 Chủ đề 5: Trừu tượng, Nghệ thuật & Sản phẩm (Abstract, Artistic & Commercial)",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "🔮 Chủ đề 5: Trừu tượng, Nghệ thuật & Sản phẩm (Abstract, Artistic & Commercial)"
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 46)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 84,
+      "stt": "085",
+      "prompt_id": "85",
+      "prompt": "Các dòng chất lỏng màu vàng gold và đen từ từ hòa quyện vào nhau, tạo thành những gợn sóng nghệ thuật, quay siêu cận cảnh.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Các dòng chất lỏng màu vàng gold và đen từ từ hòa quyện vào nhau, tạo thành những gợn sóng nghệ thuật, quay siêu cận cảnh."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 47)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 85,
+      "stt": "086",
+      "prompt_id": "86",
+      "prompt": "Video quảng cáo: Một ly bia lạnh với lớp bọt tràn viền, những giọt nước đọng trên thành ly cực kỳ sắc nét.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Video quảng cáo: Một ly bia lạnh với lớp bọt tràn viền, những giọt nước đọng trên thành ly cực kỳ sắc nét."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 48)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 86,
+      "stt": "087",
+      "prompt_id": "87",
+      "prompt": "Kính vạn hoa (Kaleidoscope): Các mảnh vỡ tinh thể màu sắc liên tục biến đổi hình dạng theo nhịp điệu.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Kính vạn hoa (Kaleidoscope): Các mảnh vỡ tinh thể màu sắc liên tục biến đổi hình dạng theo nhịp điệu."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 49)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 87,
+      "stt": "088",
+      "prompt_id": "88",
+      "prompt": "Hàng ngàn quả bóng nhựa màu đỏ rơi tự do từ trên cao xuống lấp đầy một căn phòng toàn màu trắng.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Hàng ngàn quả bóng nhựa màu đỏ rơi tự do từ trên cao xuống lấp đầy một căn phòng toàn màu trắng."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 50)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 88,
+      "stt": "089",
+      "prompt_id": "89",
+      "prompt": "Hình học trừu tượng (Abstract geometry): Các khối lập phương bằng thủy tinh liên tục trồi lên lặn xuống, ánh sáng khúc xạ rực rỡ.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Hình học trừu tượng (Abstract geometry): Các khối lập phương bằng thủy tinh liên tục trồi lên lặn xuống, ánh sáng khúc xạ rực rỡ."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 51)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 89,
+      "stt": "090",
+      "prompt_id": "90",
+      "prompt": "Cảnh một chiếc xe hơi thể thao sang trọng chạy qua đường hầm thiếu sáng, chỉ thấy đường nét xe phản chiếu ánh đèn.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Cảnh một chiếc xe hơi thể thao sang trọng chạy qua đường hầm thiếu sáng, chỉ thấy đường nét xe phản chiếu ánh đèn."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 52)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 90,
+      "stt": "091",
+      "prompt_id": "91",
+      "prompt": "Nước hoa bắn ra từ vòi xịt dạng sương mù cực mịn, quay chậm dưới ánh đèn studio rực rỡ, background đen.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Nước hoa bắn ra từ vòi xịt dạng sương mù cực mịn, quay chậm dưới ánh đèn studio rực rỡ, background đen."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 53)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 91,
+      "stt": "092",
+      "prompt_id": "92",
+      "prompt": "Cát màu liên tục được đổ lên nhau tạo thành các họa tiết xếp lớp 3D độc đáo.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Cát màu liên tục được đổ lên nhau tạo thành các họa tiết xếp lớp 3D độc đáo."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 54)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 92,
+      "stt": "093",
+      "prompt_id": "93",
+      "prompt": "Sự bùng nổ của bột màu Holi (màu xanh, đỏ, vàng) trong không trung, quay slow-motion 1000fps.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Sự bùng nổ của bột màu Holi (màu xanh, đỏ, vàng) trong không trung, quay slow-motion 1000fps."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 55)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 93,
+      "stt": "094",
+      "prompt_id": "94",
+      "prompt": "Một bức tượng đá cẩm thạch La Mã cổ đại bỗng nhiên tan chảy thành chất lỏng màu bạc óng ánh.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Một bức tượng đá cẩm thạch La Mã cổ đại bỗng nhiên tan chảy thành chất lỏng màu bạc óng ánh."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 56)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 94,
+      "stt": "095",
+      "prompt_id": "95",
+      "prompt": "Góc quay vĩ mô (Macro) bề mặt của một đôi giày da cao cấp, quay rõ từng đường kim mũi chỉ và kết cấu da.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Góc quay vĩ mô (Macro) bề mặt của một đôi giày da cao cấp, quay rõ từng đường kim mũi chỉ và kết cấu da."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 57)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 95,
+      "stt": "096",
+      "prompt_id": "96",
+      "prompt": "Hình ảnh một con mắt khổng lồ mở ra, con ngươi bên trong chứa cả một dải ngân hà đang xoay tròn.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Hình ảnh một con mắt khổng lồ mở ra, con ngươi bên trong chứa cả một dải ngân hà đang xoay tròn."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 58)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 96,
+      "stt": "097",
+      "prompt_id": "97",
+      "prompt": "Các dải lụa mềm mại bay lượn trong môi trường không trọng lực, ánh sáng pastel nhẹ nhàng.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Các dải lụa mềm mại bay lượn trong môi trường không trọng lực, ánh sáng pastel nhẹ nhàng."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 59)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 97,
+      "stt": "098",
+      "prompt_id": "98",
+      "prompt": "Video quảng cáo mỹ phẩm: Một giọt serum rơi xuống bề mặt da mô phỏng nước, tạo ra các làn sóng tỏa ra mượt mà.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Video quảng cáo mỹ phẩm: Một giọt serum rơi xuống bề mặt da mô phỏng nước, tạo ra các làn sóng tỏa ra mượt mà."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 60)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 98,
+      "stt": "099",
+      "prompt_id": "99",
+      "prompt": "Phép chiếu ánh sáng nghệ thuật (Projection mapping) lên khuôn mặt của một người phụ nữ, các họa tiết thay đổi liên tục.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Phép chiếu ánh sáng nghệ thuật (Projection mapping) lên khuôn mặt của một người phụ nữ, các họa tiết thay đổi liên tục."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 61)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 99,
+      "stt": "100",
+      "prompt_id": "100",
+      "prompt": "Các đường nét neon đang vẽ ra sơ đồ của một con chip máy tính, camera zoom sâu vào trung tâm bảng mạch.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Các đường nét neon đang vẽ ra sơ đồ của một con chip máy tính, camera zoom sâu vào trung tâm bảng mạch."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 62)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 100,
+      "stt": "101",
+      "prompt_id": "101",
+      "prompt": "Mực (Ink) màu xanh dương lan tỏa bồng bềnh trong môi trường nước, tạo thành những hình thù như những đám mây.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Mực (Ink) màu xanh dương lan tỏa bồng bềnh trong môi trường nước, tạo thành những hình thù như những đám mây."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 63)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 101,
+      "stt": "102",
+      "prompt_id": "102",
+      "prompt": "Một miếng thịt bò bít tết vừa được đặt lên vỉ nướng xèo xèo, dầu mỡ sôi lên, ngọn lửa liếm qua bề mặt thịt.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Một miếng thịt bò bít tết vừa được đặt lên vỉ nướng xèo xèo, dầu mỡ sôi lên, ngọn lửa liếm qua bề mặt thịt."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 64)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 102,
+      "stt": "103",
+      "prompt_id": "103",
+      "prompt": "Âm thanh hình ảnh hóa (Audio visualizer): Các hạt ánh sáng rung động và nảy lên theo nhịp điệu của tiếng bass.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Âm thanh hình ảnh hóa (Audio visualizer): Các hạt ánh sáng rung động và nảy lên theo nhịp điệu của tiếng bass."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 65)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 103,
+      "stt": "104",
+      "prompt_id": "104",
+      "prompt": "Đồ ăn bay lơ lửng: Các nguyên liệu của một chiếc hamburger (bánh mì, thịt bò, rau xà lách, cà chua) bay lơ lửng rồi từ từ ghép lại với nhau.",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "Đồ ăn bay lơ lửng: Các nguyên liệu của một chiếc hamburger (bánh mì, thịt bò, rau xà lách, cà chua) bay lơ lửng rồi từ từ ghép lại với nhau."
+      },
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 66)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},

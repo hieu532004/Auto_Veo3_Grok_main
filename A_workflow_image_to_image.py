@@ -780,6 +780,39 @@ class GenerateImageWorkflow(QThread):
 		token_counter = {"count": 0}
 
 		async with collector:
+			# ✅ Refresh auth từ Chrome browser ngay sau khi Chrome khởi động
+			self._collector_ref = collector
+			try:
+				if hasattr(collector, 'refresh_auth_from_browser'):
+					fresh_token, fresh_cookie = await collector.refresh_auth_from_browser(project_id)
+					if fresh_token:
+						access_token = fresh_token
+						self._log("✅ Đã lấy access_token mới từ Chrome browser")
+					if fresh_cookie:
+						cookie = fresh_cookie
+			except Exception as e:
+				self._log(f"⚠️ Không refresh được auth từ Chrome: {e}")
+
+			# ✅ Proactive token refresh background task
+			async def _proactive_token_refresh():
+				refresh_interval = 180  # 3 phút
+				while not self._should_stop():
+					await asyncio.sleep(refresh_interval)
+					if self._should_stop():
+						break
+					try:
+						if hasattr(collector, 'refresh_auth_from_browser'):
+							self._log("🔄 [Proactive] Đang refresh access_token định kỳ...")
+							ft, fc = await collector.refresh_auth_from_browser(project_id)
+							if ft:
+								access_token = ft
+								self._log("✅ [Proactive] access_token đã được refresh!")
+					except asyncio.CancelledError:
+						return
+					except Exception as e:
+						self._log(f"⚠️ [Proactive] Lỗi refresh token: {e}")
+
+			proactive_refresh_task = asyncio.create_task(_proactive_token_refresh())
 			if self._image_mode == "reference":
 				profiles = self._load_character_profiles()
 				if not profiles:
@@ -877,6 +910,14 @@ class GenerateImageWorkflow(QThread):
 				try:
 					await asyncio.gather(*tasks, return_exceptions=True)
 				except Exception:
+					pass
+
+			# ✅ Cancel proactive refresh task
+			if proactive_refresh_task:
+				proactive_refresh_task.cancel()
+				try:
+					await proactive_refresh_task
+				except (asyncio.CancelledError, Exception):
 					pass
 
 		# Sau khi gửi hết prompt, chủ động đóng collector (Chrome + thread token)

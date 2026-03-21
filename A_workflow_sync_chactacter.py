@@ -394,12 +394,25 @@ class CharacterSyncWorkflow(QThread):
 
                     if retryable:
                         if is_auth_error:
-                            import auth_helper
-                            self._log("⚠️ Token OAuth hết hạn, tự động lấy mới...")
-                            new_access = auth_helper.get_valid_access_token(auth.get("cookie", ""), auth.get("projectId", ""), force_refresh=True)
-                            if new_access and new_access != auth.get("access_token", ""):
-                                self._log("✅ Đã renew OAuth token")
-                                auth["access_token"] = new_access
+                            # ✅ Tự động lấy token mới từ Chrome browser (có lock)
+                            try:
+                                if hasattr(collector, 'refresh_auth_from_browser'):
+                                    self._log("⚠️ Token OAuth hết hạn, lấy mới từ Chrome browser...")
+                                    fresh_token, fresh_cookie = await collector.refresh_auth_from_browser(auth.get("projectId", ""))
+                                    if fresh_token:
+                                        auth["access_token"] = fresh_token
+                                        self._log("✅ Đã renew OAuth token từ Chrome browser")
+                                    if fresh_cookie:
+                                        auth["cookie"] = fresh_cookie
+                                else:
+                                    import auth_helper
+                                    self._log("⚠️ Token OAuth hết hạn, tự động lấy mới...")
+                                    new_access = auth_helper.get_valid_access_token(auth.get("cookie", ""), auth.get("projectId", ""), force_refresh=True)
+                                    if new_access and new_access != auth.get("access_token", ""):
+                                        self._log("✅ Đã renew OAuth token")
+                                        auth["access_token"] = new_access
+                            except Exception as e:
+                                self._log(f"⚠️ Lỗi refresh auth: {e}")
 
                         if retry_attempt < max_retries:
                             backoff = min(15, 5 * (retry_attempt + 1))
@@ -419,6 +432,42 @@ class CharacterSyncWorkflow(QThread):
 
         # ✅ Xử lý SONG SONG: gửi nhiều prompt cùng lúc
         async with collector:
+            # ✅ Refresh auth từ Chrome browser ngay sau khi Chrome khởi động
+            self._collector_ref = collector
+            try:
+                if hasattr(collector, 'refresh_auth_from_browser'):
+                    fresh_token, fresh_cookie = await collector.refresh_auth_from_browser(auth.get("projectId", ""))
+                    if fresh_token:
+                        auth["access_token"] = fresh_token
+                        self._log("✅ Đã lấy access_token mới từ Chrome browser")
+                    if fresh_cookie:
+                        auth["cookie"] = fresh_cookie
+            except Exception as e:
+                self._log(f"⚠️ Không refresh được auth từ Chrome: {e}")
+
+            # ✅ Proactive token refresh background task
+            async def _proactive_token_refresh():
+                refresh_interval = 180  # 3 phút
+                while not self._should_stop():
+                    await asyncio.sleep(refresh_interval)
+                    if self._should_stop():
+                        break
+                    try:
+                        if hasattr(collector, 'refresh_auth_from_browser'):
+                            self._log("🔄 [Proactive] Đang refresh access_token định kỳ...")
+                            ft, fc = await collector.refresh_auth_from_browser(auth.get("projectId", ""))
+                            if ft:
+                                auth["access_token"] = ft
+                                self._log("✅ [Proactive] access_token đã được refresh!")
+                            if fc:
+                                auth["cookie"] = fc
+                    except asyncio.CancelledError:
+                        return
+                    except Exception as e:
+                        self._log(f"⚠️ [Proactive] Lỗi refresh token: {e}")
+
+            proactive_refresh_task = asyncio.create_task(_proactive_token_refresh())
+
             pending_tasks = []
 
             for i, plan in enumerate(plans):
@@ -443,13 +492,21 @@ class CharacterSyncWorkflow(QThread):
 
                 # Delay ngắn giữa mỗi task
                 if i < len(plans) - 1:
-                    if not await self._sleep_with_stop(2):
+                    if not await self._sleep_with_stop(wait_gen_video):
                         break
 
             # Chờ tất cả task hoàn tất
             if pending_tasks:
                 self._log(f"⏳ Đang chờ {len(pending_tasks)} prompt hoàn thành...")
                 await asyncio.gather(*pending_tasks, return_exceptions=True)
+
+            # ✅ Cancel proactive refresh task
+            if proactive_refresh_task:
+                proactive_refresh_task.cancel()
+                try:
+                    await proactive_refresh_task
+                except (asyncio.CancelledError, Exception):
+                    pass
 
         self._all_prompts_submitted = True
         self._complete_wait_start_ts = time.time()

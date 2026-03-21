@@ -327,6 +327,18 @@ class TextToVideoWorkflow(QThread):
 			self._save_request_json(payload, prompt_id, prompt_text, flow="text_to_video")
 			self._log(f"🚀 [{time.strftime('%H:%M:%S')}] Gửi request tạo video (prompt {prompt_id})...")
 
+			# ✅ LUÔN reload access_token mới nhất từ config trước mỗi request
+			try:
+				_fresh = self._load_auth_config()
+				if _fresh and _fresh.get("access_token"):
+					access_token = _fresh["access_token"]
+					auth["access_token"] = access_token
+				if _fresh and _fresh.get("cookie"):
+					cookie = _fresh["cookie"]
+					auth["cookie"] = cookie
+			except Exception:
+				pass
+
 			if token_option == "Option 2":
 				response = await t2v_api.request_create_video_via_browser(
 					collector.page, t2v_api.URL_GENERATE_TEXT_TO_VIDEO, payload, access_token,
@@ -384,6 +396,10 @@ class TextToVideoWorkflow(QThread):
 
 				retry_count += 1
 				prompt_retry_counts[prompt_id] = retry_count
+				# ✅ Auth errors (401/16) KHÔNG đếm retry — chỉ cần refresh token rồi thử lại
+				if is_auth_error:
+					retry_count = max(0, retry_count - 1)
+					prompt_retry_counts[prompt_id] = retry_count
 				self._discard_scene_ids(prompt_id, scene_ids)
 
 				if retry_count >= retry_with_error:
@@ -410,6 +426,11 @@ class TextToVideoWorkflow(QThread):
 					backoff = min(60, 20 * retry_count)
 					self._log(f"⚠️ Quota exhausted (429), chờ {backoff}s rồi retry ({retry_count}/{retry_with_error})")
 					if not await self._sleep_with_stop(backoff):
+						return
+				elif is_auth_error:
+					# ✅ Auth error → chỉ chờ 2s vì đã refresh token rồi
+					self._log(f"⚠️ Lỗi 401, chờ 2s retry ({retry_count}/{retry_with_error})")
+					if not await self._sleep_with_stop(2):
 						return
 				else:
 					self._log(f"⚠️ Lỗi {error_code_str}, chờ {wait_resend}s retry ({retry_count}/{retry_with_error})")
@@ -592,6 +613,31 @@ class TextToVideoWorkflow(QThread):
 						pass
 				status_task = asyncio.create_task(self._status_poll_loop(access_token, session_id, cookie))
 
+				# ✅ PROACTIVE TOKEN REFRESH: tự động refresh access_token mỗi 3 phút
+				# Tránh 401 bằng cách refresh TRƯỚC KHI token hết hạn
+				async def _proactive_token_refresh():
+					"""Background task: refresh access_token mỗi 3 phút."""
+					refresh_interval = 180  # 3 phút
+					while not self._should_stop():
+						await asyncio.sleep(refresh_interval)
+						if self._should_stop():
+							break
+						try:
+							if hasattr(collector, 'refresh_auth_from_browser'):
+								self._log("🔄 [Proactive] Đang refresh access_token định kỳ...")
+								fresh_token, fresh_cookie = await collector.refresh_auth_from_browser(project_id)
+								if fresh_token:
+									auth["access_token"] = fresh_token
+									self._log("✅ [Proactive] access_token đã được refresh tự động!")
+								if fresh_cookie:
+									auth["cookie"] = fresh_cookie
+						except asyncio.CancelledError:
+							return
+						except Exception as e:
+							self._log(f"⚠️ [Proactive] Lỗi refresh token: {e}")
+				
+				proactive_refresh_task = asyncio.create_task(_proactive_token_refresh())
+
 				# ✅ Xử lý SONG SONG: gửi nhiều prompt video cùng lúc
 				pending_tasks = []
 				
@@ -632,7 +678,7 @@ class TextToVideoWorkflow(QThread):
 
 					# Delay ngắn giữa các lần gửi
 					if idx_prompt < len(prompts) - 1:
-						if not await self._sleep_with_stop(2):
+						if not await self._sleep_with_stop(wait_between_prompts):
 							break
 
 				# Đánh dấu đã gửi hết prompts
@@ -643,7 +689,6 @@ class TextToVideoWorkflow(QThread):
 				# Chờ tất cả task gửi request hoàn tất
 				if pending_tasks:
 					await asyncio.gather(*pending_tasks, return_exceptions=True)
-							
 		except RuntimeError as exc:
 			message = str(exc)
 			if "URL GEN TOKEN" in message:
@@ -755,15 +800,6 @@ class TextToVideoWorkflow(QThread):
 
 			await asyncio.sleep(3)
 
-		# ✅ Dừng harvest token nhưng GIỮ Chrome mở
-		chrome_closed = False
-		if (not self._auto_noi_canh) and (not self._worker_controls_lifecycle):
-			try:
-				await collector.close_after_workflow()
-				self._log("🔒 Đã đóng Chrome của workflow hiện tại.")
-				chrome_closed = True
-			except Exception:
-				self._log("⚠️ Lỗi dừng harvest token")
 		# ✅ Kiểm tra hoàn thành video và thoát luồng ngay khi xong
 		try:
 			await self._wait_for_completion()
@@ -772,6 +808,22 @@ class TextToVideoWorkflow(QThread):
 			self._log(f"[DEBUG] _run_workflow: Exception in _wait_for_completion: {e}")
 		if status_task:
 			status_task.cancel()
+		# ✅ Cancel proactive refresh task
+		try:
+			proactive_refresh_task.cancel()
+		except Exception:
+			pass
+		
+		# ✅ CHỈ đóng Chrome SAU KHI tất cả video đã hoàn thành
+		chrome_closed = False
+		if (not self._auto_noi_canh) and (not self._worker_controls_lifecycle):
+			try:
+				await collector.close_after_workflow()
+				self._log("🔒 Đã đóng Chrome sau khi hoàn thành tất cả video")
+				chrome_closed = True
+			except Exception:
+				self._log("⚠️ Lỗi dừng harvest token")
+		
 		self._log("[DEBUG] _run_workflow: Workflow kết thúc, emit automation_complete")
 		self.automation_complete.emit()
 
@@ -979,6 +1031,16 @@ class TextToVideoWorkflow(QThread):
 
 						self._log(f"🚀 [{time.strftime('%H:%M:%S')}] Gen lại request (prompt {prompt_id}, scene {scene_id[:8]})...")
 						
+						# ✅ LUÔN reload access_token mới nhất từ config trước mỗi resend request
+						try:
+							_fresh = self._load_auth_config()
+							if _fresh and _fresh.get("access_token"):
+								access_token = _fresh["access_token"]
+							if _fresh and _fresh.get("cookie"):
+								cookie = _fresh["cookie"]
+						except Exception:
+							pass
+						
 						self._log(f"🔧 Token Option: {token_option}")
 						
 						if token_option == "Option 2":
@@ -1127,17 +1189,18 @@ class TextToVideoWorkflow(QThread):
 		self._all_prompts_submitted = True
 		self._complete_wait_start_ts = time.time()
 		
-		# ✅ LUÔN TẮT CHROME SAU KHI GỬI HẾT PROMPTS (trừ khi auto_noi_canh)
-		if (not self._auto_noi_canh) and (not self._worker_controls_lifecycle):
-			try:
-				await collector.close_after_workflow()
-				self._log("🔒 Đã đóng Chrome sau khi gửi hết prompts")
-			except Exception:
-				pass
-		
+		# ✅ GIỮ Chrome mở đến khi TẤT CẢ video hoàn thành (tránh 401 khi poll status)
 		await self._wait_for_completion()
 		if status_task:
 			status_task.cancel()
+		
+		# ✅ CHỈ đóng Chrome SAU KHI tất cả video đã hoàn thành
+		if (not self._auto_noi_canh) and (not self._worker_controls_lifecycle):
+			try:
+				await collector.close_after_workflow()
+				self._log("🔒 Đã đóng Chrome sau khi hoàn thành tất cả video")
+			except Exception:
+				pass
 
 	def get_failed_scenes(self):
 		"""Lấy danh sách video lỗi từ state.json - return [(prompt_id, prompt_text, scene_id, idx), ...]"""
@@ -1554,6 +1617,7 @@ class TextToVideoWorkflow(QThread):
 			})
 
 	async def _status_poll_loop(self, access_token, session_id, cookie=None):
+		"""Status poll loop - tự động reload token mới nhất từ config trước mỗi lần check."""
 		while not self.STOP:
 			pending = [
 				sid for sid, info in self._scene_status.items()
@@ -1599,16 +1663,43 @@ class TextToVideoWorkflow(QThread):
 				operations_payload.append(op_block)
 
 			payload = {"operations": operations_payload}
+
+			# ✅ LUÔN reload token/cookie mới nhất từ config.json trước mỗi lần check
 			try:
-				response = await t2v_api.request_check_status(payload, access_token, cookie=cookie)
-			except Exception as exc:
-				self._status_poll_fail_streak += 1
-				self._log(
-					f"⚠️ Lỗi check status (lần {self._status_poll_fail_streak}/4): {exc}"
-				)
-				if not await self._sleep_with_stop(5):
-					break
-				continue
+				fresh_auth = self._load_auth_config()
+				if fresh_auth:
+					if fresh_auth.get("access_token") and fresh_auth["access_token"] != access_token:
+						access_token = fresh_auth["access_token"]
+					if fresh_auth.get("cookie"):
+						cookie = fresh_auth["cookie"]
+			except Exception:
+				pass
+
+			# ✅ Ưu tiên check status qua browser nếu Chrome còn mở
+			response = None
+			collector_ref = getattr(self, '_collector_ref', None)
+			if collector_ref:
+				browser_page = getattr(collector_ref, 'page', None)
+				if browser_page and not browser_page.is_closed():
+					try:
+						response = await t2v_api.request_check_status_via_browser(
+							browser_page, payload, access_token
+						)
+					except Exception:
+						response = None  # Fallback to urllib
+
+			# Fallback: dùng urllib nếu browser không khả dụng
+			if response is None:
+				try:
+					response = await t2v_api.request_check_status(payload, access_token, cookie=cookie)
+				except Exception as exc:
+					self._status_poll_fail_streak += 1
+					self._log(
+						f"⚠️ Lỗi check status (lần {self._status_poll_fail_streak}/4): {exc}"
+					)
+					if not await self._sleep_with_stop(5):
+						break
+					continue
 
 			if not response.get("ok", True):
 				status_code = response.get("status")
@@ -1616,48 +1707,77 @@ class TextToVideoWorkflow(QThread):
 				body_err = str(response.get("body", ""))[:200]
 				self._status_poll_fail_streak += 1
 				
-				# ✅ Nếu 401, đếm số lần 401 THỰC SỰ liên tiếp (không reset khi token đổi)
+				# ✅ Xử lý 401 — token hết hạn
 				if status_code == 401:
 					if not hasattr(self, '_consecutive_401_count'):
 						self._consecutive_401_count = 0
 					self._consecutive_401_count += 1
 					
 					self._log(
-						f"⚠️ Check status 401 (lần {self._consecutive_401_count}, "
-						f"streak={self._status_poll_fail_streak})"
+						f"⚠️ Check status 401 (lần {self._consecutive_401_count})"
 					)
 					
-					collector_ref = getattr(self, '_collector_ref', None)
+					# === BƯỚC 1: Refresh token bằng auth_helper (không cần Chrome) ===
+					try:
+						import auth_helper
+						auth_helper.invalidate_cache()
+						auth_cfg = self._load_auth_config()
+						if auth_cfg and auth_cfg.get("cookie") and auth_cfg.get("projectId"):
+							new_token = auth_helper.get_valid_access_token(
+								auth_cfg["cookie"], auth_cfg["projectId"], force_refresh=True
+							)
+							if new_token and new_token != access_token:
+								access_token = new_token
+								cookie = auth_cfg.get("cookie", cookie)
+								self._log("✅ Đã refresh token bằng auth_helper (HTTP)")
+								self._consecutive_401_count = 0
+								self._status_poll_fail_streak = 0
+								if not await self._sleep_with_stop(2):
+									break
+								continue
+					except Exception as e:
+						self._log(f"⚠️ auth_helper refresh lỗi: {e}")
 					
-					# Sau 3 lần 401 liên tiếp → RESTART Chrome để lấy token MỚI THẬT SỰ
-					if self._consecutive_401_count >= 3 and collector_ref and hasattr(collector_ref, 'force_auto_login'):
+					# === BƯỚC 2: Thử refresh qua Chrome browser (nếu còn mở) ===
+					if collector_ref and hasattr(collector_ref, 'refresh_auth_from_browser'):
+						try:
+							auth_cfg = self._load_auth_config()
+							pid = auth_cfg.get("projectId", "") if auth_cfg else ""
+							fresh_token, fresh_cookie = await collector_ref.refresh_auth_from_browser(pid)
+							if fresh_token and fresh_token != access_token:
+								access_token = fresh_token
+								self._log("✅ Đã refresh token từ Chrome browser")
+							if fresh_cookie:
+								cookie = fresh_cookie
+							if fresh_token:
+								self._consecutive_401_count = 0
+								self._status_poll_fail_streak = 0
+								if not await self._sleep_with_stop(2):
+									break
+								continue
+						except Exception as e:
+							self._log(f"⚠️ Lỗi refresh từ browser: {e}")
+					
+					# === BƯỚC 3: Sau 3 lần 401 → restart Chrome hoàn toàn ===
+					if self._consecutive_401_count >= 3 and collector_ref and hasattr(collector_ref, 'restart_browser'):
 						self._log("🛑 401 liên tiếp 3 lần! Restart Chrome để lấy token MỚI...")
 						try:
-							result = await collector_ref.force_auto_login()
-							if isinstance(result, tuple) and len(result) == 2:
-								forced_token, forced_cookie = result
-								if forced_token:
-									access_token = forced_token
-									self._log("✅ Chrome restart thành công! Token mới sẵn sàng.")
-								if forced_cookie:
-									cookie = forced_cookie
-							self._consecutive_401_count = 0
-							self._status_poll_fail_streak = 0
-						except Exception as e:
-							self._log(f"⚠️ Lỗi force_auto_login: {e}")
-					else:
-						# Thử soft refresh (NextAuth session API) cho lần 1-2
-						try:
-							if collector_ref and hasattr(collector_ref, 'refresh_auth_from_browser'):
-								auth = self._load_auth_config()
-								pid = auth.get("projectId", "") if auth else ""
+							await collector_ref.restart_browser()
+							await asyncio.sleep(5)  # Chờ Chrome khởi động xong
+							# Lấy token mới từ Chrome sau khi restart
+							if hasattr(collector_ref, 'refresh_auth_from_browser'):
+								auth_cfg = self._load_auth_config()
+								pid = auth_cfg.get("projectId", "") if auth_cfg else ""
 								fresh_token, fresh_cookie = await collector_ref.refresh_auth_from_browser(pid)
 								if fresh_token:
 									access_token = fresh_token
+									self._log("✅ Chrome restart thành công! Token mới sẵn sàng.")
 								if fresh_cookie:
 									cookie = fresh_cookie
+							self._consecutive_401_count = 0
+							self._status_poll_fail_streak = 0
 						except Exception as e:
-							self._log(f"⚠️ Lỗi refresh: {e}")
+							self._log(f"⚠️ Lỗi restart Chrome: {e}")
 				else:
 					self._log(
 						f"⚠️ Check status thất bại "

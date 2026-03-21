@@ -639,10 +639,43 @@ class GenerateImageWorkflow(QThread):
 		token_counter = {"count": 0}
 
 		async with collector:
+			# ✅ Refresh auth từ Chrome browser ngay sau khi Chrome khởi động
+			self._collector_ref = collector
+			try:
+				if hasattr(collector, 'refresh_auth_from_browser'):
+					fresh_token, fresh_cookie = await collector.refresh_auth_from_browser(project_id)
+					if fresh_token:
+						access_token = fresh_token
+						self._log("✅ Đã lấy access_token mới từ Chrome browser")
+					if fresh_cookie:
+						cookie = fresh_cookie
+			except Exception as e:
+				self._log(f"⚠️ Không refresh được auth từ Chrome: {e}")
+
+			# ✅ Proactive token refresh background task
+			async def _proactive_token_refresh():
+				refresh_interval = 180  # 3 phút
+				while not self._should_stop():
+					await asyncio.sleep(refresh_interval)
+					if self._should_stop():
+						break
+					try:
+						if hasattr(collector, 'refresh_auth_from_browser'):
+							self._log("🔄 [Proactive] Đang refresh access_token định kỳ...")
+							ft, fc = await collector.refresh_auth_from_browser(project_id)
+							if ft:
+								access_token = ft
+								self._log("✅ [Proactive] access_token đã được refresh!")
+					except asyncio.CancelledError:
+						return
+					except Exception as e:
+						self._log(f"⚠️ [Proactive] Lỗi refresh token: {e}")
+
+			proactive_refresh_task = asyncio.create_task(_proactive_token_refresh())
+
 			# ✅ Xử lý SONG SONG: gửi nhiều prompt cùng lúc (giới hạn bởi max_in_flight)
-			# Token được lấy và dùng ngay → tránh hết hạn, tăng tốc đáng kể
 			pending_tasks = []
-			prompt_delay = 2  # Delay ngắn giữa các lần gửi để tránh nghẽn token pool
+			prompt_delay = max(2, wait_between_effective)  # Dùng cấu hình thay vì hardcode
 
 			for idx_prompt, prompt in enumerate(prompts):
 				if self._should_stop():
@@ -698,6 +731,14 @@ class GenerateImageWorkflow(QThread):
 			if pending_tasks:
 				self._log(f"⏳ Đang chờ {len(pending_tasks)} prompt hoàn thành...")
 				await asyncio.gather(*pending_tasks, return_exceptions=True)
+
+			# ✅ Cancel proactive refresh task
+			if proactive_refresh_task:
+				proactive_refresh_task.cancel()
+				try:
+					await proactive_refresh_task
+				except (asyncio.CancelledError, Exception):
+					pass
 
 		# Sau khi gửi hết prompt, chủ động đóng collector (Chrome + thread token)
 		try:
@@ -947,24 +988,29 @@ class GenerateImageWorkflow(QThread):
 							"error_message": msg,
 						})
 
-					# 🔧 Handle 401 - refresh OAuth token
-					if error_code_str == "401" or http_status == "401":
-						self._log("🔄 Token OAuth hết hạn, đang làm mới...")
+					# 🔧 Handle 401 - refresh OAuth token từ Chrome browser (có lock)
+					is_auth_error = error_code_str in ("401", "16") or http_status in ("401",)
+					if is_auth_error:
+						self._log("🔄 Token OAuth hết hạn, lấy mới từ Chrome browser...")
 						try:
-							import auth_helper
-							new_token = auth_helper.get_valid_access_token(cookie, project_id)
-							if new_token and new_token != access_token:
-								access_token = new_token
-								self._log("✅ Token OAuth đã được làm mới")
+							if hasattr(collector, 'refresh_auth_from_browser'):
+								fresh_token, fresh_cookie = await collector.refresh_auth_from_browser(project_id)
+								if fresh_token:
+									access_token = fresh_token
+									self._log("✅ Token OAuth đã được làm mới từ Chrome")
+								if fresh_cookie:
+									cookie = fresh_cookie
 							else:
-								self._log("⚠️ Không thể làm mới token OAuth")
+								import auth_helper
+								new_token = auth_helper.get_valid_access_token(cookie, project_id)
+								if new_token:
+									access_token = new_token
 						except Exception as e:
 							self._log(f"⚠️ Lỗi refresh OAuth: {e}")
-						if retry_count < retry_with_error - 1:
-							if not await self._sleep_with_stop(5):
-								return
-							continue
-						return
+						# ✅ Auth error KHÔNG đếm retry
+						if not await self._sleep_with_stop(2):
+							return
+						continue
 
 					# 🔧 403 lần đầu: chờ 10s rồi retry (clear storage nhẹ)
 					if (error_code_str == "403" or http_status == "403") and consecutive_403_count == 1:
