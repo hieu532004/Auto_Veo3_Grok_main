@@ -51,6 +51,7 @@ class CharacterSyncWorkflow(QThread):
         self.project_data = project_data or {}
         self.STOP = 0
         self._upload_executor = ThreadPoolExecutor(max_workers=5, thread_name_prefix="sync-char-upload")
+        self._download_executor = ThreadPoolExecutor(max_workers=5, thread_name_prefix="sync-dl")
         self._scene_status: dict[str, dict] = {}
         self._scene_to_prompt: dict[str, dict] = {}
         self._scene_next_check_at: dict[str, float] = {}
@@ -1014,10 +1015,48 @@ class CharacterSyncWorkflow(QThread):
                         "_prompt_id": prompt_id,
                     }
                 )
-                if video_url:
-                    video_path = self._download_video(video_url, prompt_idx)
-                if image_url:
-                    image_path = self._download_image(image_url, prompt_idx)
+                self._update_state_entry(
+                    prompt_id, prompt_text, scene_id, idx, "DOWNLOADING",
+                    video_url=video_url, image_url=image_url,
+                    video_path=video_path, image_path=image_path,
+                    error=error_code, message=error_message,
+                )
+
+                def dl_task(p_id, p_text, s_id, i_idx, v_url, i_url, v_path, i_path, e_code, err_msg, p_idx_str):
+                    try:
+                        if v_url:
+                            v_path = self._download_video(v_url, p_idx_str)
+                        if i_url:
+                            i_path = self._download_image(i_url, p_idx_str)
+                    except Exception as e:
+                        self._log(f"⚠️ Lỗi tải media: {e}")
+                        
+                    self._update_state_entry(
+                        p_id, p_text, s_id, i_idx, "SUCCESSFUL",
+                        video_url=v_url, image_url=i_url,
+                        video_path=v_path, image_path=i_path,
+                        error=e_code, message=err_msg,
+                    )
+                    self.video_updated.emit({
+                        "prompt_idx": p_idx_str,
+                        "status": "SUCCESSFUL",
+                        "scene_id": s_id,
+                        "prompt": p_text,
+                        "video_path": v_path,
+                        "image_path": i_path,
+                        "_prompt_id": p_id,
+                        "error_code": e_code,
+                        "error_message": err_msg,
+                    })
+
+                self._download_executor.submit(
+                    dl_task,
+                    prompt_id, prompt_text, scene_id, idx,
+                    video_url, image_url, video_path, image_path,
+                    error_code, error_message, prompt_idx
+                )
+                updated = True
+                continue
 
             self._update_state_entry(
                 prompt_id,

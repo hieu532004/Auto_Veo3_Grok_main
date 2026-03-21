@@ -89,6 +89,7 @@ class ImageToVideoWorkflow(QThread):
 		self._scene_next_check_at = {}
 		self._scene_status_change_ts = {}
 		self._upload_executor = ThreadPoolExecutor(max_workers=5, thread_name_prefix="i2v-upload")
+		self._download_executor = ThreadPoolExecutor(max_workers=5, thread_name_prefix="i2v-dl")
 		self._active_prompt_ids = set()
 		self._worker_controls_lifecycle = bool(self.project_data.get("_worker_controls_lifecycle", False))
 		self._inline_retry_queue = []  # ✅ Queue cho inline retry AUDIO_FILTERED

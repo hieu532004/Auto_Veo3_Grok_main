@@ -8,12 +8,14 @@ import base64
 import mimetypes
 import shutil
 import time
+import requests
+import logging
 import uuid
 import traceback
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
 from urllib.parse import urlparse
-import requests
 
 _qtcore = None
 try:
@@ -63,6 +65,8 @@ class GenerateImageWorkflow(QThread):
 		self._in_flight_block_start_ts = 0
 		self._image_mode = str(self.project_data.get("image_mode") or "prompt").strip().lower()
 		self._active_prompt_ids = set()
+		self._download_executor = ThreadPoolExecutor(max_workers=5, thread_name_prefix="i2i-dl")
+		self._upload_executor = ThreadPoolExecutor(max_workers=5, thread_name_prefix="i2i-upload")
 
 	def run(self):
 		try:
@@ -1299,24 +1303,42 @@ class GenerateImageWorkflow(QThread):
 					image_url = media.get("downloadUrl") or media.get("uri") or ""
 					if not image_url:
 						self._log(f"⚠️ Prompt {prompt_id} scene {idx + 1}: API không có downloadUrl/uri")
-					image_path = self._download_image(image_url, f"{prompt_id}_{idx + 1}") if image_url else ""
-					self._update_state_entry(
-						prompt_id,
-						prompt_text,
-						scene_id,
-						idx,
-						"SUCCESSFUL",
-						image_url=image_url,
-						image_path=image_path,
-					)
+					
 					self.video_updated.emit({
 						"prompt_idx": f"{prompt_id}_{idx + 1}",
-						"status": "SUCCESSFUL",
+						"status": "DOWNLOADING",
 						"scene_id": scene_id,
 						"prompt": prompt_text,
-						"image_path": image_path,
 						"_prompt_id": prompt_id,
 					})
+					self._update_state_entry(
+						prompt_id, prompt_text, scene_id, idx, "DOWNLOADING",
+						image_url=image_url
+					)
+
+					def dl_task(p_id, p_text, s_id, i_idx, i_url, p_idx_str):
+						i_path = ""
+						if i_url:
+							i_path = self._download_image(i_url, p_idx_str)
+						
+						self._update_state_entry(
+							p_id, p_text, s_id, i_idx, "SUCCESSFUL",
+							image_url=i_url, image_path=i_path
+						)
+						self.video_updated.emit({
+							"prompt_idx": p_idx_str,
+							"status": "SUCCESSFUL",
+							"scene_id": s_id,
+							"prompt": p_text,
+							"image_path": i_path,
+							"_prompt_id": p_id,
+						})
+
+					self._download_executor.submit(
+						dl_task,
+						prompt_id, prompt_text, scene_id, idx,
+						image_url, f"{prompt_id}_{idx + 1}"
+					)
 
 				self._save_auth_to_state(access_token, session_id, project_id)
 				return

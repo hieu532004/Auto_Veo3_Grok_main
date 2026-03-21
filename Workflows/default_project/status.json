@@ -1,6 +1,6 @@
 {
   "project_name": "default_project",
-  "updated_at": 1774065428,
+  "updated_at": 1774108895,
   "rows": [
     {
       "row": 0,
@@ -13,16 +13,12 @@
       "mode_payload": {
         "prompt": "Cận cảnh khuôn mặt một người thợ rèn lớn tuổi, mồ hôi nhễ nhại, ánh sáng màu cam từ lò lửa hắt lên mặt, độ phân giải 4K, siêu thực."
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: 403 | message: reCAPTCHA evaluation failed)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\1_1_21032026_104557.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_21032026_104610.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 1,
@@ -40,10 +36,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\2_1_21032026_104625.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\2_1_21032026_225319.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_21032026_104641.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_21032026_225338.jpg"
       }
     },
     {
@@ -57,16 +53,12 @@
       "mode_payload": {
         "prompt": "Một võ sĩ samurai đứng giữa cánh đồng cỏ lau trắng muốt lộng gió, mặt trời đang lặn phía đường chân trời, phong cách điện ảnh."
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "FAILED",
+      "status_text": "Lỗi",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\3_1_21032026_104642.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_21032026_104656.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 3,
@@ -84,10 +76,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\4_1_21032026_104714.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\4_1_21032026_225340.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_21032026_104728.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_21032026_225352.jpg"
       }
     },
     {
@@ -106,10 +98,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\5_1_21032026_104729.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\5_1_21032026_225355.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_21032026_104742.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_21032026_225407.jpg"
       }
     },
     {
@@ -123,16 +115,12 @@
       "mode_payload": {
         "prompt": "Cận cảnh đôi mắt của một người lính đầy bùn đất đang nhìn lên bầu trời, trời đang mưa to, cảm xúc sâu lắng."
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "FAILED",
+      "status_text": "Lỗi",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\6_1_21032026_104743.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_21032026_104756.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 6,
@@ -145,12 +133,16 @@
       "mode_payload": {
         "prompt": "Một đoàn tàu hơi nước cổ điển chạy xuyên qua khu rừng phủ đầy tuyết trắng, khói trắng cuộn trào lên bầu trời xanh."
       },
-      "status_code": "FAILED",
-      "status_text": "Lỗi",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\7_1_21032026_225427.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_21032026_225448.jpg"
+      }
     },
     {
       "row": 7,
@@ -168,10 +160,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\8_1_21032026_104838.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\8_1_21032026_225427.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_21032026_104852.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_21032026_225451.jpg"
       }
     },
     {
@@ -185,12 +177,16 @@
       "mode_payload": {
         "prompt": "Một đầu bếp đang tung chảo lửa xào thức ăn trong một nhà bếp ánh sáng lờ mờ, lửa bùng lên mạnh mẽ, quay siêu chậm 120fps."
       },
-      "status_code": "FAILED",
-      "status_text": "Lỗi",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\9_1_21032026_225454.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_21032026_225523.jpg"
+      }
     },
     {
       "row": 9,
@@ -208,10 +204,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\10_1_21032026_104812.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\10_1_21032026_225504.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_21032026_104828.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_21032026_225530.jpg"
       }
     },
     {
@@ -230,10 +226,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\11_1_21032026_104902.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\11_1_21032026_225530.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\11_1_21032026_104913.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\11_1_21032026_225553.jpg"
       }
     },
     {
@@ -252,10 +248,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\12_1_21032026_104924.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\12_1_21032026_225530.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_21032026_104940.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_21032026_225557.jpg"
       }
     },
     {
@@ -269,12 +265,16 @@
       "mode_payload": {
         "prompt": "Hai người ôm nhau khóc dưới cơn mưa nặng hạt giữa ngã tư đường phố vắng lặng, ánh đèn đường màu vàng ấm áp."
       },
-      "status_code": "FAILED",
-      "status_text": "Lỗi",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\13_1_21032026_225612.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\13_1_21032026_225632.jpg"
+      }
     },
     {
       "row": 13,
@@ -287,16 +287,12 @@
       "mode_payload": {
         "prompt": "Một nhạc công đang chơi đàn cello trên đỉnh một vách đá mờ sương, sóng biển vỗ dữ dội phía dưới."
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "TOKEN",
+      "status_text": "Đang tạo",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\14_1_21032026_105012.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\14_1_21032026_105024.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 14,
@@ -314,10 +310,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\15_1_21032026_105034.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\15_1_21032026_225602.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\15_1_21032026_105047.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\15_1_21032026_225618.jpg"
       }
     },
     {
@@ -336,10 +332,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\16_1_21032026_105101.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\16_1_21032026_225722.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\16_1_21032026_105111.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\16_1_21032026_225743.jpg"
       }
     },
     {
@@ -358,10 +354,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\17_1_21032026_105112.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\17_1_21032026_225747.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\17_1_21032026_105127.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\17_1_21032026_225839.jpg"
       }
     },
     {
@@ -380,10 +376,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\18_1_21032026_105141.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\18_1_21032026_225659.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\18_1_21032026_105156.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\18_1_21032026_225716.jpg"
       }
     },
     {
@@ -397,16 +393,12 @@
       "mode_payload": {
         "prompt": "Cận cảnh bàn tay gân guốc của một nghệ nhân đang nhào nặn đất sét trên bàn xoay, bùn đất ướt át."
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: 403 | message: reCAPTCHA evaluation failed)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\19_1_21032026_105156.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\19_1_21032026_105210.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 19,
@@ -424,10 +416,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\20_1_21032026_105220.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\20_1_21032026_225708.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\20_1_21032026_105234.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\20_1_21032026_225726.jpg"
       }
     },
     {
@@ -446,10 +438,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\21_1_21032026_105250.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\21_1_21032026_225722.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\21_1_21032026_105307.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\21_1_21032026_225759.jpg"
       }
     },
     {
@@ -468,10 +460,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\22_1_21032026_105331.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\22_1_21032026_225736.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\22_1_21032026_105345.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\22_1_21032026_225817.jpg"
       }
     },
     {
@@ -490,10 +482,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\23_1_21032026_105307.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\23_1_21032026_225736.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\23_1_21032026_105321.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\23_1_21032026_225813.jpg"
       }
     },
     {
@@ -512,10 +504,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\24_1_21032026_105355.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\24_1_21032026_225758.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\24_1_21032026_105409.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\24_1_21032026_225835.jpg"
       }
     },
     {
@@ -529,12 +521,16 @@
       "mode_payload": {
         "prompt": "Cận cảnh một sinh vật ngoài hành tinh có đôi mắt phát sáng đang tò mò chạm vào một bông hoa của Trái Đất."
       },
-      "status_code": "TOKEN",
-      "status_text": "Đang tạo",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\25_1_21032026_225807.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\25_1_21032026_225839.jpg"
+      }
     },
     {
       "row": 25,
@@ -552,10 +548,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\26_1_21032026_105641.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\26_1_21032026_225900.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\26_1_21032026_105655.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\26_1_21032026_230005.jpg"
       }
     },
     {
@@ -574,10 +570,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\27_1_21032026_105447.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\27_1_21032026_225900.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\27_1_21032026_105500.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\27_1_21032026_230008.jpg"
       }
     },
     {
@@ -596,10 +592,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\28_1_21032026_105511.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\28_1_21032026_225900.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\28_1_21032026_105525.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\28_1_21032026_225900.mp4.thumb.jpg"
       }
     },
     {
@@ -613,16 +609,12 @@
       "mode_payload": {
         "prompt": "Một chiến binh robot bị rỉ sét đang từ từ thức tỉnh sau hàng ngàn năm trong một hang động băng giá."
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: 403 | message: reCAPTCHA evaluation failed)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\29_1_21032026_105608.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\29_1_21032026_105622.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 29,
@@ -640,10 +632,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\30_1_21032026_105623.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\30_1_21032026_225900.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\30_1_21032026_105640.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\30_1_21032026_230010.jpg"
       }
     },
     {
@@ -662,10 +654,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\31_1_21032026_105535.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\31_1_21032026_225915.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\31_1_21032026_105546.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\31_1_21032026_230012.jpg"
       }
     },
     {
@@ -679,12 +671,16 @@
       "mode_payload": {
         "prompt": "Một người máy có khuôn mặt giống con người đang khóc, một giọt nước mắt lăn xuống gò má kim loại."
       },
-      "status_code": "ACTIVE",
-      "status_text": "Đang tạo",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\32_1_21032026_230005.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\32_1_21032026_230047.jpg"
+      }
     },
     {
       "row": 32,
@@ -697,12 +693,16 @@
       "mode_payload": {
         "prompt": "Lâu đài gothic tối tăm nằm trên đỉnh ngọn núi lửa đang hoạt động, dung nham chảy đỏ rực bên dưới."
       },
-      "status_code": "ACTIVE",
-      "status_text": "Đang tạo",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\33_1_21032026_230007.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\33_1_21032026_230047.jpg"
+      }
     },
     {
       "row": 33,
@@ -715,12 +715,16 @@
       "mode_payload": {
         "prompt": "Một tiên nữ nhỏ bé có cánh trong suốt đang ngủ say trong một bông hoa sen nở rộ."
       },
-      "status_code": "ACTIVE",
-      "status_text": "Đang tạo",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\34_1_21032026_230010.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\34_1_21032026_230047.jpg"
+      }
     },
     {
       "row": 34,
@@ -733,12 +737,16 @@
       "mode_payload": {
         "prompt": "Khung cảnh sao hỏa với những cơn bão cát khổng lồ đang quét qua một khu định cư mái vòm bằng kính."
       },
-      "status_code": "ACTIVE",
-      "status_text": "Đang tạo",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\35_1_21032026_230011.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\35_1_21032026_230053.jpg"
+      }
     },
     {
       "row": 35,
@@ -751,7 +759,7 @@
       "mode_payload": {
         "prompt": "Một cuốn sách cổ nạm ngọc đang tự mở ra, những ký tự vàng bay lơ lửng xung quanh người đọc."
       },
-      "status_code": "ACTIVE",
+      "status_code": "DOWNLOADING",
       "status_text": "Đang tạo",
       "output_count": 1,
       "selected_output_index": 1,
@@ -769,7 +777,7 @@
       "mode_payload": {
         "prompt": "Giao tranh bằng kiếm laser giữa hai hiệp sĩ không gian trong một lò phản ứng năng lượng khổng lồ."
       },
-      "status_code": "ACTIVE",
+      "status_code": "DOWNLOADING",
       "status_text": "Đang tạo",
       "output_count": 1,
       "selected_output_index": 1,
@@ -787,8 +795,8 @@
       "mode_payload": {
         "prompt": "Nàng tiên cá bơi lội uyển chuyển qua một thành phố Atlantis ngập chìm dưới đáy biển sâu."
       },
-      "status_code": "TOKEN",
-      "status_text": "Đang lấy token",
+      "status_code": "DOWNLOADING",
+      "status_text": "Đang tạo",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -805,8 +813,8 @@
       "mode_payload": {
         "prompt": "Một cái cây khổng lồ ôm trọn cả một hành tinh nhỏ, rễ cây tỏa ra ánh sáng rực rỡ."
       },
-      "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 1)",
+      "status_code": "ACTIVE",
+      "status_text": "Đang tạo",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -823,8 +831,8 @@
       "mode_payload": {
         "prompt": "Người ngoài hành tinh khổng lồ bước đi giữa các tòa nhà chọc trời, sương mù che khuất nửa thân trên."
       },
-      "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 2)",
+      "status_code": "ACTIVE",
+      "status_text": "Đang tạo",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -841,8 +849,8 @@
       "mode_payload": {
         "prompt": "Một nhà khoa học điên đang cấy ghép các bộ phận cơ khí màu đồng vào cơ thể, phong cách Steampunk."
       },
-      "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 3)",
+      "status_code": "ACTIVE",
+      "status_text": "Đang tạo",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -859,8 +867,8 @@
       "mode_payload": {
         "prompt": "🎨 Chủ đề 3: Hoạt hình & 3D (Animation & 3D)"
       },
-      "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 4)",
+      "status_code": "ACTIVE",
+      "status_text": "Đang tạo",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -877,8 +885,8 @@
       "mode_payload": {
         "prompt": "Phong cách Pixar: Một chú chó Corgi mập mạp đang cố gắng nhảy lên ghế sofa nhưng bị trượt chân ngã lộn nhào."
       },
-      "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 5)",
+      "status_code": "ACTIVE",
+      "status_text": "Đang tạo",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -895,8 +903,8 @@
       "mode_payload": {
         "prompt": "Hoạt hình 2D phong cách Studio Ghibli: Một cô gái đang đạp xe trên con đường ven biển vào mùa hè, hoa anh đào bay lác đác."
       },
-      "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 6)",
+      "status_code": "ACTIVE",
+      "status_text": "Đang tạo",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -913,8 +921,8 @@
       "mode_payload": {
         "prompt": "3D Render: Quái vật nhỏ bằng len màu hồng đang vui vẻ nhảy múa dưới ánh đèn disco nhiều màu."
       },
-      "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 7)",
+      "status_code": "ACTIVE",
+      "status_text": "Đang tạo",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -931,8 +939,8 @@
       "mode_payload": {
         "prompt": "Phong cách Stop-motion: Một tách trà bằng đất sét tự động rót nước vào ly, có khói bốc lên sống động."
       },
-      "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 8)",
+      "status_code": "ACTIVE",
+      "status_text": "Đang tạo",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -949,8 +957,8 @@
       "mode_payload": {
         "prompt": "Anime style: Nhân vật nam chính tung đòn đánh mạnh mẽ, vụn đá văng tung tóe, hiệu ứng đường nét tốc độ rực rỡ."
       },
-      "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 9)",
+      "status_code": "TOKEN",
+      "status_text": "Đang tạo",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -967,8 +975,8 @@
       "mode_payload": {
         "prompt": "Đồ họa Low-poly: Khung cảnh cắm trại trong rừng với ngọn lửa trại lấp lánh và bầu trời đầy sao."
       },
-      "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 10)",
+      "status_code": "TOKEN",
+      "status_text": "Đang lấy token",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -986,7 +994,7 @@
         "prompt": "Phong cách Cyberpunk 2D: Một cô gái có cánh tay robot đang ăn mì ramen tại một quán vỉa hè đầy đèn neon."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 11)",
+      "status_text": "Đang chờ (vị trí 1)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1004,7 +1012,7 @@
         "prompt": "Hoạt hình cắt giấy (Paper cut animation): Một con thuyền giấy lênh đênh trên những lớp sóng biển bằng giấy màu xanh."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 12)",
+      "status_text": "Đang chờ (vị trí 2)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1022,7 +1030,7 @@
         "prompt": "3D Unreal Engine: Một con báo máy móc chuyển động mượt mà xuyên qua khu rừng rậm rạp nhiệt đới."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 13)",
+      "status_text": "Đang chờ (vị trí 3)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1040,7 +1048,7 @@
         "prompt": "Phong cách màu nước (Watercolor): Bức tranh một khu phố cổ Paris đang trời mưa bắt đầu chuyển động chân thực."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 14)",
+      "status_text": "Đang chờ (vị trí 4)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1058,7 +1066,7 @@
         "prompt": "Phong cách hoạt hình cổ điển 1930s (Rubber hose): Nhân vật đi qua lại với điệu bộ hài hước, màn hình đen trắng có nhiễu hạt."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 15)",
+      "status_text": "Đang chờ (vị trí 5)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1076,7 +1084,7 @@
         "prompt": "Chibi style: Một nhóm các nhân vật nhỏ bé dễ thương đang tranh nhau một chiếc bánh quy khổng lồ."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 16)",
+      "status_text": "Đang chờ (vị trí 6)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1094,7 +1102,7 @@
         "prompt": "3D Isometric: Một căn phòng làm việc thu nhỏ (diorama) tự động xây dựng lên từ các viên gạch lơ lửng."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 17)",
+      "status_text": "Đang chờ (vị trí 7)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1112,7 +1120,7 @@
         "prompt": "Hoạt hình vector (Flat design): Biểu đồ nhịp tim chuyển thành hình dáng một chiếc ô tô đang chạy trên đường cong."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 18)",
+      "status_text": "Đang chờ (vị trí 8)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1130,7 +1138,7 @@
         "prompt": "Hoạt hình tranh cát: Đôi bàn tay họa sĩ đang vẽ nên hình ảnh một gia đình hạnh phúc, cát bay theo gió."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 19)",
+      "status_text": "Đang chờ (vị trí 9)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1148,7 +1156,7 @@
         "prompt": "Đồ họa 8-bit Pixel Art: Hiệp sĩ cầm kiếm đi ngang qua màn hình, chém những con quái vật chất nhầy màu xanh lá."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 20)",
+      "status_text": "Đang chờ (vị trí 10)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1166,7 +1174,7 @@
         "prompt": "Phong cách Cel-shading: Cảnh đua xe mô tô trên đường cao tốc với những nét viền đen đậm mang đậm chất truyện tranh comic."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 21)",
+      "status_text": "Đang chờ (vị trí 11)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1184,7 +1192,7 @@
         "prompt": "3D đáng yêu: Một đám mây trắng có mắt mũi đang khóc ra những giọt mưa cầu vồng."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 22)",
+      "status_text": "Đang chờ (vị trí 12)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1202,7 +1210,7 @@
         "prompt": "Hoạt hình tĩnh vật: Các loại trái cây trên bàn bỗng dưng mọc chân và nhảy điệu cha-cha-cha."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 23)",
+      "status_text": "Đang chờ (vị trí 13)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1220,7 +1228,7 @@
         "prompt": "Phong cách vẽ chì (Pencil sketch animation): Một bức phác họa chân dung một người mỉm cười và nháy mắt với người xem."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 24)",
+      "status_text": "Đang chờ (vị trí 14)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1238,7 +1246,7 @@
         "prompt": "🌿 Chủ đề 4: Thiên nhiên & Phong cảnh (Nature & Landscapes)"
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 25)",
+      "status_text": "Đang chờ (vị trí 15)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1256,7 +1264,7 @@
         "prompt": "Video time-lapse hoa mẫu đơn từ từ nở rộ từ nụ hoa thành bông hoa rực rỡ dưới ánh sáng bình minh."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 26)",
+      "status_text": "Đang chờ (vị trí 16)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1274,7 +1282,7 @@
         "prompt": "Góc quay cận cảnh siêu thực (Macro shot): Giọt sương ban mai lăn từ từ trên gân một chiếc lá xanh mướt."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 27)",
+      "status_text": "Đang chờ (vị trí 17)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1292,7 +1300,7 @@
         "prompt": "Quay chậm (Slow-motion) một con chim bói cá lao vút xuống mặt hồ tĩnh lặng để bắt cá, nước bắn tung tóe."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 28)",
+      "status_text": "Đang chờ (vị trí 18)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1310,7 +1318,7 @@
         "prompt": "Góc nhìn từ trên cao (Top-down): Sóng biển xanh ngọc bích vỗ nhẹ nhàng vào bờ cát trắng xóa, không có người."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 29)",
+      "status_text": "Đang chờ (vị trí 19)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1328,7 +1336,7 @@
         "prompt": "Camera bay lướt qua một hẻm núi hùng vĩ, những đàn chim đại bàng đang chao liệng giữa không trung."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 30)",
+      "status_text": "Đang chờ (vị trí 20)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1346,7 +1354,7 @@
         "prompt": "Cảnh cực quang (Aurora Borealis) màu xanh lá và tím nhảy múa trên bầu trời đêm trên một túp lều tuyết ở Bắc Cực."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 31)",
+      "status_text": "Đang chờ (vị trí 21)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1364,7 +1372,7 @@
         "prompt": "Hàng ngàn con đom đóm thắp sáng một khu rừng tối tăm bám rêu xanh, tạo cảm giác thần tiên."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 32)",
+      "status_text": "Đang chờ (vị trí 22)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1382,7 +1390,7 @@
         "prompt": "Dung nham núi lửa phun trào vào đại dương, tạo ra những cột khói trắng khổng lồ bốc lên trời."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 33)",
+      "status_text": "Đang chờ (vị trí 23)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1400,7 +1408,7 @@
         "prompt": "Cơn bão lốc xoáy (Tornado) khổng lồ đang quét qua một cánh đồng hoang, bầu trời xám xịt và u ám."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 34)",
+      "status_text": "Đang chờ (vị trí 24)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1418,7 +1426,7 @@
         "prompt": "Cảnh dưới nước (Underwater): Rùa biển bơi lội thong thả qua một rạn san hô rực rỡ màu sắc."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 35)",
+      "status_text": "Đang chờ (vị trí 25)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1436,7 +1444,7 @@
         "prompt": "Đàn ngựa hoang đang phi nước đại tung bụi mù mịt trên một thảo nguyên rộng lớn, ánh nắng vàng hắt ngược."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 36)",
+      "status_text": "Đang chờ (vị trí 26)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1454,7 +1462,7 @@
         "prompt": "Thác nước khổng lồ đổ ầm ầm xuống vách đá, một chiếc cầu vồng xuất hiện trong làn sương mù do nước tạo ra."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 37)",
+      "status_text": "Đang chờ (vị trí 27)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1472,7 +1480,7 @@
         "prompt": "Cảnh tuyết rơi dày đặc, gió thổi những bông tuyết phủ kín một nhánh thông gai góc."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 38)",
+      "status_text": "Đang chờ (vị trí 28)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1490,7 +1498,7 @@
         "prompt": "Video tua nhanh (Time-lapse) bầu trời đầy sao chuyển động xoay quanh sao Bắc Đẩu, có sao băng rơi."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 39)",
+      "status_text": "Đang chờ (vị trí 29)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1508,7 +1516,7 @@
         "prompt": "Cận cảnh một con tắc kè hoa đang từ từ đổi màu da để hòa mình vào cành cây khô."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 40)",
+      "status_text": "Đang chờ (vị trí 30)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1526,7 +1534,7 @@
         "prompt": "Ánh nắng xuyên qua những tán cây cổ thụ cao vút (God rays), sương mù bảng lảng trên mặt đất rừng."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 41)",
+      "status_text": "Đang chờ (vị trí 31)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1544,7 +1552,7 @@
         "prompt": "Đàn cá heo nhảy vọt lên khỏi mặt nước biển trong xanh, đi theo mũi của một con tàu."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 42)",
+      "status_text": "Đang chờ (vị trí 32)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1562,7 +1570,7 @@
         "prompt": "Cận cảnh móng vuốt của một con báo tuyết bước đi lặng lẽ trên nền tuyết xốp."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 43)",
+      "status_text": "Đang chờ (vị trí 33)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1580,7 +1588,7 @@
         "prompt": "Biển mây trôi bồng bềnh ôm quanh những đỉnh núi đá nhọn hoắt vào buổi sáng sớm tinh mơ."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 44)",
+      "status_text": "Đang chờ (vị trí 34)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1598,7 +1606,7 @@
         "prompt": "Mạng nhện giăng giữa hai cành cây, lấp lánh những giọt sương và đung đưa nhẹ trong gió."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 45)",
+      "status_text": "Đang chờ (vị trí 35)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1616,7 +1624,7 @@
         "prompt": "🔮 Chủ đề 5: Trừu tượng, Nghệ thuật & Sản phẩm (Abstract, Artistic & Commercial)"
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 46)",
+      "status_text": "Đang chờ (vị trí 36)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1634,7 +1642,7 @@
         "prompt": "Các dòng chất lỏng màu vàng gold và đen từ từ hòa quyện vào nhau, tạo thành những gợn sóng nghệ thuật, quay siêu cận cảnh."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 47)",
+      "status_text": "Đang chờ (vị trí 37)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1652,7 +1660,7 @@
         "prompt": "Video quảng cáo: Một ly bia lạnh với lớp bọt tràn viền, những giọt nước đọng trên thành ly cực kỳ sắc nét."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 48)",
+      "status_text": "Đang chờ (vị trí 38)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1670,7 +1678,7 @@
         "prompt": "Kính vạn hoa (Kaleidoscope): Các mảnh vỡ tinh thể màu sắc liên tục biến đổi hình dạng theo nhịp điệu."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 49)",
+      "status_text": "Đang chờ (vị trí 39)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1688,7 +1696,7 @@
         "prompt": "Hàng ngàn quả bóng nhựa màu đỏ rơi tự do từ trên cao xuống lấp đầy một căn phòng toàn màu trắng."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 50)",
+      "status_text": "Đang chờ (vị trí 40)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1706,7 +1714,7 @@
         "prompt": "Hình học trừu tượng (Abstract geometry): Các khối lập phương bằng thủy tinh liên tục trồi lên lặn xuống, ánh sáng khúc xạ rực rỡ."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 51)",
+      "status_text": "Đang chờ (vị trí 41)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1724,7 +1732,7 @@
         "prompt": "Cảnh một chiếc xe hơi thể thao sang trọng chạy qua đường hầm thiếu sáng, chỉ thấy đường nét xe phản chiếu ánh đèn."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 52)",
+      "status_text": "Đang chờ (vị trí 42)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1742,7 +1750,7 @@
         "prompt": "Nước hoa bắn ra từ vòi xịt dạng sương mù cực mịn, quay chậm dưới ánh đèn studio rực rỡ, background đen."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 53)",
+      "status_text": "Đang chờ (vị trí 43)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1760,7 +1768,7 @@
         "prompt": "Cát màu liên tục được đổ lên nhau tạo thành các họa tiết xếp lớp 3D độc đáo."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 54)",
+      "status_text": "Đang chờ (vị trí 44)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1778,7 +1786,7 @@
         "prompt": "Sự bùng nổ của bột màu Holi (màu xanh, đỏ, vàng) trong không trung, quay slow-motion 1000fps."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 55)",
+      "status_text": "Đang chờ (vị trí 45)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1796,7 +1804,7 @@
         "prompt": "Một bức tượng đá cẩm thạch La Mã cổ đại bỗng nhiên tan chảy thành chất lỏng màu bạc óng ánh."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 56)",
+      "status_text": "Đang chờ (vị trí 46)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1814,7 +1822,7 @@
         "prompt": "Góc quay vĩ mô (Macro) bề mặt của một đôi giày da cao cấp, quay rõ từng đường kim mũi chỉ và kết cấu da."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 57)",
+      "status_text": "Đang chờ (vị trí 47)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1832,7 +1840,7 @@
         "prompt": "Hình ảnh một con mắt khổng lồ mở ra, con ngươi bên trong chứa cả một dải ngân hà đang xoay tròn."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 58)",
+      "status_text": "Đang chờ (vị trí 48)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1850,7 +1858,7 @@
         "prompt": "Các dải lụa mềm mại bay lượn trong môi trường không trọng lực, ánh sáng pastel nhẹ nhàng."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 59)",
+      "status_text": "Đang chờ (vị trí 49)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1868,7 +1876,7 @@
         "prompt": "Video quảng cáo mỹ phẩm: Một giọt serum rơi xuống bề mặt da mô phỏng nước, tạo ra các làn sóng tỏa ra mượt mà."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 60)",
+      "status_text": "Đang chờ (vị trí 50)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1886,7 +1894,7 @@
         "prompt": "Phép chiếu ánh sáng nghệ thuật (Projection mapping) lên khuôn mặt của một người phụ nữ, các họa tiết thay đổi liên tục."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 61)",
+      "status_text": "Đang chờ (vị trí 51)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1904,7 +1912,7 @@
         "prompt": "Các đường nét neon đang vẽ ra sơ đồ của một con chip máy tính, camera zoom sâu vào trung tâm bảng mạch."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 62)",
+      "status_text": "Đang chờ (vị trí 52)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1922,7 +1930,7 @@
         "prompt": "Mực (Ink) màu xanh dương lan tỏa bồng bềnh trong môi trường nước, tạo thành những hình thù như những đám mây."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 63)",
+      "status_text": "Đang chờ (vị trí 53)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1940,7 +1948,7 @@
         "prompt": "Một miếng thịt bò bít tết vừa được đặt lên vỉ nướng xèo xèo, dầu mỡ sôi lên, ngọn lửa liếm qua bề mặt thịt."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 64)",
+      "status_text": "Đang chờ (vị trí 54)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1958,7 +1966,7 @@
         "prompt": "Âm thanh hình ảnh hóa (Audio visualizer): Các hạt ánh sáng rung động và nảy lên theo nhịp điệu của tiếng bass."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 65)",
+      "status_text": "Đang chờ (vị trí 55)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
@@ -1976,7 +1984,7 @@
         "prompt": "Đồ ăn bay lơ lửng: Các nguyên liệu của một chiếc hamburger (bánh mì, thịt bò, rau xà lách, cà chua) bay lơ lửng rồi từ từ ghép lại với nhau."
       },
       "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 66)",
+      "status_text": "Đang chờ (vị trí 56)",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
