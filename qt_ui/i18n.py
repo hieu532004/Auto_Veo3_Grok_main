@@ -133,6 +133,7 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
     "log_title": {"vi": "Nhật ký chạy", "en": "Run Log"},
 
     "btn_join_video": {"vi": "Nối video", "en": "Join Video"},
+    "btn_remove_watermark": {"vi": "Xóa logo", "en": "Remove Logo"},
     "btn_retry": {"vi": "Tạo lại video", "en": "Regenerate"},
     "btn_retry_failed": {"vi": "Tạo lại video lỗi", "en": "Retry Failed"},
     "btn_cut_last": {"vi": "Cắt ảnh cuối", "en": "Trim Last Frame"},

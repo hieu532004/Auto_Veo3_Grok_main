@@ -1137,10 +1137,12 @@ class MainWindow(QMainWindow):
         try:
             from chrome_process_manager import ChromeProcessManager
             ChromeProcessManager.close_chrome_gracefully()
+            if hasattr(self.status, 'retry_auth_failed_rows'):
+                self.status.retry_auth_failed_rows()
             QMessageBox.information(
                 self,
-                'Reload Captcha',
-                'Đã đóng tất cả Chrome. Khi chạy workflow tiếp theo, Chrome Token Pool sẽ tự khởi động lại.',
+                'Reload Mượt Mà',
+                'Chrome lấy Token đã được khởi động lại ngầm.\nCác video đang chạy không bị ảnh hưởng và hệ thống tự động chạy lại các video vừa lỗi xác thực.',
             )
         except Exception as exc:
             QMessageBox.warning(self, 'Lỗi', f'Lỗi reload captcha: {exc}')

@@ -225,6 +225,31 @@ class _IdeaToVideoWorker(QThread):
         except BaseException as exc:
             self.completed.emit({"success": False, "message": f"Lỗi Idea to Video: {exc}"})
 
+class _RemoveWatermarkWorker(QThread):
+    progress = pyqtSignal(str)
+    completed = pyqtSignal(int)
+    error = pyqtSignal(str)
+
+    def __init__(self, paths, parent=None):
+        super().__init__(parent)
+        self.paths = paths
+
+    def run(self):
+        try:
+            from watermark_remover import remove_watermark
+            count = 0
+            for p in self.paths:
+                if not os.path.exists(p):
+                    self.progress.emit(f"⚠️ Bỏ qua file không tồn tại: {os.path.basename(p)}")
+                    continue
+                self.progress.emit(f"🔄 Đang xoá logo: {os.path.basename(p)}")
+                remove_watermark(p, log_callback=lambda msg: self.progress.emit(str(msg)))
+                count += 1
+            self.completed.emit(count)
+        except Exception as e:
+            self.error.emit(str(e))
+
+
 class StatusPanel(QWidget):
     COL_CHECK = 0
     COL_STT = 1
@@ -307,6 +332,12 @@ class StatusPanel(QWidget):
         self.btn_cut_last.setObjectName("TopAction")
         self.btn_cut_last.clicked.connect(self._on_cut_last_clicked)
         tb.addWidget(self.btn_cut_last)
+
+        self.btn_remove_watermark = QPushButton("Xóa logo")
+        self.btn_remove_watermark.setProperty("topRow", True)
+        self.btn_remove_watermark.setObjectName("TopAction")
+        self.btn_remove_watermark.clicked.connect(self._on_remove_watermark_clicked)
+        tb.addWidget(self.btn_remove_watermark)
 
         self.btn_del = QPushButton("Xóa kết quả")
         self.btn_del.setProperty("topRow", True)
@@ -487,6 +518,7 @@ class StatusPanel(QWidget):
         self.btn_retry.setText(t("btn_retry"))
         self.btn_retry_failed.setText(t("btn_retry_failed"))
         self.btn_cut_last.setText(t("btn_cut_last"))
+        self.btn_remove_watermark.setText(t("btn_remove_watermark") if t("btn_remove_watermark") else "Xóa logo")
         self.btn_del.setText(t("btn_del"))
         self.btn_zalo.setText(t("btn_zalo_group"))
         self.btn_open_guide.setText(t("btn_guide"))
@@ -3813,6 +3845,27 @@ class StatusPanel(QWidget):
             return
         self.retry_failed_rows()
 
+    def _on_remove_watermark_clicked(self) -> None:
+        video_paths = self._ask_video_source("Xóa logo video")
+        if not video_paths:
+            QMessageBox.warning(self, "Thiếu dữ liệu", "Không có video để xóa logo.")
+            return
+
+        self.btn_remove_watermark.setEnabled(False)
+        self.btn_remove_watermark.setText("Đang xóa logo...")
+        self._append_run_log("🔄 Bắt đầu tiến trình xóa logo hàng loạt...")
+
+        self._rm_worker = _RemoveWatermarkWorker(video_paths, self)
+        self._rm_worker.progress.connect(self._append_run_log)
+        self._rm_worker.error.connect(lambda e: self._append_run_log(f"⚠️ Lỗi xóa logo: {e}"))
+        def on_done(count):
+            self.btn_remove_watermark.setEnabled(True)
+            self.btn_remove_watermark.setText(t("btn_remove_watermark") if t("btn_remove_watermark") else "Xóa logo")
+            self._append_run_log(f"✅ Hoàn thành xóa logo cho {count} video!")
+            QMessageBox.information(self, "Hoàn tất", f"Đã xóa logo thành công cho {count} video.")
+        self._rm_worker.completed.connect(on_done)
+        self._rm_worker.start()
+
     def _on_cut_last_clicked(self) -> None:
         video_paths = self._ask_video_source("Cắt ảnh cuối")
         if not video_paths:
@@ -3828,6 +3881,19 @@ class StatusPanel(QWidget):
             QDesktopServices.openUrl(QUrl.fromLocalFile(str(frame_out)))
         except Exception as exc:
             QMessageBox.critical(self, "Lỗi cắt ảnh cuối", str(exc))
+
+    def retry_auth_failed_rows(self) -> None:
+        rows: list[int] = []
+        for r in range(self.table.rowCount()):
+            if self._status_code(r) == "FAILED":
+                err_code = str(self.table.item(r, 6).text()).strip() if self.table.item(r, 6) else ""
+                err_msg = str(self.table.item(r, 7).text()).strip().lower() if self.table.item(r, 7) else ""
+                if "401" in err_code or "16" in err_code or "403" in err_code or "auth" in err_code.lower() or "authentication" in err_msg or "recaptcha" in err_msg:
+                    rows.append(r)
+        if not rows:
+            return
+        self._append_run_log(f"🔄 Đang tự động thử lại {len(rows)} video bị lỗi 401/403/AUTH...")
+        self._start_rows_by_mode(rows)
 
     def retry_failed_rows(self) -> None:
         rows: list[int] = []

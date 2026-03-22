@@ -255,6 +255,10 @@ class ImageToVideoWorkflow(QThread):
 		retry_count = prompt_retry_counts.get(prompt_id, 0)
 		token_request_count = 0
 
+		# ✅ Đưa ngay vào state.json để đếm luồng chính xác, tránh tạo ồ ạt
+		for i in range(output_count):
+			self._update_state_entry(prompt_id, prompt_text, "", i, "ACTIVE")
+
 		# ✅ Emit ACTIVE status để UI cập nhật cột status
 		self.video_updated.emit({
 			"prompt_idx": f"{prompt_id}_1",
@@ -293,16 +297,23 @@ class ImageToVideoWorkflow(QThread):
 
 			# Lấy token
 			token = None
+			token_project_id = ""
 			for attempt in range(max_token_retries):
 				if self.STOP:
 					return
 				try:
 					token_request_count += 1
 					clear_storage = clear_data_every > 0 and (token_request_count % clear_data_every == 0)
-					token = await asyncio.wait_for(
+					token_result = await asyncio.wait_for(
 						collector.get_token(clear_storage=clear_storage),
 						timeout=get_token_timeout,
 					)
+					# Token pool trả về (token, project_id) hoặc string
+					if isinstance(token_result, tuple) and len(token_result) == 2:
+						token, token_project_id = token_result
+					elif token_result:
+						token = token_result
+						token_project_id = ""
 					if token:
 						break
 				except asyncio.TimeoutError:
@@ -327,8 +338,10 @@ class ImageToVideoWorkflow(QThread):
 				return
 
 			# Build payload & gửi request
+			# Dùng project_id từ token (mỗi Chrome có project riêng) nếu có
+			effective_project_id = token_project_id if token_project_id else project_id
 			payload = build_payload_generate_video_start_end(
-				token, session_id, project_id, prompt_text, None, model_key,
+				token, session_id, effective_project_id, prompt_text, None, model_key,
 				start_media_id, "temp", aspect_ratio=video_aspect,
 				end_media_id=end_media_id, output_count=output_count,
 			)
@@ -340,10 +353,14 @@ class ImageToVideoWorkflow(QThread):
 			self._log(f"🚀 [{time.strftime('%H:%M:%S')}] Gửi request video (prompt {prompt_id})...")
 
 			if token_option == "Option 2":
+				import random
+				await asyncio.sleep(random.uniform(0.5, 2.5))
 				response = await request_create_video_via_browser(
 					collector.page, create_video_url, payload, cookie, access_token,
 				)
 			else:
+				import random
+				await asyncio.sleep(random.uniform(0.5, 2.5))
 				response = await request_create_video(payload, access_token, cookie=cookie, url=create_video_url)
 
 			if self._should_stop():
@@ -353,8 +370,54 @@ class ImageToVideoWorkflow(QThread):
 			error_code, error_message = self._extract_error_info(response_body)
 			retryable_errors = {"403", "3", "13", "53", "16", "401", "429", "400", "500", "503"}
 			error_code_str = str(error_code or "").strip()
+			is_auth_error = error_code_str in ("16", "401") or "authentication credentials" in str(error_message).lower()
 
-			if not response.get("ok", True) and error_code_str in retryable_errors:
+			if (not response.get("ok", True) or error_code_str) and (error_code_str in retryable_errors or is_auth_error):
+				if is_auth_error:
+					auth_retries = prompt_retry_counts.get(f"{prompt_id}_auth_count", 0)
+					self._log(f"⚠️ Token OAuth hết hạn (lần {auth_retries + 1}), tự động lấy mới...")
+					try:
+						if hasattr(collector, 'refresh_auth_from_browser'):
+							fresh_token, fresh_cookie = await collector.refresh_auth_from_browser(project_id)
+							if fresh_token:
+								access_token = fresh_token
+								auth["access_token"] = fresh_token
+								self._log("✅ Đã renew OAuth token từ Chrome browser")
+							if fresh_cookie:
+								cookie = fresh_cookie
+								auth["cookie"] = fresh_cookie
+						if auth_retries >= 1 and hasattr(collector, 'force_auto_login'):
+							self._log("🛑 Auth error lặp lại, restart Chrome để lấy token MỚI...")
+							try:
+								result = await asyncio.wait_for(collector.force_auto_login(), timeout=120)
+							except Exception as e:
+								self._log(f"⚠️ Hết thời gian chờ (120s) khi force_auto_login: {e}")
+								result = None
+							if isinstance(result, tuple) and len(result) == 2:
+								forced_token, forced_cookie = result
+								if forced_token:
+									access_token = forced_token
+									auth["access_token"] = forced_token
+									self._log("✅ Chrome restart: token mới sẵn sàng")
+								else:
+									self._log("❌ KHÔNG THỂ LẤY TOKEN! Phiên đăng nhập Google đã hết hạn. Hãy đăng nhập lại.")
+									fail_scene_ids = scene_ids if scene_ids else [str(uuid.uuid4()) for _ in range(output_count)]
+									for idx, sid in enumerate(fail_scene_ids):
+										self._update_state_entry(prompt_id, prompt_text, sid, idx, "FAILED", error="AUTH", message="Phiên đăng nhập Google đã hết hạn. Hãy đăng nhập lại!")
+										self.video_updated.emit({
+											"prompt_idx": f"{prompt_id}_{idx + 1}", "status": "FAILED",
+											"scene_id": sid, "prompt": prompt_text, "_prompt_id": prompt_id,
+											"error_code": "AUTH", "error_message": "Phiên đăng nhập Google đã hết hạn. Hãy đăng nhập lại!",
+										})
+									return
+								if forced_cookie:
+									cookie = forced_cookie
+									auth["cookie"] = forced_cookie
+					except Exception as e:
+						self._log(f"⚠️ Lỗi refresh auth: {e}")
+					
+					prompt_retry_counts[f"{prompt_id}_auth_count"] = auth_retries + 1
+
 				if self.STOP:
 					return
 				if error_code_str == "403":
@@ -366,9 +429,12 @@ class ImageToVideoWorkflow(QThread):
 
 				retry_count += 1
 				prompt_retry_counts[prompt_id] = retry_count
+				# Không skip trừ retry_count (nếu có lúc trước), đếm bình thường
 				self._discard_scene_ids(prompt_id, scene_ids)
 
 				max_total_retries = max(retry_with_error, 3) * 2
+				if error_code_str in ("403", "429"):
+					max_total_retries = 15
 				if retry_count >= max_total_retries:
 					self._log(f"❌ Đạt retry limit ({max_total_retries}) prompt {prompt_id}")
 					for idx_s, sid in enumerate(scene_ids):
@@ -377,20 +443,25 @@ class ImageToVideoWorkflow(QThread):
 					return
 
 				if error_code_str == "403" and consecutive >= 3:
-					self._log("⚠️ 403 liên tiếp, restart Chrome...")
-					await collector.restart_browser()
+					self._log("⚠️ 403 liên tiếp, tiếp tục chờ...")
 					prompt_retry_counts[f"{prompt_id}_403_count"] = 0
-					continue
 
-				# 429 quota exhausted → chờ lâu hơn
-				if error_code_str == "429":
-					backoff = min(60, 20 * retry_count)
-					self._log(f"⚠️ Quota exhausted (429), chờ {backoff}s rồi retry ({retry_count}/{max_total_retries})")
+				import random
+				if error_code_str in ("429", "403"):
+					base_wait = wait_resend if error_code_str == "403" else 30
+					backoff = min(90, base_wait * retry_count + random.uniform(5.0, 25.0))
+					self._log(f"⚠️ Lỗi {error_code_str}, chờ {backoff:.1f}s rồi retry {retry_count}/{max_total_retries} (đã dãn cách)")
 					if not await self._sleep_with_stop(backoff):
 						return
+				elif is_auth_error:
+					jitter = random.uniform(1.0, 4.0)
+					self._log(f"⚠️ Lỗi 401, chờ {2 + jitter:.1f}s retry ({retry_count}/{max_total_retries})")
+					if not await self._sleep_with_stop(2 + jitter):
+						return
 				else:
-					self._log(f"⚠️ Lỗi {error_code_str}, chờ {wait_resend}s retry ({retry_count}/{max_total_retries})")
-					if not await self._sleep_with_stop(wait_resend):
+					jitter = random.uniform(1.0, 3.0)
+					self._log(f"⚠️ Lỗi {error_code_str}, chờ {wait_resend + jitter:.1f}s retry ({retry_count}/{max_total_retries})")
+					if not await self._sleep_with_stop(wait_resend + jitter):
 						return
 				continue
 
@@ -678,11 +749,16 @@ class ImageToVideoWorkflow(QThread):
 
 			# Lấy token mới
 			token = None
+			token_project_id = ""
 			try:
-				token = await asyncio.wait_for(
+				token_result = await asyncio.wait_for(
 					collector.get_token(clear_storage=False),
 					timeout=get_token_timeout,
 				)
+				if isinstance(token_result, tuple) and len(token_result) == 2:
+					token, token_project_id = token_result
+				elif token_result:
+					token = token_result
 			except Exception as e:
 				self._log(f"⚠️ Inline retry: không lấy được token cho prompt {r_prompt_id}: {e}")
 
@@ -712,8 +788,9 @@ class ImageToVideoWorkflow(QThread):
 					start_media = prompt_info_orig.get("start_media_id", "")
 					end_media = prompt_info_orig.get("end_media_id", "")
 
+				effective_project_id = token_project_id if token_project_id else project_id
 				payload = build_payload_generate_video_start_end(
-					token, session_id, project_id, r_prompt_text, None,
+					token, session_id, effective_project_id, r_prompt_text, None,
 					model_key, start_media, "temp",
 					aspect_ratio=video_aspect, end_media_id=end_media,
 					output_count=output_count,
@@ -944,6 +1021,7 @@ class ImageToVideoWorkflow(QThread):
 								break
 
 						token = None
+						token_project_id = ""
 
 						for attempt in range(max_token_retries):
 							if self.STOP:
@@ -955,10 +1033,15 @@ class ImageToVideoWorkflow(QThread):
 									clear_data_every > 0
 									and (token_request_count % clear_data_every == 0)
 								)
-								token = await asyncio.wait_for(
+								token_result = await asyncio.wait_for(
 									collector.get_token(clear_storage=clear_storage),
 									timeout=get_token_timeout
 								)
+								if isinstance(token_result, tuple) and len(token_result) == 2:
+									token, token_project_id = token_result
+								elif token_result:
+									token = token_result
+									token_project_id = ""
 								if token:
 									break
 							except asyncio.TimeoutError:
@@ -982,10 +1065,11 @@ class ImageToVideoWorkflow(QThread):
 							self._log(f"❌ Không lấy được token (prompt {prompt_id})")
 							break
 						
+						effective_project_id = token_project_id if token_project_id else project_id
 						payload = build_payload_generate_video_start_end(
 							token,
 							session_id,
-							project_id,
+							effective_project_id,
 							prompt_text,
 							None, # Resolve from config
 							model_key,
@@ -2133,7 +2217,7 @@ class ImageToVideoWorkflow(QThread):
 							f.write(chunk)
 			out_path = str(file_path.resolve())
 			self._log(f"⬇️  Tải video xong: {out_path}")
-			remove_watermark(out_path, log_callback=self._log)
+			# remove_watermark(out_path, log_callback=self._log)
 			try:
 				self.video_folder_updated.emit(str(video_dir.resolve()))
 			except Exception:

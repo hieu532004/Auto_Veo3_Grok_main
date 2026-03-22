@@ -429,8 +429,9 @@ class TokenCollector:
             return
         
         try:
-            self.browser = await self.playwright.chromium.connect_over_cdp(
-                f"http://localhost:{self.debug_port}"
+            self.browser = await asyncio.wait_for(
+                self.playwright.chromium.connect_over_cdp(f"http://localhost:{self.debug_port}"),
+                timeout=15.0
             )
         except Exception as e:
             self._log(f"❌ Lỗi kết nối CDP port {self.debug_port}: {e}")
@@ -858,7 +859,7 @@ class TokenCollector:
                 pass
             try:
                 if self.page and not self.page.is_closed():
-                    await self.page.close()
+                    await asyncio.wait_for(self.page.close(), timeout=2.0)
             except Exception:
                 pass
             self.page = None
@@ -867,7 +868,7 @@ class TokenCollector:
 
         try:
             if self.context:
-                await self.context.unroute("**/*", self._route_handler)
+                await asyncio.wait_for(self.context.unroute("**/*", self._route_handler), timeout=2.0)
         except Exception:
             pass
         self._routes_applied = False
@@ -878,12 +879,12 @@ class TokenCollector:
             pass
         try:
             if self.browser:
-                await self.browser.close()
+                await asyncio.wait_for(self.browser.close(), timeout=3.0)
         except Exception:
             pass
         try:
             if self.playwright:
-                await self.playwright.stop()
+                await asyncio.wait_for(self.playwright.stop(), timeout=3.0)
         except Exception:
             pass
         self.page = None
@@ -906,8 +907,9 @@ class TokenCollector:
             pass
         try:
             self.playwright = await async_playwright().start()
-            self.browser = await self.playwright.chromium.connect_over_cdp(
-                f"http://localhost:{self.debug_port}"
+            self.browser = await asyncio.wait_for(
+                self.playwright.chromium.connect_over_cdp(f"http://localhost:{self.debug_port}"),
+                timeout=15.0
             )
             self.context = self.browser.contexts[0] if self.browser.contexts else await self.browser.new_context()
             self.page = self.context.pages[0] if self.context.pages else await self.context.new_page()
@@ -978,7 +980,7 @@ class TokenCollector:
                 try:
                     if self.page and not self.page.is_closed():
                         self.page.off("response", self._on_response)
-                        await self.page.close()
+                        await asyncio.wait_for(self.page.close(), timeout=2.0)
                 except Exception:
                     pass
                 self.page = None

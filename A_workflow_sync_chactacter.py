@@ -322,17 +322,22 @@ class CharacterSyncWorkflow(QThread):
                 self._mark_prompt_failed(prompt_id, prompt_text, "UPLOAD", "Không có mediaId ảnh nhân vật")
                 return
 
+            # ✅ Đưa ngay vào state.json để đếm luồng chính xác, tránh tạo ồ ạt
+            for i in range(output_count):
+                self._update_state_entry(prompt_id, prompt_text, "", i, "ACTIVE")
+
             self.video_updated.emit({
                 "prompt_idx": f"{prompt_id}_1", "status": "ACTIVE",
                 "scene_id": "", "prompt": prompt_text, "_prompt_id": prompt_id,
             })
 
-            for retry_attempt in range(max_retries + 1):
+            for retry_attempt in range(20):
                 if self._should_stop():
                     return
 
                 # ── Lấy token ──
-                token = ""
+                token = None
+                token_project_id = ""
                 for attempt in range(token_retry):
                     if self._should_stop():
                         return
@@ -342,10 +347,16 @@ class CharacterSyncWorkflow(QThread):
                         clear_every = self._resolve_int_config(config, "CLEAR_DATA", 0)
                         if clear_every > 0 and (retry_token_counter % clear_every == 0):
                             clear_storage = True
-                        token = await asyncio.wait_for(
+                        token_result = await asyncio.wait_for(
                             collector.get_token(clear_storage=clear_storage),
                             timeout=get_token_timeout,
                         )
+                        # Token pool trả về (token, project_id) hoặc string
+                        if isinstance(token_result, tuple) and len(token_result) == 2:
+                            token, token_project_id = token_result
+                        elif token_result:
+                            token = token_result
+                            token_project_id = ""
                         if token:
                             self._log(f"✅ Prompt {prompt_id}: Lấy token thành công")
                             timeout_streak = 0
@@ -355,7 +366,10 @@ class CharacterSyncWorkflow(QThread):
                         timeout_streak += 1
                         if timeout_streak >= 2:
                             self._log("⚠️ Timeout liên tiếp, restart Chrome...")
-                            await collector.restart_browser()
+                            try:
+                                await asyncio.wait_for(collector.restart_browser(), timeout=60)
+                            except Exception as e:
+                                self._log(f"⚠️ Hết thời gian chờ restart_browser: {e}")
                             timeout_streak = 0
                     except Exception as exc:
                         self._log(f"⚠️ Lỗi lấy token (prompt {prompt_id}): {exc}")
@@ -371,8 +385,9 @@ class CharacterSyncWorkflow(QThread):
                 model_key = sync_api.select_video_model_key(
                     video_aspect_ratio, self.project_data.get("veo_model"),
                 )
+                effective_project_id = token_project_id if token_project_id else auth["projectId"]
                 payload = sync_api.build_payload_generate_video_reference(
-                    token=token, session_id=auth["sessionId"], project_id=auth["projectId"],
+                    token=token, session_id=auth["sessionId"], project_id=effective_project_id,
                     prompt=prompt_text, seed=self._resolve_seed(config, plan_index),
                     video_model_key=model_key, reference_media_ids=ref_media_ids,
                     scene_id=None, aspect_ratio=video_aspect_ratio, output_count=output_count,
@@ -381,6 +396,8 @@ class CharacterSyncWorkflow(QThread):
                 self._save_request_json(payload, prompt_id, prompt_text, flow="character_sync")
                 self._log(f"🚀 Gửi request sync character prompt {prompt_id} ({plan_index + 1}/{len(plans)})")
 
+                import random
+                await asyncio.sleep(random.uniform(0.5, 2.5))
                 response = await sync_api.request_create_video(payload, token, cookie=auth.get("cookie"))
 
                 response_body = response.get("body", "")
@@ -388,7 +405,7 @@ class CharacterSyncWorkflow(QThread):
                 err_code, err_msg = self._extract_error_info(response_body)
 
                 # ── Xử lý lỗi ──
-                if (not response.get("ok", True)) and err_msg and not operations:
+                if (not response.get("ok", True) or err_code) and err_msg and not operations:
                     is_auth_error = err_code in ("16", "401") or "authentication credentials" in str(err_msg).lower()
                     retryable = err_code in ("13", "403", "429", "500", "503", "16", "401")
                     retryable = retryable or is_auth_error or any(k in str(err_msg).upper() for k in ["HIGH_TRAFFIC", "RECAPTCHA", "CAPTCHA"])
@@ -405,6 +422,25 @@ class CharacterSyncWorkflow(QThread):
                                         self._log("✅ Đã renew OAuth token từ Chrome browser")
                                     if fresh_cookie:
                                         auth["cookie"] = fresh_cookie
+                                        
+                                    if retry_attempt >= 1 and hasattr(collector, 'force_auto_login'):
+                                        self._log("🛑 Auth error lặp lại, restart Chrome để lấy token MỚI...")
+                                        try:
+                                            result = await asyncio.wait_for(collector.force_auto_login(), timeout=120)
+                                        except Exception as e:
+                                            self._log(f"⚠️ Hết thời gian chờ (120s) khi force_auto_login: {e}")
+                                            result = None
+                                        if isinstance(result, tuple) and len(result) == 2:
+                                            forced_token, forced_cookie = result
+                                            if forced_token:
+                                                auth["access_token"] = forced_token
+                                                self._log("✅ Chrome restart: token mới sẵn sàng")
+                                            else:
+                                                self._log("❌ KHÔNG THỂ LẤY TOKEN! Phiên đăng nhập Google đã hết hạn.")
+                                                self._mark_prompt_failed(prompt_id, prompt_text, "AUTH", "Phiên đăng nhập Google đã hết hạn. Hãy đăng nhập lại.")
+                                                return
+                                            if forced_cookie:
+                                                auth["cookie"] = forced_cookie
                                 else:
                                     import auth_helper
                                     self._log("⚠️ Token OAuth hết hạn, tự động lấy mới...")
@@ -415,9 +451,14 @@ class CharacterSyncWorkflow(QThread):
                             except Exception as e:
                                 self._log(f"⚠️ Lỗi refresh auth: {e}")
 
-                        if retry_attempt < max_retries:
-                            backoff = min(15, 5 * (retry_attempt + 1))
-                            self._log(f"⚠️ Prompt {prompt_id}: {err_msg} → retry {retry_attempt + 1}/{max_retries} sau {backoff}s")
+                        effective_max_retries = 15 if err_code in ("403", "429") else max_retries
+                        if retry_attempt < effective_max_retries:
+                            import random
+                            base_wait = 20 if err_code == "403" else 5
+                            backoff = min(60, base_wait * (retry_attempt + 1) + random.uniform(5.0, 20.0))
+                            if is_auth_error:
+                                backoff = random.uniform(2.0, 6.0)
+                            self._log(f"⚠️ Prompt {prompt_id}: {err_code} {err_msg} → retry {retry_attempt + 1}/{effective_max_retries} sau {backoff:.1f}s")
                             await self._sleep_with_stop(backoff)
                             continue
                     self._mark_prompt_failed(prompt_id, prompt_text, err_code or "REQUEST", err_msg)
@@ -533,11 +574,16 @@ class CharacterSyncWorkflow(QThread):
 
             # Lấy token mới
             token = None
+            token_project_id = ""
             try:
-                token = await asyncio.wait_for(
+                token_result = await asyncio.wait_for(
                     collector.get_token(clear_storage=False),
                     timeout=get_token_timeout,
                 )
+                if isinstance(token_result, tuple) and len(token_result) == 2:
+                    token, token_project_id = token_result
+                elif token_result:
+                    token = token_result
             except Exception as e:
                 self._log(f"⚠️ Inline retry: không lấy được token: {e}")
 
@@ -568,10 +614,11 @@ class CharacterSyncWorkflow(QThread):
                     video_aspect_ratio, self.project_data.get("veo_model"),
                 )
 
+                effective_project_id = token_project_id if token_project_id else auth["projectId"]
                 payload = sync_api.build_payload_generate_video_reference(
                     token=token,
                     session_id=auth["sessionId"],
-                    project_id=auth["projectId"],
+                    project_id=effective_project_id,
                     prompt=r_prompt_text,
                     seed=self._resolve_seed(config, 0),
                     video_model_key=r_model_key,
@@ -1281,7 +1328,7 @@ class CharacterSyncWorkflow(QThread):
                         if chunk:
                             f.write(chunk)
             out_path = str(file_path.resolve())
-            remove_watermark(out_path, log_callback=self._log)
+            # remove_watermark(out_path, log_callback=self._log)
             self.video_folder_updated.emit(str(output_dir.resolve()))
             return out_path
         except Exception:

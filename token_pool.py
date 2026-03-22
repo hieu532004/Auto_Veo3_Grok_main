@@ -70,6 +70,8 @@ class TokenPool:
 		self._last_auth_refresh = 0
 		self._total_tokens = 0
 		self._token_request_counts = {}
+		# Mỗi Chrome instance có project_id riêng để tránh rate limit
+		self._instance_project_ids = {}  # {idx: project_id_str}
 
 	def _log(self, msg):
 		if callable(self.log_callback):
@@ -217,27 +219,78 @@ class TokenPool:
 			return []
 
 	async def _inject_cookies_to_collector(self, collector_idx, cookies):
-		"""Inject cookies vào Chrome pool instance qua CDP, rồi navigate lại."""
+		"""Inject cookies vào Chrome pool instance qua CDP, rồi navigate lại.
+		
+		Cookies Google Auth cần được set đúng domain nên ta:
+		1. Navigate tới accounts.google.com trước để set Google auth cookies
+		2. Navigate tới labs.google để set session cookies
+		3. Cuối cùng navigate tới project URL
+		"""
 		if collector_idx >= len(self._collectors) or not cookies:
 			return False
 		collector = self._collectors[collector_idx]
 		if not collector.context or not collector.page:
 			return False
 		try:
-			await collector.context.add_cookies(cookies)
-			# Navigate tới project URL để apply cookies
+			# Phân loại cookies theo domain
+			google_auth_cookies = []
+			labs_cookies = []
+			other_cookies = []
+			for c in cookies:
+				domain = str(c.get("domain", "")).lower()
+				if "google.com" in domain and "labs" not in domain:
+					google_auth_cookies.append(c)
+				elif "labs.google" in domain:
+					labs_cookies.append(c)
+				else:
+					other_cookies.append(c)
+			
+			# Bước 1: Navigate tới Google trước để set auth cookies
+			if google_auth_cookies:
+				try:
+					await collector.page.goto("https://accounts.google.com", wait_until="domcontentloaded", timeout=15000)
+				except Exception:
+					pass
+				await collector.context.add_cookies(google_auth_cookies)
+				self._log(f"🍪 Chrome-{collector_idx}: inject {len(google_auth_cookies)} Google auth cookies")
+			
+			# Bước 2: Navigate tới labs.google để set session cookies
+			if labs_cookies:
+				try:
+					await collector.page.goto("https://labs.google", wait_until="domcontentloaded", timeout=15000)
+				except Exception:
+					pass
+				await collector.context.add_cookies(labs_cookies)
+				self._log(f"🍪 Chrome-{collector_idx}: inject {len(labs_cookies)} labs.google cookies")
+			
+			# Bước 3: Inject tất cả cookies còn lại
+			if other_cookies:
+				await collector.context.add_cookies(other_cookies)
+			
+			# Bước 4: Navigate tới project URL để verify đăng nhập
 			try:
 				await collector.page.goto(
 					self.project_url,
 					wait_until="domcontentloaded",
-					timeout=20000,
+					timeout=25000,
 				)
 			except Exception:
 				pass
 			try:
-				await collector.page.wait_for_load_state("networkidle", timeout=10000)
+				await collector.page.wait_for_load_state("networkidle", timeout=15000)
 			except Exception:
 				pass
+			
+			# Bước 5: Kiểm tra xem có bị redirect về trang login không
+			current_url = ""
+			try:
+				current_url = collector.page.url or ""
+			except Exception:
+				pass
+			if "accounts.google.com" in current_url or "signin" in current_url.lower():
+				self._log(f"⚠️ Chrome-{collector_idx}: Vẫn bị redirect về login sau inject cookies!")
+				return False
+			
 			return True
 		except Exception as e:
 			self._log(f"⚠️ Inject cookies vào Chrome-{collector_idx} lỗi: {e}")
@@ -318,19 +371,64 @@ class TokenPool:
 				if cookies:
 					ok = await self._inject_cookies_to_collector(i, cookies)
 					if ok:
-						self._log(f"🍪 Chrome-{i}: inject {len(cookies)} cookies + navigate OK")
+						self._log(f"🍪 Chrome-{i}: inject cookies + navigate OK")
 					else:
-						self._log(f"⚠️ Chrome-{i}: inject cookies thất bại")
+						# Retry: lấy lại cookies từ Chrome-0 (có thể Chrome-0 mới xong login)
+						self._log(f"⚠️ Chrome-{i}: inject cookies thất bại, thử lấy lại cookies từ Chrome-0...")
+						await asyncio.sleep(3)
+						cookies = await self._export_cookies_from_collector(0)
+						if cookies:
+							ok2 = await self._inject_cookies_to_collector(i, cookies)
+							if ok2:
+								self._log(f"🍪 Chrome-{i}: inject cookies lần 2 OK!")
+							else:
+								self._log(f"⚠️ Chrome-{i}: inject cookies lần 2 vẫn thất bại. Chrome-{i} sẽ dùng token từ profile gốc.")
 			except Exception as e:
 				self._log(f"❌ Chrome-{i} khởi động lỗi: {e}")
 			await asyncio.sleep(2)
 
-		# ── Bước 6: Bắt đầu harvest loops ──
+		# ── Bước 6: Bắt đầu harvest loops NGAY (không chờ tạo project) ──
+		base_project_id = self._extract_project_id_from_url(self.project_url)
+		# Mặc định tất cả Chrome dùng project gốc
+		for i in range(len(self._collectors)):
+			self._instance_project_ids[i] = base_project_id
+
 		for i, collector in enumerate(self._collectors):
 			task = asyncio.create_task(self._harvest_loop(i, collector))
 			self._harvest_tasks.append(task)
-
+		
 		self._log(f"✅ TokenPool: {len(self._harvest_tasks)} Chrome đang harvest token liên tục")
+
+		# ── Bước 7: Tạo project riêng cho Chrome pool (BACKGROUND, không block harvest) ──
+		if self.num_chrome > 1:
+			self._log(f"📁 Chrome-0: dùng project gốc {base_project_id[:8] if base_project_id else '???'}...")
+			
+			async def _create_for(i):
+				try:
+					new_url = await asyncio.wait_for(
+						self._create_project_for_instance(i),
+						timeout=60
+					)
+					if new_url:
+						pid = self._extract_project_id_from_url(new_url)
+						self._instance_project_ids[i] = pid
+						self._log(f"📁 Chrome-{i}: tạo project mới {pid[:8]}... OK")
+					else:
+						self._log(f"⚠️ Chrome-{i}: không tạo được project mới, dùng project gốc")
+				except asyncio.TimeoutError:
+					self._log(f"⏱️ Chrome-{i}: timeout 60s tạo project, dùng project gốc")
+				except Exception as e:
+					self._log(f"⚠️ Chrome-{i}: lỗi tạo project: {e}, dùng project gốc")
+			
+			async def _create_all_projects():
+				if not self._should_stop():
+					pool_indices = list(range(1, len(self._collectors)))
+					await asyncio.gather(*[_create_for(i) for i in pool_indices])
+					project_count = len(set(self._instance_project_ids.values()))
+					self._log(f"📁 Hoàn tất: {project_count} projects riêng biệt đang hoạt động")
+			
+			# Chạy background - KHÔNG block harvest loops
+			asyncio.create_task(_create_all_projects())
 
 	def _get_userdata_for_instance(self, idx):
 		if not self.chrome_userdata_root:
@@ -338,6 +436,125 @@ class TokenPool:
 		else:
 			base = self.chrome_userdata_root
 		return TokenPool.get_pool_profile_dir(base, idx)
+
+	# ───────────────────────────────────────────────────────────────────
+	#  MULTI-PROJECT: Mỗi Chrome = 1 project riêng
+	# ───────────────────────────────────────────────────────────────────
+
+	@staticmethod
+	def _extract_project_id_from_url(url):
+		"""Extract project UUID từ URL dạng https://labs.google/fx/.../project/UUID"""
+		if not url or not isinstance(url, str):
+			return ""
+		import re
+		match = re.search(r'/project/([a-f0-9\-]{36})', url)
+		return match.group(1) if match else ""
+
+	async def _create_project_for_instance(self, idx):
+		"""Tạo project Flow MỚI cho Chrome-{idx} bằng cách click 'Dự án mới'."""
+		if idx >= len(self._collectors):
+			return None
+		collector = self._collectors[idx]
+		if not collector.page:
+			self._log(f"⚠️ Chrome-{idx}: không có page để tạo project")
+			return None
+		
+		flow_url = "https://labs.google/fx/vi/tools/flow"
+		self._log(f"🔄 Chrome-{idx}: đang navigate tới Flow...")
+		try:
+			await asyncio.wait_for(
+				collector.page.goto(flow_url, wait_until="domcontentloaded", timeout=15000),
+				timeout=20
+			)
+		except Exception:
+			pass
+		
+		self._log(f"🔄 Chrome-{idx}: chờ trang load...")
+		try:
+			await asyncio.wait_for(
+				collector.page.wait_for_load_state("networkidle", timeout=10000),
+				timeout=15
+			)
+		except Exception:
+			pass
+		await asyncio.sleep(2)
+		
+		self._log(f"🔄 Chrome-{idx}: tìm nút 'Dự án mới'...")
+		
+		# Đóng popup/banner nếu có (nút X) - timeout ngắn
+		try:
+			close_btn = collector.page.locator("button[aria-label='Close'], button[aria-label='Đóng']").first
+			if await close_btn.is_visible(timeout=1000):
+				await close_btn.click()
+				await asyncio.sleep(0.3)
+		except Exception:
+			pass
+		
+		# ✅ Thử JavaScript click TRƯỚC (nhanh nhất, không bị treo)
+		clicked = False
+		try:
+			result = await asyncio.wait_for(collector.page.evaluate("""() => {
+				const allElements = document.querySelectorAll('*');
+				for (const el of allElements) {
+					const text = (el.textContent || '').trim();
+					if ((text === 'Dự án mới' || text === '+ Dự án mới' || text === 'New project' || text === '+ New project') 
+						&& el.offsetWidth < 400 && el.offsetHeight < 200 
+						&& el.offsetWidth > 20 && el.offsetHeight > 10) {
+						el.click();
+						return 'clicked: ' + text;
+					}
+				}
+				return false;
+			}"""), timeout=5)
+			if result:
+				clicked = True
+				self._log(f"📁 Chrome-{idx}: JS click OK ({result})")
+		except Exception as e:
+			self._log(f"⚠️ Chrome-{idx}: JS click thất bại: {e}")
+		
+		# Fallback: Playwright selector nếu JS không click được
+		if not clicked:
+			for sel in ["text='Dự án mới'", "text='New project'", "button:has-text('Dự án mới')"]:
+				if clicked:
+					break
+				try:
+					el = collector.page.locator(sel).first
+					if await el.is_visible(timeout=800):
+						box = await el.bounding_box()
+						if box and box.get("width", 9999) < 400 and box.get("height", 9999) < 200:
+							await el.click()
+							clicked = True
+							self._log(f"📁 Chrome-{idx}: Playwright click OK ({sel})")
+				except Exception:
+					pass
+		
+		if not clicked:
+			self._log(f"⚠️ Chrome-{idx}: không tìm thấy nút 'Dự án mới'")
+			return None
+		
+		# Chờ navigate tới project URL mới
+		self._log(f"🔄 Chrome-{idx}: chờ tạo project mới...")
+		try:
+			await asyncio.wait_for(
+				collector.page.wait_for_load_state("networkidle", timeout=15000),
+				timeout=20
+			)
+		except Exception:
+			pass
+		
+		for _ in range(20):
+			url = collector.page.url or ""
+			if "/project/" in url and self._extract_project_id_from_url(url):
+				collector.project_url = url
+				return url
+			await asyncio.sleep(0.5)
+		
+		self._log(f"⚠️ Chrome-{idx}: tạo project OK nhưng URL chưa chuyển: {collector.page.url}")
+		return None
+
+	def get_instance_project_id(self, idx):
+		"""Lấy project_id của Chrome instance {idx}."""
+		return self._instance_project_ids.get(idx, "")
 
 	# ───────────────────────────────────────────────────────────────────
 	#  HARVEST LOOP
@@ -368,7 +585,9 @@ class TokenPool:
 				)
 
 				if token:
-					await self._token_queue.put((token, time.time()))
+					# Token kèm project_id của Chrome instance này
+					pid = self._instance_project_ids.get(idx, "")
+					await self._token_queue.put((token, time.time(), pid))
 					self._total_tokens += 1
 					fail_streak = 0
 					self._log(f"[Chrome-{idx}] 🎯 Token #{self._total_tokens} (pool={self._token_queue.qsize()})")
@@ -431,6 +650,7 @@ class TokenPool:
 			self._log(f"⚠️ Re-sync cookies Chrome-{target_idx} lỗi: {e}")
 
 	async def get_token(self, timeout=120, **kwargs):
+		"""Trả về (token, project_id) hoặc None nếu timeout."""
 		if not self._started:
 			await self.start()
 		start_wait = time.time()
@@ -439,16 +659,24 @@ class TokenPool:
 				return None
 			try:
 				token_data = await asyncio.wait_for(self._token_queue.get(), timeout=2.0)
-				if isinstance(token_data, tuple) and len(token_data) == 2:
-					token, ts = token_data
+				if isinstance(token_data, tuple) and len(token_data) == 3:
+					token, ts, pid = token_data
 					token_age = time.time() - ts
 					if token_age < 120:
-						return token
+						return (token, pid)
 					else:
 						self._log(f"♻️ Loại bỏ token quá hạn ({int(time.time() - ts)}s)")
 						continue
+				elif isinstance(token_data, tuple) and len(token_data) == 2:
+					# Backward compat: (token, ts) không có project_id
+					token, ts = token_data
+					token_age = time.time() - ts
+					if token_age < 120:
+						return (token, "")
+					else:
+						continue
 				else:
-					return token_data
+					return (token_data, "")
 			except asyncio.TimeoutError:
 				pass
 			except Exception as e:
@@ -459,6 +687,14 @@ class TokenPool:
 
 	async def force_auto_login(self):
 		"""Được gọi khi 401 fail liên tục. RESTART Chrome-0 hoàn toàn để lấy token mới."""
+		if not hasattr(self, '_last_force_login'):
+			self._last_force_login = 0
+		import time
+		if time.time() - self._last_force_login < 60:
+			self._log("ℹ️ Chrome-0 vừa được restart gần đây. Đang gọi lại refresh_auth_from_browser...")
+			return await self.refresh_auth_from_browser()
+		self._last_force_login = time.time()
+		
 		self._log("🚨 Token hết hạn. RESTART Chrome-0 để lấy access_token MỚI...")
 		new_token = None
 		new_cookie = ""
