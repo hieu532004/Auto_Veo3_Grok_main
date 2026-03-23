@@ -593,7 +593,7 @@ class CharacterSyncWorkflow(QThread):
 
                 # Delay ngắn giữa mỗi task
                 if i < len(plans) - 1:
-                    if not await self._sleep_with_stop(wait_gen_video):
+                    if not await self._sleep_with_stop(2):
                         break
 
             # Chờ tất cả task hoàn tất
@@ -690,7 +690,31 @@ class CharacterSyncWorkflow(QThread):
                 self._save_request_json(payload, r_prompt_id, r_prompt_text, flow="character_sync_retry")
 
                 self._log(f"🚀 Inline retry: gửi request tạo video prompt {r_prompt_id}...")
-                response = await sync_api.request_create_video(payload, token, cookie=auth.get("cookie"))
+                
+                # Resolving page_ref identical to main loop
+                page_ref = None
+                if collector:
+                    if hasattr(collector, "_token_to_idx"):
+                        instance_idx = collector._token_to_idx.get(token)
+                        if instance_idx is not None:
+                            colls = getattr(collector, "_collectors", [])
+                            if instance_idx < len(colls):
+                                c = colls[instance_idx]
+                                if c and getattr(c, "page", None) and not c.page.is_closed():
+                                    page_ref = c.page
+                                    self._log(f"🔗 Mapped token -> Chrome-{instance_idx}")
+                    elif hasattr(collector, "page") and collector.page and not collector.page.is_closed():
+                        page_ref = collector.page
+                        self._log(f"🔗 Mapped token -> Single Chrome")
+
+                if page_ref and not page_ref.is_closed():
+                    self._log(f"🌐 (Browser) Gửi request retry {r_prompt_id} qua browser API...")
+                    response = await sync_api.request_create_video_via_browser(
+                        page_ref, payload, auth.get("cookie"), auth.get("access_token", "")
+                    )
+                else:
+                    self._log(f"⚠️ Inline retry: Không map được token -> browser tab, fallback urllib...")
+                    response = await sync_api.request_create_video(payload, auth.get("access_token", ""), cookie=auth.get("cookie"))
 
                 response_body = response.get("body", "")
                 operations = self._parse_operations(response_body)
