@@ -387,48 +387,12 @@ class TokenPool:
 				self._log(f"❌ Chrome-{i} khởi động lỗi: {e}")
 			await asyncio.sleep(2)
 
-		# ── Bước 6: Bắt đầu harvest loops NGAY (không chờ tạo project) ──
-		base_project_id = self._extract_project_id_from_url(self.project_url)
-		# Mặc định tất cả Chrome dùng project gốc
-		for i in range(len(self._collectors)):
-			self._instance_project_ids[i] = base_project_id
-
+		# ── Bước 6: Bắt đầu harvest loops ──
 		for i, collector in enumerate(self._collectors):
 			task = asyncio.create_task(self._harvest_loop(i, collector))
 			self._harvest_tasks.append(task)
 		
 		self._log(f"✅ TokenPool: {len(self._harvest_tasks)} Chrome đang harvest token liên tục")
-
-		# ── Bước 7: Tạo project riêng cho Chrome pool (BACKGROUND, không block harvest) ──
-		if self.num_chrome > 1:
-			self._log(f"📁 Chrome-0: dùng project gốc {base_project_id[:8] if base_project_id else '???'}...")
-			
-			async def _create_for(i):
-				try:
-					new_url = await asyncio.wait_for(
-						self._create_project_for_instance(i),
-						timeout=60
-					)
-					if new_url:
-						pid = self._extract_project_id_from_url(new_url)
-						self._instance_project_ids[i] = pid
-						self._log(f"📁 Chrome-{i}: tạo project mới {pid[:8]}... OK")
-					else:
-						self._log(f"⚠️ Chrome-{i}: không tạo được project mới, dùng project gốc")
-				except asyncio.TimeoutError:
-					self._log(f"⏱️ Chrome-{i}: timeout 60s tạo project, dùng project gốc")
-				except Exception as e:
-					self._log(f"⚠️ Chrome-{i}: lỗi tạo project: {e}, dùng project gốc")
-			
-			async def _create_all_projects():
-				if not self._should_stop():
-					pool_indices = list(range(1, len(self._collectors)))
-					await asyncio.gather(*[_create_for(i) for i in pool_indices])
-					project_count = len(set(self._instance_project_ids.values()))
-					self._log(f"📁 Hoàn tất: {project_count} projects riêng biệt đang hoạt động")
-			
-			# Chạy background - KHÔNG block harvest loops
-			asyncio.create_task(_create_all_projects())
 
 	def _get_userdata_for_instance(self, idx):
 		if not self.chrome_userdata_root:
@@ -437,120 +401,6 @@ class TokenPool:
 			base = self.chrome_userdata_root
 		return TokenPool.get_pool_profile_dir(base, idx)
 
-	# ───────────────────────────────────────────────────────────────────
-	#  MULTI-PROJECT: Mỗi Chrome = 1 project riêng
-	# ───────────────────────────────────────────────────────────────────
-
-	@staticmethod
-	def _extract_project_id_from_url(url):
-		"""Extract project UUID từ URL dạng https://labs.google/fx/.../project/UUID"""
-		if not url or not isinstance(url, str):
-			return ""
-		import re
-		match = re.search(r'/project/([a-f0-9\-]{36})', url)
-		return match.group(1) if match else ""
-
-	async def _create_project_for_instance(self, idx):
-		"""Tạo project Flow MỚI cho Chrome-{idx} bằng cách click 'Dự án mới'."""
-		if idx >= len(self._collectors):
-			return None
-		collector = self._collectors[idx]
-		if not collector.page:
-			self._log(f"⚠️ Chrome-{idx}: không có page để tạo project")
-			return None
-		
-		flow_url = "https://labs.google/fx/vi/tools/flow"
-		self._log(f"🔄 Chrome-{idx}: đang navigate tới Flow...")
-		try:
-			await asyncio.wait_for(
-				collector.page.goto(flow_url, wait_until="domcontentloaded", timeout=15000),
-				timeout=20
-			)
-		except Exception:
-			pass
-		
-		self._log(f"🔄 Chrome-{idx}: chờ trang load...")
-		try:
-			await asyncio.wait_for(
-				collector.page.wait_for_load_state("networkidle", timeout=10000),
-				timeout=15
-			)
-		except Exception:
-			pass
-		await asyncio.sleep(2)
-		
-		self._log(f"🔄 Chrome-{idx}: tìm nút 'Dự án mới'...")
-		
-		# Đóng popup/banner nếu có (nút X) - timeout ngắn
-		try:
-			close_btn = collector.page.locator("button[aria-label='Close'], button[aria-label='Đóng']").first
-			if await close_btn.is_visible(timeout=1000):
-				await close_btn.click()
-				await asyncio.sleep(0.3)
-		except Exception:
-			pass
-		
-		# ✅ Thử JavaScript click TRƯỚC (nhanh nhất, không bị treo)
-		clicked = False
-		try:
-			result = await asyncio.wait_for(collector.page.evaluate("""() => {
-				const allElements = document.querySelectorAll('*');
-				for (const el of allElements) {
-					const text = (el.textContent || '').trim();
-					if ((text === 'Dự án mới' || text === '+ Dự án mới' || text === 'New project' || text === '+ New project') 
-						&& el.offsetWidth < 400 && el.offsetHeight < 200 
-						&& el.offsetWidth > 20 && el.offsetHeight > 10) {
-						el.click();
-						return 'clicked: ' + text;
-					}
-				}
-				return false;
-			}"""), timeout=5)
-			if result:
-				clicked = True
-				self._log(f"📁 Chrome-{idx}: JS click OK ({result})")
-		except Exception as e:
-			self._log(f"⚠️ Chrome-{idx}: JS click thất bại: {e}")
-		
-		# Fallback: Playwright selector nếu JS không click được
-		if not clicked:
-			for sel in ["text='Dự án mới'", "text='New project'", "button:has-text('Dự án mới')"]:
-				if clicked:
-					break
-				try:
-					el = collector.page.locator(sel).first
-					if await el.is_visible(timeout=800):
-						box = await el.bounding_box()
-						if box and box.get("width", 9999) < 400 and box.get("height", 9999) < 200:
-							await el.click()
-							clicked = True
-							self._log(f"📁 Chrome-{idx}: Playwright click OK ({sel})")
-				except Exception:
-					pass
-		
-		if not clicked:
-			self._log(f"⚠️ Chrome-{idx}: không tìm thấy nút 'Dự án mới'")
-			return None
-		
-		# Chờ navigate tới project URL mới
-		self._log(f"🔄 Chrome-{idx}: chờ tạo project mới...")
-		try:
-			await asyncio.wait_for(
-				collector.page.wait_for_load_state("networkidle", timeout=15000),
-				timeout=20
-			)
-		except Exception:
-			pass
-		
-		for _ in range(20):
-			url = collector.page.url or ""
-			if "/project/" in url and self._extract_project_id_from_url(url):
-				collector.project_url = url
-				return url
-			await asyncio.sleep(0.5)
-		
-		self._log(f"⚠️ Chrome-{idx}: tạo project OK nhưng URL chưa chuyển: {collector.page.url}")
-		return None
 
 	def get_instance_project_id(self, idx):
 		"""Lấy project_id của Chrome instance {idx}."""
