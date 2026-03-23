@@ -787,6 +787,7 @@ class GenerateImageWorkflow(QThread):
 				if self._should_stop():
 					return
 				token = None
+				token_project_id = ""
 				for attempt in range(max_token_retries):
 					if self._should_stop():
 						return
@@ -795,10 +796,16 @@ class GenerateImageWorkflow(QThread):
 							token_counter["count"] += 1
 							clear_storage = clear_data_token_image > 0 and (token_counter["count"] % clear_data_token_image == 0)
 							token_timeout_for_call = max(get_token_timeout, 60) if clear_storage else get_token_timeout
-							token = await asyncio.wait_for(
+							token_result = await asyncio.wait_for(
 								collector.get_token(clear_storage=clear_storage, token_timeout_override=token_timeout_for_call),
 								timeout=token_timeout_for_call,
 							)
+						# Token pool trả về (token, project_id) hoặc string
+						if isinstance(token_result, tuple) and len(token_result) == 2:
+							token, token_project_id = token_result
+						elif token_result:
+							token = token_result
+							token_project_id = ""
 						if token:
 							token_timeout_streak = 0
 							break
@@ -826,6 +833,9 @@ class GenerateImageWorkflow(QThread):
 						continue
 					return
 
+				# Dùng project_id từ token (mỗi Chrome có project riêng) nếu có
+				effective_project_id = token_project_id if token_project_id else project_id
+
 				wait_start_ts = time.time()
 				payload = None
 				while True:
@@ -837,7 +847,7 @@ class GenerateImageWorkflow(QThread):
 							payload = build_generate_image_payload(
 								prompt_text,
 								session_id,
-								project_id,
+								effective_project_id,
 								token,
 								aspect_ratio=aspect_ratio,
 								output_count=output_count,
@@ -857,14 +867,25 @@ class GenerateImageWorkflow(QThread):
 				self._log(f"🚀 [{time.strftime('%H:%M:%S')}] Gửi request tạo ảnh (prompt {prompt_id}), retry {retry_count + 1}/{retry_with_error}...")
 				send_started = time.time()
 
-				token_option = "Option 1"
-				self._log(f"🔧 Token Option: {token_option}")
-				image_api_url = build_generate_image_url(project_id)
+				# ✅ Lấy page_ref từ Chrome đã sinh ra token (giống Character Sync)
+				page_ref = None
+				if hasattr(collector, "_token_to_idx"):
+					instance_idx = collector._token_to_idx.get(token)
+					if instance_idx is not None:
+						colls = getattr(collector, "_collectors", [])
+						if instance_idx < len(colls):
+							c = colls[instance_idx]
+							if c and getattr(c, "page", None) and not c.page.is_closed():
+								page_ref = c.page
+				elif hasattr(collector, "page") and collector.page and not collector.page.is_closed():
+					page_ref = collector.page
+
+				image_api_url = build_generate_image_url(effective_project_id)
 				browser_req_timeout_ms = max(30000, int(response_timeout * 1000))
 				
-				if token_option == "Option 2":
+				if page_ref and not page_ref.is_closed():
 					send_task = asyncio.create_task(request_generate_images_via_browser(
-						collector.page,
+						page_ref,
 						image_api_url,
 						payload,
 						access_token,
