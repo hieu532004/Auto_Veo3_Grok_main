@@ -554,7 +554,7 @@ class ImageToVideoWorkflow(QThread):
 		token_retry_delay = self._resolve_int_config(config, "TOKEN_RETRY_DELAY", 2)
 		retry_with_error = self._resolve_int_config(config, "RETRY_WITH_ERROR", 3)
 		wait_resend = self._resolve_int_config(config, "WAIT_RESEND_VIDEO", 20)  # ✅ Wait time for 403 retry
-		wait_between_prompts = self._resolve_int_config(config, "WAIT_BETWEEN_PROMPTS", 12)  # ✅ Delay giữa các prompt để tránh 403
+		wait_between_prompts = self._resolve_int_config(config, "WAIT_BETWEEN_PROMPTS", 3)  # ✅ Giảm delay giống Text to Video để ramp up nhanh đủ số luồng
 		max_in_flight = self._resolve_worker_max_in_flight(self._resolve_int_config(config, "MULTI_VIDEO", 1))
 		clear_data_every = self._resolve_int_config(config, "CLEAR_DATA", 1)
 		clear_data_wait = self._resolve_int_config(config, "CLEAR_DATA_WAIT", 2)
@@ -904,7 +904,7 @@ class ImageToVideoWorkflow(QThread):
 		token_retry_delay = self._resolve_int_config(config, "TOKEN_RETRY_DELAY", 2)
 		retry_with_error = self._resolve_int_config(config, "RETRY_WITH_ERROR", 3)
 		wait_resend = self._resolve_int_config(config, "WAIT_RESEND_VIDEO", 20)  # ✅ Wait time for 403 retry
-		wait_between_prompts = self._resolve_int_config(config, "WAIT_BETWEEN_PROMPTS", 12)  # ✅ Delay giữa các prompt
+		wait_between_prompts = self._resolve_int_config(config, "WAIT_BETWEEN_PROMPTS", 3)  # ✅ Giảm delay giống Text to Video
 		max_in_flight = self._resolve_worker_max_in_flight(self._resolve_int_config(config, "MULTI_VIDEO", 1))
 		clear_data_every = self._resolve_int_config(config, "CLEAR_DATA", 1)
 		clear_data_wait = self._resolve_int_config(config, "CLEAR_DATA_WAIT", 2)

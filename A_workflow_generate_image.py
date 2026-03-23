@@ -603,16 +603,9 @@ class GenerateImageWorkflow(QThread):
 
 		config = SettingsManager.load_config()
 		output_count = self._resolve_output_count(config)
-		wait_between = int(config.get("WAIT_BETWEEN_PROMPTS", config.get("WAIT_GEN_IMAGE", config.get("WAIT_GEN_VIDEO", 12))))
-		# Tăng thời gian chờ giữa các request theo số lượng ảnh cần tạo
-		extra_wait = 0
-		if output_count == 2:
-			extra_wait = 15
-		elif output_count == 3:
-			extra_wait = 25
-		elif output_count >= 4:
-			extra_wait = 40
-		wait_between_effective = wait_between + extra_wait
+		wait_between = int(config.get("WAIT_BETWEEN_PROMPTS", config.get("WAIT_GEN_IMAGE", config.get("WAIT_GEN_VIDEO", 3))))
+		# ✅ Không thêm extra_wait — inflight_lock đã kiểm soát số luồng đồng thời
+		wait_between_effective = wait_between
 		max_token_retries = int(config.get("TOKEN_RETRY", 3))
 		token_retry_delay = int(config.get("TOKEN_RETRY_DELAY", 2))
 		retry_with_error = int(config.get("RETRY_WITH_ERROR", 3))
@@ -678,7 +671,7 @@ class GenerateImageWorkflow(QThread):
 
 			# ✅ Xử lý SONG SONG: gửi nhiều prompt cùng lúc (giới hạn bởi max_in_flight)
 			pending_tasks = []
-			prompt_delay = max(2, wait_between_effective)  # Dùng cấu hình thay vì hardcode
+			prompt_delay = max(2, min(wait_between_effective, 5))  # ✅ Giới hạn 2-5s để ramp up nhanh đủ số luồng
 
 			for idx_prompt, prompt in enumerate(prompts):
 				if self._should_stop():
@@ -777,29 +770,45 @@ class GenerateImageWorkflow(QThread):
 		if self._should_stop():
 			return
 
+		# ✅ Đưa ngay vào state.json để đếm luồng chính xác (giống Text to Video)
+		for i in range(output_count):
+			self._update_state_entry(prompt_id, prompt_text, "", i, "ACTIVE")
+
+		# ✅ Emit ACTIVE status để UI cập nhật
+		self.video_updated.emit({
+			"prompt_idx": f"{prompt_id}_1",
+			"status": "ACTIVE",
+			"scene_id": "",
+			"prompt": prompt_text,
+			"_prompt_id": prompt_id,
+		})
+
 		scene_ids = None
 		last_error_msg = ""
 		consecutive_403_count = 0
 		clear_403_cooldown_until = 0.0
 		token_timeout_streak = 0
+		token_request_count = 0
+
 		for retry_count in range(retry_with_error):
 			try:
 				if self._should_stop():
 					return
+
+				# ── Lấy token (KHÔNG dùng token_lock — cho phép song song giống Text to Video) ──
 				token = None
 				token_project_id = ""
 				for attempt in range(max_token_retries):
 					if self._should_stop():
 						return
 					try:
-						async with token_lock:
-							token_counter["count"] += 1
-							clear_storage = clear_data_token_image > 0 and (token_counter["count"] % clear_data_token_image == 0)
-							token_timeout_for_call = max(get_token_timeout, 60) if clear_storage else get_token_timeout
-							token_result = await asyncio.wait_for(
-								collector.get_token(clear_storage=clear_storage, token_timeout_override=token_timeout_for_call),
-								timeout=token_timeout_for_call,
-							)
+						token_request_count += 1
+						clear_storage = clear_data_token_image > 0 and (token_request_count % clear_data_token_image == 0)
+						token_timeout_for_call = max(get_token_timeout, 60) if clear_storage else get_token_timeout
+						token_result = await asyncio.wait_for(
+							collector.get_token(clear_storage=clear_storage, token_timeout_override=token_timeout_for_call),
+							timeout=token_timeout_for_call,
+						)
 						# Token pool trả về (token, project_id) hoặc string
 						if isinstance(token_result, tuple) and len(token_result) == 2:
 							token, token_project_id = token_result
@@ -831,36 +840,36 @@ class GenerateImageWorkflow(QThread):
 						if not await self._sleep_with_stop(wait_resend_image):
 							return
 						continue
+					# Hết retry → mark FAILED
+					fail_scene_ids = scene_ids if scene_ids else [str(uuid.uuid4()) for _ in range(output_count)]
+					for idx, sid in enumerate(fail_scene_ids):
+						self._update_state_entry(prompt_id, prompt_text, sid, idx, "FAILED", error="TOKEN", message=last_error_msg)
+						self.video_updated.emit({
+							"prompt_idx": f"{prompt_id}_{idx + 1}", "status": "FAILED",
+							"scene_id": sid, "prompt": prompt_text, "_prompt_id": prompt_id,
+							"error_code": "TOKEN", "error_message": last_error_msg,
+						})
 					return
 
-				# Dùng project_id từ token (mỗi Chrome có project riêng) nếu có
+				if self._should_stop():
+					return
+
+				# ── Build payload & gửi request (KHÔNG dùng inflight_lock — outer loop đã kiểm soát) ──
 				effective_project_id = token_project_id if token_project_id else project_id
 
-				wait_start_ts = time.time()
-				payload = None
-				while True:
-					if self._should_stop():
-						return
-					async with inflight_lock:
-						in_progress = self._count_in_progress()
-						if in_progress < max_in_flight:
-							payload = build_generate_image_payload(
-								prompt_text,
-								session_id,
-								effective_project_id,
-								token,
-								aspect_ratio=aspect_ratio,
-								output_count=output_count,
-							)
-							if scene_ids is None:
-								scene_ids = self._assign_scene_ids(payload, prompt_id, prompt_text)
-							else:
-								for idx, scene_id in enumerate(scene_ids or []):
-									self._update_state_entry(prompt_id, prompt_text, scene_id, idx, "PENDING")
-							break
-					elapsed = int(time.time() - wait_start_ts)
-					self._log(f"⏳ Đang tạo ảnh đủ giới hạn {max_in_flight}, chờ {elapsed}s...")
-					await asyncio.sleep(5)
+				payload = build_generate_image_payload(
+					prompt_text,
+					session_id,
+					effective_project_id,
+					token,
+					aspect_ratio=aspect_ratio,
+					output_count=output_count,
+				)
+				if scene_ids is None:
+					scene_ids = self._assign_scene_ids(payload, prompt_id, prompt_text)
+				else:
+					for idx, scene_id in enumerate(scene_ids or []):
+						self._update_state_entry(prompt_id, prompt_text, scene_id, idx, "PENDING")
 
 				self._save_request_json(payload, prompt_id, prompt_text)
 
@@ -961,13 +970,19 @@ class GenerateImageWorkflow(QThread):
 				error_code_str = body_error_code if body_error_code else http_status
 
 				# ✅ Lỗi nội dung (UNSAFE/CENSORED): KHÔNG retry, skip prompt ngay
+				# QUAN TRỌNG: Nếu message là "invalid argument" thì đây là lỗi tham số, CẦN retry
 				non_retryable_reasons = {
 					"PUBLIC_ERROR_UNSAFE_GENERATION",
 					"PUBLIC_ERROR_SOMETHING_WENT_WRONG_UNSAFE",
 					"SAFETY_FILTER",
 					"CONTENT_FILTERED",
 				}
-				if error_reason and error_reason.upper() in {r.upper() for r in non_retryable_reasons}:
+				# Phân biệt: "invalid argument" = lỗi tham số (retryable), không phải nội dung
+				is_actually_content_error = (
+					error_reason and error_reason.upper() in {r.upper() for r in non_retryable_reasons}
+					and "invalid argument" not in (error_message or "").lower()
+				)
+				if is_actually_content_error:
 					msg = error_message or error_reason
 					self._log(f"🚫 Prompt {prompt_id} bị chặn bởi bộ lọc nội dung: {error_reason}")
 					self._log(f"   → Bỏ qua prompt này (không retry)")

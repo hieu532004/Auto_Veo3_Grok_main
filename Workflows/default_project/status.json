@@ -1,28 +1,27 @@
 {
   "project_name": "default_project",
-  "updated_at": 1774301336,
+  "updated_at": 1774303635,
   "rows": [
     {
       "row": 0,
       "stt": "001",
       "prompt_id": "1",
       "prompt": "Các dòng chất lỏng màu vàng gold và đen từ từ hòa quyện vào nhau, tạo thành những gợn sóng nghệ thuật, quay siêu cận cảnh.",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/18_1_24032026_042236.jpg",
-        "prompt": "Các dòng chất lỏng màu vàng gold và đen từ từ hòa quyện vào nhau, tạo thành những gợn sóng nghệ thuật, quay siêu cận cảnh."
+        "description": "Các dòng chất lỏng màu vàng gold và đen từ từ hòa quyện vào nhau, tạo thành những gợn sóng nghệ thuật, quay siêu cận cảnh."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\1_1_24032026_042607.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_24032026_050539.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_24032026_042609.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_24032026_050539.jpg"
       }
     },
     {
@@ -30,22 +29,21 @@
       "stt": "002",
       "prompt_id": "2",
       "prompt": "Video quảng cáo: Một ly bia lạnh với lớp bọt tràn viền, những giọt nước đọng trên thành ly cực kỳ sắc nét.",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/19_1_24032026_042236.jpg",
-        "prompt": "Video quảng cáo: Một ly bia lạnh với lớp bọt tràn viền, những giọt nước đọng trên thành ly cực kỳ sắc nét."
+        "description": "Video quảng cáo: Một ly bia lạnh với lớp bọt tràn viền, những giọt nước đọng trên thành ly cực kỳ sắc nét."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\2_1_24032026_042624.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_24032026_050545.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_24032026_042627.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_24032026_050545.jpg"
       }
     },
     {
@@ -53,22 +51,21 @@
       "stt": "003",
       "prompt_id": "3",
       "prompt": "Kính vạn hoa (Kaleidoscope): Các mảnh vỡ tinh thể màu sắc liên tục biến đổi hình dạng theo nhịp điệu.",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/20_1_24032026_042235.jpg",
-        "prompt": "Kính vạn hoa (Kaleidoscope): Các mảnh vỡ tinh thể màu sắc liên tục biến đổi hình dạng theo nhịp điệu."
+        "description": "Kính vạn hoa (Kaleidoscope): Các mảnh vỡ tinh thể màu sắc liên tục biến đổi hình dạng theo nhịp điệu."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\3_1_24032026_042627.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_24032026_050550.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_24032026_042629.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_24032026_050550.jpg"
       }
     },
     {
@@ -76,22 +73,21 @@
       "stt": "004",
       "prompt_id": "4",
       "prompt": "Hàng ngàn quả bóng nhựa màu đỏ rơi tự do từ trên cao xuống lấp đầy một căn phòng toàn màu trắng.",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/14_1_24032026_042216.jpg",
-        "prompt": "Hàng ngàn quả bóng nhựa màu đỏ rơi tự do từ trên cao xuống lấp đầy một căn phòng toàn màu trắng."
+        "description": "Hàng ngàn quả bóng nhựa màu đỏ rơi tự do từ trên cao xuống lấp đầy một căn phòng toàn màu trắng."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\4_1_24032026_042641.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_24032026_050558.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_24032026_042643.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_24032026_050558.jpg"
       }
     },
     {
@@ -99,22 +95,21 @@
       "stt": "005",
       "prompt_id": "5",
       "prompt": "Hình học trừu tượng (Abstract geometry): Các khối lập phương bằng thủy tinh liên tục trồi lên lặn xuống, ánh sáng khúc xạ rực rỡ.",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/16_1_24032026_042216.jpg",
-        "prompt": "Hình học trừu tượng (Abstract geometry): Các khối lập phương bằng thủy tinh liên tục trồi lên lặn xuống, ánh sáng khúc xạ rực rỡ."
+        "description": "Hình học trừu tượng (Abstract geometry): Các khối lập phương bằng thủy tinh liên tục trồi lên lặn xuống, ánh sáng khúc xạ rực rỡ."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\5_1_24032026_042700.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_24032026_050559.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_24032026_042702.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_24032026_050559.jpg"
       }
     },
     {
@@ -122,22 +117,21 @@
       "stt": "006",
       "prompt_id": "6",
       "prompt": "Cảnh một chiếc xe hơi thể thao sang trọng chạy qua đường hầm thiếu sáng, chỉ thấy đường nét xe phản chiếu ánh đèn.",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/17_1_24032026_042216.jpg",
-        "prompt": "Cảnh một chiếc xe hơi thể thao sang trọng chạy qua đường hầm thiếu sáng, chỉ thấy đường nét xe phản chiếu ánh đèn."
+        "description": "Cảnh một chiếc xe hơi thể thao sang trọng chạy qua đường hầm thiếu sáng, chỉ thấy đường nét xe phản chiếu ánh đèn."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\6_1_24032026_042713.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_24032026_050618.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_24032026_042715.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_24032026_050618.jpg"
       }
     },
     {
@@ -145,22 +139,21 @@
       "stt": "007",
       "prompt_id": "7",
       "prompt": "Nước hoa bắn ra từ vòi xịt dạng sương mù cực mịn, quay chậm dưới ánh đèn studio rực rỡ, background đen.",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/15_1_24032026_042159.jpg",
-        "prompt": "Nước hoa bắn ra từ vòi xịt dạng sương mù cực mịn, quay chậm dưới ánh đèn studio rực rỡ, background đen."
+        "description": "Nước hoa bắn ra từ vòi xịt dạng sương mù cực mịn, quay chậm dưới ánh đèn studio rực rỡ, background đen."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\7_1_24032026_042728.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_24032026_050611.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_24032026_042730.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_24032026_050611.jpg"
       }
     },
     {
@@ -168,22 +161,21 @@
       "stt": "008",
       "prompt_id": "8",
       "prompt": "Cát màu liên tục được đổ lên nhau tạo thành các họa tiết xếp lớp 3D độc đáo.",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/12_1_24032026_042144.jpg",
-        "prompt": "Cát màu liên tục được đổ lên nhau tạo thành các họa tiết xếp lớp 3D độc đáo."
+        "description": "Cát màu liên tục được đổ lên nhau tạo thành các họa tiết xếp lớp 3D độc đáo."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\8_1_24032026_042741.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_24032026_050613.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_24032026_042743.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_24032026_050613.jpg"
       }
     },
     {
@@ -191,22 +183,21 @@
       "stt": "009",
       "prompt_id": "9",
       "prompt": "Sự bùng nổ của bột màu Holi (màu xanh, đỏ, vàng) trong không trung, quay slow-motion 1000fps.",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/13_1_24032026_042144.jpg",
-        "prompt": "Sự bùng nổ của bột màu Holi (màu xanh, đỏ, vàng) trong không trung, quay slow-motion 1000fps."
+        "description": "Sự bùng nổ của bột màu Holi (màu xanh, đỏ, vàng) trong không trung, quay slow-motion 1000fps."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\9_1_24032026_042755.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_24032026_050624.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_24032026_042758.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_24032026_050624.jpg"
       }
     },
     {
@@ -214,22 +205,21 @@
       "stt": "010",
       "prompt_id": "10",
       "prompt": "Một bức tượng đá cẩm thạch La Mã cổ đại bỗng nhiên tan chảy thành chất lỏng màu bạc óng ánh.",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/9_1_24032026_042119.jpg",
-        "prompt": "Một bức tượng đá cẩm thạch La Mã cổ đại bỗng nhiên tan chảy thành chất lỏng màu bạc óng ánh."
+        "description": "Một bức tượng đá cẩm thạch La Mã cổ đại bỗng nhiên tan chảy thành chất lỏng màu bạc óng ánh."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\10_1_24032026_042809.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_24032026_050632.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_24032026_042812.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_24032026_050632.jpg"
       }
     },
     {
@@ -237,22 +227,21 @@
       "stt": "011",
       "prompt_id": "11",
       "prompt": "Góc quay vĩ mô (Macro) bề mặt của một đôi giày da cao cấp, quay rõ từng đường kim mũi chỉ và kết cấu da.",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/10_1_24032026_042119.jpg",
-        "prompt": "Góc quay vĩ mô (Macro) bề mặt của một đôi giày da cao cấp, quay rõ từng đường kim mũi chỉ và kết cấu da."
+        "description": "Góc quay vĩ mô (Macro) bề mặt của một đôi giày da cao cấp, quay rõ từng đường kim mũi chỉ và kết cấu da."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\11_1_24032026_042823.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\11_1_24032026_050633.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\11_1_24032026_042825.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\11_1_24032026_050633.jpg"
       }
     },
     {
@@ -260,22 +249,21 @@
       "stt": "012",
       "prompt_id": "12",
       "prompt": "Hình ảnh một con mắt khổng lồ mở ra, con ngươi bên trong chứa cả một dải ngân hà đang xoay tròn.",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/11_1_24032026_042118.jpg",
-        "prompt": "Hình ảnh một con mắt khổng lồ mở ra, con ngươi bên trong chứa cả một dải ngân hà đang xoay tròn."
+        "description": "Hình ảnh một con mắt khổng lồ mở ra, con ngươi bên trong chứa cả một dải ngân hà đang xoay tròn."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\12_1_24032026_042836.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_24032026_050635.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_24032026_042839.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_24032026_050635.jpg"
       }
     },
     {
@@ -283,22 +271,175 @@
       "stt": "013",
       "prompt_id": "13",
       "prompt": "Các dải lụa mềm mại bay lượn trong môi trường không trọng lực, ánh sáng pastel nhẹ nhàng.",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/8_1_24032026_042100.jpg",
-        "prompt": "Các dải lụa mềm mại bay lượn trong môi trường không trọng lực, ánh sáng pastel nhẹ nhàng."
+        "description": "Các dải lụa mềm mại bay lượn trong môi trường không trọng lực, ánh sáng pastel nhẹ nhàng."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\13_1_24032026_042851.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\13_1_24032026_050636.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\13_1_24032026_042853.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\13_1_24032026_050636.jpg"
+      }
+    },
+    {
+      "row": 13,
+      "stt": "014",
+      "prompt_id": "14",
+      "prompt": "Video quảng cáo mỹ phẩm: Một giọt serum rơi xuống bề mặt da mô phỏng nước, tạo ra các làn sóng tỏa ra mượt mà.",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "Video quảng cáo mỹ phẩm: Một giọt serum rơi xuống bề mặt da mô phỏng nước, tạo ra các làn sóng tỏa ra mượt mà."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\14_1_24032026_050642.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\14_1_24032026_050642.jpg"
+      }
+    },
+    {
+      "row": 14,
+      "stt": "015",
+      "prompt_id": "15",
+      "prompt": "Phép chiếu ánh sáng nghệ thuật (Projection mapping) lên khuôn mặt của một người phụ nữ, các họa tiết thay đổi liên tục.",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "Phép chiếu ánh sáng nghệ thuật (Projection mapping) lên khuôn mặt của một người phụ nữ, các họa tiết thay đổi liên tục."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\15_1_24032026_050650.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\15_1_24032026_050650.jpg"
+      }
+    },
+    {
+      "row": 15,
+      "stt": "016",
+      "prompt_id": "16",
+      "prompt": "Các đường nét neon đang vẽ ra sơ đồ của một con chip máy tính, camera zoom sâu vào trung tâm bảng mạch.",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "Các đường nét neon đang vẽ ra sơ đồ của một con chip máy tính, camera zoom sâu vào trung tâm bảng mạch."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\16_1_24032026_050704.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\16_1_24032026_050704.jpg"
+      }
+    },
+    {
+      "row": 16,
+      "stt": "017",
+      "prompt_id": "17",
+      "prompt": "Mực (Ink) màu xanh dương lan tỏa bồng bềnh trong môi trường nước, tạo thành những hình thù như những đám mây.",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "Mực (Ink) màu xanh dương lan tỏa bồng bềnh trong môi trường nước, tạo thành những hình thù như những đám mây."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\17_1_24032026_050659.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\17_1_24032026_050659.jpg"
+      }
+    },
+    {
+      "row": 17,
+      "stt": "018",
+      "prompt_id": "18",
+      "prompt": "Một miếng thịt bò bít tết vừa được đặt lên vỉ nướng xèo xèo, dầu mỡ sôi lên, ngọn lửa liếm qua bề mặt thịt.",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "Một miếng thịt bò bít tết vừa được đặt lên vỉ nướng xèo xèo, dầu mỡ sôi lên, ngọn lửa liếm qua bề mặt thịt."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\18_1_24032026_050713.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\18_1_24032026_050713.jpg"
+      }
+    },
+    {
+      "row": 18,
+      "stt": "019",
+      "prompt_id": "19",
+      "prompt": "Âm thanh hình ảnh hóa (Audio visualizer): Các hạt ánh sáng rung động và nảy lên theo nhịp điệu của tiếng bass.",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "Âm thanh hình ảnh hóa (Audio visualizer): Các hạt ánh sáng rung động và nảy lên theo nhịp điệu của tiếng bass."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\19_1_24032026_050707.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\19_1_24032026_050707.jpg"
+      }
+    },
+    {
+      "row": 19,
+      "stt": "020",
+      "prompt_id": "20",
+      "prompt": "Đồ ăn bay lơ lửng: Các nguyên liệu của một chiếc hamburger (bánh mì, thịt bò, rau xà lách, cà chua) bay lơ lửng rồi từ từ ghép lại với nhau.",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "Đồ ăn bay lơ lửng: Các nguyên liệu của một chiếc hamburger (bánh mì, thịt bò, rau xà lách, cà chua) bay lơ lửng rồi từ từ ghép lại với nhau."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\20_1_24032026_050711.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\20_1_24032026_050711.jpg"
       }
     }
   ]
