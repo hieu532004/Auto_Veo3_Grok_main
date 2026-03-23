@@ -353,15 +353,26 @@ class ImageToVideoWorkflow(QThread):
 			self._save_request_json(payload, prompt_id, prompt_text, flow=flow_name)
 			self._log(f"🚀 [{time.strftime('%H:%M:%S')}] Gửi request video (prompt {prompt_id})...")
 
-			if token_option == "Option 2":
-				import random
-				await asyncio.sleep(random.uniform(0.5, 2.5))
+			# ✅ Lấy page_ref từ Chrome đã sinh ra token (giống Character Sync)
+			import random
+			await asyncio.sleep(random.uniform(0.5, 2.5))
+			page_ref = None
+			if hasattr(collector, "_token_to_idx"):
+				instance_idx = collector._token_to_idx.get(token)
+				if instance_idx is not None:
+					colls = getattr(collector, "_collectors", [])
+					if instance_idx < len(colls):
+						c = colls[instance_idx]
+						if c and getattr(c, "page", None) and not c.page.is_closed():
+							page_ref = c.page
+			elif hasattr(collector, "page") and collector.page and not collector.page.is_closed():
+				page_ref = collector.page
+
+			if page_ref and not page_ref.is_closed():
 				response = await request_create_video_via_browser(
-					collector.page, create_video_url, payload, cookie, access_token,
+					page_ref, create_video_url, payload, cookie, access_token,
 				)
 			else:
-				import random
-				await asyncio.sleep(random.uniform(0.5, 2.5))
 				response = await request_create_video(payload, access_token, cookie=cookie, url=create_video_url)
 
 			if self._should_stop():
@@ -1101,9 +1112,22 @@ class ImageToVideoWorkflow(QThread):
 						
 						self._log(f"🔧 Token Option: {token_option}")
 						
-						if token_option == "Option 2":
+						# ✅ Lấy page_ref từ Chrome đã sinh ra token (giống Character Sync)
+						page_ref = None
+						if hasattr(collector, "_token_to_idx"):
+							instance_idx = collector._token_to_idx.get(token)
+							if instance_idx is not None:
+								colls = getattr(collector, "_collectors", [])
+								if instance_idx < len(colls):
+									c = colls[instance_idx]
+									if c and getattr(c, "page", None) and not c.page.is_closed():
+										page_ref = c.page
+						elif hasattr(collector, "page") and collector.page and not collector.page.is_closed():
+							page_ref = collector.page
+
+						if page_ref and not page_ref.is_closed():
 							response = await request_create_video_via_browser(
-								collector.page,
+								page_ref,
 								create_video_url,
 								payload,
 								cookie,
