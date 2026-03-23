@@ -1,6 +1,6 @@
 {
   "project_name": "default_project",
-  "updated_at": 1774289058,
+  "updated_at": 1774291374,
   "rows": [
     {
       "row": 0,
@@ -14,11 +14,11 @@
         "characters": [
           {
             "name": "n1",
-            "path": "C:/Users/ADMIN/Downloads/Một_bức_ảnh_202603211420.png"
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
           },
           {
             "name": "n2",
-            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
           },
           {
             "name": "n3",
@@ -32,10 +32,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\1_1_24032026_010334.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\1_1_24032026_014219.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_24032026_010336.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_24032026_014222.jpg"
       }
     },
     {
@@ -50,11 +50,11 @@
         "characters": [
           {
             "name": "n1",
-            "path": "C:/Users/ADMIN/Downloads/Một_bức_ảnh_202603211420.png"
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
           },
           {
             "name": "n2",
-            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
           },
           {
             "name": "n3",
@@ -68,10 +68,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\2_1_24032026_010343.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\2_1_24032026_014152.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_24032026_010345.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_24032026_014155.jpg"
       }
     },
     {
@@ -86,11 +86,11 @@
         "characters": [
           {
             "name": "n1",
-            "path": "C:/Users/ADMIN/Downloads/Một_bức_ảnh_202603211420.png"
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
           },
           {
             "name": "n2",
-            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
           },
           {
             "name": "n3",
@@ -104,10 +104,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\3_1_24032026_010406.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\3_1_24032026_014241.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_24032026_010408.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_24032026_014243.jpg"
       }
     },
     {
@@ -122,11 +122,11 @@
         "characters": [
           {
             "name": "n1",
-            "path": "C:/Users/ADMIN/Downloads/Một_bức_ảnh_202603211420.png"
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
           },
           {
             "name": "n2",
-            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
           },
           {
             "name": "n3",
@@ -140,10 +140,10 @@
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\4_1_24032026_010416.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\4_1_24032026_014219.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_24032026_010418.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_24032026_014222.jpg"
       }
     },
     {
@@ -158,11 +158,11 @@
         "characters": [
           {
             "name": "n1",
-            "path": "C:/Users/ADMIN/Downloads/Một_bức_ảnh_202603211420.png"
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
           },
           {
             "name": "n2",
-            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
           },
           {
             "name": "n3",
@@ -171,12 +171,16 @@
         ],
         "prompt": "n1,n2, n3 trong 1 khung hình"
       },
-      "status_code": "ACTIVE",
-      "status_text": "Đang tạo",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\5_1_24032026_014219.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_24032026_014221.jpg"
+      }
     },
     {
       "row": 5,
@@ -190,11 +194,11 @@
         "characters": [
           {
             "name": "n1",
-            "path": "C:/Users/ADMIN/Downloads/Một_bức_ảnh_202603211420.png"
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
           },
           {
             "name": "n2",
-            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
           },
           {
             "name": "n3",
@@ -203,12 +207,16 @@
         ],
         "prompt": "n1,n2, n3 trong 1 khung hình"
       },
-      "status_code": "ACTIVE",
-      "status_text": "Đang tạo",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\6_1_24032026_014219.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_24032026_014221.jpg"
+      }
     },
     {
       "row": 6,
@@ -222,11 +230,11 @@
         "characters": [
           {
             "name": "n1",
-            "path": "C:/Users/ADMIN/Downloads/Một_bức_ảnh_202603211420.png"
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
           },
           {
             "name": "n2",
-            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
           },
           {
             "name": "n3",
@@ -235,12 +243,16 @@
         ],
         "prompt": "n1,n2, n3 trong 1 khung hình"
       },
-      "status_code": "REQUESTED",
-      "status_text": "Đang tạo",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\7_1_24032026_014219.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_24032026_014221.jpg"
+      }
     },
     {
       "row": 7,
@@ -254,11 +266,11 @@
         "characters": [
           {
             "name": "n1",
-            "path": "C:/Users/ADMIN/Downloads/Một_bức_ảnh_202603211420.png"
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
           },
           {
             "name": "n2",
-            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
           },
           {
             "name": "n3",
@@ -267,12 +279,16 @@
         ],
         "prompt": "n1,n2, n3 trong 1 khung hình"
       },
-      "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 1)",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\8_1_24032026_014241.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_24032026_014243.jpg"
+      }
     },
     {
       "row": 8,
@@ -286,11 +302,11 @@
         "characters": [
           {
             "name": "n1",
-            "path": "C:/Users/ADMIN/Downloads/Một_bức_ảnh_202603211420.png"
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
           },
           {
             "name": "n2",
-            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
           },
           {
             "name": "n3",
@@ -299,12 +315,16 @@
         ],
         "prompt": "n1,n2, n3 trong 1 khung hình"
       },
-      "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 2)",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\9_1_24032026_014241.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_24032026_014243.jpg"
+      }
     },
     {
       "row": 9,
@@ -318,11 +338,11 @@
         "characters": [
           {
             "name": "n1",
-            "path": "C:/Users/ADMIN/Downloads/Một_bức_ảnh_202603211420.png"
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
           },
           {
             "name": "n2",
-            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
           },
           {
             "name": "n3",
@@ -331,12 +351,16 @@
         ],
         "prompt": "n1,n2, n3 trong 1 khung hình"
       },
-      "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 3)",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\10_1_24032026_014241.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_24032026_014243.jpg"
+      }
     },
     {
       "row": 10,
@@ -350,11 +374,11 @@
         "characters": [
           {
             "name": "n1",
-            "path": "C:/Users/ADMIN/Downloads/Một_bức_ảnh_202603211420.png"
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
           },
           {
             "name": "n2",
-            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
           },
           {
             "name": "n3",
@@ -363,12 +387,16 @@
         ],
         "prompt": "n1,n2, n3 trong 1 khung hình"
       },
-      "status_code": "PENDING",
-      "status_text": "Đang chờ (vị trí 4)",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\11_1_24032026_014251.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\11_1_24032026_014253.jpg"
+      }
     }
   ]
 }

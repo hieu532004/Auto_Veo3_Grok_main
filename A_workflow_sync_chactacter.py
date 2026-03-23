@@ -399,12 +399,8 @@ class CharacterSyncWorkflow(QThread):
                 access_token = auth.get("access_token", "")
                 try:
                     _fresh = self._load_auth_config()
-                    if _fresh and _fresh.get("access_token"):
-                        access_token = _fresh["access_token"]
-                        auth["access_token"] = access_token
-                    if _fresh and _fresh.get("cookie"):
-                        auth["cookie"] = _fresh["cookie"]
                     if _fresh and _fresh.get("sessionId"):
+                        # Chỉ reload sessionId lỡ người dùng đổi tay, không phá hỏng access_token sinh từ Browser
                         auth["sessionId"] = _fresh["sessionId"]
                 except Exception:
                     pass
@@ -1055,25 +1051,57 @@ class CharacterSyncWorkflow(QThread):
                 self._log(
                     f"⚠️ Check status thất bại (lần {self._status_poll_fail_streak}/4, status={status_code}, reason={reason}, body={body_err})"
                 )
-                # ✅ Nếu 401 (token expired), thử refresh token bằng auth_helper
+                # ✅ Nếu 401 (token expired), thử dùng token mới ngầm định từ chạy nền
                 if status_code == 401:
                     try:
-                        import auth_helper
-                        auth = self._load_auth_config()
-                        if auth:
-                            new_token = auth_helper.get_valid_access_token(
-                                auth.get("cookie", ""), auth.get("projectId", ""), force_refresh=True
-                            )
-                            if new_token and new_token != access_token:
-                                access_token = new_token
-                                self._log("✅ Đã refresh access_token cho status poll (auth_helper)")
+                        self._log("🔄 Check 401: Đang thử reload/refresh token...")
+                        
+                        # 1. Update từ token chạy nền (nếu collector đã lấy dc token mới)
+                        if auth_dict:
+                            current_mem_token = auth_dict.get("access_token", "")
+                            if current_mem_token and current_mem_token != access_token:
+                                access_token = current_mem_token
+                                cookie = auth_dict.get("cookie", cookie)
+                                self._log("✅ [Check Status] Đã tiếp nhận token MỚI từ background worker (Collector)")
                                 self._status_poll_fail_streak = 0
-                            else:
-                                access_token = auth["access_token"]
-                                cookie = auth.get("cookie")
-                                self._log("🔄 Đã reload access_token từ config cho status poll")
+                                continue
+                        
+                        # 2. Xui lắm mới dùng auth_helper fetch thẳng urllib
+                        import auth_helper
+                        fallback_cookie = auth_dict.get("cookie") if auth_dict else cookie
+                        fallback_proj = auth_dict.get("projectId", "") if auth_dict else ""
+                        
+                        new_token = auth_helper.get_valid_access_token(
+                            fallback_cookie, fallback_proj, force_refresh=True
+                        )
+                        if new_token and new_token != access_token:
+                            access_token = new_token
+                            if auth_dict:
+                                auth_dict["access_token"] = new_token
+                            self._log("✅ Đã refresh access_token thủ công cho status poll bằng vòng lập phụ")
+                            self._status_poll_fail_streak = 0
+                            continue
+                            
+                        # 3. Ép Collector Chrome Browser refresh token ngay lập tức!
+                        if hasattr(self, '_collector_ref') and self._collector_ref and hasattr(self._collector_ref, 'refresh_auth_from_browser'):
+                            self._log("🔥 Cứu hộ 401: Ép Chrome Browser lấy token mới NGAY LẬP TỨC...")
+                            try:
+                                ft, fc = await self._collector_ref.refresh_auth_from_browser(fallback_proj)
+                                if ft and ft != access_token:
+                                    access_token = ft
+                                    if auth_dict:
+                                        auth_dict["access_token"] = ft
+                                        if fc: auth_dict["cookie"] = fc
+                                    self._log("✅ Cứu hộ thành công! Chrome Browser đã đẩy Token vào status poll!")
+                                    self._status_poll_fail_streak = 0
+                                    continue
+                            except Exception as e:
+                                self._log(f"⚠️ Cứu hộ lỗi: {e}")
+
+                        self._log("⚠️ Status poll không thể làm mới token qua urllib/browser, chờ đợi...")
+                            
                     except Exception as e:
-                        self._log(f"⚠️ Lỗi refresh token trong status poll: {e}")
+                        self._log(f"⚠️ Lỗi xử lý token bảo mật trong status poll: {e}")
                 # ✅ Cap fail streak
                 if self._status_poll_fail_streak >= 8:
                     self._log("❌ Status poll thất bại 8 lần liên tiếp, đánh FAILED tất cả video đang chờ")
