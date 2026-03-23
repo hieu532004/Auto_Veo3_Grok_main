@@ -241,7 +241,7 @@ def build_payload_generate_video_start_end(
 			"userPaygateTier": USER_PAYGATE_TIER,
 			"sessionId": session_id,
 			"recaptchaContext": {
-				"token": token,
+				"token": str(token[0] if isinstance(token, (tuple, list)) else token or ""),
 				"applicationType": "RECAPTCHA_APPLICATION_TYPE_WEB"
 			}
 		},

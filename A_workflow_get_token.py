@@ -1631,8 +1631,21 @@ class TokenCollector:
             pass
 
         try:
+            # Thử nút tiếng Việt
             project_btn = self.page.locator("button:has-text('Dự án mới')").first
-            if await project_btn.is_visible():
+            btn_visible = False
+            try:
+                btn_visible = await project_btn.is_visible()
+            except Exception:
+                pass
+            # Thử nút tiếng Anh nếu không thấy nút Việt
+            if not btn_visible:
+                project_btn = self.page.locator("button:has-text('New project')").first
+                try:
+                    btn_visible = await project_btn.is_visible()
+                except Exception:
+                    pass
+            if btn_visible:
                 await project_btn.click()
                 try:
                     await self.page.wait_for_load_state("networkidle", timeout=20000)
@@ -1650,11 +1663,31 @@ class TokenCollector:
         except Exception:
             pass
 
-        self._log("❌ ERROR URL GEN TOKEN không hợp lệ")
+        # ✅ FALLBACK: Tạo project mới thất bại → thử dùng project URL từ config
+        self._log("⚠️ Không tạo được project mới, thử dùng project URL từ config...")
         try:
-            ChromeProcessManager.close_chrome_gracefully()
+            config = SettingsManager.load_config()
+            saved_url = ""
+            if isinstance(config, dict):
+                saved_url = config.get("account1", {}).get("URL_GEN_TOKEN", "")
+            if saved_url and self._is_project_url(saved_url):
+                self._log(f"✅ Fallback: dùng project URL từ config: {saved_url[-40:]}")
+                self.project_url = saved_url
+                try:
+                    await self.page.goto(saved_url, wait_until="domcontentloaded", timeout=20000)
+                except Exception:
+                    pass
+                return
         except Exception:
             pass
+
+        # Nếu không có URL nào hợp lệ → raise error
+        self._log("❌ ERROR URL GEN TOKEN không hợp lệ")
+        if not self._pool_mode:
+            try:
+                ChromeProcessManager.close_chrome_gracefully()
+            except Exception:
+                pass
         raise RuntimeError("ERROR URL GEN TOKEN không hợp lệ")
 
     def _find_free_port(self, start_port):

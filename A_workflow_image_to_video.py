@@ -430,6 +430,14 @@ class ImageToVideoWorkflow(QThread):
 				retry_count += 1
 				prompt_retry_counts[prompt_id] = retry_count
 				# Không skip trừ retry_count (nếu có lúc trước), đếm bình thường
+				# ✅ Auth errors: hoàn lại retry_count
+				if is_auth_error:
+					retry_count -= 1
+					prompt_retry_counts[prompt_id] = retry_count
+				# ✅ 429 Quota Exhausted: KHÔNG tiêu hao retry_count (rate limit tạm thời)
+				if error_code_str == "429":
+					retry_count -= 1
+					prompt_retry_counts[prompt_id] = retry_count
 				self._discard_scene_ids(prompt_id, scene_ids)
 
 				max_total_retries = max(retry_with_error, 3) * 2

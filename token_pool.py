@@ -453,6 +453,8 @@ class TokenPool:
 							await collector.restart_browser()
 							if idx > 0:
 								await self._resync_cookies_to_instance(idx)
+							# ✅ Đảm bảo Chrome ở đúng project URL sau restart
+							await self._ensure_project_url_for_instance(idx)
 						except Exception:
 							pass
 						fail_streak = 0
@@ -474,6 +476,8 @@ class TokenPool:
 						await collector.restart_browser()
 						if idx > 0:
 							await self._resync_cookies_to_instance(idx)
+						# ✅ Đảm bảo Chrome ở đúng project URL sau restart
+						await self._ensure_project_url_for_instance(idx)
 					except Exception:
 						pass
 					fail_streak = 0
@@ -498,6 +502,62 @@ class TokenPool:
 				self._log(f"🍪 Re-sync cookies cho Chrome-{target_idx} OK")
 		except Exception as e:
 			self._log(f"⚠️ Re-sync cookies Chrome-{target_idx} lỗi: {e}")
+
+	async def _ensure_project_url_for_instance(self, idx):
+		"""Đảm bảo Chrome instance {idx} đang ở đúng project URL (/project/UUID).
+		
+		Khi Chrome restart, nó có thể là trang /flow (không có Video mode tab).
+		Method này check và navigate lại về project URL nếu cần.
+		"""
+		if idx >= len(self._collectors):
+			return
+		collector = self._collectors[idx]
+		if not collector or not getattr(collector, 'page', None):
+			return
+		try:
+			current_url = collector.page.url or ""
+		except Exception:
+			return
+		
+		# Nếu đã ở /project/ URL thì OK
+		if "/project/" in current_url:
+			return
+		
+		# Nếu project_url của collector là /project/ URL thì navigate tới đó
+		if hasattr(collector, 'project_url') and "/project/" in str(collector.project_url or ""):
+			await self._navigate_to_base_project(idx, collector.project_url)
+			return
+		
+		# Thử lấy project URL từ config
+		try:
+			config = SettingsManager.load_config()
+			saved_url = ""
+			if isinstance(config, dict):
+				saved_url = config.get("account1", {}).get("URL_GEN_TOKEN", "")
+			if saved_url and "/project/" in saved_url:
+				await self._navigate_to_base_project(idx, saved_url)
+				# Cập nhật project_url cho collector
+				if hasattr(collector, 'project_url'):
+					collector.project_url = saved_url
+		except Exception as e:
+			self._log(f"⚠️ Chrome-{idx}: lỗi lấy project URL từ config: {e}")
+
+	async def _navigate_to_base_project(self, idx, project_url):
+		"""Navigate Chrome instance {idx} tới project URL."""
+		if idx >= len(self._collectors):
+			return
+		collector = self._collectors[idx]
+		if not collector or not getattr(collector, 'page', None):
+			return
+		try:
+			self._log(f"🔄 Chrome-{idx}: navigate về project URL...")
+			await collector.page.goto(project_url, wait_until="domcontentloaded", timeout=20000)
+			try:
+				await collector.page.wait_for_load_state("networkidle", timeout=10000)
+			except Exception:
+				pass
+		except Exception as e:
+			self._log(f"⚠️ Chrome-{idx}: lỗi navigate về project URL: {e}")
 
 	async def get_token(self, timeout=120, **kwargs):
 		"""Trả về (token, project_id) hoặc None nếu timeout."""

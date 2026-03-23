@@ -152,6 +152,10 @@ def build_create_payload(
     output_count=1,
 ):
     payload = json.loads(json.dumps(payload_text_to_video))
+    # ✅ Đảm bảo token luôn là string (không phải tuple/list)
+    if isinstance(recaptcha_token, (tuple, list)):
+        recaptcha_token = str(recaptcha_token[0]) if recaptcha_token else ""
+    recaptcha_token = str(recaptcha_token or "")
     payload["clientContext"]["recaptchaContext"]["token"] = recaptcha_token
     payload["clientContext"]["sessionId"] = session_id
     payload["clientContext"]["projectId"] = project_id

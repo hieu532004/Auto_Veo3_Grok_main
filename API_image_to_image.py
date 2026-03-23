@@ -172,6 +172,10 @@ def build_generate_image_payload(
 	reference_input_names=None,
 ):
 	payload = _clone_payload_template()
+	# ✅ Đảm bảo token luôn là string (không phải tuple/list)
+	if isinstance(recaptcha_token, (tuple, list)):
+		recaptcha_token = str(recaptcha_token[0]) if recaptcha_token else ""
+	recaptcha_token = str(recaptcha_token or "")
 	payload["clientContext"]["recaptchaContext"]["token"] = recaptcha_token
 	payload["clientContext"]["sessionId"] = session_id
 	payload["clientContext"]["projectId"] = project_id

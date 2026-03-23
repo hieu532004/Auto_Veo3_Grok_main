@@ -162,6 +162,49 @@ class TextToVideoWorkflow(QThread):
 			self._log(f"⚠️ Lỗi đọc state.json cho auto-retry: {e}")
 			return []
 
+	def _collect_retryable_failed_prompts(self):
+		"""Lấy danh sách prompt bị lỗi có thể retry (TOKEN, 400, 429, 403, v.v.) từ state.json.
+		Loại trừ lỗi vĩnh viễn: AUTH, SAFETY_FILTER, CONTENT_FILTERED."""
+		NON_RETRYABLE_ERRORS = {"AUTH", "SAFETY_FILTER", "CONTENT_FILTERED", "PUBLIC_ERROR_UNSAFE_GENERATION", "NO_CHARACTER", "UPLOAD"}
+		try:
+			state_data = self._load_state_json()
+			failed_map = {}  # prompt_id -> {prompt_id, prompt_text}
+			prompts = state_data.get("prompts", {})
+			for prompt_key, prompt_data in prompts.items():
+				if not isinstance(prompt_data, dict):
+					continue
+				prompt_id = str(prompt_data.get("id", ""))
+				prompt_text = prompt_data.get("prompt", "")
+				statuses = prompt_data.get("statuses", [])
+				errors = prompt_data.get("errors", [])
+				
+				has_success = any(s == "SUCCESSFUL" for s in statuses)
+				if has_success:
+					continue  # Prompt đã thành công, không retry
+				
+				has_retryable_fail = False
+				for idx, status in enumerate(statuses):
+					if status != "FAILED":
+						continue
+					err_code = str(errors[idx] if idx < len(errors) else "").strip().upper()
+					if err_code in NON_RETRYABLE_ERRORS:
+						continue  # Lỗi vĩnh viễn, không retry
+					has_retryable_fail = True
+				
+				if has_retryable_fail and prompt_id not in failed_map:
+					failed_map[prompt_id] = {
+						"prompt_id": prompt_id,
+						"prompt_text": prompt_text,
+					}
+			
+			result = list(failed_map.values())
+			if result:
+				self._log(f"📋 Tìm thấy {len(result)} prompt lỗi có thể retry")
+			return result
+		except Exception as e:
+			self._log(f"⚠️ Lỗi đọc state.json cho auto-retry: {e}")
+			return []
+
 	def _close_token_chrome_later(self):
 		# Chrome giữ mở để tái sử dụng
 		self._log("ℹ️ Chrome vẫn mở để tái sử dụng cho lần tạo tiếp theo")
@@ -437,6 +480,14 @@ class TextToVideoWorkflow(QThread):
 				# ✅ Auth errors dùng bộ đếm riêng, KHÔNG tiêu hao retry_count chung
 				if is_auth_error:
 					retry_count -= 1  # Hoàn lại retry_count chung cho auth error
+					prompt_retry_counts[prompt_id] = retry_count
+				# ✅ 429 Quota Exhausted: KHÔNG tiêu hao retry_count (đây là rate limit tạm thời)
+				if error_code_str == "429":
+					retry_count -= 1  # Hoàn lại retry_count cho 429
+					prompt_retry_counts[prompt_id] = retry_count
+				# ✅ 400 Invalid payload (token sai format): KHÔNG tiêu hao retry_count
+				if error_code_str == "400" and "recaptcha" in str(error_message).lower():
+					retry_count -= 1  # Hoàn lại retry_count cho token format error
 					prompt_retry_counts[prompt_id] = retry_count
 				
 				self._discard_scene_ids(prompt_id, scene_ids)
@@ -868,6 +919,53 @@ class TextToVideoWorkflow(QThread):
 		except Exception:
 			pass
 		
+		# ✅ AUTO-RETRY: Sau khi hoàn thành, tự động retry các prompt bị lỗi (TOKEN/400/429/403)
+		if not self.STOP and not self._auto_noi_canh:
+			failed_prompts = self._collect_retryable_failed_prompts()
+			if failed_prompts:
+				self._log(f"🔁 Auto-retry: có {len(failed_prompts)} prompt bị lỗi, restart Chrome và thử lại...")
+				try:
+					await collector.restart_browser()
+					self._log("✅ Chrome đã restart, bắt đầu retry prompts lỗi...")
+					
+					# Reset retry counts cho lần retry mới
+					retry_prompt_retry_counts = {}
+					retry_tasks = []
+					
+					for retry_item in failed_prompts:
+						if self.STOP:
+							break
+						r_prompt_id = retry_item["prompt_id"]
+						r_prompt_text = retry_item["prompt_text"]
+						
+						self._log(f"🔁 Auto-retry prompt {r_prompt_id}...")
+						task = asyncio.create_task(self._process_video_prompt(
+							collector, r_prompt_id, r_prompt_text,
+							session_id, project_id, access_token, cookie, auth,
+							video_model_key, video_aspect_ratio, output_count,
+							token_option, max_token_retries, token_retry_delay,
+							get_token_timeout, clear_data_every, retry_with_error,
+							wait_resend, retry_prompt_retry_counts,
+						))
+						retry_tasks.append(task)
+						
+						# Delay giữa các retry
+						if not await self._sleep_with_stop(wait_between_prompts):
+							break
+					
+					if retry_tasks:
+						self._log(f"⏳ Đang chờ {len(retry_tasks)} prompt retry hoàn thành...")
+						await asyncio.gather(*retry_tasks, return_exceptions=True)
+					
+					# Chờ video retry hoàn thành
+					self._complete_wait_start_ts = time.time()
+					try:
+						await self._wait_for_completion()
+					except Exception:
+						pass
+				except Exception as e:
+					self._log(f"⚠️ Auto-retry lỗi: {e}")
+
 		# ✅ CHỈ đóng Chrome SAU KHI tất cả video đã hoàn thành
 		chrome_closed = False
 		if (not self._auto_noi_canh) and (not self._worker_controls_lifecycle):
