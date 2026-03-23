@@ -411,27 +411,58 @@ class GenerateImageWorkflow(QThread):
 			project_id,
 			file_name=filename,
 		)
-		try:
-			if use_browser_upload and page is not None:
-				response = await request_upload_image_via_browser(page, payload, access_token)
-			else:
-				response = await request_upload_image(payload, access_token, cookie=cookie)
-		except Exception as exc:
-			return False, key, "", f"{name}: upload exception {exc}"
 
-		body = response.get("body", "")
-		media_id = extract_media_id(body)
-		if not response.get("ok", True) or not media_id:
-			status = str(response.get("status") or "")
-			reason = str(response.get("reason") or response.get("error") or "")
-			preview = str(body or "")[:220].replace("\n", " ").strip()
-			detail = f"status={status} reason={reason}".strip()
-			if preview:
-				detail = f"{detail} body={preview}".strip()
-			return False, key, "", f"{name}: upload thất bại ({detail})"
+		# ✅ Retry upload tối đa 3 lần (lấy token mới nếu 401)
+		current_token = access_token
+		current_cookie = cookie
+		for upload_attempt in range(3):
+			if upload_attempt > 0:
+				# Reload token mới từ config
+				try:
+					fresh = self._load_auth_config()
+					if fresh and fresh.get("access_token"):
+						current_token = fresh["access_token"]
+					if fresh and fresh.get("cookie"):
+						current_cookie = fresh["cookie"]
+				except Exception:
+					pass
 
-		self._log(f"✅ Upload ảnh thành công: {name}")
-		return True, key, str(media_id), ""
+			try:
+				if use_browser_upload and page is not None:
+					response = await request_upload_image_via_browser(page, payload, current_token)
+				else:
+					response = await request_upload_image(payload, current_token, cookie=current_cookie)
+			except Exception as exc:
+				if upload_attempt < 2:
+					await asyncio.sleep(2)
+					continue
+				return False, key, "", f"{name}: upload exception {exc}"
+
+			# ✅ 401 → retry với token mới
+			http_status = response.get("status")
+			if http_status == 401 and upload_attempt < 2:
+				self._log(f"⚠️ Upload {name}: 401, đang lấy token mới (lần {upload_attempt + 1})...")
+				await asyncio.sleep(3)
+				continue
+
+			body = response.get("body", "")
+			media_id = extract_media_id(body)
+			if not response.get("ok", True) or not media_id:
+				status = str(response.get("status") or "")
+				reason = str(response.get("reason") or response.get("error") or "")
+				preview = str(body or "")[:220].replace("\n", " ").strip()
+				detail = f"status={status} reason={reason}".strip()
+				if preview:
+					detail = f"{detail} body={preview}".strip()
+				if upload_attempt < 2:
+					await asyncio.sleep(2)
+					continue
+				return False, key, "", f"{name}: upload thất bại ({detail})"
+
+			self._log(f"✅ Upload ảnh thành công: {name}")
+			return True, key, str(media_id), ""
+
+		return False, key, "", f"{name}: upload thất bại sau 3 lần thử"
 
 	def _read_image_bytes(self, image_link):
 		parsed = urlparse(str(image_link or ""))

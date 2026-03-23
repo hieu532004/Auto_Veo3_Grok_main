@@ -38,6 +38,7 @@ from API_image_to_video import (
 	request_create_video,
 	request_create_video_via_browser,
 	request_upload_image,
+	request_upload_image_via_browser,
 	DEFAULT_SEED,
 	IMAGE_ASPECT_RATIO_LANDSCAPE,
 	IMAGE_ASPECT_RATIO_PORTRAIT,
@@ -562,16 +563,8 @@ class ImageToVideoWorkflow(QThread):
 		if not chrome_userdata_root:
 			chrome_userdata_root = SettingsManager.create_chrome_userdata_folder(profile_name)
 
-		upload_tasks = self._schedule_upload_tasks(
-			prompts,
-			session_id,
-			access_token,
-			cookie,
-			max_parallel=5,
-		)
-		if upload_tasks:
-			self._log(f"⬆️ Khởi động upload ảnh nền ({len(upload_tasks)} prompt, tối đa 5 luồng)...")
-
+		# ✅ Upload ảnh sẽ chạy SAU KHI Chrome khởi động và refresh token mới
+		# (Không upload ở đây vì access_token cũ có thể đã hết hạn)
 
 		status_task = asyncio.create_task(self._status_poll_loop(access_token, session_id, cookie))
 
@@ -629,6 +622,18 @@ class ImageToVideoWorkflow(QThread):
 							auth["cookie"] = fresh_cookie
 				except Exception as e:
 					self._log(f"⚠️ Không refresh được auth từ Chrome: {e}")
+
+				# ✅ Upload ảnh SAU KHI có token mới từ Chrome
+				upload_tasks = self._schedule_upload_tasks(
+					prompts,
+					session_id,
+					access_token,
+					cookie,
+					max_parallel=5,
+					auth_dict=auth,
+				)
+				if upload_tasks:
+					self._log(f"⬆️ Khởi động upload ảnh nền ({len(upload_tasks)} prompt, tối đa 5 luồng)...")
 
 				# ✅ Restart status_task với token mới
 				if status_task:
@@ -992,6 +997,7 @@ class ImageToVideoWorkflow(QThread):
 							image_aspect,
 							prompt_id,
 							"ảnh bắt đầu",
+							auth_dict=auth,
 						)
 
 						if start_end_mode:
@@ -1003,6 +1009,7 @@ class ImageToVideoWorkflow(QThread):
 								image_aspect,
 								prompt_id,
 								"ảnh kết thúc",
+								auth_dict=auth,
 							)
 							start_result, end_result = await asyncio.gather(start_upload_task, end_upload_task)
 						else:
@@ -1325,7 +1332,7 @@ class ImageToVideoWorkflow(QThread):
 		path.mkdir(parents=True, exist_ok=True)
 		return path
 
-	def _upload_image_media_id_sync(self, image_link: str, session_id: str, access_token: str, cookie, aspect_ratio: str, prompt_id: str, stage_label: str) -> dict:
+	def _upload_image_media_id_sync(self, image_link: str, session_id: str, access_token: str, cookie, aspect_ratio: str, prompt_id: str, stage_label: str, auth_dict: dict = None) -> dict:
 		image_bytes, mime_type = self._read_image_bytes(image_link)
 		if not image_bytes:
 			return {"ok": False, "error": "UPLOAD", "message": f"Cannot read {stage_label}"}
@@ -1338,24 +1345,65 @@ class ImageToVideoWorkflow(QThread):
 			aspect_ratio=aspect_ratio,
 		)
 
-		self._log(f"⬆️  [Upload] prompt {prompt_id}: đang upload {stage_label}...")
-		try:
-			upload_response = asyncio.run(request_upload_image(upload_payload, access_token, cookie=cookie))
-		except Exception as exc:
-			return {"ok": False, "error": "UPLOAD", "message": f"Upload {stage_label} failed: {exc}"}
+		# ✅ Retry upload tối đa 3 lần (lấy token mới nếu 401)
+		for upload_attempt in range(3):
+			# ✅ Luôn dùng token mới nhất từ auth dict hoặc config
+			current_token = access_token
+			current_cookie = cookie
+			if auth_dict:
+				current_token = auth_dict.get("access_token", access_token)
+				current_cookie = auth_dict.get("cookie", cookie)
+			if not current_token or upload_attempt > 0:
+				# Reload từ config file
+				try:
+					fresh = self._load_auth_config()
+					if fresh and fresh.get("access_token"):
+						current_token = fresh["access_token"]
+						if auth_dict:
+							auth_dict["access_token"] = current_token
+					if fresh and fresh.get("cookie"):
+						current_cookie = fresh["cookie"]
+						if auth_dict:
+							auth_dict["cookie"] = current_cookie
+				except Exception:
+					pass
 
-		upload_body = upload_response.get("body", "")
-		media_id = self._extract_media_id(upload_body)
-		if not upload_response.get("ok", True) or not media_id:
-			status = upload_response.get("status")
-			reason = upload_response.get("reason")
-			self._log(f"❌ [Upload] prompt {prompt_id}: upload {stage_label} lỗi (status={status}, reason={reason})")
-			return {"ok": False, "error": "UPLOAD", "message": f"Upload {stage_label} failed"}
+			self._log(f"⬆️  [Upload] prompt {prompt_id}: đang upload {stage_label}...")
+			try:
+				upload_response = asyncio.run(request_upload_image(upload_payload, current_token, cookie=current_cookie))
+			except Exception as exc:
+				if upload_attempt < 2:
+					import time as _time
+					_time.sleep(2)
+					continue
+				return {"ok": False, "error": "UPLOAD", "message": f"Upload {stage_label} failed: {exc}"}
 
-		self._log(f"✅ [Upload] prompt {prompt_id}: upload {stage_label} xong")
-		return {"ok": True, "media_id": str(media_id)}
+			# ✅ Nếu 401, thử lại với token mới
+			http_status = upload_response.get("status")
+			if http_status == 401 and upload_attempt < 2:
+				self._log(f"⚠️ [Upload] prompt {prompt_id}: 401, đang lấy token mới (lần {upload_attempt + 1})...")
+				import time as _time
+				_time.sleep(3)
+				continue
 
-	async def _upload_image_media_id_threaded(self, image_link: str, session_id: str, access_token: str, cookie, aspect_ratio: str, prompt_id: str, stage_label: str) -> dict:
+			upload_body = upload_response.get("body", "")
+			media_id = self._extract_media_id(upload_body)
+			if not upload_response.get("ok", True) or not media_id:
+				status = upload_response.get("status")
+				reason = upload_response.get("reason")
+				self._log(f"❌ [Upload] prompt {prompt_id}: upload {stage_label} lỗi (status={status}, reason={reason})")
+				if upload_attempt < 2:
+					import time as _time
+					_time.sleep(2)
+					continue
+				return {"ok": False, "error": "UPLOAD", "message": f"Upload {stage_label} failed"}
+
+			self._log(f"✅ [Upload] prompt {prompt_id}: upload {stage_label} xong")
+			return {"ok": True, "media_id": str(media_id)}
+
+		return {"ok": False, "error": "UPLOAD", "message": f"Upload {stage_label} failed after retries"}
+
+	async def _upload_image_media_id_threaded(self, image_link: str, session_id: str, access_token: str, cookie, aspect_ratio: str, prompt_id: str, stage_label: str, auth_dict: dict = None) -> dict:
 		loop = asyncio.get_running_loop()
 		executor = self._upload_executor
 		if executor is None:
@@ -1371,9 +1419,73 @@ class ImageToVideoWorkflow(QThread):
 			str(aspect_ratio or ""),
 			str(prompt_id or ""),
 			str(stage_label or "image"),
+			auth_dict,
 		)
 
-	async def _upload_prompt_media(self, prompt: dict, session_id: str, access_token: str, cookie, sem: asyncio.Semaphore) -> dict:
+	async def _upload_image_via_browser(self, image_link: str, session_id: str, access_token: str, aspect_ratio: str, prompt_id: str, stage_label: str) -> dict:
+		"""Upload ảnh trực tiếp qua Playwright browser API - có cookies hợp lệ."""
+		image_bytes, mime_type = self._read_image_bytes(image_link)
+		if not image_bytes:
+			return {"ok": False, "error": "UPLOAD", "message": f"Cannot read {stage_label}"}
+
+		base64_image = base64.b64encode(image_bytes).decode("utf-8")
+		upload_payload = build_payload_upload_image(
+			base64_image,
+			mime_type,
+			session_id,
+			aspect_ratio=aspect_ratio,
+		)
+
+		# Lấy page từ collector
+		collector_ref = getattr(self, '_collector_ref', None)
+		if not collector_ref:
+			return {"ok": False, "error": "UPLOAD", "message": "No browser collector available"}
+
+		# Lấy page từ collector (Chrome-0)
+		page = None
+		if hasattr(collector_ref, '_collectors') and collector_ref._collectors:
+			c0 = collector_ref._collectors[0]
+			if c0 and hasattr(c0, 'page') and c0.page and not c0.page.is_closed():
+				page = c0.page
+		if not page and hasattr(collector_ref, 'page'):
+			page = collector_ref.page
+
+		if not page or page.is_closed():
+			return {"ok": False, "error": "UPLOAD", "message": "Browser page not available"}
+
+		self._log(f"⬆️  [Upload-Browser] prompt {prompt_id}: đang upload {stage_label}...")
+		try:
+			upload_response = await request_upload_image_via_browser(page, upload_payload, access_token)
+		except Exception as exc:
+			return {"ok": False, "error": "UPLOAD", "message": f"Upload {stage_label} failed: {exc}"}
+
+		if upload_response.get("status") == 401:
+			self._log(f"⚠️ [Upload-Browser] prompt {prompt_id}: 401, retry...")
+			# Retry: reload auth
+			try:
+				if hasattr(collector_ref, 'refresh_auth_from_browser'):
+					ft, fc = await collector_ref.refresh_auth_from_browser("")
+					if ft:
+						access_token = ft
+			except Exception:
+				pass
+			try:
+				upload_response = await request_upload_image_via_browser(page, upload_payload, access_token)
+			except Exception as exc:
+				return {"ok": False, "error": "UPLOAD", "message": f"Upload {stage_label} retry failed: {exc}"}
+
+		upload_body = upload_response.get("body", "")
+		media_id = self._extract_media_id(upload_body)
+		if not upload_response.get("ok", True) or not media_id:
+			status = upload_response.get("status")
+			reason = upload_response.get("reason")
+			self._log(f"❌ [Upload-Browser] prompt {prompt_id}: upload {stage_label} lỗi (status={status}, reason={reason})")
+			return {"ok": False, "error": "UPLOAD", "message": f"Upload {stage_label} failed"}
+
+		self._log(f"✅ [Upload-Browser] prompt {prompt_id}: upload {stage_label} xong")
+		return {"ok": True, "media_id": str(media_id)}
+
+	async def _upload_prompt_media(self, prompt: dict, session_id: str, access_token: str, cookie, sem: asyncio.Semaphore, auth_dict: dict = None) -> dict:
 		prompt_id = str(prompt.get("id") or "")
 		prompt_text = str(prompt.get("prompt") or "")
 		start_image_link = str(prompt.get("start_image_link") or prompt.get("image_link") or prompt.get("image") or "").strip()
@@ -1390,29 +1502,38 @@ class ImageToVideoWorkflow(QThread):
 			if start_end_mode and not end_image_link:
 				return {"ok": False, "error": "UPLOAD", "message": "Missing end image link"}
 
-			start_task = self._upload_image_media_id_threaded(
-				start_image_link,
-				session_id,
-				access_token,
-				cookie,
-				image_aspect,
-				prompt_id,
-				"ảnh bắt đầu",
-			)
-			if start_end_mode:
-				end_task = self._upload_image_media_id_threaded(
-					end_image_link,
-					session_id,
-					access_token,
-					cookie,
-					image_aspect,
-					prompt_id,
-					"ảnh kết thúc",
+			# ✅ Ưu tiên upload qua browser (có cookies hợp lệ, tránh 401)
+			use_browser = getattr(self, '_collector_ref', None) is not None
+
+			if use_browser:
+				start_task = self._upload_image_via_browser(
+					start_image_link, session_id, access_token,
+					image_aspect, prompt_id, "ảnh bắt đầu",
 				)
-				start_result, end_result = await asyncio.gather(start_task, end_task)
+				if start_end_mode:
+					end_task = self._upload_image_via_browser(
+						end_image_link, session_id, access_token,
+						image_aspect, prompt_id, "ảnh kết thúc",
+					)
+					start_result, end_result = await asyncio.gather(start_task, end_task)
+				else:
+					start_result = await start_task
+					end_result = {"ok": True, "media_id": ""}
 			else:
-				start_result = await start_task
-				end_result = {"ok": True, "media_id": ""}
+				# Fallback: upload qua urllib (ThreadPoolExecutor)
+				start_task = self._upload_image_media_id_threaded(
+					start_image_link, session_id, access_token, cookie,
+					image_aspect, prompt_id, "ảnh bắt đầu", auth_dict=auth_dict,
+				)
+				if start_end_mode:
+					end_task = self._upload_image_media_id_threaded(
+						end_image_link, session_id, access_token, cookie,
+						image_aspect, prompt_id, "ảnh kết thúc", auth_dict=auth_dict,
+					)
+					start_result, end_result = await asyncio.gather(start_task, end_task)
+				else:
+					start_result = await start_task
+					end_result = {"ok": True, "media_id": ""}
 
 			if not start_result.get("ok"):
 				return {"ok": False, "error": "UPLOAD", "message": str(start_result.get("message") or "Upload image failed")}
@@ -1438,7 +1559,7 @@ class ImageToVideoWorkflow(QThread):
 				"image_path": start_image_link,
 			}
 
-	def _schedule_upload_tasks(self, prompts: list[dict], session_id: str, access_token: str, cookie, max_parallel: int = 5) -> dict:
+	def _schedule_upload_tasks(self, prompts: list[dict], session_id: str, access_token: str, cookie, max_parallel: int = 5, auth_dict: dict = None) -> dict:
 		limit = int(max_parallel or 1)
 		if limit < 1:
 			limit = 1
@@ -1449,7 +1570,7 @@ class ImageToVideoWorkflow(QThread):
 			if not prompt_id:
 				continue
 			tasks[prompt_id] = asyncio.create_task(
-				self._upload_prompt_media(prompt, session_id, access_token, cookie, sem)
+				self._upload_prompt_media(prompt, session_id, access_token, cookie, sem, auth_dict=auth_dict)
 			)
 		return tasks
 

@@ -304,6 +304,38 @@ async def request_upload_image(payload, token, cookie=None):
 	return await send_request_with_token(URL_UPLOAD_IMAGE, payload, token, method="POST", cookie=cookie)
 
 
+async def request_upload_image_via_browser(page, payload, access_token):
+	"""Upload ảnh qua Playwright browser API - dùng cookies từ browser."""
+	import json
+	try:
+		headers = {
+			"Content-Type": "application/json",
+			"Authorization": f"Bearer {access_token}",
+		}
+		data = json.dumps(payload)
+		response = await page.request.post(
+			URL_UPLOAD_IMAGE,
+			data=data,
+			headers=headers,
+			timeout=60000,
+		)
+		body = await response.text()
+		return {
+			"ok": response.ok,
+			"url": URL_UPLOAD_IMAGE,
+			"status": response.status,
+			"reason": response.status_text,
+			"headers": dict(response.headers),
+			"body": body,
+		}
+	except Exception as exc:
+		return {
+			"ok": False,
+			"url": URL_UPLOAD_IMAGE,
+			"error": str(exc),
+		}
+
+
 async def request_create_video(payload, token, cookie=None, url=None):
 	target_url = str(url or URL_IMGAE_TO_VIDEO)
 	return await send_request_with_token(target_url, payload, token, method="POST", cookie=cookie)

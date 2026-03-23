@@ -1,2289 +1,300 @@
 {
   "project_name": "default_project",
-  "updated_at": 1774253260,
+  "updated_at": 1774258380,
   "rows": [
     {
       "row": 0,
       "stt": "001",
       "prompt_id": "1",
-      "prompt": "Cận cảnh khuôn mặt một người thợ rèn lớn tuổi, mồ hôi nhễ nhại, ánh sáng màu cam từ lò lửa hắt lên mặt, độ phân giải 4K, siêu thực.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hieu",
+      "mode_key": "image_to_video_single",
+      "mode_label": "VEO3 - Tạo video từ Ảnh",
+      "mode_name": "VEO3 - Tạo video từ Ảnh",
       "mode_payload": {
-        "prompt": "Cận cảnh khuôn mặt một người thợ rèn lớn tuổi, mồ hôi nhễ nhại, ánh sáng màu cam từ lò lửa hắt lên mặt, độ phân giải 4K, siêu thực."
+        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/25_1_23032026_155430.jpg",
+        "prompt": "hieu"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\1_1_23032026_150234.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\1_1_23032026_162406.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_23032026_150236.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_23032026_162407.jpg"
       }
     },
     {
       "row": 1,
       "stt": "002",
       "prompt_id": "2",
-      "prompt": "Góc quay drone lướt trên một thành phố cyberpunk dưới cơn mưa rào, ánh đèn neon phản chiếu lấp lánh trên vũng nước, ban đêm.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hieu",
+      "mode_key": "image_to_video_single",
+      "mode_label": "VEO3 - Tạo video từ Ảnh",
+      "mode_name": "VEO3 - Tạo video từ Ảnh",
       "mode_payload": {
-        "prompt": "Góc quay drone lướt trên một thành phố cyberpunk dưới cơn mưa rào, ánh đèn neon phản chiếu lấp lánh trên vũng nước, ban đêm."
+        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/24_1_23032026_155348.jpg",
+        "prompt": "hieu"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\2_1_23032026_150710.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\2_1_23032026_162418.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_23032026_150712.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_23032026_162420.jpg"
       }
     },
     {
       "row": 2,
       "stt": "003",
       "prompt_id": "3",
-      "prompt": "Một võ sĩ samurai đứng giữa cánh đồng cỏ lau trắng muốt lộng gió, mặt trời đang lặn phía đường chân trời, phong cách điện ảnh.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hieu",
+      "mode_key": "image_to_video_single",
+      "mode_label": "VEO3 - Tạo video từ Ảnh",
+      "mode_name": "VEO3 - Tạo video từ Ảnh",
       "mode_payload": {
-        "prompt": "Một võ sĩ samurai đứng giữa cánh đồng cỏ lau trắng muốt lộng gió, mặt trời đang lặn phía đường chân trời, phong cách điện ảnh."
+        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/23_1_23032026_155252.jpg",
+        "prompt": "hieu"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\3_1_23032026_150220.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\3_1_23032026_162609.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_23032026_150222.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_23032026_162611.jpg"
       }
     },
     {
       "row": 3,
       "stt": "004",
       "prompt_id": "4",
-      "prompt": "Một người phụ nữ mặc váy lụa đỏ đang múa trong một căn phòng bỏ hoang, ánh sáng mặt trời chiếu xuyên qua cửa sổ bám bụi, quay chậm (slow-motion).",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hieu",
+      "mode_key": "image_to_video_single",
+      "mode_label": "VEO3 - Tạo video từ Ảnh",
+      "mode_name": "VEO3 - Tạo video từ Ảnh",
       "mode_payload": {
-        "prompt": "Một người phụ nữ mặc váy lụa đỏ đang múa trong một căn phòng bỏ hoang, ánh sáng mặt trời chiếu xuyên qua cửa sổ bám bụi, quay chậm (slow-motion)."
+        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/20_1_23032026_155243.jpg",
+        "prompt": "hieu"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\4_1_23032026_150254.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\4_1_23032026_162346.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_23032026_150257.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_23032026_162348.jpg"
       }
     },
     {
       "row": 4,
       "stt": "005",
       "prompt_id": "5",
-      "prompt": "Góc quay theo chân (tracking shot) một người đàn ông mặc áo măng tô đen đi dạo dưới trời tuyết rơi tại New York vào thập niên 1950.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hieu",
+      "mode_key": "image_to_video_single",
+      "mode_label": "VEO3 - Tạo video từ Ảnh",
+      "mode_name": "VEO3 - Tạo video từ Ảnh",
       "mode_payload": {
-        "prompt": "Góc quay theo chân (tracking shot) một người đàn ông mặc áo măng tô đen đi dạo dưới trời tuyết rơi tại New York vào thập niên 1950."
+        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/22_1_23032026_155227.jpg",
+        "prompt": "hieu"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\5_1_23032026_150234.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\5_1_23032026_162550.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_23032026_150237.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_23032026_162552.jpg"
       }
     },
     {
       "row": 5,
       "stt": "006",
       "prompt_id": "6",
-      "prompt": "Cận cảnh đôi mắt của một người lính đầy bùn đất đang nhìn lên bầu trời, trời đang mưa to, cảm xúc sâu lắng.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hieu",
+      "mode_key": "image_to_video_single",
+      "mode_label": "VEO3 - Tạo video từ Ảnh",
+      "mode_name": "VEO3 - Tạo video từ Ảnh",
       "mode_payload": {
-        "prompt": "Cận cảnh đôi mắt của một người lính đầy bùn đất đang nhìn lên bầu trời, trời đang mưa to, cảm xúc sâu lắng."
+        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/19_1_23032026_155218.jpg",
+        "prompt": "hieu"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\6_1_23032026_150318.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\6_1_23032026_162513.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_23032026_150320.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_23032026_162515.jpg"
       }
     },
     {
       "row": 6,
       "stt": "007",
       "prompt_id": "7",
-      "prompt": "Một đoàn tàu hơi nước cổ điển chạy xuyên qua khu rừng phủ đầy tuyết trắng, khói trắng cuộn trào lên bầu trời xanh.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hiue",
+      "mode_key": "image_to_video_single",
+      "mode_label": "VEO3 - Tạo video từ Ảnh",
+      "mode_name": "VEO3 - Tạo video từ Ảnh",
       "mode_payload": {
-        "prompt": "Một đoàn tàu hơi nước cổ điển chạy xuyên qua khu rừng phủ đầy tuyết trắng, khói trắng cuộn trào lên bầu trời xanh."
+        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/8_1_23032026_155152.jpg",
+        "prompt": "hiue"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\7_1_23032026_150710.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\7_1_23032026_163056.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_23032026_150712.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_23032026_163058.jpg"
       }
     },
     {
       "row": 7,
       "stt": "008",
       "prompt_id": "8",
-      "prompt": "Góc quay từ dưới lên (low angle) một tòa nhà chọc trời bằng kính đang phản chiếu những đám mây trôi nhanh, video time-lapse.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hieu",
+      "mode_key": "image_to_video_single",
+      "mode_label": "VEO3 - Tạo video từ Ảnh",
+      "mode_name": "VEO3 - Tạo video từ Ảnh",
       "mode_payload": {
-        "prompt": "Góc quay từ dưới lên (low angle) một tòa nhà chọc trời bằng kính đang phản chiếu những đám mây trôi nhanh, video time-lapse."
+        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/9_1_23032026_155152.jpg",
+        "prompt": "hieu"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\8_1_23032026_150308.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\8_1_23032026_163257.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_23032026_150311.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_23032026_163259.jpg"
       }
     },
     {
       "row": 8,
       "stt": "009",
       "prompt_id": "9",
-      "prompt": "Một đầu bếp đang tung chảo lửa xào thức ăn trong một nhà bếp ánh sáng lờ mờ, lửa bùng lên mạnh mẽ, quay siêu chậm 120fps.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hieu",
+      "mode_key": "image_to_video_single",
+      "mode_label": "VEO3 - Tạo video từ Ảnh",
+      "mode_name": "VEO3 - Tạo video từ Ảnh",
       "mode_payload": {
-        "prompt": "Một đầu bếp đang tung chảo lửa xào thức ăn trong một nhà bếp ánh sáng lờ mờ, lửa bùng lên mạnh mẽ, quay siêu chậm 120fps."
+        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/21_1_23032026_155139.jpg",
+        "prompt": "hieu"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\9_1_23032026_142518.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\9_1_23032026_162402.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_23032026_142520.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_23032026_162405.jpg"
       }
     },
     {
       "row": 9,
       "stt": "010",
       "prompt_id": "10",
-      "prompt": "Cảnh rượt đuổi bằng ô tô trên con đường đèo quanh co bên bờ biển, góc quay từ trực thăng, ánh sáng bình minh.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hieu",
+      "mode_key": "image_to_video_single",
+      "mode_label": "VEO3 - Tạo video từ Ảnh",
+      "mode_name": "VEO3 - Tạo video từ Ảnh",
       "mode_payload": {
-        "prompt": "Cảnh rượt đuổi bằng ô tô trên con đường đèo quanh co bên bờ biển, góc quay từ trực thăng, ánh sáng bình minh."
+        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/16_1_23032026_155112.jpg",
+        "prompt": "hieu"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\10_1_23032026_150308.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\10_1_23032026_163211.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_23032026_150311.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_23032026_163213.jpg"
       }
     },
     {
       "row": 10,
       "stt": "011",
       "prompt_id": "11",
-      "prompt": "Một cô gái đang ngồi đọc sách bên cửa sổ kính lớn trên xe lửa, phong cảnh núi non lướt qua nhanh chóng.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "hieu",
+      "mode_key": "image_to_video_single",
+      "mode_label": "VEO3 - Tạo video từ Ảnh",
+      "mode_name": "VEO3 - Tạo video từ Ảnh",
       "mode_payload": {
-        "prompt": "Một cô gái đang ngồi đọc sách bên cửa sổ kính lớn trên xe lửa, phong cảnh núi non lướt qua nhanh chóng."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\11_1_23032026_150244.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\11_1_23032026_150246.jpg"
-      }
-    },
-    {
-      "row": 11,
-      "stt": "012",
-      "prompt_id": "12",
-      "prompt": "Góc nhìn thứ nhất (POV) đang chạy xuyên qua một khu rừng sương mù dày đặc, ánh sáng mờ ảo, không khí rùng rợn.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Góc nhìn thứ nhất (POV) đang chạy xuyên qua một khu rừng sương mù dày đặc, ánh sáng mờ ảo, không khí rùng rợn."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\12_1_23032026_150333.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_23032026_150335.jpg"
-      }
-    },
-    {
-      "row": 12,
-      "stt": "013",
-      "prompt_id": "13",
-      "prompt": "Hai người ôm nhau khóc dưới cơn mưa nặng hạt giữa ngã tư đường phố vắng lặng, ánh đèn đường màu vàng ấm áp.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Hai người ôm nhau khóc dưới cơn mưa nặng hạt giữa ngã tư đường phố vắng lặng, ánh đèn đường màu vàng ấm áp."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\13_1_23032026_150423.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\13_1_23032026_150424.jpg"
-      }
-    },
-    {
-      "row": 13,
-      "stt": "014",
-      "prompt_id": "14",
-      "prompt": "Một nhạc công đang chơi đàn cello trên đỉnh một vách đá mờ sương, sóng biển vỗ dữ dội phía dưới.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Một nhạc công đang chơi đàn cello trên đỉnh một vách đá mờ sương, sóng biển vỗ dữ dội phía dưới."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\14_1_23032026_150730.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\14_1_23032026_150732.jpg"
-      }
-    },
-    {
-      "row": 14,
-      "stt": "015",
-      "prompt_id": "15",
-      "prompt": "Cận cảnh giọt cà phê espresso từ từ rơi xuống lớp bọt sữa nóng, ánh sáng studio, phong cách quảng cáo.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Cận cảnh giọt cà phê espresso từ từ rơi xuống lớp bọt sữa nóng, ánh sáng studio, phong cách quảng cáo."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\15_1_23032026_150409.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\15_1_23032026_150411.jpg"
-      }
-    },
-    {
-      "row": 15,
-      "stt": "016",
-      "prompt_id": "16",
-      "prompt": "Góc quay rộng một đoàn xe du mục đang băng qua sa mạc Sahara bạt ngàn dưới cái nắng chói chang.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Góc quay rộng một đoàn xe du mục đang băng qua sa mạc Sahara bạt ngàn dưới cái nắng chói chang."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\16_1_23032026_150514.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\16_1_23032026_150516.jpg"
-      }
-    },
-    {
-      "row": 16,
-      "stt": "017",
-      "prompt_id": "17",
-      "prompt": "Một người thợ mộc đang bào gỗ, những mạt gỗ bay lơ lửng trong không trung bắt được tia nắng mặt trời.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Một người thợ mộc đang bào gỗ, những mạt gỗ bay lơ lửng trong không trung bắt được tia nắng mặt trời."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\17_1_23032026_150423.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\17_1_23032026_150425.jpg"
-      }
-    },
-    {
-      "row": 17,
-      "stt": "018",
-      "prompt_id": "18",
-      "prompt": "Trẻ em đang chơi đùa với pháo hoa cầm tay trên bãi biển vào ban đêm, nụ cười rạng rỡ, ánh sáng chân thực.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Trẻ em đang chơi đùa với pháo hoa cầm tay trên bãi biển vào ban đêm, nụ cười rạng rỡ, ánh sáng chân thực."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\18_1_23032026_150437.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\18_1_23032026_150439.jpg"
-      }
-    },
-    {
-      "row": 18,
-      "stt": "019",
-      "prompt_id": "19",
-      "prompt": "Cận cảnh bàn tay gân guốc của một nghệ nhân đang nhào nặn đất sét trên bàn xoay, bùn đất ướt át.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Cận cảnh bàn tay gân guốc của một nghệ nhân đang nhào nặn đất sét trên bàn xoay, bùn đất ướt át."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\19_1_23032026_150437.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\19_1_23032026_150439.jpg"
-      }
-    },
-    {
-      "row": 19,
-      "stt": "020",
-      "prompt_id": "20",
-      "prompt": "Góc quay ngang lướt qua những người mẫu đang sải bước trên sàn catwalk, ánh đèn flash chớp liên tục.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Góc quay ngang lướt qua những người mẫu đang sải bước trên sàn catwalk, ánh đèn flash chớp liên tục."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\20_1_23032026_150557.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\20_1_23032026_150559.jpg"
-      }
-    },
-    {
-      "row": 20,
-      "stt": "021",
-      "prompt_id": "21",
-      "prompt": "🚀 Chủ đề 2: Viễn tưởng & Kỳ ảo (Sci-Fi & Fantasy)",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "🚀 Chủ đề 2: Viễn tưởng & Kỳ ảo (Sci-Fi & Fantasy)"
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\21_1_23032026_142650.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\21_1_23032026_142652.jpg"
-      }
-    },
-    {
-      "row": 21,
-      "stt": "022",
-      "prompt_id": "22",
-      "prompt": "Một con rồng vảy đen khổng lồ đang bay lượn qua những đám mây giông bão, tia chớp lóe sáng làm lộ rõ đôi cánh.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Một con rồng vảy đen khổng lồ đang bay lượn qua những đám mây giông bão, tia chớp lóe sáng làm lộ rõ đôi cánh."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\22_1_23032026_142730.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\22_1_23032026_142733.jpg"
-      }
-    },
-    {
-      "row": 22,
-      "stt": "023",
-      "prompt_id": "23",
-      "prompt": "Phi hành gia đang trôi dạt vô định trong không gian tĩnh lặng, kính mũ bảo hiểm phản chiếu hình ảnh Trái Đất rực rỡ.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Phi hành gia đang trôi dạt vô định trong không gian tĩnh lặng, kính mũ bảo hiểm phản chiếu hình ảnh Trái Đất rực rỡ."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\23_1_23032026_142730.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\23_1_23032026_142733.jpg"
-      }
-    },
-    {
-      "row": 23,
-      "stt": "024",
-      "prompt_id": "24",
-      "prompt": "Một thành phố nổi trên không trung với những thác nước đổ xuống những đám mây trắng xốp, phong cách kỳ ảo.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Một thành phố nổi trên không trung với những thác nước đổ xuống những đám mây trắng xốp, phong cách kỳ ảo."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\24_1_23032026_142618.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\24_1_23032026_142620.jpg"
-      }
-    },
-    {
-      "row": 24,
-      "stt": "025",
-      "prompt_id": "25",
-      "prompt": "Cận cảnh một sinh vật ngoài hành tinh có đôi mắt phát sáng đang tò mò chạm vào một bông hoa của Trái Đất.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Cận cảnh một sinh vật ngoài hành tinh có đôi mắt phát sáng đang tò mò chạm vào một bông hoa của Trái Đất."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\25_1_23032026_142518.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\25_1_23032026_142520.jpg"
-      }
-    },
-    {
-      "row": 25,
-      "stt": "026",
-      "prompt_id": "26",
-      "prompt": "Những chiếc xe bay (hovercar) đang len lỏi qua các luồng giao thông trên không trong một siêu đô thị tương lai năm 3000.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Những chiếc xe bay (hovercar) đang len lỏi qua các luồng giao thông trên không trong một siêu đô thị tương lai năm 3000."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\26_1_23032026_142930.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\26_1_23032026_142933.jpg"
-      }
-    },
-    {
-      "row": 26,
-      "stt": "027",
-      "prompt_id": "27",
-      "prompt": "Một phù thủy mặc áo choàng đen đang niệm chú, phép thuật màu xanh lục bùng nổ từ đầu đũa phép.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Một phù thủy mặc áo choàng đen đang niệm chú, phép thuật màu xanh lục bùng nổ từ đầu đũa phép."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\27_1_23032026_142650.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\27_1_23032026_142652.jpg"
-      }
-    },
-    {
-      "row": 27,
-      "stt": "028",
-      "prompt_id": "28",
-      "prompt": "Khu rừng phát sáng sinh học (bioluminescent) vào ban đêm với những cây nấm khổng lồ và bướm dạ quang bay lượn.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Khu rừng phát sáng sinh học (bioluminescent) vào ban đêm với những cây nấm khổng lồ và bướm dạ quang bay lượn."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\28_1_23032026_142537.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\28_1_23032026_142539.jpg"
-      }
-    },
-    {
-      "row": 28,
-      "stt": "029",
-      "prompt_id": "29",
-      "prompt": "Một chiến binh robot bị rỉ sét đang từ từ thức tỉnh sau hàng ngàn năm trong một hang động băng giá.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Một chiến binh robot bị rỉ sét đang từ từ thức tỉnh sau hàng ngàn năm trong một hang động băng giá."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\29_1_23032026_142628.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\29_1_23032026_142630.jpg"
-      }
-    },
-    {
-      "row": 29,
-      "stt": "030",
-      "prompt_id": "30",
-      "prompt": "Cổng dịch chuyển không gian bằng năng lượng lượng tử đang mở ra giữa một cánh đồng lúa mì hoang sơ.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Cổng dịch chuyển không gian bằng năng lượng lượng tử đang mở ra giữa một cánh đồng lúa mì hoang sơ."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\30_1_23032026_142808.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\30_1_23032026_142810.jpg"
-      }
-    },
-    {
-      "row": 30,
-      "stt": "031",
-      "prompt_id": "31",
-      "prompt": "Tàu vũ trụ khổng lồ đang từ từ tiến vào bầu khí quyển của một hành tinh màu đỏ rực lửa.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Tàu vũ trụ khổng lồ đang từ từ tiến vào bầu khí quyển của một hành tinh màu đỏ rực lửa."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\31_1_23032026_142556.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\31_1_23032026_142558.jpg"
-      }
-    },
-    {
-      "row": 31,
-      "stt": "032",
-      "prompt_id": "32",
-      "prompt": "Một người máy có khuôn mặt giống con người đang khóc, một giọt nước mắt lăn xuống gò má kim loại.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Một người máy có khuôn mặt giống con người đang khóc, một giọt nước mắt lăn xuống gò má kim loại."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\32_1_23032026_142556.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\32_1_23032026_142557.jpg"
-      }
-    },
-    {
-      "row": 32,
-      "stt": "033",
-      "prompt_id": "33",
-      "prompt": "Lâu đài gothic tối tăm nằm trên đỉnh ngọn núi lửa đang hoạt động, dung nham chảy đỏ rực bên dưới.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Lâu đài gothic tối tăm nằm trên đỉnh ngọn núi lửa đang hoạt động, dung nham chảy đỏ rực bên dưới."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\33_1_23032026_142618.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\33_1_23032026_142620.jpg"
-      }
-    },
-    {
-      "row": 33,
-      "stt": "034",
-      "prompt_id": "34",
-      "prompt": "Một tiên nữ nhỏ bé có cánh trong suốt đang ngủ say trong một bông hoa sen nở rộ.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Một tiên nữ nhỏ bé có cánh trong suốt đang ngủ say trong một bông hoa sen nở rộ."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\34_1_23032026_142717.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\34_1_23032026_142719.jpg"
-      }
-    },
-    {
-      "row": 34,
-      "stt": "035",
-      "prompt_id": "35",
-      "prompt": "Khung cảnh sao hỏa với những cơn bão cát khổng lồ đang quét qua một khu định cư mái vòm bằng kính.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Khung cảnh sao hỏa với những cơn bão cát khổng lồ đang quét qua một khu định cư mái vòm bằng kính."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\35_1_23032026_142537.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\35_1_23032026_142539.jpg"
-      }
-    },
-    {
-      "row": 35,
-      "stt": "036",
-      "prompt_id": "36",
-      "prompt": "Một cuốn sách cổ nạm ngọc đang tự mở ra, những ký tự vàng bay lơ lửng xung quanh người đọc.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Một cuốn sách cổ nạm ngọc đang tự mở ra, những ký tự vàng bay lơ lửng xung quanh người đọc."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\36_1_23032026_144635.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\36_1_23032026_144637.jpg"
-      }
-    },
-    {
-      "row": 36,
-      "stt": "037",
-      "prompt_id": "37",
-      "prompt": "Giao tranh bằng kiếm laser giữa hai hiệp sĩ không gian trong một lò phản ứng năng lượng khổng lồ.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Giao tranh bằng kiếm laser giữa hai hiệp sĩ không gian trong một lò phản ứng năng lượng khổng lồ."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\37_1_23032026_144653.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\37_1_23032026_144655.jpg"
-      }
-    },
-    {
-      "row": 37,
-      "stt": "038",
-      "prompt_id": "38",
-      "prompt": "Nàng tiên cá bơi lội uyển chuyển qua một thành phố Atlantis ngập chìm dưới đáy biển sâu.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Nàng tiên cá bơi lội uyển chuyển qua một thành phố Atlantis ngập chìm dưới đáy biển sâu."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\38_1_23032026_142808.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\38_1_23032026_142810.jpg"
-      }
-    },
-    {
-      "row": 38,
-      "stt": "039",
-      "prompt_id": "39",
-      "prompt": "Một cái cây khổng lồ ôm trọn cả một hành tinh nhỏ, rễ cây tỏa ra ánh sáng rực rỡ.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Một cái cây khổng lồ ôm trọn cả một hành tinh nhỏ, rễ cây tỏa ra ánh sáng rực rỡ."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\39_1_23032026_142717.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\39_1_23032026_142719.jpg"
-      }
-    },
-    {
-      "row": 39,
-      "stt": "040",
-      "prompt_id": "40",
-      "prompt": "Người ngoài hành tinh khổng lồ bước đi giữa các tòa nhà chọc trời, sương mù che khuất nửa thân trên.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Người ngoài hành tinh khổng lồ bước đi giữa các tòa nhà chọc trời, sương mù che khuất nửa thân trên."
+        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/18_1_23032026_155058.jpg",
+        "prompt": "hieu"
       },
       "status_code": "FAILED",
-      "status_text": "Lỗi (mã lỗi: 400 | message: Invalid JSON payload received. Unknown name \"token\" at 'client_context.recaptcha_context': Proto field is not repeating, cannot start list.)",
+      "status_text": "Lỗi",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {},
       "preview_map": {}
     },
     {
-      "row": 40,
-      "stt": "041",
-      "prompt_id": "41",
-      "prompt": "Một nhà khoa học điên đang cấy ghép các bộ phận cơ khí màu đồng vào cơ thể, phong cách Steampunk.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "row": 11,
+      "stt": "012",
+      "prompt_id": "12",
+      "prompt": "hieu",
+      "mode_key": "image_to_video_single",
+      "mode_label": "VEO3 - Tạo video từ Ảnh",
+      "mode_name": "VEO3 - Tạo video từ Ảnh",
       "mode_payload": {
-        "prompt": "Một nhà khoa học điên đang cấy ghép các bộ phận cơ khí màu đồng vào cơ thể, phong cách Steampunk."
+        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/17_1_23032026_155031.jpg",
+        "prompt": "hieu"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\41_1_23032026_144943.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\12_1_23032026_162516.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\41_1_23032026_144946.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_23032026_162517.jpg"
       }
     },
     {
-      "row": 41,
-      "stt": "042",
-      "prompt_id": "42",
-      "prompt": "🎨 Chủ đề 3: Hoạt hình & 3D (Animation & 3D)",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "row": 12,
+      "stt": "013",
+      "prompt_id": "13",
+      "prompt": "hieu",
+      "mode_key": "image_to_video_single",
+      "mode_label": "VEO3 - Tạo video từ Ảnh",
+      "mode_name": "VEO3 - Tạo video từ Ảnh",
       "mode_payload": {
-        "prompt": "🎨 Chủ đề 3: Hoạt hình & 3D (Animation & 3D)"
+        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/1_1_23032026_155017.jpg",
+        "prompt": "hieu"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\42_1_23032026_143151.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\13_1_23032026_162628.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\42_1_23032026_143153.jpg"
-      }
-    },
-    {
-      "row": 42,
-      "stt": "043",
-      "prompt_id": "43",
-      "prompt": "Phong cách Pixar: Một chú chó Corgi mập mạp đang cố gắng nhảy lên ghế sofa nhưng bị trượt chân ngã lộn nhào.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Phong cách Pixar: Một chú chó Corgi mập mạp đang cố gắng nhảy lên ghế sofa nhưng bị trượt chân ngã lộn nhào."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\43_1_23032026_143128.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\43_1_23032026_143130.jpg"
-      }
-    },
-    {
-      "row": 43,
-      "stt": "044",
-      "prompt_id": "44",
-      "prompt": "Hoạt hình 2D phong cách Studio Ghibli: Một cô gái đang đạp xe trên con đường ven biển vào mùa hè, hoa anh đào bay lác đác.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Hoạt hình 2D phong cách Studio Ghibli: Một cô gái đang đạp xe trên con đường ven biển vào mùa hè, hoa anh đào bay lác đác."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\44_1_23032026_143214.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\44_1_23032026_143216.jpg"
-      }
-    },
-    {
-      "row": 44,
-      "stt": "045",
-      "prompt_id": "45",
-      "prompt": "3D Render: Quái vật nhỏ bằng len màu hồng đang vui vẻ nhảy múa dưới ánh đèn disco nhiều màu.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "3D Render: Quái vật nhỏ bằng len màu hồng đang vui vẻ nhảy múa dưới ánh đèn disco nhiều màu."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\45_1_23032026_142828.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\45_1_23032026_142830.jpg"
-      }
-    },
-    {
-      "row": 45,
-      "stt": "046",
-      "prompt_id": "46",
-      "prompt": "Phong cách Stop-motion: Một tách trà bằng đất sét tự động rót nước vào ly, có khói bốc lên sống động.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Phong cách Stop-motion: Một tách trà bằng đất sét tự động rót nước vào ly, có khói bốc lên sống động."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\46_1_23032026_143035.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\46_1_23032026_143038.jpg"
-      }
-    },
-    {
-      "row": 46,
-      "stt": "047",
-      "prompt_id": "47",
-      "prompt": "Anime style: Nhân vật nam chính tung đòn đánh mạnh mẽ, vụn đá văng tung tóe, hiệu ứng đường nét tốc độ rực rỡ.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Anime style: Nhân vật nam chính tung đòn đánh mạnh mẽ, vụn đá văng tung tóe, hiệu ứng đường nét tốc độ rực rỡ."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\47_1_23032026_144021.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\47_1_23032026_144022.jpg"
-      }
-    },
-    {
-      "row": 47,
-      "stt": "048",
-      "prompt_id": "48",
-      "prompt": "Đồ họa Low-poly: Khung cảnh cắm trại trong rừng với ngọn lửa trại lấp lánh và bầu trời đầy sao.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Đồ họa Low-poly: Khung cảnh cắm trại trong rừng với ngọn lửa trại lấp lánh và bầu trời đầy sao."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\48_1_23032026_143446.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\48_1_23032026_143448.jpg"
-      }
-    },
-    {
-      "row": 48,
-      "stt": "049",
-      "prompt_id": "49",
-      "prompt": "Phong cách Cyberpunk 2D: Một cô gái có cánh tay robot đang ăn mì ramen tại một quán vỉa hè đầy đèn neon.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Phong cách Cyberpunk 2D: Một cô gái có cánh tay robot đang ăn mì ramen tại một quán vỉa hè đầy đèn neon."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\49_1_23032026_143840.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\49_1_23032026_143842.jpg"
-      }
-    },
-    {
-      "row": 49,
-      "stt": "050",
-      "prompt_id": "50",
-      "prompt": "Hoạt hình cắt giấy (Paper cut animation): Một con thuyền giấy lênh đênh trên những lớp sóng biển bằng giấy màu xanh.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Hoạt hình cắt giấy (Paper cut animation): Một con thuyền giấy lênh đênh trên những lớp sóng biển bằng giấy màu xanh."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\50_1_23032026_142659.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\50_1_23032026_142701.jpg"
-      }
-    },
-    {
-      "row": 50,
-      "stt": "051",
-      "prompt_id": "51",
-      "prompt": "3D Unreal Engine: Một con báo máy móc chuyển động mượt mà xuyên qua khu rừng rậm rạp nhiệt đới.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "3D Unreal Engine: Một con báo máy móc chuyển động mượt mà xuyên qua khu rừng rậm rạp nhiệt đới."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\51_1_23032026_143112.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\51_1_23032026_143114.jpg"
-      }
-    },
-    {
-      "row": 51,
-      "stt": "052",
-      "prompt_id": "52",
-      "prompt": "Phong cách màu nước (Watercolor): Bức tranh một khu phố cổ Paris đang trời mưa bắt đầu chuyển động chân thực.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Phong cách màu nước (Watercolor): Bức tranh một khu phố cổ Paris đang trời mưa bắt đầu chuyển động chân thực."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\52_1_23032026_143151.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\52_1_23032026_143154.jpg"
-      }
-    },
-    {
-      "row": 52,
-      "stt": "053",
-      "prompt_id": "53",
-      "prompt": "Phong cách hoạt hình cổ điển 1930s (Rubber hose): Nhân vật đi qua lại với điệu bộ hài hước, màn hình đen trắng có nhiễu hạt.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Phong cách hoạt hình cổ điển 1930s (Rubber hose): Nhân vật đi qua lại với điệu bộ hài hước, màn hình đen trắng có nhiễu hạt."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\53_1_23032026_143338.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\53_1_23032026_143339.jpg"
-      }
-    },
-    {
-      "row": 53,
-      "stt": "054",
-      "prompt_id": "54",
-      "prompt": "Chibi style: Một nhóm các nhân vật nhỏ bé dễ thương đang tranh nhau một chiếc bánh quy khổng lồ.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Chibi style: Một nhóm các nhân vật nhỏ bé dễ thương đang tranh nhau một chiếc bánh quy khổng lồ."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\54_1_23032026_143229.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\54_1_23032026_143231.jpg"
-      }
-    },
-    {
-      "row": 54,
-      "stt": "055",
-      "prompt_id": "55",
-      "prompt": "3D Isometric: Một căn phòng làm việc thu nhỏ (diorama) tự động xây dựng lên từ các viên gạch lơ lửng.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "3D Isometric: Một căn phòng làm việc thu nhỏ (diorama) tự động xây dựng lên từ các viên gạch lơ lửng."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\55_1_23032026_143338.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\55_1_23032026_143340.jpg"
-      }
-    },
-    {
-      "row": 55,
-      "stt": "056",
-      "prompt_id": "56",
-      "prompt": "Hoạt hình vector (Flat design): Biểu đồ nhịp tim chuyển thành hình dáng một chiếc ô tô đang chạy trên đường cong.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Hoạt hình vector (Flat design): Biểu đồ nhịp tim chuyển thành hình dáng một chiếc ô tô đang chạy trên đường cong."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\56_1_23032026_143050.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\56_1_23032026_143052.jpg"
-      }
-    },
-    {
-      "row": 56,
-      "stt": "057",
-      "prompt_id": "57",
-      "prompt": "Hoạt hình tranh cát: Đôi bàn tay họa sĩ đang vẽ nên hình ảnh một gia đình hạnh phúc, cát bay theo gió.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Hoạt hình tranh cát: Đôi bàn tay họa sĩ đang vẽ nên hình ảnh một gia đình hạnh phúc, cát bay theo gió."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\57_1_23032026_142909.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\57_1_23032026_142911.jpg"
-      }
-    },
-    {
-      "row": 57,
-      "stt": "058",
-      "prompt_id": "58",
-      "prompt": "Đồ họa 8-bit Pixel Art: Hiệp sĩ cầm kiếm đi ngang qua màn hình, chém những con quái vật chất nhầy màu xanh lá.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Đồ họa 8-bit Pixel Art: Hiệp sĩ cầm kiếm đi ngang qua màn hình, chém những con quái vật chất nhầy màu xanh lá."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\58_1_23032026_143542.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\58_1_23032026_143545.jpg"
-      }
-    },
-    {
-      "row": 58,
-      "stt": "059",
-      "prompt_id": "59",
-      "prompt": "Phong cách Cel-shading: Cảnh đua xe mô tô trên đường cao tốc với những nét viền đen đậm mang đậm chất truyện tranh comic.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Phong cách Cel-shading: Cảnh đua xe mô tô trên đường cao tốc với những nét viền đen đậm mang đậm chất truyện tranh comic."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\59_1_23032026_142650.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\59_1_23032026_142652.jpg"
-      }
-    },
-    {
-      "row": 59,
-      "stt": "060",
-      "prompt_id": "60",
-      "prompt": "3D đáng yêu: Một đám mây trắng có mắt mũi đang khóc ra những giọt mưa cầu vồng.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "3D đáng yêu: Một đám mây trắng có mắt mũi đang khóc ra những giọt mưa cầu vồng."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\60_1_23032026_142740.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\60_1_23032026_142742.jpg"
-      }
-    },
-    {
-      "row": 60,
-      "stt": "061",
-      "prompt_id": "61",
-      "prompt": "Hoạt hình tĩnh vật: Các loại trái cây trên bàn bỗng dưng mọc chân và nhảy điệu cha-cha-cha.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Hoạt hình tĩnh vật: Các loại trái cây trên bàn bỗng dưng mọc chân và nhảy điệu cha-cha-cha."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\61_1_23032026_143708.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\61_1_23032026_143710.jpg"
-      }
-    },
-    {
-      "row": 61,
-      "stt": "062",
-      "prompt_id": "62",
-      "prompt": "Phong cách vẽ chì (Pencil sketch animation): Một bức phác họa chân dung một người mỉm cười và nháy mắt với người xem.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Phong cách vẽ chì (Pencil sketch animation): Một bức phác họa chân dung một người mỉm cười và nháy mắt với người xem."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\62_1_23032026_142808.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\62_1_23032026_142810.jpg"
-      }
-    },
-    {
-      "row": 62,
-      "stt": "063",
-      "prompt_id": "63",
-      "prompt": "🌿 Chủ đề 4: Thiên nhiên & Phong cảnh (Nature & Landscapes)",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "🌿 Chủ đề 4: Thiên nhiên & Phong cảnh (Nature & Landscapes)"
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\63_1_23032026_143356.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\63_1_23032026_143359.jpg"
-      }
-    },
-    {
-      "row": 63,
-      "stt": "064",
-      "prompt_id": "64",
-      "prompt": "Video time-lapse hoa mẫu đơn từ từ nở rộ từ nụ hoa thành bông hoa rực rỡ dưới ánh sáng bình minh.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Video time-lapse hoa mẫu đơn từ từ nở rộ từ nụ hoa thành bông hoa rực rỡ dưới ánh sáng bình minh."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\64_1_23032026_142717.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\64_1_23032026_142719.jpg"
-      }
-    },
-    {
-      "row": 64,
-      "stt": "065",
-      "prompt_id": "65",
-      "prompt": "Góc quay cận cảnh siêu thực (Macro shot): Giọt sương ban mai lăn từ từ trên gân một chiếc lá xanh mướt.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Góc quay cận cảnh siêu thực (Macro shot): Giọt sương ban mai lăn từ từ trên gân một chiếc lá xanh mướt."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\65_1_23032026_142828.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\65_1_23032026_142830.jpg"
-      }
-    },
-    {
-      "row": 65,
-      "stt": "066",
-      "prompt_id": "66",
-      "prompt": "Quay chậm (Slow-motion) một con chim bói cá lao vút xuống mặt hồ tĩnh lặng để bắt cá, nước bắn tung tóe.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Quay chậm (Slow-motion) một con chim bói cá lao vút xuống mặt hồ tĩnh lặng để bắt cá, nước bắn tung tóe."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\66_1_23032026_143247.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\66_1_23032026_143249.jpg"
-      }
-    },
-    {
-      "row": 66,
-      "stt": "067",
-      "prompt_id": "67",
-      "prompt": "Góc nhìn từ trên cao (Top-down): Sóng biển xanh ngọc bích vỗ nhẹ nhàng vào bờ cát trắng xóa, không có người.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Góc nhìn từ trên cao (Top-down): Sóng biển xanh ngọc bích vỗ nhẹ nhàng vào bờ cát trắng xóa, không có người."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\67_1_23032026_143247.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\67_1_23032026_143249.jpg"
-      }
-    },
-    {
-      "row": 67,
-      "stt": "068",
-      "prompt_id": "68",
-      "prompt": "Camera bay lướt qua một hẻm núi hùng vĩ, những đàn chim đại bàng đang chao liệng giữa không trung.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Camera bay lướt qua một hẻm núi hùng vĩ, những đàn chim đại bàng đang chao liệng giữa không trung."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\68_1_23032026_143954.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\68_1_23032026_143956.jpg"
-      }
-    },
-    {
-      "row": 68,
-      "stt": "069",
-      "prompt_id": "69",
-      "prompt": "Cảnh cực quang (Aurora Borealis) màu xanh lá và tím nhảy múa trên bầu trời đêm trên một túp lều tuyết ở Bắc Cực.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Cảnh cực quang (Aurora Borealis) màu xanh lá và tím nhảy múa trên bầu trời đêm trên một túp lều tuyết ở Bắc Cực."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\69_1_23032026_145045.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\69_1_23032026_145047.jpg"
-      }
-    },
-    {
-      "row": 69,
-      "stt": "070",
-      "prompt_id": "70",
-      "prompt": "Hàng ngàn con đom đóm thắp sáng một khu rừng tối tăm bám rêu xanh, tạo cảm giác thần tiên.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Hàng ngàn con đom đóm thắp sáng một khu rừng tối tăm bám rêu xanh, tạo cảm giác thần tiên."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\70_1_23032026_143640.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\70_1_23032026_143643.jpg"
-      }
-    },
-    {
-      "row": 70,
-      "stt": "071",
-      "prompt_id": "71",
-      "prompt": "Dung nham núi lửa phun trào vào đại dương, tạo ra những cột khói trắng khổng lồ bốc lên trời.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Dung nham núi lửa phun trào vào đại dương, tạo ra những cột khói trắng khổng lồ bốc lên trời."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\71_1_23032026_144937.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\71_1_23032026_144938.jpg"
-      }
-    },
-    {
-      "row": 71,
-      "stt": "072",
-      "prompt_id": "72",
-      "prompt": "Cơn bão lốc xoáy (Tornado) khổng lồ đang quét qua một cánh đồng hoang, bầu trời xám xịt và u ám.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Cơn bão lốc xoáy (Tornado) khổng lồ đang quét qua một cánh đồng hoang, bầu trời xám xịt và u ám."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\72_1_23032026_143446.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\72_1_23032026_143448.jpg"
-      }
-    },
-    {
-      "row": 72,
-      "stt": "073",
-      "prompt_id": "73",
-      "prompt": "Cảnh dưới nước (Underwater): Rùa biển bơi lội thong thả qua một rạn san hô rực rỡ màu sắc.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Cảnh dưới nước (Underwater): Rùa biển bơi lội thong thả qua một rạn san hô rực rỡ màu sắc."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\73_1_23032026_144806.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\73_1_23032026_144809.jpg"
-      }
-    },
-    {
-      "row": 73,
-      "stt": "074",
-      "prompt_id": "74",
-      "prompt": "Đàn ngựa hoang đang phi nước đại tung bụi mù mịt trên một thảo nguyên rộng lớn, ánh nắng vàng hắt ngược.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Đàn ngựa hoang đang phi nước đại tung bụi mù mịt trên một thảo nguyên rộng lớn, ánh nắng vàng hắt ngược."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\74_1_23032026_143247.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\74_1_23032026_143249.jpg"
-      }
-    },
-    {
-      "row": 74,
-      "stt": "075",
-      "prompt_id": "75",
-      "prompt": "Thác nước khổng lồ đổ ầm ầm xuống vách đá, một chiếc cầu vồng xuất hiện trong làn sương mù do nước tạo ra.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Thác nước khổng lồ đổ ầm ầm xuống vách đá, một chiếc cầu vồng xuất hiện trong làn sương mù do nước tạo ra."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\75_1_23032026_142808.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\75_1_23032026_142810.jpg"
-      }
-    },
-    {
-      "row": 75,
-      "stt": "076",
-      "prompt_id": "76",
-      "prompt": "Cảnh tuyết rơi dày đặc, gió thổi những bông tuyết phủ kín một nhánh thông gai góc.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Cảnh tuyết rơi dày đặc, gió thổi những bông tuyết phủ kín một nhánh thông gai góc."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\76_1_23032026_144931.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\76_1_23032026_144933.jpg"
-      }
-    },
-    {
-      "row": 76,
-      "stt": "077",
-      "prompt_id": "77",
-      "prompt": "Video tua nhanh (Time-lapse) bầu trời đầy sao chuyển động xoay quanh sao Bắc Đẩu, có sao băng rơi.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Video tua nhanh (Time-lapse) bầu trời đầy sao chuyển động xoay quanh sao Bắc Đẩu, có sao băng rơi."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\77_1_23032026_143429.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\77_1_23032026_143431.jpg"
-      }
-    },
-    {
-      "row": 77,
-      "stt": "078",
-      "prompt_id": "78",
-      "prompt": "Cận cảnh một con tắc kè hoa đang từ từ đổi màu da để hòa mình vào cành cây khô.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Cận cảnh một con tắc kè hoa đang từ từ đổi màu da để hòa mình vào cành cây khô."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\78_1_23032026_143214.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\78_1_23032026_143216.jpg"
-      }
-    },
-    {
-      "row": 78,
-      "stt": "079",
-      "prompt_id": "79",
-      "prompt": "Ánh nắng xuyên qua những tán cây cổ thụ cao vút (God rays), sương mù bảng lảng trên mặt đất rừng.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Ánh nắng xuyên qua những tán cây cổ thụ cao vút (God rays), sương mù bảng lảng trên mặt đất rừng."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\79_1_23032026_143600.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\79_1_23032026_143602.jpg"
-      }
-    },
-    {
-      "row": 79,
-      "stt": "080",
-      "prompt_id": "80",
-      "prompt": "Đàn cá heo nhảy vọt lên khỏi mặt nước biển trong xanh, đi theo mũi của một con tàu.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Đàn cá heo nhảy vọt lên khỏi mặt nước biển trong xanh, đi theo mũi của một con tàu."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\80_1_23032026_143356.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\80_1_23032026_143359.jpg"
-      }
-    },
-    {
-      "row": 80,
-      "stt": "081",
-      "prompt_id": "81",
-      "prompt": "Cận cảnh móng vuốt của một con báo tuyết bước đi lặng lẽ trên nền tuyết xốp.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Cận cảnh móng vuốt của một con báo tuyết bước đi lặng lẽ trên nền tuyết xốp."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\81_1_23032026_143542.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\81_1_23032026_143545.jpg"
-      }
-    },
-    {
-      "row": 81,
-      "stt": "082",
-      "prompt_id": "82",
-      "prompt": "Biển mây trôi bồng bềnh ôm quanh những đỉnh núi đá nhọn hoắt vào buổi sáng sớm tinh mơ.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Biển mây trôi bồng bềnh ôm quanh những đỉnh núi đá nhọn hoắt vào buổi sáng sớm tinh mơ."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\82_1_23032026_142950.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\82_1_23032026_142953.jpg"
-      }
-    },
-    {
-      "row": 82,
-      "stt": "083",
-      "prompt_id": "83",
-      "prompt": "Mạng nhện giăng giữa hai cành cây, lấp lánh những giọt sương và đung đưa nhẹ trong gió.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Mạng nhện giăng giữa hai cành cây, lấp lánh những giọt sương và đung đưa nhẹ trong gió."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\83_1_23032026_142808.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\83_1_23032026_142809.jpg"
-      }
-    },
-    {
-      "row": 83,
-      "stt": "084",
-      "prompt_id": "84",
-      "prompt": "🔮 Chủ đề 5: Trừu tượng, Nghệ thuật & Sản phẩm (Abstract, Artistic & Commercial)",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "🔮 Chủ đề 5: Trừu tượng, Nghệ thuật & Sản phẩm (Abstract, Artistic & Commercial)"
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\84_1_23032026_142828.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\84_1_23032026_142829.jpg"
-      }
-    },
-    {
-      "row": 84,
-      "stt": "085",
-      "prompt_id": "85",
-      "prompt": "Các dòng chất lỏng màu vàng gold và đen từ từ hòa quyện vào nhau, tạo thành những gợn sóng nghệ thuật, quay siêu cận cảnh.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Các dòng chất lỏng màu vàng gold và đen từ từ hòa quyện vào nhau, tạo thành những gợn sóng nghệ thuật, quay siêu cận cảnh."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\85_1_23032026_143229.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\85_1_23032026_143231.jpg"
-      }
-    },
-    {
-      "row": 85,
-      "stt": "086",
-      "prompt_id": "86",
-      "prompt": "Video quảng cáo: Một ly bia lạnh với lớp bọt tràn viền, những giọt nước đọng trên thành ly cực kỳ sắc nét.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Video quảng cáo: Một ly bia lạnh với lớp bọt tràn viền, những giọt nước đọng trên thành ly cực kỳ sắc nét."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\86_1_23032026_143214.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\86_1_23032026_143216.jpg"
-      }
-    },
-    {
-      "row": 86,
-      "stt": "087",
-      "prompt_id": "87",
-      "prompt": "Kính vạn hoa (Kaleidoscope): Các mảnh vỡ tinh thể màu sắc liên tục biến đổi hình dạng theo nhịp điệu.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Kính vạn hoa (Kaleidoscope): Các mảnh vỡ tinh thể màu sắc liên tục biến đổi hình dạng theo nhịp điệu."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\87_1_23032026_143128.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\87_1_23032026_143131.jpg"
-      }
-    },
-    {
-      "row": 87,
-      "stt": "088",
-      "prompt_id": "88",
-      "prompt": "Hàng ngàn quả bóng nhựa màu đỏ rơi tự do từ trên cao xuống lấp đầy một căn phòng toàn màu trắng.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Hàng ngàn quả bóng nhựa màu đỏ rơi tự do từ trên cao xuống lấp đầy một căn phòng toàn màu trắng."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\88_1_23032026_144903.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\88_1_23032026_144906.jpg"
-      }
-    },
-    {
-      "row": 88,
-      "stt": "089",
-      "prompt_id": "89",
-      "prompt": "Hình học trừu tượng (Abstract geometry): Các khối lập phương bằng thủy tinh liên tục trồi lên lặn xuống, ánh sáng khúc xạ rực rỡ.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Hình học trừu tượng (Abstract geometry): Các khối lập phương bằng thủy tinh liên tục trồi lên lặn xuống, ánh sáng khúc xạ rực rỡ."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\89_1_23032026_142950.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\89_1_23032026_142953.jpg"
-      }
-    },
-    {
-      "row": 89,
-      "stt": "090",
-      "prompt_id": "90",
-      "prompt": "Cảnh một chiếc xe hơi thể thao sang trọng chạy qua đường hầm thiếu sáng, chỉ thấy đường nét xe phản chiếu ánh đèn.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Cảnh một chiếc xe hơi thể thao sang trọng chạy qua đường hầm thiếu sáng, chỉ thấy đường nét xe phản chiếu ánh đèn."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\90_1_23032026_142849.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\90_1_23032026_142851.jpg"
-      }
-    },
-    {
-      "row": 90,
-      "stt": "091",
-      "prompt_id": "91",
-      "prompt": "Nước hoa bắn ra từ vòi xịt dạng sương mù cực mịn, quay chậm dưới ánh đèn studio rực rỡ, background đen.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Nước hoa bắn ra từ vòi xịt dạng sương mù cực mịn, quay chậm dưới ánh đèn studio rực rỡ, background đen."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\91_1_23032026_142909.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\91_1_23032026_142911.jpg"
-      }
-    },
-    {
-      "row": 91,
-      "stt": "092",
-      "prompt_id": "92",
-      "prompt": "Cát màu liên tục được đổ lên nhau tạo thành các họa tiết xếp lớp 3D độc đáo.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Cát màu liên tục được đổ lên nhau tạo thành các họa tiết xếp lớp 3D độc đáo."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\92_1_23032026_142920.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\92_1_23032026_142922.jpg"
-      }
-    },
-    {
-      "row": 92,
-      "stt": "093",
-      "prompt_id": "93",
-      "prompt": "Sự bùng nổ của bột màu Holi (màu xanh, đỏ, vàng) trong không trung, quay slow-motion 1000fps.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Sự bùng nổ của bột màu Holi (màu xanh, đỏ, vàng) trong không trung, quay slow-motion 1000fps."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\93_1_23032026_143101.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\93_1_23032026_143104.jpg"
-      }
-    },
-    {
-      "row": 93,
-      "stt": "094",
-      "prompt_id": "94",
-      "prompt": "Một bức tượng đá cẩm thạch La Mã cổ đại bỗng nhiên tan chảy thành chất lỏng màu bạc óng ánh.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Một bức tượng đá cẩm thạch La Mã cổ đại bỗng nhiên tan chảy thành chất lỏng màu bạc óng ánh."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\94_1_23032026_143151.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\94_1_23032026_143154.jpg"
-      }
-    },
-    {
-      "row": 94,
-      "stt": "095",
-      "prompt_id": "95",
-      "prompt": "Góc quay vĩ mô (Macro) bề mặt của một đôi giày da cao cấp, quay rõ từng đường kim mũi chỉ và kết cấu da.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Góc quay vĩ mô (Macro) bề mặt của một đôi giày da cao cấp, quay rõ từng đường kim mũi chỉ và kết cấu da."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\95_1_23032026_143000.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\95_1_23032026_143002.jpg"
-      }
-    },
-    {
-      "row": 95,
-      "stt": "096",
-      "prompt_id": "96",
-      "prompt": "Hình ảnh một con mắt khổng lồ mở ra, con ngươi bên trong chứa cả một dải ngân hà đang xoay tròn.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Hình ảnh một con mắt khổng lồ mở ra, con ngươi bên trong chứa cả một dải ngân hà đang xoay tròn."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\96_1_23032026_143151.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\96_1_23032026_143154.jpg"
-      }
-    },
-    {
-      "row": 96,
-      "stt": "097",
-      "prompt_id": "97",
-      "prompt": "Các dải lụa mềm mại bay lượn trong môi trường không trọng lực, ánh sáng pastel nhẹ nhàng.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Các dải lụa mềm mại bay lượn trong môi trường không trọng lực, ánh sáng pastel nhẹ nhàng."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\97_1_23032026_143010.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\97_1_23032026_143011.jpg"
-      }
-    },
-    {
-      "row": 97,
-      "stt": "098",
-      "prompt_id": "98",
-      "prompt": "Video quảng cáo mỹ phẩm: Một giọt serum rơi xuống bề mặt da mô phỏng nước, tạo ra các làn sóng tỏa ra mượt mà.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Video quảng cáo mỹ phẩm: Một giọt serum rơi xuống bề mặt da mô phỏng nước, tạo ra các làn sóng tỏa ra mượt mà."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\98_1_23032026_142849.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\98_1_23032026_142850.jpg"
-      }
-    },
-    {
-      "row": 98,
-      "stt": "099",
-      "prompt_id": "99",
-      "prompt": "Phép chiếu ánh sáng nghệ thuật (Projection mapping) lên khuôn mặt của một người phụ nữ, các họa tiết thay đổi liên tục.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Phép chiếu ánh sáng nghệ thuật (Projection mapping) lên khuôn mặt của một người phụ nữ, các họa tiết thay đổi liên tục."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\99_1_23032026_143446.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\99_1_23032026_143448.jpg"
-      }
-    },
-    {
-      "row": 99,
-      "stt": "100",
-      "prompt_id": "100",
-      "prompt": "Các đường nét neon đang vẽ ra sơ đồ của một con chip máy tính, camera zoom sâu vào trung tâm bảng mạch.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Các đường nét neon đang vẽ ra sơ đồ của một con chip máy tính, camera zoom sâu vào trung tâm bảng mạch."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\100_1_23032026_142849.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\100_1_23032026_142851.jpg"
-      }
-    },
-    {
-      "row": 100,
-      "stt": "101",
-      "prompt_id": "101",
-      "prompt": "Mực (Ink) màu xanh dương lan tỏa bồng bềnh trong môi trường nước, tạo thành những hình thù như những đám mây.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Mực (Ink) màu xanh dương lan tỏa bồng bềnh trong môi trường nước, tạo thành những hình thù như những đám mây."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\101_1_23032026_143542.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\101_1_23032026_143544.jpg"
-      }
-    },
-    {
-      "row": 101,
-      "stt": "102",
-      "prompt_id": "102",
-      "prompt": "Một miếng thịt bò bít tết vừa được đặt lên vỉ nướng xèo xèo, dầu mỡ sôi lên, ngọn lửa liếm qua bề mặt thịt.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Một miếng thịt bò bít tết vừa được đặt lên vỉ nướng xèo xèo, dầu mỡ sôi lên, ngọn lửa liếm qua bề mặt thịt."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\102_1_23032026_143552.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\102_1_23032026_143554.jpg"
-      }
-    },
-    {
-      "row": 102,
-      "stt": "103",
-      "prompt_id": "103",
-      "prompt": "Âm thanh hình ảnh hóa (Audio visualizer): Các hạt ánh sáng rung động và nảy lên theo nhịp điệu của tiếng bass.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Âm thanh hình ảnh hóa (Audio visualizer): Các hạt ánh sáng rung động và nảy lên theo nhịp điệu của tiếng bass."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\103_1_23032026_143214.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\103_1_23032026_143217.jpg"
-      }
-    },
-    {
-      "row": 103,
-      "stt": "104",
-      "prompt_id": "104",
-      "prompt": "Đồ ăn bay lơ lửng: Các nguyên liệu của một chiếc hamburger (bánh mì, thịt bò, rau xà lách, cà chua) bay lơ lửng rồi từ từ ghép lại với nhau.",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "Đồ ăn bay lơ lửng: Các nguyên liệu của một chiếc hamburger (bánh mì, thịt bò, rau xà lách, cà chua) bay lơ lửng rồi từ từ ghép lại với nhau."
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\104_1_23032026_143628.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\104_1_23032026_143631.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\13_1_23032026_162630.jpg"
       }
     }
   ]

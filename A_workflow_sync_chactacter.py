@@ -776,30 +776,52 @@ class CharacterSyncWorkflow(QThread):
             aspect_ratio=sync_api.IMAGE_ASPECT_RATIO_PORTRAIT,
         )
         
-        # ✅ Retry upload tối đa 3 lần
+        # ✅ Retry upload tối đa 3 lần (lấy token mới nếu 401)
         max_upload_retries = 3
         last_error = ""
+        current_token = access_token
+        current_cookie = cookie
         for attempt in range(max_upload_retries):
+            # ✅ Retry: reload token mới từ config
+            if attempt > 0:
+                try:
+                    fresh = self._load_auth_config()
+                    if fresh and fresh.get("access_token"):
+                        current_token = fresh["access_token"]
+                    if fresh and fresh.get("cookie"):
+                        current_cookie = fresh["cookie"]
+                except Exception:
+                    pass
+
             try:
+                _tok = current_token
+                _ck = current_cookie
                 response = await asyncio.get_running_loop().run_in_executor(
                     self._upload_executor,
-                    lambda: asyncio.run(sync_api.request_upload_image(payload, access_token, cookie=cookie)),
+                    lambda: asyncio.run(sync_api.request_upload_image(payload, _tok, cookie=_ck)),
                 )
             except Exception as exc:
                 last_error = f"{name}: upload exception {exc}"
                 if attempt < max_upload_retries - 1:
-                    self._log(f"⚠️ Upload ảnh {name} lỗi (lần {attempt + 1}/{max_upload_retries}): {exc}, retry sau 5s...")
-                    await asyncio.sleep(5)
+                    self._log(f"⚠️ Upload ảnh {name} lỗi (lần {attempt + 1}/{max_upload_retries}): {exc}, retry sau 3s...")
+                    await asyncio.sleep(3)
                     continue
                 return False, key, "", last_error
+
+            # ✅ 401 → retry với token mới
+            http_status = response.get("status")
+            if http_status == 401 and attempt < max_upload_retries - 1:
+                self._log(f"⚠️ Upload {name}: 401, đang lấy token mới (lần {attempt + 1})...")
+                await asyncio.sleep(3)
+                continue
 
             body = response.get("body", "")
             media_id = self._extract_media_id(body)
             if not response.get("ok", True) or not media_id:
                 last_error = f"{name}: upload thất bại"
                 if attempt < max_upload_retries - 1:
-                    self._log(f"⚠️ Upload ảnh {name} thất bại (lần {attempt + 1}/{max_upload_retries}), retry sau 5s...")
-                    await asyncio.sleep(5)
+                    self._log(f"⚠️ Upload ảnh {name} thất bại (lần {attempt + 1}/{max_upload_retries}), retry sau 3s...")
+                    await asyncio.sleep(3)
                     continue
                 return False, key, "", last_error
 
