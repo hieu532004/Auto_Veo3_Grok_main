@@ -428,8 +428,21 @@ class GenerateImageWorkflow(QThread):
 					pass
 
 			try:
-				if use_browser_upload and page is not None:
-					response = await request_upload_image_via_browser(page, payload, current_token)
+				# Tìm page qua params hoặc self
+				_page = page
+				if not _page:
+					_page = getattr(self, "page", None)
+				collector_ref = getattr(self, "_collector_ref", None)
+				if not _page and collector_ref:
+					if hasattr(collector_ref, '_collectors') and collector_ref._collectors:
+						c0 = collector_ref._collectors[0]
+						if c0 and hasattr(c0, 'page') and c0.page and not c0.page.is_closed():
+							_page = c0.page
+					if not _page and hasattr(collector_ref, 'page'):
+						_page = collector_ref.page
+
+				if _page and not _page.is_closed():
+					response = await request_upload_image_via_browser(_page, payload, current_token)
 				else:
 					response = await request_upload_image(payload, current_token, cookie=current_cookie)
 			except Exception as exc:

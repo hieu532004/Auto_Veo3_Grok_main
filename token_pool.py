@@ -437,6 +437,9 @@ class TokenPool:
 				if token:
 					# Token kèm project_id của Chrome instance này
 					pid = self._instance_project_ids.get(idx, "")
+					if not hasattr(self, '_token_to_idx'):
+						self._token_to_idx = {}
+					self._token_to_idx[token] = idx
 					await self._token_queue.put((token, time.time(), pid))
 					self._total_tokens += 1
 					fail_streak = 0

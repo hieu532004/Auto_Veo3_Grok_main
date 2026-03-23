@@ -353,6 +353,9 @@ async def request_upload_image_via_browser(page, payload, access_token):
 		headers = {
 			"Content-Type": "application/json",
 			"Authorization": f"Bearer {access_token}",
+			"Origin": "https://labs.google",
+			"Referer": "https://labs.google/",
+			"X-Goog-AuthUser": "0",
 		}
 		data = json.dumps(payload)
 
@@ -437,6 +440,9 @@ async def request_generate_images_via_browser(page, url, payload, access_token, 
 		headers = {
 			"Content-Type": "application/json",
 			"Authorization": f"Bearer {access_token}",
+			"Origin": "https://labs.google",
+			"Referer": "https://labs.google/",
+			"X-Goog-AuthUser": "0",
 		}
 		data = json.dumps(payload)
 

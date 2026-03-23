@@ -221,6 +221,47 @@ class CharacterSyncWorkflow(QThread):
                 all_profiles[str(prof["name_key"])] = prof
 
         self._log(f"⬆️ Upload ảnh nhân vật dùng chung: {len(all_profiles)} ảnh (tối đa 5 thread)")
+        
+        # ✅ Khởi tạo Chrome Collector TRƯỚC KHI upload để dùng browser tránh 401
+        profile_name = self.project_data.get("veo_profile") or SettingsManager.load_settings().get("current_profile")
+        project_link = auth.get("URL_GEN_TOKEN") or self.project_data.get("project_link") or "https://labs.google/fx/vi/tools/flow"
+        chrome_userdata_root = auth.get("folder_user_data_get_token") or SettingsManager.create_chrome_userdata_folder(profile_name)
+
+        collector = None
+        try:
+            collector = await asyncio.wait_for(
+                self._init_token_collector(
+                    project_link, chrome_userdata_root, profile_name,
+                    self._resolve_int_config(config, "CLEAR_DATA_WAIT", 2), 40, get_token_timeout,
+                ),
+                timeout=180,
+            )
+            # Khởi động Chrome (tương đương context manager open)
+            if hasattr(collector, '__aenter__'):
+                await collector.__aenter__()
+            self._collector_ref = collector
+            
+            # Làm mới token ngay
+            try:
+                if hasattr(collector, 'refresh_auth_from_browser'):
+                    fresh_token, fresh_cookie = await collector.refresh_auth_from_browser(auth.get("projectId", ""))
+                    if fresh_token:
+                        auth["access_token"] = fresh_token
+                        self._log("✅ Đã lấy access_token mới từ Chrome browser")
+                    if fresh_cookie:
+                        auth["cookie"] = fresh_cookie
+            except Exception as e:
+                self._log(f"⚠️ Không refresh được auth từ Chrome: {e}")
+        except Exception as exc:
+            self._log(f"❌ Không khởi tạo được TokenCollector: {exc}")
+            return
+            
+        async def _close_collector():
+            try:
+                if collector and hasattr(collector, '__aexit__'):
+                    await collector.__aexit__(None, None, None)
+            except: pass
+
         media_cache = await self._upload_all_character_media(
             list(all_profiles.values()),
             auth["sessionId"],
@@ -228,6 +269,7 @@ class CharacterSyncWorkflow(QThread):
             auth.get("cookie"),
         )
         if self._should_stop():
+            await _close_collector()
             return
 
         for key, profile in all_profiles.items():
@@ -239,6 +281,7 @@ class CharacterSyncWorkflow(QThread):
         if not media_cache:
             self._log("❌ Không có ảnh nhân vật nào upload thành công, dừng workflow")
             self._log("❌ Upload ảnh nhân vật thất bại: tất cả")
+            await _close_collector()
             return
         
         # ✅ Lọc bỏ plans mà TẤT CẢ nhân vật đều upload thất bại
@@ -255,6 +298,7 @@ class CharacterSyncWorkflow(QThread):
         plans = valid_plans
         if not plans:
             self._log("❌ Không còn prompt nào có nhân vật upload thành công, dừng workflow")
+            await _close_collector()
             return
 
         if media_cache:
@@ -262,39 +306,10 @@ class CharacterSyncWorkflow(QThread):
             await self._sleep_with_stop(12)
 
         status_task = asyncio.create_task(
-            self._status_poll_loop(auth["access_token"], auth.get("cookie"))
+            self._status_poll_loop(auth["access_token"], auth.get("cookie"), auth_dict=auth)
         )
 
-        profile_name = self.project_data.get("veo_profile") or SettingsManager.load_settings().get("current_profile")
-        project_link = auth.get("URL_GEN_TOKEN") or self.project_data.get("project_link") or "https://labs.google/fx/vi/tools/flow"
-        chrome_userdata_root = auth.get("folder_user_data_get_token") or SettingsManager.create_chrome_userdata_folder(profile_name)
 
-        collector = None
-        try:
-            collector = await asyncio.wait_for(
-                self._init_token_collector(
-                    project_link,
-                    chrome_userdata_root,
-                    profile_name,
-                    self._resolve_int_config(config, "CLEAR_DATA_WAIT", 2),
-                    40,
-                    get_token_timeout,
-                ),
-                timeout=180,
-            )
-        except asyncio.TimeoutError:
-            self._log(f"❌ TokenCollector startup timeout (180s) — Chrome không connect được")
-            if status_task:
-                status_task.cancel()
-            return
-        except Exception as exc:
-            import traceback
-            err_detail = f"{type(exc).__name__}: {exc}" if str(exc) else f"{type(exc).__name__} (no message)"
-            self._log(f"❌ Không khởi tạo được TokenCollector: {err_detail}")
-            self._log(f"   Traceback: {traceback.format_exc().splitlines()[-2] if traceback.format_exc().splitlines() else 'N/A'}")
-            if status_task:
-                status_task.cancel()
-            return
 
         retry_token_counter = 0
         timeout_streak = 0
@@ -380,6 +395,20 @@ class CharacterSyncWorkflow(QThread):
                     self._mark_prompt_failed(prompt_id, prompt_text, "TOKEN", "Không lấy được token")
                     return
 
+                # ✅ LUÔN reload access_token mới nhất từ config trước mỗi request
+                access_token = auth.get("access_token", "")
+                try:
+                    _fresh = self._load_auth_config()
+                    if _fresh and _fresh.get("access_token"):
+                        access_token = _fresh["access_token"]
+                        auth["access_token"] = access_token
+                    if _fresh and _fresh.get("cookie"):
+                        auth["cookie"] = _fresh["cookie"]
+                    if _fresh and _fresh.get("sessionId"):
+                        auth["sessionId"] = _fresh["sessionId"]
+                except Exception:
+                    pass
+
                 # ── Build payload & gửi request ──
                 video_aspect_ratio = self._resolve_video_aspect_ratio()
                 model_key = sync_api.select_video_model_key(
@@ -398,11 +427,40 @@ class CharacterSyncWorkflow(QThread):
 
                 import random
                 await asyncio.sleep(random.uniform(0.5, 2.5))
-                response = await sync_api.request_create_video(payload, token, cookie=auth.get("cookie"))
+
+                # ✅ Lấy chính xác page_ref của Chrome đã sinh ra mã reCAPTCHA token này
+                page_ref = None
+                collector_ref = getattr(self, "_collector_ref", None)
+                if collector_ref:
+                    if hasattr(collector_ref, "_token_to_idx"):
+                        # TokenPool mode
+                        instance_idx = collector_ref._token_to_idx.get(token)
+                        if instance_idx is not None:
+                            colls = getattr(collector_ref, "_collectors", [])
+                            if instance_idx < len(colls):
+                                c = colls[instance_idx]
+                                if c and getattr(c, "page", None) and not c.page.is_closed():
+                                    page_ref = c.page
+                                    self._log(f"🔗 Mapped token -> Chrome-{instance_idx}")
+                    elif hasattr(collector_ref, "page") and collector_ref.page and not collector_ref.page.is_closed():
+                        # Single TokenCollector mode
+                        page_ref = collector_ref.page
+                        self._log(f"🔗 Mapped token -> Single Chrome")
+
+                if page_ref and not page_ref.is_closed():
+                    self._log(f"🌐 (Browser) Gửi request sync character {prompt_id} qua browser API...")
+                    response = await sync_api.request_create_video_via_browser(
+                        page_ref, payload, auth.get("cookie"), access_token
+                    )
+                else:
+                    self._log(f"⚠️ Không map được token -> browser tab, fallback urllib...")
+                    response = await sync_api.request_create_video(payload, access_token, cookie=auth.get("cookie"))
 
                 response_body = response.get("body", "")
                 operations = self._parse_operations(response_body)
                 err_code, err_msg = self._extract_error_info(response_body)
+                if not err_msg and response.get("error"):
+                    err_msg = response.get("error")
 
                 # ── Xử lý lỗi ──
                 if (not response.get("ok", True) or err_code) and err_msg and not operations:
@@ -473,7 +531,8 @@ class CharacterSyncWorkflow(QThread):
                 return
 
         # ✅ Xử lý SONG SONG: gửi nhiều prompt cùng lúc
-        async with collector:
+        if collector: # Replaced async with collector:
+            # Collector đã mở & token đã được refresh trước đó
             # ✅ Refresh auth từ Chrome browser ngay sau khi Chrome khởi động
             self._collector_ref = collector
             try:
@@ -650,6 +709,10 @@ class CharacterSyncWorkflow(QThread):
 
         await self._wait_for_completion()
         status_task.cancel()
+        if collector and hasattr(collector, '__aexit__'):
+            try:
+                await getattr(collector, '__aexit__')(None, None, None)
+            except: pass
 
     def _resolve_seed(self, config, index):
         seed_mode = str(config.get("SEED_MODE", "Random")).strip().lower()
@@ -740,7 +803,8 @@ class CharacterSyncWorkflow(QThread):
             return False
 
     async def _upload_all_character_media(self, profiles, session_id, access_token, cookie):
-        sem = asyncio.Semaphore(5)
+        # 🛑 Đổi thành Semaphore(1) để upload tuần tự, tránh quá tải browser API / chặn IP
+        sem = asyncio.Semaphore(1)
 
         async def _upload_one(profile):
             async with sem:
@@ -796,10 +860,27 @@ class CharacterSyncWorkflow(QThread):
             try:
                 _tok = current_token
                 _ck = current_cookie
-                response = await asyncio.get_running_loop().run_in_executor(
-                    self._upload_executor,
-                    lambda: asyncio.run(sync_api.request_upload_image(payload, _tok, cookie=_ck)),
-                )
+
+                # Ưu tiên upload qua Chrome browser nếu có
+                page = getattr(self, "page", None)
+                collector_ref = getattr(self, "_collector_ref", None)
+                if not page and collector_ref:
+                    if hasattr(collector_ref, '_collectors') and collector_ref._collectors:
+                        c0 = collector_ref._collectors[0]
+                        if c0 and hasattr(c0, 'page') and c0.page and not c0.page.is_closed():
+                            page = c0.page
+                    if not page and hasattr(collector_ref, 'page'):
+                        page = collector_ref.page
+
+                if page and not page.is_closed():
+                    # Gọi browser upload
+                    response = await sync_api.request_upload_image_via_browser(page, payload, _tok)
+                else:
+                    # Fallback urllib
+                    response = await asyncio.get_running_loop().run_in_executor(
+                        self._upload_executor,
+                        lambda: asyncio.run(sync_api.request_upload_image(payload, _tok, cookie=_ck)),
+                    )
             except Exception as exc:
                 last_error = f"{name}: upload exception {exc}"
                 if attempt < max_upload_retries - 1:
@@ -818,9 +899,10 @@ class CharacterSyncWorkflow(QThread):
             body = response.get("body", "")
             media_id = self._extract_media_id(body)
             if not response.get("ok", True) or not media_id:
-                last_error = f"{name}: upload thất bại"
+                err_detail = response.get("error") or response.get("body") or response.get("reason") or "No response body"
+                last_error = f"{name}: upload thất bại ({err_detail})"
                 if attempt < max_upload_retries - 1:
-                    self._log(f"⚠️ Upload ảnh {name} thất bại (lần {attempt + 1}/{max_upload_retries}), retry sau 3s...")
+                    self._log(f"⚠️ Upload ảnh {name} thất bại (lần {attempt + 1}/{max_upload_retries}) | Chi tiết: {err_detail[:100]} | Retry sau 3s...")
                     await asyncio.sleep(3)
                     continue
                 return False, key, "", last_error
@@ -889,7 +971,7 @@ class CharacterSyncWorkflow(QThread):
                 }
             )
 
-    async def _status_poll_loop(self, access_token, cookie=None):
+    async def _status_poll_loop(self, access_token, cookie=None, auth_dict=None):
         while not self._should_stop():
             pending = [
                 sid
@@ -928,6 +1010,12 @@ class CharacterSyncWorkflow(QThread):
                 payload["operations"].append(op)
 
             try:
+                # ✅ Luôn đọc token mới nhất từ auth dict
+                if auth_dict and auth_dict.get("access_token"):
+                    access_token = auth_dict["access_token"]
+                if auth_dict and auth_dict.get("cookie"):
+                    cookie = auth_dict["cookie"]
+
                 response = await sync_api.request_check_status(payload, access_token, cookie=cookie)
             except Exception as exc:
                 self._status_poll_fail_streak += 1

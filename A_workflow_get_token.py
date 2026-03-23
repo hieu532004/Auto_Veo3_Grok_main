@@ -1281,10 +1281,7 @@ class TokenCollector:
                 await asyncio.sleep(1)
 
             if not web_stable:
-                self._log(f"❌ Reload {max_reload_attempts} lần vẫn chưa ổn định để lấy token")
-                return False
-
-
+                self._log(f"⚠️ Reload {max_reload_attempts} lần vẫn chưa ổn định, NHƯNG vẫn tiếp tục chờ token...")
 
         # --- FALLBACK UI CHECK ---
         detected_mode, detected_text = await self._detect_current_mode(timeout_ms=2000, preferred_mode=self.mode)
@@ -1356,11 +1353,11 @@ class TokenCollector:
                 except Exception:
                     await asyncio.sleep(0.5)
             else:
-                self._log(f"⚠️  Timeout chờ textarea ({textarea_timeout}s)")
-                return False
+                self._log(f"⚠️  Timeout chờ textarea ({textarea_timeout}s) - Bỏ qua để chờ token từ network")
+                # Không return False nữa
         except Exception as e:
             self._log(f"⚠️  Lỗi nhập text: {e}")
-            return False
+            # Không return False
 
         btn_selectors = [
             ("xpath", ".//button[i[normalize-space()='arrow_forward']]"),
@@ -1374,6 +1371,7 @@ class TokenCollector:
                 return False
             self._debug_log(f"🔍 Tìm button 'Tạo/Create' (lần {btn_attempt + 1}/{max_button_retries})...")
             timeout_start = time.time()
+            clicked_btn = False
             while time.time() - timeout_start < 8:
                 if self._should_stop():
                     return False
@@ -1391,10 +1389,17 @@ class TokenCollector:
                             clicked = await self._click_with_fallback(loc, label="create button")
                             if clicked:
                                 self._debug_log(f"✅ Clicked button via {sel_type}: {sel_value[:60]}")
-                                return True
+                                clicked_btn = True
+                                break
                     except Exception:
                         pass
+                if clicked_btn:
+                    break
                 await asyncio.sleep(0.4)
+                
+            if clicked_btn:
+                return True
+                
             self._log(f"⚠️ Lần {btn_attempt + 1} tìm button timeout")
             if btn_attempt < max_button_retries - 1:
                 for _ in range(5):
@@ -1403,15 +1408,14 @@ class TokenCollector:
                     await asyncio.sleep(0.3)
         
         if not await self._verify_project_accessible():
+            # Chỉ khi lỗi dự án thì mới return False
             return False
 
         if not _has_reloaded:
-            self._log("🔄 Không thấy nút sau 3 lần, reload trang và thử lại...")
-            if await self._reload_project_page():
-                return await self._trigger_token_once(clear_storage=clear_storage, _has_reloaded=True)
+            self._log("🔄 Không thấy nút sau 3 lần, fallback: thử chờ token mạng, không bắt buộc click...")
 
-        self._log(f"❌ Không Lấy được token sau {max_button_retries} lần thử")
-        return False
+        # LUÔN LUÔN return True để vòng ngoài được phép await self._token_future lấy token mạng
+        return True
 
     async def get_token(self, clear_storage=False, token_timeout_override=None):
         if self._should_stop():

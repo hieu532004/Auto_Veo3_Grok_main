@@ -566,7 +566,7 @@ class ImageToVideoWorkflow(QThread):
 		# ✅ Upload ảnh sẽ chạy SAU KHI Chrome khởi động và refresh token mới
 		# (Không upload ở đây vì access_token cũ có thể đã hết hạn)
 
-		status_task = asyncio.create_task(self._status_poll_loop(access_token, session_id, cookie))
+		status_task = asyncio.create_task(self._status_poll_loop(access_token, session_id, cookie, auth_dict=auth))
 
 		prompt_retry_counts = {}
 		token_request_count = 0
@@ -642,7 +642,7 @@ class ImageToVideoWorkflow(QThread):
 						await status_task
 					except (asyncio.CancelledError, Exception):
 						pass
-				status_task = asyncio.create_task(self._status_poll_loop(access_token, session_id, cookie))
+				status_task = asyncio.create_task(self._status_poll_loop(access_token, session_id, cookie, auth_dict=auth))
 
 				# ✅ Proactive token refresh background task
 				async def _proactive_token_refresh():
@@ -913,7 +913,7 @@ class ImageToVideoWorkflow(QThread):
 
 		self._log(f"📝 Số video cần gen lại: {len(resend_items)}")
 
-		status_task = asyncio.create_task(self._status_poll_loop(access_token, session_id, cookie))
+		status_task = asyncio.create_task(self._status_poll_loop(access_token, session_id, cookie, auth_dict=auth))
 		prompt_retry_counts = {}
 		token_request_count = 0
 		self._complete_wait_start_ts = 0
@@ -1960,7 +1960,7 @@ class ImageToVideoWorkflow(QThread):
 				"_prompt_id": prompt_id,
 			})
 
-	async def _status_poll_loop(self, access_token, session_id, cookie=None):
+	async def _status_poll_loop(self, access_token, session_id, cookie=None, auth_dict=None):
 		self._log("[POLL] Status poll loop đã khởi động")
 		try:
 			while not self.STOP:
@@ -2003,6 +2003,11 @@ class ImageToVideoWorkflow(QThread):
 					operations_payload.append(op_block)
 
 				payload = {"operations": operations_payload}
+				# ✅ Luôn đọc token mới nhất từ auth dict (được cập nhật bởi prompt tasks)
+				if auth_dict and auth_dict.get("access_token"):
+					access_token = auth_dict["access_token"]
+				if auth_dict and auth_dict.get("cookie"):
+					cookie = auth_dict["cookie"]
 				try:
 					response = await request_check_status(payload, access_token, cookie=cookie)
 				except Exception as exc:

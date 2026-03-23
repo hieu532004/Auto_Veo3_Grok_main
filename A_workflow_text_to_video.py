@@ -651,7 +651,7 @@ class TextToVideoWorkflow(QThread):
 		self._log(f"⚙️ Cấu hình chạy: MULTI_VIDEO={max_in_flight} | OUTPUT_COUNT={output_count}")
 
 
-		status_task = asyncio.create_task(self._status_poll_loop(access_token, session_id, cookie))
+		status_task = asyncio.create_task(self._status_poll_loop(access_token, session_id, cookie, auth_dict=auth))
 
 		prompt_retry_counts = {}
 		token_request_count = 0
@@ -716,7 +716,7 @@ class TextToVideoWorkflow(QThread):
 						await status_task
 					except (asyncio.CancelledError, Exception):
 						pass
-				status_task = asyncio.create_task(self._status_poll_loop(access_token, session_id, cookie))
+				status_task = asyncio.create_task(self._status_poll_loop(access_token, session_id, cookie, auth_dict=auth))
 
 				# ✅ PROACTIVE TOKEN REFRESH: tự động refresh access_token mỗi 3 phút
 				# Tránh 401 bằng cách refresh TRƯỚC KHI token hết hạn
@@ -1039,7 +1039,7 @@ class TextToVideoWorkflow(QThread):
 
 		self._log(f"📝 Số video cần gen lại: {len(resend_items)}")
 
-		status_task = asyncio.create_task(self._status_poll_loop(access_token, session_id, cookie))
+		status_task = asyncio.create_task(self._status_poll_loop(access_token, session_id, cookie, auth_dict=auth))
 		prompt_retry_counts = {}
 		token_request_count = 0
 		self._complete_wait_start_ts = 0
@@ -1768,7 +1768,7 @@ class TextToVideoWorkflow(QThread):
 				"_prompt_id": prompt_id,
 			})
 
-	async def _status_poll_loop(self, access_token, session_id, cookie=None):
+	async def _status_poll_loop(self, access_token, session_id, cookie=None, auth_dict=None):
 		"""Status poll loop - tự động reload token mới nhất từ config trước mỗi lần check."""
 		while not self.STOP:
 			pending = [
@@ -1816,16 +1816,11 @@ class TextToVideoWorkflow(QThread):
 
 			payload = {"operations": operations_payload}
 
-			# ✅ LUÔN reload token/cookie mới nhất từ config.json trước mỗi lần check
-			try:
-				fresh_auth = self._load_auth_config()
-				if fresh_auth:
-					if fresh_auth.get("access_token") and fresh_auth["access_token"] != access_token:
-						access_token = fresh_auth["access_token"]
-					if fresh_auth.get("cookie"):
-						cookie = fresh_auth["cookie"]
-			except Exception:
-				pass
+			# ✅ Luôn đọc token mới nhất từ auth dict (được cập nhật bởi prompt tasks)
+			if auth_dict and auth_dict.get("access_token"):
+				access_token = auth_dict["access_token"]
+			if auth_dict and auth_dict.get("cookie"):
+				cookie = auth_dict["cookie"]
 
 			# ✅ Ưu tiên check status qua browser nếu Chrome còn mở
 			response = None

@@ -311,6 +311,9 @@ async def request_upload_image_via_browser(page, payload, access_token):
 		headers = {
 			"Content-Type": "application/json",
 			"Authorization": f"Bearer {access_token}",
+			"Origin": "https://labs.google",
+			"Referer": "https://labs.google/",
+			"X-Goog-AuthUser": "0",
 		}
 		data = json.dumps(payload)
 		response = await page.request.post(
@@ -354,6 +357,9 @@ async def request_create_video_via_browser(page, url, payload, cookie, access_to
 		headers = {
 			"Content-Type": "application/json",
 			"Authorization": f"Bearer {access_token}",
+			"Origin": "https://labs.google",
+			"Referer": "https://labs.google/",
+			"X-Goog-AuthUser": "0",
 		}
 		data = json.dumps(payload)
 		
