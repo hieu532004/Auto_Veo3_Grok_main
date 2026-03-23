@@ -247,7 +247,7 @@ class ImageToVideoWorkflow(QThread):
 	async def _process_i2v_prompt(
 		self, collector, prompt_id, prompt_text, idx_prompt,
 		upload_tasks, start_end_mode, create_video_url,
-		session_id, project_id, access_token, cookie,
+		session_id, project_id, access_token, cookie, auth,
 		output_count, token_option, max_token_retries, token_retry_delay,
 		get_token_timeout, clear_data_every, retry_with_error,
 		wait_resend, prompt_retry_counts,
@@ -700,7 +700,7 @@ class ImageToVideoWorkflow(QThread):
 					task = asyncio.create_task(self._process_i2v_prompt(
 						collector, prompt_id, prompt_text, idx_prompt,
 						upload_tasks, start_end_mode, create_video_url,
-						session_id, project_id, access_token, cookie,
+						session_id, project_id, access_token, cookie, auth,
 						output_count, token_option, max_token_retries, token_retry_delay,
 						get_token_timeout, clear_data_every, retry_with_error,
 						wait_resend, prompt_retry_counts,

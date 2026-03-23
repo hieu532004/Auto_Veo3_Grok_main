@@ -919,6 +919,7 @@ class GenerateImageWorkflow(QThread):
 							project_id,
 							access_token,
 							cookie,
+							auth,
 							output_count,
 							response_timeout,
 							max_token_retries,
@@ -973,6 +974,7 @@ class GenerateImageWorkflow(QThread):
 		project_id,
 		access_token,
 		cookie,
+		auth,
 		output_count,
 		response_timeout,
 		max_token_retries,
@@ -1216,17 +1218,29 @@ class GenerateImageWorkflow(QThread):
 							"error_message": msg,
 						})
 
-					# 🔧 Handle 401 - refresh OAuth token
-					if error_code_str == "401" or http_status == "401":
-						self._log("🔄 Token OAuth hết hạn, đang làm mới...")
+					# 🔧 Handle 401 - refresh OAuth token từ Chrome browser
+					if error_code_str == "401" or http_status == "401" or error_code_str == "16":
+						self._log("🔄 Token OAuth hết hạn, lấy mới từ Chrome browser...")
 						try:
-							import auth_helper
-							new_token = auth_helper.get_valid_access_token(cookie, project_id)
-							if new_token and new_token != access_token:
-								access_token = new_token
-								self._log("✅ Token OAuth đã được làm mới")
+							if hasattr(collector, 'refresh_auth_from_browser'):
+								fresh_token, fresh_cookie = await collector.refresh_auth_from_browser(project_id)
+								if fresh_token:
+									access_token = fresh_token
+									if auth:
+										auth["access_token"] = fresh_token
+									self._log("✅ Token OAuth đã được làm mới từ Chrome")
+								if fresh_cookie:
+									cookie = fresh_cookie
 							else:
-								self._log("⚠️ Không thể làm mới token OAuth")
+								import auth_helper
+								new_token = auth_helper.get_valid_access_token(cookie, project_id)
+								if new_token and new_token != access_token:
+									access_token = new_token
+									if auth:
+										auth["access_token"] = new_token
+									self._log("✅ Token OAuth đã được làm mới")
+								else:
+									self._log("⚠️ Không thể làm mới token OAuth")
 						except Exception as e:
 							self._log(f"⚠️ Lỗi refresh OAuth: {e}")
 						if retry_count < retry_with_error - 1:

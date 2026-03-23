@@ -710,6 +710,7 @@ class GenerateImageWorkflow(QThread):
 					project_id,
 					access_token,
 					cookie,
+					auth,
 					output_count,
 					response_timeout,
 					max_token_retries,
@@ -759,6 +760,7 @@ class GenerateImageWorkflow(QThread):
 		project_id,
 		access_token,
 		cookie,
+		auth,
 		output_count,
 		response_timeout,
 		max_token_retries,
@@ -1000,6 +1002,8 @@ class GenerateImageWorkflow(QThread):
 								fresh_token, fresh_cookie = await collector.refresh_auth_from_browser(project_id)
 								if fresh_token:
 									access_token = fresh_token
+									if auth:
+										auth["access_token"] = fresh_token
 									self._log("✅ Token OAuth đã được làm mới từ Chrome")
 								if fresh_cookie:
 									cookie = fresh_cookie

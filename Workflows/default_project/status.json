@@ -1,28 +1,29 @@
 {
   "project_name": "default_project",
-  "updated_at": 1774258380,
+  "updated_at": 1774259943,
   "rows": [
     {
       "row": 0,
       "stt": "001",
       "prompt_id": "1",
       "prompt": "hieu",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/25_1_23032026_155430.jpg",
-        "prompt": "hieu"
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/8_1_23032026_163259.jpg",
+        "prompt": "hieu",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/3_1_23032026_164259.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\1_1_23032026_162406.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\1_1_23032026_165032.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_23032026_162407.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_23032026_165034.jpg"
       }
     },
     {
@@ -30,22 +31,23 @@
       "stt": "002",
       "prompt_id": "2",
       "prompt": "hieu",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/24_1_23032026_155348.jpg",
-        "prompt": "hieu"
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/10_1_23032026_163213.jpg",
+        "prompt": "hieu",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/2_1_23032026_164256.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\2_1_23032026_162418.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\2_1_23032026_165058.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_23032026_162420.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_23032026_165100.jpg"
       }
     },
     {
@@ -53,22 +55,23 @@
       "stt": "003",
       "prompt_id": "3",
       "prompt": "hieu",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/23_1_23032026_155252.jpg",
-        "prompt": "hieu"
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/7_1_23032026_163058.jpg",
+        "prompt": "hieu",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/8_1_23032026_163259.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\3_1_23032026_162609.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\3_1_23032026_165446.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_23032026_162611.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_23032026_165448.jpg"
       }
     },
     {
@@ -76,22 +79,23 @@
       "stt": "004",
       "prompt_id": "4",
       "prompt": "hieu",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/20_1_23032026_155243.jpg",
-        "prompt": "hieu"
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/13_1_23032026_162630.jpg",
+        "prompt": "hieu",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/10_1_23032026_163213.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\4_1_23032026_162346.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\4_1_23032026_165403.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_23032026_162348.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_23032026_165405.jpg"
       }
     },
     {
@@ -99,22 +103,23 @@
       "stt": "005",
       "prompt_id": "5",
       "prompt": "hieu",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/22_1_23032026_155227.jpg",
-        "prompt": "hieu"
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/3_1_23032026_162611.jpg",
+        "prompt": "hieu",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/7_1_23032026_163058.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\5_1_23032026_162550.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\5_1_23032026_165201.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_23032026_162552.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_23032026_165204.jpg"
       }
     },
     {
@@ -122,22 +127,23 @@
       "stt": "006",
       "prompt_id": "6",
       "prompt": "hieu",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/19_1_23032026_155218.jpg",
-        "prompt": "hieu"
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/5_1_23032026_162552.jpg",
+        "prompt": "hieu",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/13_1_23032026_162630.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\6_1_23032026_162513.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\6_1_23032026_165429.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_23032026_162515.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_23032026_165431.jpg"
       }
     },
     {
@@ -145,22 +151,23 @@
       "stt": "007",
       "prompt_id": "7",
       "prompt": "hiue",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/8_1_23032026_155152.jpg",
-        "prompt": "hiue"
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/12_1_23032026_162517.jpg",
+        "prompt": "hiue",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/3_1_23032026_162611.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\7_1_23032026_163056.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\7_1_23032026_165834.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_23032026_163058.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_23032026_165835.jpg"
       }
     },
     {
@@ -168,22 +175,23 @@
       "stt": "008",
       "prompt_id": "8",
       "prompt": "hieu",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/9_1_23032026_155152.jpg",
-        "prompt": "hieu"
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/6_1_23032026_162515.jpg",
+        "prompt": "hieu",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/5_1_23032026_162552.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\8_1_23032026_163257.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\8_1_23032026_165159.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_23032026_163259.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_23032026_165201.jpg"
       }
     },
     {
@@ -191,22 +199,23 @@
       "stt": "009",
       "prompt_id": "9",
       "prompt": "hieu",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/21_1_23032026_155139.jpg",
-        "prompt": "hieu"
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/2_1_23032026_162420.jpg",
+        "prompt": "hieu",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/12_1_23032026_162517.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\9_1_23032026_162402.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\9_1_23032026_165406.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_23032026_162405.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_23032026_165408.jpg"
       }
     },
     {
@@ -214,22 +223,23 @@
       "stt": "010",
       "prompt_id": "10",
       "prompt": "hieu",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/16_1_23032026_155112.jpg",
-        "prompt": "hieu"
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/1_1_23032026_162407.jpg",
+        "prompt": "hieu",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/6_1_23032026_162515.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\10_1_23032026_163211.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\10_1_23032026_165409.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_23032026_163213.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_23032026_165411.jpg"
       }
     },
     {
@@ -237,41 +247,47 @@
       "stt": "011",
       "prompt_id": "11",
       "prompt": "hieu",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/18_1_23032026_155058.jpg",
-        "prompt": "hieu"
-      },
-      "status_code": "FAILED",
-      "status_text": "Lỗi",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 11,
-      "stt": "012",
-      "prompt_id": "12",
-      "prompt": "hieu",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
-      "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/17_1_23032026_155031.jpg",
-        "prompt": "hieu"
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/9_1_23032026_162405.jpg",
+        "prompt": "hieu",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/2_1_23032026_162420.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\12_1_23032026_162516.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\11_1_23032026_165449.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_23032026_162517.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\11_1_23032026_165451.jpg"
+      }
+    },
+    {
+      "row": 11,
+      "stt": "012",
+      "prompt_id": "12",
+      "prompt": "hieu",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_payload": {
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/4_1_23032026_162348.jpg",
+        "prompt": "hieu",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/1_1_23032026_162407.jpg"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\12_1_23032026_165411.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_23032026_165413.jpg"
       }
     },
     {
@@ -279,22 +295,23 @@
       "stt": "013",
       "prompt_id": "13",
       "prompt": "hieu",
-      "mode_key": "image_to_video_single",
-      "mode_label": "VEO3 - Tạo video từ Ảnh",
-      "mode_name": "VEO3 - Tạo video từ Ảnh",
+      "mode_key": "image_to_video_start_end",
+      "mode_label": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
+      "mode_name": "VEO3 - Tạo video từ Ảnh (đầu-cuối)",
       "mode_payload": {
-        "image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/1_1_23032026_155017.jpg",
-        "prompt": "hieu"
+        "end_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/25_1_23032026_155430.jpg",
+        "prompt": "hieu",
+        "start_image_link": "C:/Users/ADMIN/Downloads/Telegram Desktop/image/9_1_23032026_162405.jpg"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\13_1_23032026_162628.mp4"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\13_1_23032026_165900.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\13_1_23032026_162630.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\13_1_23032026_165902.jpg"
       }
     }
   ]
