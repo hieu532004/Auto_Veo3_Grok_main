@@ -3789,16 +3789,24 @@ class StatusPanel(QWidget):
     def _ask_video_source(self, action_name: str) -> list[str]:
         action = str(action_name or "").strip().lower()
         is_cut = "cắt" in action
+        is_remove_logo = "xóa logo" in action or "xoá logo" in action
 
-        title = "Cắt ảnh cuối" if is_cut else "Nối video"
         if is_cut:
+            title = "Cắt ảnh cuối"
             message = "Bạn muốn cắt ảnh từ video đã chọn hay duyệt cắt video khác?"
             btn_selected_text = "Cắt ảnh video đã chọn"
             btn_browse_text = "Duyệt cắt video khác"
+        elif is_remove_logo:
+            title = "Xóa logo"
+            message = "Bạn muốn xóa logo video đã chọn hay duyệt video khác?"
+            btn_selected_text = "Xóa logo video đã chọn"
+            btn_browse_text = "Duyệt video khác"
         else:
+            title = "Nối video"
             message = "Bạn muốn nối video đã chọn hay duyệt nối video khác?"
             btn_selected_text = "Nối video đã chọn"
             btn_browse_text = "Duyệt nối video khác"
+
 
         box = QMessageBox(self)
         box.setIcon(QMessageBox.Icon.Question)
