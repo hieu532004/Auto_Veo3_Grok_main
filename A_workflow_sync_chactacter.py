@@ -1036,7 +1036,33 @@ class CharacterSyncWorkflow(QThread):
                 if auth_dict and auth_dict.get("cookie"):
                     cookie = auth_dict["cookie"]
 
-                response = await sync_api.request_check_status(payload, access_token, cookie=cookie)
+                # ✅ Ưu tiên check status qua browser (giống Text to Video / Image to Video)
+                # Browser có cookies session tự động, tránh 401
+                response = None
+                collector_ref = getattr(self, '_collector_ref', None)
+                browser_page = None
+                if collector_ref:
+                    # TokenPool mode: tìm page từ bất kỳ collector nào trong pool
+                    if hasattr(collector_ref, '_collectors'):
+                        for c in getattr(collector_ref, '_collectors', []):
+                            if c and getattr(c, 'page', None) and not c.page.is_closed():
+                                browser_page = c.page
+                                break
+                    # Single collector mode
+                    elif getattr(collector_ref, 'page', None) and not collector_ref.page.is_closed():
+                        browser_page = collector_ref.page
+
+                if browser_page:
+                    try:
+                        response = await sync_api.request_check_status_via_browser(
+                            browser_page, payload, access_token
+                        )
+                    except Exception:
+                        response = None  # Fallback to urllib
+
+                # Fallback: dùng urllib nếu browser không khả dụng
+                if response is None:
+                    response = await sync_api.request_check_status(payload, access_token, cookie=cookie)
             except Exception as exc:
                 self._status_poll_fail_streak += 1
                 self._log(f"⚠️ Check status lỗi (lần {self._status_poll_fail_streak}/4): {exc}")

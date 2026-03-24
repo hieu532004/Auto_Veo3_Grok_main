@@ -277,6 +277,45 @@ async def request_check_status(payload, token, cookie=None):
     return await send_request_with_token(URL_STATUS_REFERENCE_VIDEO, payload, token, method="POST", cookie=cookie)
 
 
+async def request_check_status_via_browser(page, payload, access_token):
+    """Check status video qua browser (Playwright) — dùng browser cookies tự động.
+
+    Ưu tiên dùng khi Chrome còn mở vì browser xử lý auth tốt hơn urllib.
+    """
+    import json
+    try:
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {access_token}",
+            "Origin": "https://labs.google",
+            "Referer": "https://labs.google/",
+            "X-Goog-AuthUser": "0",
+        }
+        data = json.dumps(payload)
+
+        response = await page.request.post(
+            URL_STATUS_REFERENCE_VIDEO,
+            data=data,
+            headers=headers,
+        )
+
+        body = await response.text()
+        return {
+            "ok": response.ok,
+            "url": URL_STATUS_REFERENCE_VIDEO,
+            "status": response.status,
+            "reason": response.status_text,
+            "headers": dict(response.headers),
+            "body": body,
+        }
+    except Exception as exc:
+        return {
+            "ok": False,
+            "url": URL_STATUS_REFERENCE_VIDEO,
+            "error": str(exc),
+        }
+
+
 async def request_create_video_via_browser(page, payload, cookie, access_token):
     import json
 
