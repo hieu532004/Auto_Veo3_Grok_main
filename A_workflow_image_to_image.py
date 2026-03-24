@@ -529,7 +529,13 @@ class GenerateImageWorkflow(QThread):
 
 	def _resolve_int_config(self, config, key, default_value):
 		try:
-			return int(config.get(key, default_value))
+			val = config.get(key)
+			if val is not None:
+				return int(val)
+			val_lower = config.get(key.lower())
+			if val_lower is not None:
+				return int(val_lower)
+			return int(default_value)
 		except Exception:
 			return default_value
 
@@ -890,7 +896,7 @@ class GenerateImageWorkflow(QThread):
 					prompt_reference_names[str(prompt_id)] = ref_names
 
 			tasks = []
-			prompt_delay = 2  # Delay ngắn thay vì wait_between_effective dài
+			prompt_delay = 0.1  # Delay cực ngắn để đạt được đúng số luồng cho việc tạo ảnh
 			for idx_prompt, prompt in enumerate(prompts):
 				if self._should_stop():
 					self._log("🛑 STOP trong vòng lặp prompt")
@@ -947,12 +953,27 @@ class GenerateImageWorkflow(QThread):
 					if not await self._sleep_with_stop(prompt_delay):
 						break
 
+			# Chờ tất cả task hoàn tất
 			if tasks:
-				self._log(f"⏳ Đang chờ {len(tasks)} prompt hoàn thành...")
+				self._log(f"⏳ Đang chờ {len(tasks)} prompt hoàn thành việc gửi request...")
 				try:
 					await asyncio.gather(*tasks, return_exceptions=True)
 				except Exception:
 					pass
+
+			# ✅ Đợi các luồng tải ảnh nền (download futures) hoàn tất trước khi đóng Chrome
+			if hasattr(self, "_download_futures") and self._download_futures:
+				self._log(f"⏳ Đang chờ tải {len(self._download_futures)} ảnh về máy...")
+				try:
+					import concurrent.futures
+					await asyncio.get_running_loop().run_in_executor(
+						None, 
+						lambda: concurrent.futures.wait(self._download_futures, timeout=120)
+					)
+				except Exception as e:
+					self._log(f"⚠️ Lỗi khi chờ tải ảnh: {e}")
+				finally:
+					self._download_futures.clear()
 
 			# ✅ Cancel proactive refresh task
 			if proactive_refresh_task:
@@ -1429,11 +1450,14 @@ class GenerateImageWorkflow(QThread):
 							"_prompt_id": p_id,
 						})
 
-					self._download_executor.submit(
+					if not hasattr(self, "_download_futures"):
+						self._download_futures = []
+					future = self._download_executor.submit(
 						dl_task,
 						prompt_id, prompt_text, scene_id, idx,
 						image_url, f"{prompt_id}_{idx + 1}"
 					)
+					self._download_futures.append(future)
 
 				self._save_auth_to_state(access_token, session_id, project_id)
 				return
