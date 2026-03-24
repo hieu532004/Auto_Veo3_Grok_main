@@ -954,10 +954,10 @@ class MainWindow(QMainWindow):
                 self.btn_start.setText(f"{platform_prefix} - Tạo ảnh từ ảnh tham chiếu")
             else:
                 self.btn_start.setText(f"{platform_prefix} - Tạo ảnh từ prompt")
-            self.btn_start.setObjectName("Success")
+            self.btn_start.setObjectName("Accent")
         elif cur is self.tab_grok_create_image:
             self.btn_start.setText(f"{platform_prefix} - Tạo ảnh từ prompt")
-            self.btn_start.setObjectName("Success")
+            self.btn_start.setObjectName("Accent")
         elif cur is self.tab_image or cur is self.tab_grok_image:
             if cur is self.tab_image:
                 mode = "single"

@@ -1277,17 +1277,19 @@ class GenerateImageWorkflow(QThread):
 					msg = error_message or response.get("reason") or response.get("error") or "Unknown error"
 					last_error_msg = msg
 					self._log(f"⚠️ Lỗi {error_code_str} (prompt {prompt_id}): {msg}")
-					for idx, scene_id in enumerate(scene_ids or []):
-						self._update_state_entry(prompt_id, prompt_text, scene_id, idx, "FAILED", error=error_code_str, message=msg)
-						self.video_updated.emit({
-							"prompt_idx": f"{prompt_id}_{idx + 1}",
-							"status": "FAILED",
-							"scene_id": scene_id,
-							"prompt": prompt_text,
-							"_prompt_id": prompt_id,
-							"error_code": error_code_str,
-							"error_message": msg,
-						})
+					
+					if retry_count >= retry_with_error - 1:
+						for idx, scene_id in enumerate(scene_ids or []):
+							self._update_state_entry(prompt_id, prompt_text, scene_id, idx, "FAILED", error=error_code_str, message=msg)
+							self.video_updated.emit({
+								"prompt_idx": f"{prompt_id}_{idx + 1}",
+								"status": "FAILED",
+								"scene_id": scene_id,
+								"prompt": prompt_text,
+								"_prompt_id": prompt_id,
+								"error_code": error_code_str,
+								"error_message": msg,
+							})
 
 					# 🔧 Handle 401 - refresh OAuth token từ Chrome browser
 					if error_code_str == "401" or http_status == "401" or error_code_str == "16":
@@ -1376,6 +1378,13 @@ class GenerateImageWorkflow(QThread):
 					code = str(response.get("status") or error_code or "")
 					msg = error_message or response.get("reason") or response.get("error") or "Unknown error"
 					last_error_msg = msg
+					
+					if retry_count < retry_with_error - 1:
+						self._log(f"⚠️ Chờ {wait_resend_image}s rồi retry prompt {prompt_id} ({retry_count + 1}/{retry_with_error})")
+						if not await self._sleep_with_stop(wait_resend_image):
+							return
+						continue
+
 					self._log(f"❌ API lỗi (prompt {prompt_id}): {msg}")
 					for idx, scene_id in enumerate(scene_ids or []):
 						self._update_state_entry(prompt_id, prompt_text, scene_id, idx, "FAILED", error=code, message=msg)
@@ -1388,16 +1397,19 @@ class GenerateImageWorkflow(QThread):
 							"error_code": code,
 							"error_message": msg,
 						})
-					if retry_count < retry_with_error - 1:
-						if not await self._sleep_with_stop(wait_resend_image):
-							return
-						continue
 					return
 
 				medias = parse_media_from_response(response_body)
 				if not medias:
 					last_error_msg = "Không nhận được ảnh"
-					self._log(f"⚠️ API không trả về ảnh (prompt {prompt_id})")
+					
+					if retry_count < retry_with_error - 1:
+						self._log(f"⚠️ Chờ {wait_resend_image}s rồi retry prompt {prompt_id} ({retry_count + 1}/{retry_with_error})")
+						if not await self._sleep_with_stop(wait_resend_image):
+							return
+						continue
+
+					self._log(f"❌ API không trả về ảnh (prompt {prompt_id})")
 					for idx, scene_id in enumerate(scene_ids or []):
 						self._update_state_entry(prompt_id, prompt_text, scene_id, idx, "FAILED", message=last_error_msg)
 						self.video_updated.emit({
@@ -1408,10 +1420,6 @@ class GenerateImageWorkflow(QThread):
 							"_prompt_id": prompt_id,
 							"error_message": last_error_msg,
 						})
-					if retry_count < retry_with_error - 1:
-						if not await self._sleep_with_stop(wait_resend_image):
-							return
-						continue
 					return
 
 				for idx, scene_id in enumerate(scene_ids or []):
