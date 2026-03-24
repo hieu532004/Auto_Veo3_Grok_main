@@ -677,7 +677,7 @@ class GenerateImageWorkflow(QThread):
 
 			# ✅ Xử lý SONG SONG: gửi nhiều prompt cùng lúc (giới hạn bởi max_in_flight)
 			pending_tasks = []
-			prompt_delay = max(0.1, min(wait_between_effective, 1))  # ✅ Giới hạn nhỏ 0.1-1s để đạt giới hạn concurrency cho ảnh
+			prompt_delay = max(0.1, wait_between_effective)  # ✅ Áp dụng đúng thời gian delay cấu hình để tránh rate limit
 
 			for idx_prompt, prompt in enumerate(prompts):
 				if self._should_stop():
@@ -945,6 +945,13 @@ class GenerateImageWorkflow(QThread):
 					self._save_response_json(response, prompt_id, prompt_text)
 				except asyncio.TimeoutError:
 					last_error_msg = "Timeout chờ ảnh"
+					
+					if retry_count < retry_with_error - 1:
+						self._log(f"⏱️ {response_timeout}s timeout tạo ảnh (prompt {prompt_id}), chờ để retry ({retry_count + 1}/{retry_with_error})...")
+						if not await self._sleep_with_stop(wait_resend_image):
+							return
+						continue
+
 					self._log(f"⏱️ {response_timeout}s timeout tạo ảnh (prompt {prompt_id})")
 					for idx, scene_id in enumerate(scene_ids or []):
 						self._update_state_entry(prompt_id, prompt_text, scene_id, idx, "FAILED", error="TIMEOUT", message=last_error_msg)
@@ -957,13 +964,16 @@ class GenerateImageWorkflow(QThread):
 							"error_code": "TIMEOUT",
 							"error_message": last_error_msg,
 						})
-					if retry_count < retry_with_error - 1:
-						if not await self._sleep_with_stop(wait_resend_image):
-							return
-						continue
 					return
 				except Exception as e:
 					last_error_msg = str(e)
+					
+					if retry_count < retry_with_error - 1:
+						self._log(f"⚠️ Lỗi gửi request tạo ảnh: {e}, chờ để retry ({retry_count + 1}/{retry_with_error})...")
+						if not await self._sleep_with_stop(wait_resend_image):
+							return
+						continue
+
 					self._log(f"❌ Lỗi gửi request tạo ảnh: {e}")
 					for idx, scene_id in enumerate(scene_ids or []):
 						self._update_state_entry(prompt_id, prompt_text, scene_id, idx, "FAILED", error="REQUEST", message=last_error_msg)
@@ -976,10 +986,6 @@ class GenerateImageWorkflow(QThread):
 							"error_code": "REQUEST",
 							"error_message": last_error_msg,
 						})
-					if retry_count < retry_with_error - 1:
-						if not await self._sleep_with_stop(wait_resend_image):
-							return
-						continue
 					return
 
 				response_body = response.get("body", "")

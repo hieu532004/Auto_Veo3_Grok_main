@@ -589,7 +589,7 @@ class CharacterSyncWorkflow(QThread):
 
                 # Delay ngắn giữa mỗi task
                 if i < len(plans) - 1:
-                    if not await self._sleep_with_stop(2):
+                    if not await self._sleep_with_stop(wait_gen_video):
                         break
 
             # Chờ tất cả task hoàn tất
