@@ -727,12 +727,36 @@ class CharacterSyncWorkflow(QThread):
 
             await asyncio.sleep(3)
 
-        await self._wait_for_completion()
-        status_task.cancel()
-        if collector and hasattr(collector, '__aexit__'):
+        # ✅ Kiểm tra hoàn thành video và thoát luồng ngay khi xong
+        try:
+            await self._wait_for_completion()
+            self._log("[DEBUG] _run_workflow: Đã hoàn thành tất cả video, huỷ status_task")
+        except Exception as e:
+            self._log(f"[DEBUG] _run_workflow: Exception in _wait_for_completion: {e}")
+
+        # ✅ Cancel status poll loop
+        if status_task:
+            status_task.cancel()
             try:
-                await getattr(collector, '__aexit__')(None, None, None)
-            except: pass
+                await status_task
+            except (asyncio.CancelledError, Exception):
+                pass
+
+        # ✅ Cancel proactive refresh task
+        try:
+            proactive_refresh_task.cancel()
+        except Exception:
+            pass
+
+        # ✅ Đóng collector sau khi hoàn thành (dừng harvest + cleanup Chrome)
+        if collector:
+            try:
+                await collector.close_after_workflow()
+                self._log("🔒 Đã đóng Chrome sau khi hoàn thành tất cả video")
+            except Exception:
+                self._log("⚠️ Lỗi dừng harvest token")
+
+        self._log("[DEBUG] _run_workflow: Workflow kết thúc")
 
     def _resolve_seed(self, config, index):
         seed_mode = str(config.get("SEED_MODE", "Random")).strip().lower()
@@ -996,20 +1020,21 @@ class CharacterSyncWorkflow(QThread):
             pending = [
                 sid
                 for sid, info in self._scene_status.items()
-                if info.get("status") in {
-                    "MEDIA_GENERATION_STATUS_ACTIVE",
-                    "MEDIA_GENERATION_STATUS_PENDING",
-                    "ACTIVE",
-                    "PENDING",
-                }
+                if self._is_running_status(info.get("status"))
             ]
             if not pending:
-                await asyncio.sleep(1)
+                # ✅ Nếu tất cả prompts đã submitted VÀ không còn scene nào pending → thoát
+                if self._all_prompts_submitted:
+                    self._log("🏁 Status poll: tất cả scene đã hoàn thành, thoát poll loop")
+                    break
+                if not await self._sleep_with_stop(1):
+                    break
                 continue
 
             eligible = [sid for sid in pending if self._scene_next_check_at.get(sid, 0) <= time.time()]
             if not eligible:
-                await asyncio.sleep(1)
+                if not await self._sleep_with_stop(1):
+                    break
                 continue
 
             # Giới hạn số lượng operations mỗi lần check để không bị lỗi HTTP 400
@@ -1066,7 +1091,8 @@ class CharacterSyncWorkflow(QThread):
             except Exception as exc:
                 self._status_poll_fail_streak += 1
                 self._log(f"⚠️ Check status lỗi (lần {self._status_poll_fail_streak}/4): {exc}")
-                await asyncio.sleep(5)
+                if not await self._sleep_with_stop(5):
+                    break
                 continue
 
             if not response.get("ok", True):
@@ -1133,7 +1159,8 @@ class CharacterSyncWorkflow(QThread):
                     self._log("❌ Status poll thất bại 8 lần liên tiếp, đánh FAILED tất cả video đang chờ")
                     self._mark_pending_failed("Status poll failed liên tiếp")
                     break
-                await asyncio.sleep(5)
+                if not await self._sleep_with_stop(5):
+                    break
                 continue
 
             body = response.get("body", "")
@@ -1151,7 +1178,8 @@ class CharacterSyncWorkflow(QThread):
             else:
                 self._status_poll_fail_streak = 0
                 self._mark_stuck_pending(time.time())
-            await asyncio.sleep(5)
+            if not await self._sleep_with_stop(5):
+                break
 
     def _handle_status_response(self, response_body):
         try:
@@ -1427,22 +1455,62 @@ class CharacterSyncWorkflow(QThread):
         )
 
     async def _wait_for_completion(self):
+        """✅ Chờ tất cả video hoàn thành — pattern giống text-to-video.
+        Thoát khi: _all_prompts_submitted=True + tất cả video đã SUCCESSFUL/FAILED
+        Hoặc khi bấm STOP hoặc timeout.
+        """
+        _last_pending_log_ts = 0
+        _no_pending_count = 0  # Đếm số lần liên tiếp không có pending
+
         while True:
             if self._should_stop():
-                return
+                self._log("🛑 STOP nhận được, thoát loop chờ")
+                break
 
-            pending = self._count_in_progress()
-            if self._all_prompts_submitted and pending <= 0:
-                self._log("✅ Sync character hoàn tất")
-                return
-
+            # Timeout check
             if self._all_prompts_submitted and self._complete_wait_timeout > 0:
-                elapsed = time.time() - float(self._complete_wait_start_ts or time.time())
+                if not self._complete_wait_start_ts:
+                    self._complete_wait_start_ts = time.time()
+                elapsed = time.time() - self._complete_wait_start_ts
                 if elapsed >= self._complete_wait_timeout:
                     self._log("⏱️ Quá thời gian chờ hoàn thành, dừng workflow")
-                    return
+                    break
 
-            await asyncio.sleep(2)
+            # ✅ KIỂM TRA TỪ STATE.JSON (nguồn chính xác nhất)
+            state_pending = self._count_in_progress()
+
+            # ✅ KIỂM TRA TỪ _scene_status
+            scene_pending = [
+                info for info in self._scene_status.values()
+                if self._is_running_status(info.get("status"))
+            ]
+
+            # ✅ ĐIỀU KIỆN THOÁT: đã gửi hết prompts VÀ không còn video pending
+            if self._all_prompts_submitted:
+                if state_pending == 0:
+                    _no_pending_count += 1
+                    self._log(f"🔍 Kiểm tra: state_pending={state_pending}, scene_pending={len(scene_pending)}, count={_no_pending_count}")
+                    # Chờ 2 lần liên tiếp để chắc chắn
+                    if _no_pending_count >= 2:
+                        self._log("✅ Sync character hoàn tất (từ state.json)")
+                        break
+                else:
+                    _no_pending_count = 0
+
+                # Fallback: kiểm tra _scene_status
+                if len(self._scene_status) > 0 and (not scene_pending) and state_pending == 0:
+                    self._log("✅ Sync character hoàn tất (từ scene_status)")
+                    break
+
+            # Log trạng thái chờ mỗi 15s
+            now = time.time()
+            total_pending = max(state_pending, len(scene_pending))
+            if total_pending > 0 and (now - _last_pending_log_ts) >= 15:
+                _last_pending_log_ts = now
+                self._log(f"⏳ Đang chờ {total_pending} video hoàn thành...")
+
+            if not await self._sleep_with_stop(2):
+                break
 
     def _short_status(self, status):
         text = str(status or "")
@@ -1457,6 +1525,20 @@ class CharacterSyncWorkflow(QThread):
         if not text:
             return "UNKNOWN"
         return text
+
+    def _is_running_status(self, status):
+        """Trả về True nếu status chưa hoàn thành (đang chạy/chờ)."""
+        upper = str(status or "").upper()
+        if not upper:
+            return False
+        return not self._is_terminal_status(upper)
+
+    def _is_terminal_status(self, status):
+        """Trả về True nếu status đã kết thúc (SUCCESSFUL/FAILED/CANCEL)."""
+        upper = str(status or "").upper()
+        if not upper:
+            return False
+        return any(marker in upper for marker in {"SUCCESS", "FAILED", "CANCEL", "ERROR"})
 
     def _normalize_status_full(self, value):
         s = str(value or "").strip().upper()
