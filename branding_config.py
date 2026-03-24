@@ -7,12 +7,12 @@ import sys
 import unicodedata
 from pathlib import Path
 
-DEFAULT_OWNER_NAME = "Hieummo"
+DEFAULT_OWNER_NAME = "Hieummo - Nghiammo"
 DEFAULT_OWNER_PHONE = "0347854097"
 
 OWNER_ZALO_URL = "https://zalo.me/g/xdhbas545"
 #ngôn ngư chrome grok tiếng việt
-APP_VERSION = "V2.2.7"
+APP_VERSION = "V2.2.8"
 
 
 def _resolve_app_dir() -> Path:
