@@ -853,11 +853,11 @@ class MainWindow(QMainWindow):
                 self.btn_start.setText(f'{platform_prefix} — Image from Reference')
             else:
                 self.btn_start.setText(f'{platform_prefix} — Image from Prompt')
-            self.btn_start.setObjectName('Success')
+            self.btn_start.setObjectName('Accent')
 
         elif cur is self.tab_grok_create_image:
             self.btn_start.setText(f'{platform_prefix} — Image from Prompt')
-            self.btn_start.setObjectName('Success')
+            self.btn_start.setObjectName('Accent')
 
         elif cur is self.tab_image or cur is self.tab_grok_image:
             mode = 'single'
