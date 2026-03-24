@@ -2352,6 +2352,7 @@ class TextToVideoWorkflow(QThread):
 				clear_data_wait=clear_data_wait,
 				keep_chrome_open=self._keep_chrome_open,
 				close_chrome_after_token=getattr(self, '_close_chrome_after_token', False),
+				hide_window=True,
 			)
 			await pool.start()
 			return pool
@@ -2371,6 +2372,7 @@ class TextToVideoWorkflow(QThread):
 			keep_chrome_open=self._keep_chrome_open,
 			close_chrome_after_token=self._close_chrome_after_token,
 			mode="video",
+			hide_window=True,
 		)
 
 	async def _wait_for_completion(self):

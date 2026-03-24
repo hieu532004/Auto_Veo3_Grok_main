@@ -1958,6 +1958,7 @@ class CharacterSyncWorkflow(QThread):
                 clear_data_wait=clear_data_wait,
                 keep_chrome_open=True,
                 close_chrome_after_token=getattr(self, '_close_chrome_after_token', False),
+                hide_window=True,
             )
             await pool.start()
             return pool
@@ -1969,7 +1970,7 @@ class CharacterSyncWorkflow(QThread):
             profile_name=profile_name,
             debug_port=9222,
             headless=False,
-            hide_window=TOKEN_CHROME_HIDE_WINDOW,
+            hide_window=True,
             token_timeout=token_timeout,
             idle_timeout=idle_timeout,
             log_callback=self._log,

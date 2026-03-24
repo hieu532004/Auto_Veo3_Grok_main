@@ -1,5 +1,404 @@
 {
   "project_name": "default_project",
-  "updated_at": 1774347706,
-  "rows": []
+  "updated_at": 1774351275,
+  "rows": [
+    {
+      "row": 0,
+      "stt": "001",
+      "prompt_id": "1",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\1_1_24032026_182030.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_24032026_182031.jpg"
+      }
+    },
+    {
+      "row": 1,
+      "stt": "002",
+      "prompt_id": "2",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\2_1_24032026_182044.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_24032026_182046.jpg"
+      }
+    },
+    {
+      "row": 2,
+      "stt": "003",
+      "prompt_id": "3",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\3_1_24032026_182044.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_24032026_182046.jpg"
+      }
+    },
+    {
+      "row": 3,
+      "stt": "004",
+      "prompt_id": "4",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\4_1_24032026_182058.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_24032026_182101.jpg"
+      }
+    },
+    {
+      "row": 4,
+      "stt": "005",
+      "prompt_id": "5",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 5,
+      "stt": "006",
+      "prompt_id": "6",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 6,
+      "stt": "007",
+      "prompt_id": "7",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 7,
+      "stt": "008",
+      "prompt_id": "8",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\8_1_24032026_182058.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_24032026_182100.jpg"
+      }
+    },
+    {
+      "row": 8,
+      "stt": "009",
+      "prompt_id": "9",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 9,
+      "stt": "010",
+      "prompt_id": "10",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 10,
+      "stt": "011",
+      "prompt_id": "11",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 11,
+      "stt": "012",
+      "prompt_id": "12",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 12,
+      "stt": "013",
+      "prompt_id": "13",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 13,
+      "stt": "014",
+      "prompt_id": "14",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 14,
+      "stt": "015",
+      "prompt_id": "15",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 15,
+      "stt": "016",
+      "prompt_id": "16",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 16,
+      "stt": "017",
+      "prompt_id": "17",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 17,
+      "stt": "018",
+      "prompt_id": "18",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 18,
+      "stt": "019",
+      "prompt_id": "19",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 19,
+      "stt": "020",
+      "prompt_id": "20",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 20,
+      "stt": "021",
+      "prompt_id": "21",
+      "prompt": "n1, n2, n3 chung 1 khung hình",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "n1, n2, n3 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    }
+  ]
 }

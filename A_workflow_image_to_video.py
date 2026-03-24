@@ -2576,6 +2576,7 @@ class ImageToVideoWorkflow(QThread):
 				clear_data_interval=clear_data_interval,
 				clear_data_wait=clear_data_wait,
 				keep_chrome_open=self._keep_chrome_open,
+				hide_window=True,
 			)
 			await pool.start()
 			return pool

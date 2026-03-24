@@ -103,13 +103,13 @@ class _ClickPickLineEdit(QLineEdit):
 class AppConfig:
     USER: str = ''
     PASS: str = ''
-    TYPE_ACCOUNT: str = 'NORMAL'
-    multi_video: int = 3
-    num_chrome: int = 1
+    TYPE_ACCOUNT: str = 'ULTRA'
+    multi_video: int = 10
+    num_chrome: int = 4
     output_count: int = 1
     create_image_model: str = 'Imagen 4'
     video_aspect_ratio: str = '9:16'
-    veo_model: str = VEO_MODEL_FAST
+    veo_model: str = VEO_MODEL_FAST_2
     offscreen_chrome: bool = True
     video_output_dir: str = DEFAULT_DOWNLOAD_DIR
     idea_scene_count: int = 1
@@ -117,8 +117,8 @@ class AppConfig:
     idea_dialogue_language: str = 'Tiếng Việt (vi-VN)'
     veo3_user: str = ''
     veo3_pass: str = ''
-    wait_gen_video: int = 15
-    wait_gen_image: int = 15
+    wait_gen_video: int = 1
+    wait_gen_image: int = 1
     retry_with_error: int = 3
     CLEAR_DATA_IMAGE: int = 11
     clear_data: int = 5
@@ -133,9 +133,10 @@ class AppConfig:
     grok_user: str = ''
     grok_pass: str = ''
     grok_account_type: str = 'SUPER'
-    grok_multi_video: int = 5
+    grok_multi_video: int = 10
     grok_video_length_seconds: int = 6
     grok_video_resolution: str = '480p'
+    wait_between_prompts: int = 1
 
     @staticmethod
     def _config_token_option_for_json(token_option: str) -> str:

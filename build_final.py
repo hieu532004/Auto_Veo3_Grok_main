@@ -104,7 +104,7 @@ def build():
     print("=" * 60)
 
     try:
-        subprocess.run(["taskkill", "/F", "/IM", "Auto_Veo3_Grok_HieuMMO.exe", "/T"],
+        subprocess.run(["taskkill", "/F", "/IM", "Auto_Veo3_Grok_HieuMMO_V2.2.8.exe", "/T"],
                         capture_output=True, timeout=5)
     except Exception:
         pass
@@ -121,7 +121,7 @@ def build():
         "--onedir",
         "--windowed",
         "--icon=app_icon.ico",
-        "--name=Auto_Veo3_Grok_HieuMMO",
+        "--name=Auto_Veo3_Grok_HieuMMO_V2.2.8",
         "--distpath=dist2",
         "--workpath=build2",
         f"--paths={SRC_DIR}",
@@ -131,7 +131,7 @@ def build():
     print(f"  Command: {' '.join(cmd[:8])} ... ({len(cmd)} args total)")
     subprocess.check_call(cmd, cwd=SRC_DIR)
 
-    app_dist = os.path.join(SRC_DIR, "dist2", "Auto_Veo3_Grok_HieuMMO")
+    app_dist = os.path.join(SRC_DIR, "dist2", "Auto_Veo3_Grok_HieuMMO_V2.2.8")
     print(f"\n[3/3] Post-build: copying runtime data to {app_dist}")
 
     for d in ["data_general", "Workflows", "downloads"]:
@@ -174,7 +174,7 @@ def build():
     print("  BUILD SUCCESSFUL!")
     print("=" * 60)
     print(f"\n  Output folder: {app_dist}")
-    print(f"  EXE file:      {os.path.join(app_dist, 'Auto_Veo3_Grok_HieuMMO.exe')}")
+    print(f"  EXE file:      {os.path.join(app_dist, 'Auto_Veo3_Grok_HieuMMO_V2.2.8.exe')}")
     print(f"\n  To distribute: zip the entire '{os.path.basename(app_dist)}' folder")
     print("=" * 60)
 

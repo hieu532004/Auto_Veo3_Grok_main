@@ -538,6 +538,7 @@ class GenerateImageWorkflow(QThread):
 				clear_data_wait=clear_data_wait,
 				keep_chrome_open=self._keep_chrome_open,
 				close_chrome_after_token=getattr(self, '_close_chrome_after_token', False),
+				hide_window=True,
 			)
 			await pool.start()
 			return pool
@@ -556,6 +557,7 @@ class GenerateImageWorkflow(QThread):
 			clear_data_interval=clear_data_interval,
 			keep_chrome_open=self._keep_chrome_open,
 			mode="generate_image",
+			hide_window=True,
 		)
 
 	async def _run_workflow(self):

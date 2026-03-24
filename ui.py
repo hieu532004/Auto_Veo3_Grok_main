@@ -115,12 +115,12 @@ class AppConfig:
     USER: str = ""
     PASS: str = ""
     TYPE_ACCOUNT: str = "NORMAL"  # NORMAL|ULTRA
-    multi_video: int = 3
-    num_chrome: int = 1
+    multi_video: int = 10
+    num_chrome: int = 4
     output_count: int = 1
     create_image_model: str = "Imagen 4"
     video_aspect_ratio: str = "9:16"  # 9:16|16:9
-    veo_model: str = VEO_MODEL_FAST
+    veo_model: str = VEO_MODEL_FAST_2
     offscreen_chrome: bool = True
     video_output_dir: str = DEFAULT_DOWNLOAD_DIR
     idea_scene_count: int = 1
@@ -130,14 +130,14 @@ class AppConfig:
     # VEO3 settings (per Settings tab)
     veo3_user: str = ""
     veo3_pass: str = ""
-    wait_gen_video: int = 15
-    wait_gen_image: int = 15
+    wait_gen_video: int = 1
+    wait_gen_image: int = 1
     retry_with_error: int = 3
     CLEAR_DATA_IMAGE: int = 11
     clear_data: int = 5
     clear_data_wait: int = 4
     wait_resend_video: int = 10
-    wait_between_prompts: int = 12
+    wait_between_prompts: int = 1
     download_mode: str = "720"  # 720|1080
     token_option: str = "Option2"  # Option2|Option1
     seed_mode: str = "Random"  # Random|Fixed

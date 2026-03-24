@@ -129,16 +129,16 @@ class SettingsTab(QWidget):
         self.output_count = combo(['1', '2', '3', '4'], str(output_cur))
         form.addRow('Số đầu ra:', self.output_count)
         
-        self.multi_video = int_edit(1, 20, int(getattr(config, 'multi_video', 3)) or 3)
+        self.multi_video = int_edit(1, 20, int(getattr(config, 'multi_video', 10)) or 10)
         form.addRow('MULTI_VIDEO:', self.multi_video)
         
-        self.num_chrome = int_edit(1, 8, int(getattr(config, 'num_chrome', 1)) or 1)
+        self.num_chrome = int_edit(1, 8, int(getattr(config, 'num_chrome', 4)) or 4)
         form.addRow('NUM_CHROME (Token Pool):', self.num_chrome)
         
-        self.wait_gen_video = int_edit(0, 999, int(getattr(config, 'wait_gen_video', 15)) or 15)
+        self.wait_gen_video = int_edit(0, 999, int(getattr(config, 'wait_gen_video', 1)) or 1)
         form.addRow('WAIT_GEN_VIDEO:', self.wait_gen_video)
         
-        self.wait_gen_image = int_edit(0, 999, int(getattr(config, 'wait_gen_image', 15)) or 15)
+        self.wait_gen_image = int_edit(0, 999, int(getattr(config, 'wait_gen_image', 1)) or 1)
         form.addRow('WAIT_GEN_IMAGE:', self.wait_gen_image)
         
         self.retry_with_error = int_edit(0, 99, int(getattr(config, 'retry_with_error', 3)) or 3)

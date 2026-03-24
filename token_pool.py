@@ -45,6 +45,7 @@ class TokenPool:
 		clear_data_wait=2,
 		keep_chrome_open=True,
 		close_chrome_after_token=False,
+		hide_window=False,
 	):
 		self.num_chrome = max(1, min(int(num_chrome), 4))
 		self.project_url = project_url
@@ -58,6 +59,7 @@ class TokenPool:
 		self.clear_data_wait = clear_data_wait
 		self.keep_chrome_open = keep_chrome_open
 		self.close_chrome_after_token = close_chrome_after_token
+		self.hide_window = hide_window
 
 		self._collectors = []
 		self._token_queue = asyncio.Queue(maxsize=16)
@@ -329,7 +331,7 @@ class TokenPool:
 				profile_name=self.profile_name,
 				debug_port=port,
 				headless=False,
-				hide_window=False,
+				hide_window=self.hide_window,
 				token_timeout=self.token_timeout,
 				idle_timeout=600,
 				log_callback=lambda msg, idx=i: self._log(f"[Chrome-{idx}] {msg}"),

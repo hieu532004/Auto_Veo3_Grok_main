@@ -102,16 +102,16 @@ class SettingsTab(QWidget):
         self.output_count = combo(["1", "2", "3", "4"], str(output_cur))
         form.addRow("Số đầu ra:", self.output_count)
 
-        self.multi_video = int_edit(1, 20, int(getattr(config, "multi_video", 3) or 3))
+        self.multi_video = int_edit(1, 20, int(getattr(config, "multi_video", 10) or 10))
         form.addRow("Số Luồng Chạy:", self.multi_video)
 
-        self.num_chrome = int_edit(1, 4, int(getattr(config, "num_chrome", 1) or 1))
+        self.num_chrome = int_edit(1, 4, int(getattr(config, "num_chrome", 4) or 4))
         form.addRow("Số Chrome:", self.num_chrome)
 
-        self.wait_gen_video = int_edit(0, 999, int(getattr(config, "wait_gen_video", 15) or 15))
+        self.wait_gen_video = int_edit(0, 999, int(getattr(config, "wait_gen_video", 1) or 1))
         form.addRow("WAIT_GEN_VIDEO:", self.wait_gen_video)
 
-        self.wait_gen_image = int_edit(0, 999, int(getattr(config, "wait_gen_image", 15) or 15))
+        self.wait_gen_image = int_edit(0, 999, int(getattr(config, "wait_gen_image", 1) or 1))
         form.addRow("WAIT_GEN_IMAGE:", self.wait_gen_image)
 
         self.retry_with_error = int_edit(0, 99, int(getattr(config, "retry_with_error", 3) or 3))
@@ -129,7 +129,7 @@ class SettingsTab(QWidget):
         self.wait_resend_video = int_edit(0, 999, int(getattr(config, "wait_resend_video", 10) or 10))
         form.addRow("WAIT_RESEND_VIDEO:", self.wait_resend_video)
 
-        self.wait_between_prompts = int_edit(0, 999, int(getattr(config, "wait_between_prompts", 12) or 12))
+        self.wait_between_prompts = int_edit(0, 999, int(getattr(config, "wait_between_prompts", 1) or 1))
         form.addRow("WAIT_BETWEEN_PROMPTS:", self.wait_between_prompts)
 
         self.download_mode = combo(["720", "1080", "2K", "4K"], str(getattr(config, "download_mode", "720") or "720"))
