@@ -201,33 +201,22 @@ class SettingsTab(QWidget):
         self.cookie_lab.textChanged.connect(self._on_cookie_changed)
 
         # Chrome control buttons
-        chrome_grid = QGridLayout()
-        chrome_grid.setSpacing(8)
+        chrome_row = QHBoxLayout()
+        chrome_row.setSpacing(8)
 
-        self.btn_load_captcha = QPushButton("Load Captcha Mới")
-        self.btn_load_captcha.setObjectName("Accent")
-        self.btn_load_captcha.setFixedHeight(36)
-        self.btn_load_captcha.clicked.connect(self._load_captcha_new)
+        self.btn_open_profile = QPushButton("Mở Profile Chrome")
+        self.btn_open_profile.setObjectName("Warning")
+        self.btn_open_profile.setFixedHeight(36)
+        self.btn_open_profile.clicked.connect(self._open_profile)
 
         self.btn_xoa_chrome = QPushButton("Xóa Chrome")
         self.btn_xoa_chrome.setObjectName("Danger")
         self.btn_xoa_chrome.setFixedHeight(36)
         self.btn_xoa_chrome.clicked.connect(self._xoa_chrome)
 
-        self.btn_mo_labgoogle = QPushButton("Mở LabGoogle")
-        self.btn_mo_labgoogle.setObjectName("Warning")
-        self.btn_mo_labgoogle.setFixedHeight(36)
-        self.btn_mo_labgoogle.clicked.connect(self._mo_labgoogle)
-
-        self.btn_open_profile = QPushButton("Mở Profile Chrome")
-        self.btn_open_profile.setFixedHeight(36)
-        self.btn_open_profile.clicked.connect(self._open_profile)
-
-        chrome_grid.addWidget(self.btn_load_captcha, 0, 0)
-        chrome_grid.addWidget(self.btn_xoa_chrome, 0, 1)
-        chrome_grid.addWidget(self.btn_mo_labgoogle, 1, 0)
-        chrome_grid.addWidget(self.btn_open_profile, 1, 1)
-        right.addLayout(chrome_grid)
+        chrome_row.addWidget(self.btn_open_profile)
+        chrome_row.addWidget(self.btn_xoa_chrome)
+        right.addLayout(chrome_row)
 
         self.btn_auto_login = QPushButton("AUTO Login & Lấy Cookie")
         self.btn_auto_login.setObjectName("Orange")
@@ -481,7 +470,8 @@ class SettingsTab(QWidget):
                 except Exception:
                     pass
 
-            self.btn_load_captcha.setText("Load Captcha Mới")
+
+
             QMessageBox.information(self, "Thông báo", f"Đã đóng {num} Chrome instances.")
         except Exception as exc:
             QMessageBox.warning(self, "Lỗi", f"Không đóng được Chrome: {exc}")
@@ -602,7 +592,33 @@ class SettingsTab(QWidget):
         return str(os.getenv("PROFILE_NAME", "PROFILE_1") or "PROFILE_1").strip() or "PROFILE_1"
 
     def _open_profile(self) -> None:
-        self._mo_labgoogle()
+        try:
+            from chrome import (
+                get_chrome_executable_path,
+                start_chrome_debug,
+                pick_cdp_port_for_new_session,
+                resolve_profile_dir,
+                CDP_HOST,
+            )
+
+            profile_dir = resolve_profile_dir(self._current_profile_name())
+            profile_dir.mkdir(parents=True, exist_ok=True)
+            chrome_exe = get_chrome_executable_path()
+            port = pick_cdp_port_for_new_session(CDP_HOST, 9250)
+
+            start_chrome_debug(
+                chrome_exe=chrome_exe,
+                host=CDP_HOST,
+                port=port,
+                user_data_dir=profile_dir,
+                url="https://labs.google/fx/vi/tools/flow",
+                offscreen=False,
+            )
+
+            self._last_profile_dir = str(profile_dir)
+            self._last_profile_cdp_port = port
+        except Exception as exc:
+            QMessageBox.critical(self, "Lỗi", f"Không mở được Chrome: {exc}")
 
     def _delete_profile(self) -> None:
         p = self._profile_dir()

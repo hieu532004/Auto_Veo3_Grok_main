@@ -626,12 +626,8 @@ class MainWindow(QMainWindow):
         self.btn_stop.setEnabled(True)
         btn_row.addWidget(self.btn_stop, 1)
 
-        self.btn_reload_captcha = QPushButton('♻ Reload Captcha')
-        self.btn_reload_captcha.setObjectName('Orange')
-        self.btn_reload_captcha.setCursor(Qt.CursorShape.PointingHandCursor)
-        self.btn_reload_captcha.clicked.connect(self._on_reload_captcha)
-        self.btn_reload_captcha.setEnabled(True)
-        btn_row.addWidget(self.btn_reload_captcha, 2)
+
+
 
         self.btn_view = QPushButton(t('btn_view_output'))
         self.btn_view.setObjectName('Warning')

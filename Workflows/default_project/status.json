@@ -1,446 +1,650 @@
 {
   "project_name": "default_project",
-  "updated_at": 1774303635,
+  "updated_at": 1774330122,
   "rows": [
     {
       "row": 0,
       "stt": "001",
       "prompt_id": "1",
-      "prompt": "Các dòng chất lỏng màu vàng gold và đen từ từ hòa quyện vào nhau, tạo thành những gợn sóng nghệ thuật, quay siêu cận cảnh.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Các dòng chất lỏng màu vàng gold và đen từ từ hòa quyện vào nhau, tạo thành những gợn sóng nghệ thuật, quay siêu cận cảnh."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_24032026_050539.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_24032026_050539.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 1,
       "stt": "002",
       "prompt_id": "2",
-      "prompt": "Video quảng cáo: Một ly bia lạnh với lớp bọt tràn viền, những giọt nước đọng trên thành ly cực kỳ sắc nét.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Video quảng cáo: Một ly bia lạnh với lớp bọt tràn viền, những giọt nước đọng trên thành ly cực kỳ sắc nét."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_24032026_050545.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_24032026_050545.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 2,
       "stt": "003",
       "prompt_id": "3",
-      "prompt": "Kính vạn hoa (Kaleidoscope): Các mảnh vỡ tinh thể màu sắc liên tục biến đổi hình dạng theo nhịp điệu.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Kính vạn hoa (Kaleidoscope): Các mảnh vỡ tinh thể màu sắc liên tục biến đổi hình dạng theo nhịp điệu."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_24032026_050550.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_24032026_050550.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 3,
       "stt": "004",
       "prompt_id": "4",
-      "prompt": "Hàng ngàn quả bóng nhựa màu đỏ rơi tự do từ trên cao xuống lấp đầy một căn phòng toàn màu trắng.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Hàng ngàn quả bóng nhựa màu đỏ rơi tự do từ trên cao xuống lấp đầy một căn phòng toàn màu trắng."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_24032026_050558.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_24032026_050558.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 4,
       "stt": "005",
       "prompt_id": "5",
-      "prompt": "Hình học trừu tượng (Abstract geometry): Các khối lập phương bằng thủy tinh liên tục trồi lên lặn xuống, ánh sáng khúc xạ rực rỡ.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Hình học trừu tượng (Abstract geometry): Các khối lập phương bằng thủy tinh liên tục trồi lên lặn xuống, ánh sáng khúc xạ rực rỡ."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_24032026_050559.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_24032026_050559.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 5,
       "stt": "006",
       "prompt_id": "6",
-      "prompt": "Cảnh một chiếc xe hơi thể thao sang trọng chạy qua đường hầm thiếu sáng, chỉ thấy đường nét xe phản chiếu ánh đèn.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Cảnh một chiếc xe hơi thể thao sang trọng chạy qua đường hầm thiếu sáng, chỉ thấy đường nét xe phản chiếu ánh đèn."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_24032026_050618.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_24032026_050618.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 6,
       "stt": "007",
       "prompt_id": "7",
-      "prompt": "Nước hoa bắn ra từ vòi xịt dạng sương mù cực mịn, quay chậm dưới ánh đèn studio rực rỡ, background đen.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Nước hoa bắn ra từ vòi xịt dạng sương mù cực mịn, quay chậm dưới ánh đèn studio rực rỡ, background đen."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_24032026_050611.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_24032026_050611.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 7,
       "stt": "008",
       "prompt_id": "8",
-      "prompt": "Cát màu liên tục được đổ lên nhau tạo thành các họa tiết xếp lớp 3D độc đáo.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Cát màu liên tục được đổ lên nhau tạo thành các họa tiết xếp lớp 3D độc đáo."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_24032026_050613.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_24032026_050613.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 8,
       "stt": "009",
       "prompt_id": "9",
-      "prompt": "Sự bùng nổ của bột màu Holi (màu xanh, đỏ, vàng) trong không trung, quay slow-motion 1000fps.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Sự bùng nổ của bột màu Holi (màu xanh, đỏ, vàng) trong không trung, quay slow-motion 1000fps."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_24032026_050624.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_24032026_050624.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 9,
       "stt": "010",
       "prompt_id": "10",
-      "prompt": "Một bức tượng đá cẩm thạch La Mã cổ đại bỗng nhiên tan chảy thành chất lỏng màu bạc óng ánh.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Một bức tượng đá cẩm thạch La Mã cổ đại bỗng nhiên tan chảy thành chất lỏng màu bạc óng ánh."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_24032026_050632.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_24032026_050632.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 10,
       "stt": "011",
       "prompt_id": "11",
-      "prompt": "Góc quay vĩ mô (Macro) bề mặt của một đôi giày da cao cấp, quay rõ từng đường kim mũi chỉ và kết cấu da.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Góc quay vĩ mô (Macro) bề mặt của một đôi giày da cao cấp, quay rõ từng đường kim mũi chỉ và kết cấu da."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\11_1_24032026_050633.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\11_1_24032026_050633.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 11,
       "stt": "012",
       "prompt_id": "12",
-      "prompt": "Hình ảnh một con mắt khổng lồ mở ra, con ngươi bên trong chứa cả một dải ngân hà đang xoay tròn.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Hình ảnh một con mắt khổng lồ mở ra, con ngươi bên trong chứa cả một dải ngân hà đang xoay tròn."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_24032026_050635.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_24032026_050635.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 12,
       "stt": "013",
       "prompt_id": "13",
-      "prompt": "Các dải lụa mềm mại bay lượn trong môi trường không trọng lực, ánh sáng pastel nhẹ nhàng.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Các dải lụa mềm mại bay lượn trong môi trường không trọng lực, ánh sáng pastel nhẹ nhàng."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\13_1_24032026_050636.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\13_1_24032026_050636.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 13,
       "stt": "014",
       "prompt_id": "14",
-      "prompt": "Video quảng cáo mỹ phẩm: Một giọt serum rơi xuống bề mặt da mô phỏng nước, tạo ra các làn sóng tỏa ra mượt mà.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Video quảng cáo mỹ phẩm: Một giọt serum rơi xuống bề mặt da mô phỏng nước, tạo ra các làn sóng tỏa ra mượt mà."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\14_1_24032026_050642.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\14_1_24032026_050642.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 14,
       "stt": "015",
       "prompt_id": "15",
-      "prompt": "Phép chiếu ánh sáng nghệ thuật (Projection mapping) lên khuôn mặt của một người phụ nữ, các họa tiết thay đổi liên tục.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Phép chiếu ánh sáng nghệ thuật (Projection mapping) lên khuôn mặt của một người phụ nữ, các họa tiết thay đổi liên tục."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\15_1_24032026_050650.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\15_1_24032026_050650.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 15,
       "stt": "016",
       "prompt_id": "16",
-      "prompt": "Các đường nét neon đang vẽ ra sơ đồ của một con chip máy tính, camera zoom sâu vào trung tâm bảng mạch.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Các đường nét neon đang vẽ ra sơ đồ của một con chip máy tính, camera zoom sâu vào trung tâm bảng mạch."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\16_1_24032026_050704.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\16_1_24032026_050704.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 16,
       "stt": "017",
       "prompt_id": "17",
-      "prompt": "Mực (Ink) màu xanh dương lan tỏa bồng bềnh trong môi trường nước, tạo thành những hình thù như những đám mây.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Mực (Ink) màu xanh dương lan tỏa bồng bềnh trong môi trường nước, tạo thành những hình thù như những đám mây."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\17_1_24032026_050659.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\17_1_24032026_050659.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 17,
       "stt": "018",
       "prompt_id": "18",
-      "prompt": "Một miếng thịt bò bít tết vừa được đặt lên vỉ nướng xèo xèo, dầu mỡ sôi lên, ngọn lửa liếm qua bề mặt thịt.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Một miếng thịt bò bít tết vừa được đặt lên vỉ nướng xèo xèo, dầu mỡ sôi lên, ngọn lửa liếm qua bề mặt thịt."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\18_1_24032026_050713.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\18_1_24032026_050713.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 18,
       "stt": "019",
       "prompt_id": "19",
-      "prompt": "Âm thanh hình ảnh hóa (Audio visualizer): Các hạt ánh sáng rung động và nảy lên theo nhịp điệu của tiếng bass.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Âm thanh hình ảnh hóa (Audio visualizer): Các hạt ánh sáng rung động và nảy lên theo nhịp điệu của tiếng bass."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\19_1_24032026_050707.jpg"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\19_1_24032026_050707.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 19,
       "stt": "020",
       "prompt_id": "20",
-      "prompt": "Đồ ăn bay lơ lửng: Các nguyên liệu của một chiếc hamburger (bánh mì, thịt bò, rau xà lách, cà chua) bay lơ lửng rồi từ từ ghép lại với nhau.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
       "mode_payload": {
-        "description": "Đồ ăn bay lơ lửng: Các nguyên liệu của một chiếc hamburger (bánh mì, thịt bò, rau xà lách, cà chua) bay lơ lửng rồi từ từ ghép lại với nhau."
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\20_1_24032026_050711.jpg"
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 20,
+      "stt": "021",
+      "prompt_id": "21",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
       },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\20_1_24032026_050711.jpg"
-      }
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 21,
+      "stt": "022",
+      "prompt_id": "22",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 22,
+      "stt": "023",
+      "prompt_id": "23",
+      "prompt": "n1, n2 chung 1 khung hình",
+      "mode_key": "create_image_reference",
+      "mode_label": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_name": "VEO3 - Tạo ảnh từ ảnh tham chiếu",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "n1",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          },
+          {
+            "name": "n2",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          }
+        ],
+        "prompt": "n1, n2 chung 1 khung hình"
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
     }
   ]
 }

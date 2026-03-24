@@ -764,11 +764,7 @@ class MainWindow(QMainWindow):
         self.btn_stop.setEnabled(True)
         btn_row.addWidget(self.btn_stop, 1)
 
-        self.btn_reload_captcha = QPushButton("♻ Reload Captcha")
-        self.btn_reload_captcha.setObjectName("Orange")
-        self.btn_reload_captcha.clicked.connect(self._on_reload_captcha)
-        self.btn_reload_captcha.setEnabled(True)
-        btn_row.addWidget(self.btn_reload_captcha, 2)
+
 
         self.btn_view = QPushButton("Xem video/Ảnh")
         self.btn_view.setObjectName("Warning")
@@ -1168,19 +1164,6 @@ class MainWindow(QMainWindow):
         self._queue_worker.stop_all()
         self._update_start_button_for_tab()
 
-    def _on_reload_captcha(self) -> None:
-        try:
-            from chrome_process_manager import ChromeProcessManager
-            ChromeProcessManager.close_chrome_gracefully()
-            if hasattr(self.status, 'retry_auth_failed_rows'):
-                self.status.retry_auth_failed_rows()
-            QMessageBox.information(
-                self,
-                "Reload Mượt Mà",
-                "Chrome lấy Token đã được ngầm khởi động lại.\nCác luồng đang chạy không bị ảnh hưởng và hệ thống tự động chạy lại các video vừa bị lỗi xác thực.",
-            )
-        except Exception as exc:
-            QMessageBox.warning(self, "Lỗi", f"Lỗi reload captcha: {exc}")
 
     def _on_start_stop(self) -> None:
         flow_name = self._flow_name_from_current_tab()
