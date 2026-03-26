@@ -1940,13 +1940,23 @@ class StatusPanel(QWidget):
         return dict(raw) if isinstance(raw, dict) else {}
 
     def _sync_stt_and_prompt_ids(self) -> None:
+        used_ids = set()
         for r in range(self.table.rowCount()):
             stt_item = self.table.item(r, self.COL_STT)
             if stt_item is not None:
                 stt_item.setText(f"{r+1:03d}")
             prompt_item = self.table.item(r, self.COL_PROMPT)
             if prompt_item is not None:
-                prompt_item.setData(Qt.ItemDataRole.UserRole, str(r + 1))
+                pid = str(prompt_item.data(Qt.ItemDataRole.UserRole) or "").strip()
+                if pid and pid not in used_ids:
+                    used_ids.add(pid)
+                else:
+                    # Gán ID mới nếu trống hoặc bị trùng
+                    new_id = str(r + 1)
+                    while new_id in used_ids:
+                        new_id = str(int(new_id) + 1)
+                    prompt_item.setData(Qt.ItemDataRole.UserRole, new_id)
+                    used_ids.add(new_id)
 
     def _collect_existing_prompt_ids(self) -> set[str]:
         ids: set[str] = set()
@@ -3702,6 +3712,11 @@ class StatusPanel(QWidget):
                 break
 
         if all_terminal:
+            for i in range(self.table.rowCount()):
+                if self._status_code(i) == "FAILED":
+                    self._set_row_checked(i, True)
+            self._sync_select_all_header()
+
             self._active_queue_rows.clear()
             self._awaiting_completion_confirmation = False
             self._completion_poll_attempts = 0
@@ -3715,6 +3730,11 @@ class StatusPanel(QWidget):
             self._append_run_log("⏳ Chưa đủ điều kiện hoàn thành, tiếp tục chờ trạng thái video thực tế...")
         if self._completion_poll_attempts >= 600:
             self._append_run_log("⚠️ Quá thời gian chờ xác nhận hoàn thành, chuyển workflow kế tiếp để tránh kẹt hàng chờ.")
+            for i in range(self.table.rowCount()):
+                if self._status_code(i) == "FAILED":
+                    self._set_row_checked(i, True)
+            self._sync_select_all_header()
+
             self._active_queue_rows.clear()
             self._awaiting_completion_confirmation = False
             self._completion_poll_attempts = 0

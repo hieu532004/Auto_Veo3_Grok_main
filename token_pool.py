@@ -417,6 +417,8 @@ class TokenPool:
 		self._token_request_counts[idx] = 0
 
 		while not self._should_stop():
+			import random
+			await asyncio.sleep(idx * random.uniform(1.0, 3.0)) # Jittered start
 			try:
 				# Token hợp lệ 120s, không cần queue quá nhiều
 				queue_limit = 3
@@ -470,7 +472,8 @@ class TokenPool:
 						fail_streak = 0
 					await asyncio.sleep(3)
 
-				wait_time = max(1, self.clear_data_wait)
+				import random
+				wait_time = max(1, self.clear_data_wait) + random.uniform(0.5, 3.5)
 				for _ in range(int(wait_time * 2)):
 					if self._should_stop():
 						return
@@ -857,7 +860,7 @@ class TokenPool:
 					collector0 = self._collectors[0]
 					if collector0 and getattr(collector0, 'page', None) and not collector0.page.is_closed():
 						try:
-							session_data = await collector0.page.evaluate("""() => {
+							eval_coro = collector0.page.evaluate("""() => {
 								return fetch('/fx/api/auth/session', {
 									credentials: 'include',
 									headers: { 'Accept': 'application/json' }
@@ -865,6 +868,7 @@ class TokenPool:
 								.then(r => r.json())
 								.catch(e => null);
 							}""")
+							session_data = await asyncio.wait_for(eval_coro, timeout=30)
 							
 							if session_data and isinstance(session_data, dict):
 								token = (session_data.get("accessToken") 
@@ -875,6 +879,8 @@ class TokenPool:
 									self._log("✅ Đã lấy access_token MỚI từ NextAuth session API!")
 								else:
 									self._log(f"Session API response keys: {list(session_data.keys())}")
+						except asyncio.TimeoutError:
+							self._log("⚠️ Timeout khi gọi NextAuth session API")
 						except Exception as e:
 							self._log(f"⚠️ Lỗi gọi session API: {e}")
 

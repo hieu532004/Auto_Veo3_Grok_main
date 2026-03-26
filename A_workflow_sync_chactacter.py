@@ -277,12 +277,7 @@ class CharacterSyncWorkflow(QThread):
                 prof_name = profile.get('name', key)
                 self._log(f"⚠️ Upload ảnh nhân vật thất bại: {prof_name} — các prompt dùng nhân vật này sẽ bị bỏ qua")
         
-        # ✅ Nếu KHÔNG có ảnh nào upload thành công → dừng workflow
-        if not media_cache:
-            self._log("❌ Không có ảnh nhân vật nào upload thành công, dừng workflow")
-            self._log("❌ Upload ảnh nhân vật thất bại: tất cả")
-            await _close_collector()
-            return
+        # ✅ Nếu KHÔNG có ảnh nào upload thành công → sẽ được xử lý ở vòng lặp valid_plans bên dưới
         
         # ✅ Lọc bỏ plans mà TẤT CẢ nhân vật đều upload thất bại
         valid_plans = []
@@ -832,22 +827,14 @@ class CharacterSyncWorkflow(QThread):
                 detail.append(f"- Prompt {item.get('prompt_id')}: {names}")
             detail_text = "\n".join(detail)
             msg = (
-                "Một số prompt nhắc tới hơn 3 nhân vật.\n"
-                "Hệ thống chỉ dùng 3 nhân vật đầu tiên cho mỗi prompt.\n\n"
-                f"{detail_text}\n\n"
-                "Bạn có muốn tiếp tục không?"
+                "⚠️ Một số prompt nhắc tới hơn 3 nhân vật.\n"
+                "Hệ thống tự động CHỈ DÙNG 3 nhân vật đầu tiên cho mỗi prompt.\n\n"
+                f"{detail_text}"
             )
-            ans = QMessageBox.question(
-                None,
-                "Sync Character",
-                msg,
-                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
-                QMessageBox.StandardButton.Yes,
-            )
-            return ans == QMessageBox.StandardButton.Yes
+            self._log(msg)
+            return True
         except Exception:
-            self._log("⚠️ Không hiển thị được hộp thoại xác nhận, mặc định dừng để an toàn")
-            return False
+            return True
 
     async def _upload_all_character_media(self, profiles, session_id, access_token, cookie):
         # 🛑 Đổi thành Semaphore(1) để upload tuần tự, tránh quá tải browser API / chặn IP
