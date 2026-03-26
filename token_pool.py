@@ -361,8 +361,9 @@ class TokenPool:
 			cookies = await self._export_cookies_from_collector(0)
 			self._log(f"🍪 Đã lấy {len(cookies)} cookies từ Chrome-0")
 
-		# ── Bước 5: Khởi động Chrome-1/2/3 + inject cookies ──
-		for i in range(1, len(self._collectors)):
+		# ── Bước 5: Khởi động Chrome-1/2/3 + inject cookies ĐỒNG THỜI ──
+		async def _start_and_inject(i):
+			await asyncio.sleep((i - 1) * 1.5)  # Staggered start để tránh CPU spike
 			if self._should_stop():
 				return
 			try:
@@ -375,19 +376,25 @@ class TokenPool:
 					if ok:
 						self._log(f"🍪 Chrome-{i}: inject cookies + navigate OK")
 					else:
-						# Retry: lấy lại cookies từ Chrome-0 (có thể Chrome-0 mới xong login)
+						# Retry: lấy lại cookies từ Chrome-0
 						self._log(f"⚠️ Chrome-{i}: inject cookies thất bại, thử lấy lại cookies từ Chrome-0...")
 						await asyncio.sleep(3)
-						cookies = await self._export_cookies_from_collector(0)
-						if cookies:
-							ok2 = await self._inject_cookies_to_collector(i, cookies)
+						cookies_new = await self._export_cookies_from_collector(0)
+						if cookies_new:
+							ok2 = await self._inject_cookies_to_collector(i, cookies_new)
 							if ok2:
 								self._log(f"🍪 Chrome-{i}: inject cookies lần 2 OK!")
 							else:
-								self._log(f"⚠️ Chrome-{i}: inject cookies lần 2 vẫn thất bại. Chrome-{i} sẽ dùng token từ profile gốc.")
+								self._log(f"⚠️ Chrome-{i}: inject cookies lần 2 vẫn thất bại.")
 			except Exception as e:
 				self._log(f"❌ Chrome-{i} khởi động lỗi: {e}")
-			await asyncio.sleep(2)
+
+		tasks = []
+		for i in range(1, len(self._collectors)):
+			tasks.append(asyncio.create_task(_start_and_inject(i)))
+			
+		if tasks:
+			await asyncio.gather(*tasks)
 
 		# ── Bước 6: Bắt đầu harvest loops ──
 		for i, collector in enumerate(self._collectors):
