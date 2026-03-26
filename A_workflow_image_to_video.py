@@ -1892,7 +1892,14 @@ class ImageToVideoWorkflow(QThread):
 			}
 		return state_data["prompts"][prompt_key]
 
-	def _update_state_entry(self, prompt_id, prompt_text, scene_id, idx, status, video_url="", image_url="", video_path="", image_path="", error="", message=""):
+	def _update_state_entry(self, *args, **kwargs):
+		if not hasattr(self, "_state_lock"):
+			import threading
+			self._state_lock = threading.Lock()
+		with self._state_lock:
+			return self._update_state_entry_unlocked(*args, **kwargs)
+
+	def _update_state_entry_unlocked(self, prompt_id, prompt_text, scene_id, idx, status, video_url="", image_url="", video_path="", image_path="", error="", message=""):
 		state_data = self._load_state_json()
 		prompt_data = self._ensure_prompt_entry(state_data, prompt_id, prompt_text)
 

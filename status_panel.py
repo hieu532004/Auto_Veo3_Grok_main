@@ -23,6 +23,7 @@ from PyQt6.QtWidgets import (
     QScrollArea,
     QTableWidget,
     QTableWidgetItem,
+    QProgressBar,
     QAbstractItemView,
     QHeaderView,
     QToolButton,
@@ -249,6 +250,75 @@ class _RemoveWatermarkWorker(QThread):
         except Exception as e:
             self.error.emit(str(e))
 
+
+class VeoProgressBar(QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.layout = QVBoxLayout(self)
+        self.layout.setContentsMargins(10, 0, 10, 0)
+        self.layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        
+        self.bar = QProgressBar(self)
+        self.bar.setRange(0, 100)
+        self.bar.setValue(0)
+        self.bar.setTextVisible(True)
+        self.bar.setFormat("%p%")
+        self.bar.setFixedHeight(18)
+        self.bar.setStyleSheet("""
+            QProgressBar {
+                border: 1px solid #3d3d3d;
+                border-radius: 4px;
+                text-align: center;
+                background-color: transparent;
+                color: #ff9800;
+                font-size: 11px;
+                font-weight: bold;
+            }
+            QProgressBar::chunk {
+                background-color: rgba(255, 152, 0, 0.4);
+                border-radius: 3px;
+                width: 1px;
+            }
+        """)
+        
+        self.layout.addWidget(self.bar)
+        
+        self._custom_text = ""
+        self._real_val = 0.0
+
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self._fake_step)
+        self.timer.start(800)
+
+    def set_status_code(self, code: str, text: str):
+        self._custom_text = text
+        if code == "DOWNLOADING":
+            if self._real_val < 90:
+                self._real_val = 90.0
+            self.bar.setFormat(f"Tải về... %p%")
+        elif code == "PENDING":
+            self._real_val = 0.0
+            self.bar.setValue(0)
+            self.bar.setFormat(f"{text} %p%")
+        else:
+            self.bar.setFormat(f"{text} %p%")
+
+    def _fake_step(self):
+        if self._real_val <= 0 and "chờ" in self._custom_text.lower():
+            return
+            
+        if self._real_val < 30:
+            self._real_val += 3.0
+        elif self._real_val < 60:
+            self._real_val += 1.5
+        elif self._real_val < 85:
+            self._real_val += 0.5
+        elif self._real_val < 95:
+            self._real_val += 0.1
+        
+        int_val = int(self._real_val)
+        if self.bar.value() != int_val:
+            self.bar.setValue(int_val)
 
 class StatusPanel(QWidget):
     COL_CHECK = 0
@@ -2095,14 +2165,20 @@ class StatusPanel(QWidget):
             return
         code = self._status_code(row)
         text = str(status_text or item.text() or "")
-        if code in {"FAILED", "STOPPED", "CANCELED"} or "Lỗi" in text or "Hủy" in text:
-            color = QColor("#d32f2f")
-        elif code in {"SUCCESSFUL"}:
-            color = QColor("#2e7d32")
-        elif code in {"ACTIVE", "DOWNLOADING", "TOKEN", "REQUESTED"}:
-            color = QColor("#ef6c00")
+        
+        has_bar = isinstance(self.table.cellWidget(int(row), self.COL_STATUS), VeoProgressBar)
+        if has_bar:
+            color = QColor("transparent")
         else:
-            color = QColor("#374151")
+            if code in {"FAILED", "STOPPED", "CANCELED"} or "Lỗi" in text or "Hủy" in text:
+                color = QColor("#d32f2f")
+            elif code in {"SUCCESSFUL"}:
+                color = QColor("#2e7d32")
+            elif code in {"ACTIVE", "DOWNLOADING", "TOKEN", "REQUESTED", "PENDING"}:
+                color = QColor("#ef6c00")
+            else:
+                color = QColor("#374151")
+                
         item.setForeground(QBrush(color))
 
     def _refresh_pending_positions(self) -> None:
@@ -3239,7 +3315,24 @@ class StatusPanel(QWidget):
                 item.setData(Qt.ItemDataRole.UserRole + 7, "")
         except Exception:
             pass
-        item.setText(str(text or self._status_text(code)))
+            
+        display_text = str(text or self._status_text(code))
+        item.setText(display_text)
+        
+        status_upper = str(code or "").upper()
+        if status_upper in ["ACTIVE", "DOWNLOADING", "PENDING", "TOKEN", "REQUESTED"]:
+            current_widget = self.table.cellWidget(int(row), self.COL_STATUS)
+            if not isinstance(current_widget, VeoProgressBar):
+                bar = VeoProgressBar()
+                self.table.setCellWidget(int(row), self.COL_STATUS, bar)
+            else:
+                bar = current_widget
+            bar.set_status_code(status_upper, display_text)
+        else:
+            current_widget = self.table.cellWidget(int(row), self.COL_STATUS)
+            if current_widget is not None:
+                self.table.removeCellWidget(int(row), self.COL_STATUS)
+                
         self._apply_status_color(row, item.text())
         if not self._loading_status_snapshot:
             self._save_status_snapshot()
