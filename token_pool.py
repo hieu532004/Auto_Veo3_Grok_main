@@ -419,9 +419,9 @@ class TokenPool:
 		while not self._should_stop():
 			try:
 				# Token hợp lệ 120s, không cần queue quá nhiều
-				queue_limit = 6
+				queue_limit = 3
 				if self._token_queue.qsize() >= queue_limit:
-					await asyncio.sleep(2)
+					await asyncio.sleep(1)
 					continue
 
 				clear_storage = (
@@ -442,6 +442,11 @@ class TokenPool:
 					if not hasattr(self, '_token_to_idx'):
 						self._token_to_idx = {}
 					self._token_to_idx[token] = idx
+					# Giữ dict nhỏ gọn: chỉ giữ 20 token gần nhất
+					if len(self._token_to_idx) > 20:
+						oldest_keys = list(self._token_to_idx.keys())[:-20]
+						for k in oldest_keys:
+							self._token_to_idx.pop(k, None)
 					await self._token_queue.put((token, time.time(), pid))
 					self._total_tokens += 1
 					fail_streak = 0
@@ -577,7 +582,7 @@ class TokenPool:
 				if isinstance(token_data, tuple) and len(token_data) == 3:
 					token, ts, pid = token_data
 					token_age = time.time() - ts
-					if token_age < 120:
+					if token_age < 40:
 						return (token, pid)
 					else:
 						self._log(f"♻️ Loại bỏ token quá hạn ({int(time.time() - ts)}s)")
@@ -586,7 +591,7 @@ class TokenPool:
 					# Backward compat: (token, ts) không có project_id
 					token, ts = token_data
 					token_age = time.time() - ts
-					if token_age < 120:
+					if token_age < 40:
 						return (token, "")
 					else:
 						continue

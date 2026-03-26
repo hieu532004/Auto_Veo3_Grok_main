@@ -460,8 +460,11 @@ class CharacterSyncWorkflow(QThread):
 
                 # ── Xử lý lỗi ──
                 if (not response.get("ok", True) or err_code) and err_msg and not operations:
-                    is_auth_error = err_code in ("16", "401") or "authentication credentials" in str(err_msg).lower()
-                    retryable = err_code in ("13", "403", "429", "500", "503", "16", "401")
+                    err_code_str = str(err_code or "").strip()
+                    if not err_code_str and not response.get("ok", True):
+                        err_code_str = str(response.get("status", ""))
+                    is_auth_error = err_code_str in ("16", "401") or "authentication credentials" in str(err_msg).lower() or (err_code_str == "403" and retry_attempt >= 1)
+                    retryable = err_code_str in ("13", "403", "429", "500", "503", "16", "401")
                     retryable = retryable or is_auth_error or any(k in str(err_msg).upper() for k in ["HIGH_TRAFFIC", "RECAPTCHA", "CAPTCHA"])
 
                     if retryable:

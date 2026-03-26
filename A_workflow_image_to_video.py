@@ -382,7 +382,11 @@ class ImageToVideoWorkflow(QThread):
 			error_code, error_message = self._extract_error_info(response_body)
 			retryable_errors = {"403", "3", "13", "53", "16", "401", "429", "400", "500", "503"}
 			error_code_str = str(error_code or "").strip()
-			is_auth_error = error_code_str in ("16", "401") or "authentication credentials" in str(error_message).lower()
+			if not error_code_str and not response.get("ok", True):
+				error_code_str = str(response.get("status", ""))
+			
+			consecutive_403 = prompt_retry_counts.get(f"{prompt_id}_403_count", 0) + (1 if error_code_str == "403" else 0)
+			is_auth_error = error_code_str in ("16", "401") or "authentication credentials" in str(error_message).lower() or (error_code_str == "403" and consecutive_403 >= 2)
 
 			if (not response.get("ok", True) or error_code_str) and (error_code_str in retryable_errors or is_auth_error):
 				if is_auth_error:
@@ -808,22 +812,60 @@ class ImageToVideoWorkflow(QThread):
 			try:
 				start_media = ""
 				end_media = ""
+
+				# ✅ Re-upload ảnh vì media_id cũ đã expire (Google chỉ giữ ~2 phút)
 				if prompt_info_orig:
-					start_media = prompt_info_orig.get("start_media_id", "")
-					end_media = prompt_info_orig.get("end_media_id", "")
+					_sem = asyncio.Semaphore(1)
+					self._log(f"⬆️  Inline retry: re-upload ảnh cho prompt {r_prompt_id}...")
+					upload_result = await self._upload_prompt_media(
+						prompt_info_orig, session_id, access_token, cookie, _sem
+					)
+					if upload_result.get("ok"):
+						start_media = upload_result.get("start_media_id", "")
+						end_media = upload_result.get("end_media_id", "")
+						# Cập nhật lại prompt info để retry sau dùng được
+						prompt_info_orig["start_media_id"] = start_media
+						if end_media:
+							prompt_info_orig["end_media_id"] = end_media
+						self._log(f"✅ Inline retry: re-upload ảnh xong (media={start_media[:12]}...)")
+					else:
+						self._log(f"❌ Inline retry: re-upload ảnh thất bại: {upload_result.get('message')}")
+						# Fallback: dùng media_id cũ (có thể vẫn lỗi)
+						start_media = prompt_info_orig.get("start_media_id", "")
+						end_media = prompt_info_orig.get("end_media_id", "")
+
+				# ✅ Resolve model_key và video_aspect cho inline retry (không kế thừa từ task scope)
+				_retry_image_aspect, _retry_video_aspect, _retry_model_key = self._resolve_aspect_ratio_and_model()
 
 				effective_project_id = token_project_id if token_project_id else project_id
 				payload = build_payload_generate_video_start_end(
 					token, session_id, effective_project_id, r_prompt_text, None,
-					model_key, start_media, "temp",
-					aspect_ratio=video_aspect, end_media_id=end_media,
+					_retry_model_key, start_media, "temp",
+					aspect_ratio=_retry_video_aspect, end_media_id=end_media,
 					output_count=output_count,
 				)
 				new_scene_ids = self._assign_scene_ids(payload, r_prompt_id, output_count)
 				self._save_request_json(payload, r_prompt_id, r_prompt_text, flow="image_to_video_retry")
 
 				self._log(f"🚀 Inline retry: gửi request tạo video prompt {r_prompt_id}...")
-				response = await request_create_video(payload, access_token, cookie=cookie, url=create_video_url)
+				# ✅ Ưu tiên gửi qua browser (via_browser) để có cookies đúng
+				page_ref = None
+				collector_ref = getattr(self, '_collector_ref', None)
+				if collector_ref:
+					if hasattr(collector_ref, '_collectors'):
+						for c in collector_ref._collectors:
+							if c and getattr(c, 'page', None) and not c.page.is_closed():
+								page_ref = c.page
+								break
+					elif hasattr(collector_ref, 'page') and collector_ref.page and not collector_ref.page.is_closed():
+						page_ref = collector_ref.page
+				
+				if page_ref and not page_ref.is_closed():
+					response = await request_create_video_via_browser(
+						page_ref, create_video_url, payload, cookie, access_token,
+					)
+				else:
+					response = await request_create_video(payload, access_token, cookie=cookie, url=create_video_url)
 
 				response_body = response.get("body", "")
 				operations = self._parse_operations(response_body)
@@ -1447,7 +1489,8 @@ class ImageToVideoWorkflow(QThread):
 		)
 
 	async def _upload_image_via_browser(self, image_link: str, session_id: str, access_token: str, aspect_ratio: str, prompt_id: str, stage_label: str) -> dict:
-		"""Upload ảnh trực tiếp qua Playwright browser API - có cookies hợp lệ."""
+		"""Upload ảnh trực tiếp qua Playwright browser API - có cookies hợp lệ.
+		Có retry tối đa 3 lần cho lỗi 400/network, và round-robin chọn Chrome page."""
 		image_bytes, mime_type = self._read_image_bytes(image_link)
 		if not image_bytes:
 			return {"ok": False, "error": "UPLOAD", "message": f"Cannot read {stage_label}"}
@@ -1460,54 +1503,99 @@ class ImageToVideoWorkflow(QThread):
 			aspect_ratio=aspect_ratio,
 		)
 
-		# Lấy page từ collector
+		# Lấy page từ collector — round-robin qua tất cả Chrome instances
 		collector_ref = getattr(self, '_collector_ref', None)
 		if not collector_ref:
 			return {"ok": False, "error": "UPLOAD", "message": "No browser collector available"}
 
-		# Lấy page từ collector (Chrome-0)
-		page = None
-		if hasattr(collector_ref, '_collectors') and collector_ref._collectors:
-			c0 = collector_ref._collectors[0]
-			if c0 and hasattr(c0, 'page') and c0.page and not c0.page.is_closed():
-				page = c0.page
-		if not page and hasattr(collector_ref, 'page'):
-			page = collector_ref.page
+		def _pick_page():
+			"""Round-robin chọn page từ tất cả collectors, tránh chỉ dùng Chrome-0."""
+			pages = []
+			if hasattr(collector_ref, '_collectors') and collector_ref._collectors:
+				for c in collector_ref._collectors:
+					if c and hasattr(c, 'page') and c.page and not c.page.is_closed():
+						pages.append(c.page)
+			if not pages and hasattr(collector_ref, 'page') and collector_ref.page and not collector_ref.page.is_closed():
+				pages.append(collector_ref.page)
+			if not pages:
+				return None
+			# Round-robin bằng counter
+			if not hasattr(self, '_upload_page_counter'):
+				self._upload_page_counter = 0
+			idx = self._upload_page_counter % len(pages)
+			self._upload_page_counter += 1
+			return pages[idx]
 
-		if not page or page.is_closed():
+		page = _pick_page()
+		if not page:
 			return {"ok": False, "error": "UPLOAD", "message": "Browser page not available"}
 
 		self._log(f"⬆️  [Upload-Browser] prompt {prompt_id}: đang upload {stage_label}...")
-		try:
-			upload_response = await request_upload_image_via_browser(page, upload_payload, access_token)
-		except Exception as exc:
-			return {"ok": False, "error": "UPLOAD", "message": f"Upload {stage_label} failed: {exc}"}
 
-		if upload_response.get("status") == 401:
-			self._log(f"⚠️ [Upload-Browser] prompt {prompt_id}: 401, retry...")
-			# Retry: reload auth
-			try:
-				if hasattr(collector_ref, 'refresh_auth_from_browser'):
-					ft, fc = await collector_ref.refresh_auth_from_browser("")
-					if ft:
-						access_token = ft
-			except Exception:
-				pass
+		max_retries = 3
+		last_status = None
+		last_reason = None
+
+		for attempt in range(max_retries):
 			try:
 				upload_response = await request_upload_image_via_browser(page, upload_payload, access_token)
 			except Exception as exc:
-				return {"ok": False, "error": "UPLOAD", "message": f"Upload {stage_label} retry failed: {exc}"}
+				if attempt < max_retries - 1:
+					wait_sec = 2 + attempt * 2
+					self._log(f"⚠️ [Upload-Browser] prompt {prompt_id}: lỗi network, chờ {wait_sec}s retry {attempt + 1}/{max_retries}")
+					await asyncio.sleep(wait_sec)
+					page = _pick_page() or page
+					continue
+				return {"ok": False, "error": "UPLOAD", "message": f"Upload {stage_label} failed: {exc}"}
 
-		upload_body = upload_response.get("body", "")
-		media_id = self._extract_media_id(upload_body)
-		if not upload_response.get("ok", True) or not media_id:
-			status = upload_response.get("status")
-			reason = upload_response.get("reason")
-			self._log(f"❌ [Upload-Browser] prompt {prompt_id}: upload {stage_label} lỗi (status={status}, reason={reason})")
-			return {"ok": False, "error": "UPLOAD", "message": f"Upload {stage_label} failed"}
+			http_status = upload_response.get("status")
 
-		self._log(f"✅ [Upload-Browser] prompt {prompt_id}: upload {stage_label} xong")
-		return {"ok": True, "media_id": str(media_id)}
+			# 401 — refresh token rồi retry
+			if http_status == 401:
+				self._log(f"⚠️ [Upload-Browser] prompt {prompt_id}: 401, retry...")
+				try:
+					if hasattr(collector_ref, 'refresh_auth_from_browser'):
+						ft, fc = await collector_ref.refresh_auth_from_browser("")
+						if ft:
+							access_token = ft
+				except Exception:
+					pass
+				page = _pick_page() or page
+				continue
+
+			# 400 — Bad Request, chờ rồi retry (có thể do race condition hoặc server tạm lỗi)
+			if http_status == 400:
+				last_status = http_status
+				last_reason = upload_response.get("reason")
+				if attempt < max_retries - 1:
+					wait_sec = 3 + attempt * 3
+					self._log(f"⚠️ [Upload-Browser] prompt {prompt_id}: 400 Bad Request, chờ {wait_sec}s retry {attempt + 1}/{max_retries}")
+					await asyncio.sleep(wait_sec)
+					page = _pick_page() or page
+					continue
+				# Hết retry
+				break
+
+			# Thành công hoặc lỗi khác — thoát vòng lặp
+			upload_body = upload_response.get("body", "")
+			media_id = self._extract_media_id(upload_body)
+			if upload_response.get("ok", True) and media_id:
+				self._log(f"✅ [Upload-Browser] prompt {prompt_id}: upload {stage_label} xong")
+				return {"ok": True, "media_id": str(media_id)}
+
+			# Lỗi khác (không phải 400/401) — cũng retry
+			last_status = http_status
+			last_reason = upload_response.get("reason")
+			if attempt < max_retries - 1:
+				wait_sec = 2 + attempt * 2
+				self._log(f"⚠️ [Upload-Browser] prompt {prompt_id}: upload lỗi {http_status}, chờ {wait_sec}s retry {attempt + 1}/{max_retries}")
+				await asyncio.sleep(wait_sec)
+				page = _pick_page() or page
+				continue
+			break
+
+		self._log(f"❌ [Upload-Browser] prompt {prompt_id}: upload {stage_label} lỗi (status={last_status}, reason={last_reason})")
+		return {"ok": False, "error": "UPLOAD", "message": f"Upload {stage_label} failed"}
 
 	async def _upload_prompt_media(self, prompt: dict, session_id: str, access_token: str, cookie, sem: asyncio.Semaphore, auth_dict: dict = None) -> dict:
 		prompt_id = str(prompt.get("id") or "")

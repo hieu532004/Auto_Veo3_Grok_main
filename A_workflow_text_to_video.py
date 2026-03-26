@@ -426,7 +426,11 @@ class TextToVideoWorkflow(QThread):
 			error_code, error_message = self._extract_error_info(response_body)
 			retryable_errors = {"403", "3", "13", "53", "16", "401", "429", "400", "500", "503"}
 			error_code_str = str(error_code or "").strip()
-			is_auth_error = error_code_str in ("16", "401") or "authentication credentials" in str(error_message).lower()
+			if not error_code_str and not response.get("ok", True):
+				error_code_str = str(response.get("status", ""))
+			
+			consecutive_403 = prompt_retry_counts.get(f"{prompt_id}_403_count", 0) + (1 if error_code_str == "403" else 0)
+			is_auth_error = error_code_str in ("16", "401") or "authentication credentials" in str(error_message).lower() or (error_code_str == "403" and consecutive_403 >= 2)
 
 			# ── Xử lý lỗi retryable ──
 			if (not response.get("ok", True) or error_code_str) and (error_code_str in retryable_errors or is_auth_error):
@@ -888,7 +892,25 @@ class TextToVideoWorkflow(QThread):
 						cookie = retry_auth["cookie"]
 				except Exception:
 					pass
-				response = await t2v_api.request_create_video(payload, access_token, cookie=cookie)
+				
+				# ✅ Ưu tiên gửi qua browser (via_browser) để có cookies đúng
+				page_ref = None
+				collector_ref = getattr(self, '_collector_ref', None)
+				if collector_ref:
+					if hasattr(collector_ref, '_collectors'):
+						for c in collector_ref._collectors:
+							if c and getattr(c, 'page', None) and not c.page.is_closed():
+								page_ref = c.page
+								break
+					elif hasattr(collector_ref, 'page') and collector_ref.page and not collector_ref.page.is_closed():
+						page_ref = collector_ref.page
+				
+				if page_ref and not page_ref.is_closed():
+					response = await t2v_api.request_create_video_via_browser(
+						page_ref, t2v_api.URL_GENERATE_TEXT_TO_VIDEO, payload, access_token,
+					)
+				else:
+					response = await t2v_api.request_create_video(payload, access_token, cookie=cookie)
 
 				response_body = response.get("body", "")
 				operations = self._parse_operations(response_body)
@@ -939,6 +961,27 @@ class TextToVideoWorkflow(QThread):
 					await collector.restart_browser()
 					self._log("✅ Chrome đã restart, bắt đầu retry prompts lỗi...")
 					
+					# ✅ QUAN TRỌNG: Restart status poll loop để theo dõi video retry
+					# Status poll đã bị cancel ở trên, cần khởi động lại
+					# để state.json được cập nhật khi video retry hoàn thành
+					try:
+						# Refresh auth trước khi tạo status poll mới
+						_fresh_auth = self._load_auth_config()
+						if _fresh_auth:
+							if _fresh_auth.get("access_token"):
+								access_token = _fresh_auth["access_token"]
+								auth["access_token"] = access_token
+							if _fresh_auth.get("cookie"):
+								cookie = _fresh_auth["cookie"]
+								auth["cookie"] = cookie
+					except Exception:
+						pass
+					
+					status_task = asyncio.create_task(
+						self._status_poll_loop(access_token, session_id, cookie, auth_dict=auth)
+					)
+					self._log("[POLL] Đã restart status poll loop cho auto-retry")
+					
 					# Reset retry counts cho lần retry mới
 					retry_prompt_retry_counts = {}
 					retry_tasks = []
@@ -968,12 +1011,19 @@ class TextToVideoWorkflow(QThread):
 						self._log(f"⏳ Đang chờ {len(retry_tasks)} prompt retry hoàn thành...")
 						await asyncio.gather(*retry_tasks, return_exceptions=True)
 					
-					# Chờ video retry hoàn thành
+					# ✅ Đánh dấu đã gửi hết retry prompts để _wait_for_completion biết khi nào thoát
+					self._all_prompts_submitted = True
+					
+					# Chờ video retry hoàn thành (status poll sẽ cập nhật state.json)
 					self._complete_wait_start_ts = time.time()
 					try:
 						await self._wait_for_completion()
 					except Exception:
 						pass
+					
+					# Cancel status poll sau khi retry xong
+					if status_task:
+						status_task.cancel()
 				except Exception as e:
 					self._log(f"⚠️ Auto-retry lỗi: {e}")
 

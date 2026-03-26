@@ -114,7 +114,7 @@ class _ClickPickLineEdit(QLineEdit):
 class AppConfig:
     USER: str = ""
     PASS: str = ""
-    TYPE_ACCOUNT: str = "NORMAL"  # NORMAL|ULTRA
+    TYPE_ACCOUNT: str = "ULTRA"  # NORMAL|ULTRA
     multi_video: int = 10
     num_chrome: int = 4
     output_count: int = 1
