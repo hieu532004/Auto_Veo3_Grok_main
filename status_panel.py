@@ -3448,6 +3448,8 @@ class StatusPanel(QWidget):
                 error_code=err_code,
                 error_message=err_message,
             )
+            self._set_row_checked(row, True)
+            self._sync_select_all_header()
         elif status_code == "DOWNLOADING":
             self._set_row_status_detail(row, "DOWNLOADING", "Đang tải video")
         elif status_code == "SUCCESSFUL":
