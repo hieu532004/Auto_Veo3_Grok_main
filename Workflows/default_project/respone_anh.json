@@ -1,0 +1,14 @@
+[
+  {
+    "timestamp": 1774558878,
+    "project_name": "default_project",
+    "flow": "generate_image",
+    "prompt_id": "1",
+    "prompt_text": "sadasda",
+    "ok": true,
+    "status": 200,
+    "reason": "OK",
+    "error": null,
+    "body": "{\n  \"media\": [\n    {\n      \"name\": \"07518aa5-a585-4454-8b54-ef95b3a55c12\",\n      \"workflowId\": \"36cc7caf-19cc-445a-b66b-0326b390be55\",\n      \"image\": {\n        \"generatedImage\": {\n          \"seed\": 257835691,\n          \"mediaGenerationId\": \"CAMSJDc1MWU1M2VjLTdiMDYtNDk1My1hNzVhLWRiOTI2OGJjZmJkMhokYjNmMjdiNDItM2Q4Yi00NGNjLWI2ZjMtYWI0MGRhYTRjMTlhIgNDQUUqJDA3NTE4YWE1LWE1ODUtNDQ1NC04YjU0LWVmOTViM2E1NWMxMg\",\n          \"mediaVisibility\": \"PRIVATE\",\n          \"prompt\": \"in the echo\",\n          \"modelNameType\": \"NARWHAL\",\n          \"workflowId\": \"36cc7caf-19cc-445a-b66b-0326b390be55\",\n          \"fifeUrl\": \"https://storage.googleapis.com/ai-sandbox-videofx/image/07518aa5-a585-4454-8b54-ef95b3a55c12?GoogleAccessId=labs-ai-sandbox-videoserver-prod@system.gserviceaccount.com&Expires=1774580476&Signature=gK8Mo2uSIegLBaqLMBrMB810NSZykUNFsI%2Bd1s00e5GbzRMRUihmH6J9rh0nHlhhYN1OR5bKhB6Q2VewC1h50ky64bE6wGcvgpM%2FaS4lq8yOYWhnXeoX0Dy2exR3aga0JKTDpL9cpocNQm5NxJjtnJWdhih%2B59GSqO9rsN1%2FYFBc3Kf2VssRQJKQV6KW1ljeA%2FCDUlwhPky3SPihxZrThszkqSR7ixcsU%2FvCuba6hRXG2Q4sEutebsYTo4lsmf0OuAaUlj5hDmg7ID1VqhxL5XOxZg8PriZUkUdpZ%2Bs3ym%2BMFo%2BDxVgEkenMe6XQGH%2FUY9guVNad9KK5%2BLz6ggiOcg%3D%3D\",\n          \"aspectRatio\": \"IMAGE_ASPECT_RATIO_LANDSCAPE\",\n          \"requestData\": {\n            \"promptInputs\": [\n              {\n                \"textInput\": \"sadasda\"\n              }\n            ],\n            \"imageGenerationRequestData\": {}\n          }\n        },\n        \"dimensions\": {\n          \"width\": 1376,\n          \"height\": 768\n        }\n      }\n    }\n  ],\n  \"workflows\": [\n    {\n      \"name\": \"36cc7caf-19cc-445a-b66b-0326b390be55\",\n      \"metadata\": {\n        \"displayName\": \"sadasda\",\n        \"createTime\": \"2026-03-26T21:00:46.093674Z\",\n        \"primaryMediaId\": \"07518aa5-a585-4454-8b54-ef95b3a55c12\",\n        \"batchId\": \"aefbac85-cdcc-4f44-a5fd-62b8a0d31c49\"\n      },\n      \"projectId\": \"751e53ec-7b06-4953-a75a-db9268bcfbd2\"\n    }\n  ]\n}\n"
+  }
+]

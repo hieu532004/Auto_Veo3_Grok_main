@@ -129,14 +129,14 @@ def _mac_addr() -> str:
     return hex(_uuid.getnode())
 
 def make_machine_id() -> str:
+    # Cải tiến: Loại bỏ platform.release() (vì cập nhật Win sẽ bị đổi)
+    # Loại bỏ _mac_addr() (uuid.getnode() rất dễ bị đổi khi thay mạng, bật VPN hoặc trả về số random nếu lỗi)
     parts = [
         platform.system(),
-        platform.release(),
         platform.machine(),
         _win_machine_guid(),
         _win_system_uuid(),
-        _linux_machine_id(),
-        _mac_addr(),
+        _linux_machine_id()
     ]
     raw = "|".join([p.strip().lower() for p in parts if p and p.strip()])
     raw = re.sub(r"\s+", " ", raw)

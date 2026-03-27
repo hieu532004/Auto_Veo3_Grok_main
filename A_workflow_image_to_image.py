@@ -192,7 +192,14 @@ class GenerateImageWorkflow(QThread):
 			}
 		return state_data["prompts"][prompt_key]
 
-	def _update_state_entry(self, prompt_id, prompt_text, scene_id, idx, status, image_url="", image_path="", error="", message=""):
+	def _update_state_entry(self, *args, **kwargs):
+		if not hasattr(self, "_state_lock"):
+			import threading
+			self._state_lock = threading.Lock()
+		with self._state_lock:
+			return self._update_state_entry_unlocked(*args, **kwargs)
+
+	def _update_state_entry_unlocked(self, prompt_id, prompt_text, scene_id, idx, status, image_url="", image_path="", error="", message=""):
 		state_data = self._load_state_json()
 		prompt_data = self._ensure_prompt_entry(state_data, prompt_id, prompt_text)
 
@@ -968,10 +975,21 @@ class GenerateImageWorkflow(QThread):
 				self._log(f"⏳ Đang chờ tải {len(self._download_futures)} ảnh về máy...")
 				try:
 					import concurrent.futures
-					await asyncio.get_running_loop().run_in_executor(
-						None, 
-						lambda: concurrent.futures.wait(self._download_futures, timeout=120)
-					)
+					while self._download_futures:
+						if self._should_stop():
+							self._log("🛑 Phát hiện lệnh STOP, huỷ bỏ việc chờ tải ảnh!")
+							break
+							
+						loop = asyncio.get_running_loop()
+						done, not_done = await loop.run_in_executor(
+							None, 
+							lambda: concurrent.futures.wait(self._download_futures, timeout=0.5)
+						)
+						
+						if not not_done:
+							break  # Tất cả đã tải xong
+						
+						self._download_futures = list(not_done)
 				except Exception as e:
 					self._log(f"⚠️ Lỗi khi chờ tải ảnh: {e}")
 				finally:
