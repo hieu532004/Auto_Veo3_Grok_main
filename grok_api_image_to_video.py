@@ -574,10 +574,6 @@ async def run_batch_image_to_video(
 
                 ok = await download_video(source_url, session, out_path)
                 if ok:
-                    try:
-                        remove_watermark(str(out_path), log_callback=lambda m: _safe(on_info, m))
-                    except Exception as e:
-                        _safe(on_info, f"[GROK-I2V {idx+1}] Lỗi xoá logo: {e}")
                     result["savedFile"] = str(out_path)
                     _safe(on_video, idx, str(out_path))
                     _safe(on_status, idx, "Hoàn thành")
@@ -589,10 +585,6 @@ async def run_batch_image_to_video(
                         if fresh_hd:
                             ok2 = await download_video(fresh_hd, session, out_path)
                             if ok2:
-                                try:
-                                    remove_watermark(str(out_path), log_callback=lambda m: _safe(on_info, m))
-                                except Exception as e:
-                                    _safe(on_info, f"[GROK-I2V {idx+1}] Lỗi xoá logo: {e}")
                                 result["savedFile"] = str(out_path)
                                 _safe(on_video, idx, str(out_path))
                                 _safe(on_status, idx, "Hoàn thành")
