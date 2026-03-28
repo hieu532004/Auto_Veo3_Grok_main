@@ -244,7 +244,8 @@ class CharacterSyncTab(QWidget):
             if p and os.path.isfile(p) and _is_image_file(p):
                 if len(self._items) >= 10:
                     break
-                self._items.append({'path': str(p), 'name': ''})
+                next_num = len(self._items) + 1
+                self._items.append({'path': str(p), 'name': f'@Image{next_num}'})
         
         if len(paths) > len(truncated) or len(self._items) >= 10:
             self._show_max_message()

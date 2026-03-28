@@ -2818,8 +2818,15 @@ class StatusPanel(QWidget):
         low = status_text.lower()
 
         if isinstance(progress, int):
-            self._set_video_progress_text(row, int(progress))
             self._set_row_status_detail(row, "ACTIVE", "Đang tạo")
+            current_widget = self.table.cellWidget(int(row), self.COL_STATUS)
+            if current_widget:
+                try:
+                    current_widget.timer.stop()
+                    current_widget.bar.setValue(int(progress))
+                    current_widget.bar.setFormat("Đang tạo... %p%")
+                except Exception:
+                    pass
 
         if "lỗi" in low or low == "error" or low.startswith("error"):
             self._set_row_status_detail(row, "FAILED", self._format_failed_status_text("GROK_ERROR", status_text))

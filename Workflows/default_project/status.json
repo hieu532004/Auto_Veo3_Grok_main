@@ -1,27 +1,784 @@
 {
   "project_name": "default_project",
-  "updated_at": 1774558879,
+  "updated_at": 1774719898,
   "rows": [
     {
       "row": 0,
       "stt": "001",
       "prompt_id": "1",
-      "prompt": "sadasda",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
       "mode_payload": {
-        "description": "sadasda"
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_27032026_040118.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\1_1_28032026_231253.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_27032026_040118.jpg"
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_28032026_231255.jpg"
+      }
+    },
+    {
+      "row": 1,
+      "stt": "002",
+      "prompt_id": "2",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\2_1_28032026_231233.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_28032026_231235.jpg"
+      }
+    },
+    {
+      "row": 2,
+      "stt": "003",
+      "prompt_id": "3",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\3_1_28032026_231253.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_28032026_231256.jpg"
+      }
+    },
+    {
+      "row": 3,
+      "stt": "004",
+      "prompt_id": "4",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\4_1_28032026_231233.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_28032026_231235.jpg"
+      }
+    },
+    {
+      "row": 4,
+      "stt": "005",
+      "prompt_id": "5",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\5_1_28032026_231233.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_28032026_231235.jpg"
+      }
+    },
+    {
+      "row": 5,
+      "stt": "006",
+      "prompt_id": "6",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\6_1_28032026_231216.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_28032026_231218.jpg"
+      }
+    },
+    {
+      "row": 6,
+      "stt": "007",
+      "prompt_id": "7",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\7_1_28032026_231253.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_28032026_231256.jpg"
+      }
+    },
+    {
+      "row": 7,
+      "stt": "008",
+      "prompt_id": "8",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\8_1_28032026_231306.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_28032026_231308.jpg"
+      }
+    },
+    {
+      "row": 8,
+      "stt": "009",
+      "prompt_id": "9",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\9_1_28032026_231253.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_28032026_231255.jpg"
+      }
+    },
+    {
+      "row": 9,
+      "stt": "010",
+      "prompt_id": "10",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\10_1_28032026_231306.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_28032026_231308.jpg"
+      }
+    },
+    {
+      "row": 10,
+      "stt": "011",
+      "prompt_id": "11",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\11_1_28032026_231322.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\11_1_28032026_231324.jpg"
+      }
+    },
+    {
+      "row": 11,
+      "stt": "012",
+      "prompt_id": "12",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\12_1_28032026_231335.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_28032026_231337.jpg"
+      }
+    },
+    {
+      "row": 12,
+      "stt": "013",
+      "prompt_id": "13",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\13_1_28032026_231335.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\13_1_28032026_231337.jpg"
+      }
+    },
+    {
+      "row": 13,
+      "stt": "014",
+      "prompt_id": "14",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\14_1_28032026_231402.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\14_1_28032026_231404.jpg"
+      }
+    },
+    {
+      "row": 14,
+      "stt": "015",
+      "prompt_id": "15",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\15_1_28032026_231402.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\15_1_28032026_231403.jpg"
+      }
+    },
+    {
+      "row": 15,
+      "stt": "016",
+      "prompt_id": "16",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\16_1_28032026_231402.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\16_1_28032026_231404.jpg"
+      }
+    },
+    {
+      "row": 16,
+      "stt": "017",
+      "prompt_id": "17",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\17_1_28032026_231345.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\17_1_28032026_231346.jpg"
+      }
+    },
+    {
+      "row": 17,
+      "stt": "018",
+      "prompt_id": "18",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\18_1_28032026_231415.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\18_1_28032026_231417.jpg"
+      }
+    },
+    {
+      "row": 18,
+      "stt": "019",
+      "prompt_id": "19",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\19_1_28032026_231415.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\19_1_28032026_231417.jpg"
+      }
+    },
+    {
+      "row": 19,
+      "stt": "020",
+      "prompt_id": "20",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\20_1_28032026_231430.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\20_1_28032026_231432.jpg"
+      }
+    },
+    {
+      "row": 20,
+      "stt": "021",
+      "prompt_id": "21",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "@Image1",
+            "path": "C:/Users/ADMIN/Downloads/download.jpg"
+          },
+          {
+            "name": "@Image2",
+            "path": "C:/Users/ADMIN/Downloads/undefined - Imgur.jpg"
+          },
+          {
+            "name": "@Image3",
+            "path": "C:/Users/ADMIN/Downloads/a5581aa1c6ab94f40c9f9d10aba8ec0c.0000000.jpg"
+          }
+        ],
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\21_1_28032026_231440.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\21_1_28032026_231442.jpg"
+      }
+    },
+    {
+      "row": 21,
+      "stt": "022",
+      "prompt_id": "22",
+      "prompt": "@Image1, @Image2, @Image3 đi chơi",
+      "mode_key": "grok_image_to_video",
+      "mode_label": "GROK - Tạo video từ Ảnh",
+      "mode_name": "GROK - Tạo video từ Ảnh",
+      "mode_payload": {
+        "image_link": "@Image1=C:/Users/ADMIN/Downloads/hinh-nen-ronaldo-2.jpg|@Image2=C:/Users/ADMIN/Downloads/anh-messi-4k-argentina-3.jpg|@Image3=C:/Users/ADMIN/Downloads/Hinh-anh-avatar-em-be-gai-de-thuong-1-666x1024.jpg",
+        "prompt": "@Image1, @Image2, @Image3 đi chơi"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\grok_video\\001_i2v_Image1_Image2_Image3_i_ch_i_20260329_004452_389399.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\grok_video\\001_i2v_Image1_Image2_Image3_i_ch_i_20260329_004452_389399.mp4"
       }
     }
   ]

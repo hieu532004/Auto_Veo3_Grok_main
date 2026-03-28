@@ -8,6 +8,7 @@ from PyQt6.QtCore import QThread, pyqtSignal
 from grok_chrome_manager import kill_profile_chrome, resolve_profile_dir
 from grok_workflow_image_to_video import run_image_to_video_jobs
 from grok_workflow_text_to_video import run_text_to_video_jobs
+from grok_workflow_create_image import run_grok_create_image_jobs, run_grok_create_image_reference_jobs
 
 
 def _kill_profile_chrome_async() -> None:
@@ -307,6 +308,260 @@ class GrokImageToVideoWorker(QThread):
                 self._emit_log("✅ GROK Image to Video hoàn tất.")
         except Exception as exc:
             self._emit_log(f"❌ Lỗi GROK Image to Video: {exc}")
+        finally:
+            try:
+                self.automation_complete.emit()
+            except Exception:
+                pass
+
+
+class GrokCreateImageWorker(QThread):
+    log_message = pyqtSignal(str)
+    status_updated = pyqtSignal(dict)
+    image_updated = pyqtSignal(dict)
+    automation_complete = pyqtSignal()
+
+    def __init__(
+        self,
+        prompts: list[str],
+        prompt_ids: list[str],
+        output_dir: str,
+        max_concurrency: int,
+        image_count: int = 2,
+        offscreen_chrome: bool = False,
+        parent=None,
+    ):
+        super().__init__(parent)
+        self._prompts = [str(p or "").strip() for p in (prompts or [])]
+        self._prompt_ids = [str(pid or "").strip() for pid in (prompt_ids or [])]
+        self._output_dir = str(output_dir or "").strip()
+        self._max_concurrency = max(1, int(max_concurrency or 1))
+        self._image_count = max(1, int(image_count or 2))
+        self._offscreen_chrome = bool(offscreen_chrome)
+        self._stop_event = threading.Event()
+
+    def stop(self) -> None:
+        self._stop_event.set()
+        _kill_profile_chrome_async()
+        try:
+            self.requestInterruption()
+        except Exception:
+            pass
+
+    def _emit_log(self, message: str) -> None:
+        try:
+            self.log_message.emit(str(message or ""))
+        except Exception:
+            pass
+
+    def _safe_prompt_id(self, idx: int) -> str:
+        try:
+            if 0 <= int(idx) < len(self._prompt_ids):
+                pid = str(self._prompt_ids[int(idx)] or "").strip()
+                if pid:
+                    return pid
+        except Exception:
+            pass
+        return str(int(idx) + 1)
+
+    def _on_status(self, idx: int, text: str) -> None:
+        prompt_id = self._safe_prompt_id(int(idx))
+        payload = {
+            "prompt_id": prompt_id,
+            "index": int(idx),
+            "status_text": str(text or "").strip(),
+        }
+        try:
+            self.status_updated.emit(payload)
+        except Exception:
+            pass
+        self._emit_log(f"[GROK-IMG #{prompt_id}] {payload['status_text']}")
+
+    def _on_progress(self, idx: int, progress: int) -> None:
+        prompt_id = self._safe_prompt_id(int(idx))
+        pct = int(max(0, min(100, int(progress or 0))))
+        payload = {
+            "prompt_id": prompt_id,
+            "index": int(idx),
+            "progress": pct,
+        }
+        try:
+            self.status_updated.emit(payload)
+        except Exception:
+            pass
+
+    def _on_image(self, idx: int, file_path: str) -> None:
+        prompt_id = self._safe_prompt_id(int(idx))
+        payload = {
+            "_prompt_id": prompt_id,
+            "prompt_idx": f"{prompt_id}_1",
+            "status": "SUCCESSFUL",
+            "image_path": str(file_path or "").strip(),
+        }
+        try:
+            self.image_updated.emit(payload)
+        except Exception:
+            pass
+        self._emit_log(f"[GROK-IMG #{prompt_id}] da luu anh")
+
+    def run(self) -> None:
+        try:
+            if self._stop_event.is_set():
+                self._emit_log("GROK Create Image da dung.")
+                return
+            prompts = [p for p in self._prompts if p]
+            if not prompts:
+                self._emit_log("GROK: Khong co prompt hop le.")
+                return
+
+            self._emit_log(f"Khoi dong GROK Create Image | prompts={len(prompts)}")
+            run_grok_create_image_jobs(
+                prompts=prompts,
+                max_concurrency=self._max_concurrency,
+                image_count=self._image_count,
+                download_dir=self._output_dir,
+                offscreen_chrome=bool(self._offscreen_chrome),
+                stop_event=self._stop_event,
+                on_status=self._on_status,
+                on_progress=self._on_progress,
+                on_image=self._on_image,
+                on_info=self._emit_log,
+            )
+            if self._stop_event.is_set():
+                self._emit_log("GROK Create Image da dung.")
+            else:
+                self._emit_log("GROK Create Image hoan tat.")
+        except Exception as exc:
+            self._emit_log(f"Loi GROK Create Image: {exc}")
+        finally:
+            try:
+                self.automation_complete.emit()
+            except Exception:
+                pass
+
+
+class GrokCreateImageReferenceWorker(QThread):
+    log_message = pyqtSignal(str)
+    status_updated = pyqtSignal(dict)
+    image_updated = pyqtSignal(dict)
+    automation_complete = pyqtSignal()
+
+    def __init__(
+        self,
+        items: list[dict],
+        prompt_ids: list[str],
+        output_dir: str,
+        max_concurrency: int,
+        image_count: int = 2,
+        offscreen_chrome: bool = False,
+        parent=None,
+    ):
+        super().__init__(parent)
+        self._items = [x for x in (items or []) if isinstance(x, dict)]
+        self._prompt_ids = [str(pid or "").strip() for pid in (prompt_ids or [])]
+        self._output_dir = str(output_dir or "").strip()
+        self._max_concurrency = max(1, int(max_concurrency or 1))
+        self._image_count = max(1, int(image_count or 2))
+        self._offscreen_chrome = bool(offscreen_chrome)
+        self._stop_event = threading.Event()
+
+    def stop(self) -> None:
+        self._stop_event.set()
+        _kill_profile_chrome_async()
+        try:
+            self.requestInterruption()
+        except Exception:
+            pass
+
+    def _emit_log(self, message: str) -> None:
+        try:
+            self.log_message.emit(str(message or ""))
+        except Exception:
+            pass
+
+    def _safe_prompt_id(self, idx: int) -> str:
+        try:
+            if 0 <= int(idx) < len(self._prompt_ids):
+                pid = str(self._prompt_ids[int(idx)] or "").strip()
+                if pid:
+                    return pid
+        except Exception:
+            pass
+        return str(int(idx) + 1)
+
+    def _on_status(self, idx: int, text: str) -> None:
+        prompt_id = self._safe_prompt_id(int(idx))
+        try:
+            self.status_updated.emit({
+                "prompt_id": prompt_id,
+                "index": int(idx),
+                "status_text": str(text or "").strip(),
+            })
+        except Exception:
+            pass
+        self._emit_log(f"[GROK-IMG-REF #{prompt_id}] {str(text or '')}")
+
+    def _on_progress(self, idx: int, progress: int) -> None:
+        prompt_id = self._safe_prompt_id(int(idx))
+        try:
+            self.status_updated.emit({
+                "prompt_id": prompt_id,
+                "index": int(idx),
+                "progress": int(max(0, min(100, int(progress or 0)))),
+            })
+        except Exception:
+            pass
+
+    def _on_image(self, idx: int, file_path: str) -> None:
+        prompt_id = self._safe_prompt_id(int(idx))
+        try:
+            self.image_updated.emit({
+                "_prompt_id": prompt_id,
+                "prompt_idx": f"{prompt_id}_1",
+                "status": "SUCCESSFUL",
+                "image_path": str(file_path or "").strip(),
+            })
+        except Exception:
+            pass
+        self._emit_log(f"[GROK-IMG-REF #{prompt_id}] da luu anh")
+
+    def run(self) -> None:
+        try:
+            if self._stop_event.is_set():
+                self._emit_log("GROK Reference Image da dung.")
+                return
+
+            clean_items = []
+            for raw in self._items:
+                path = str(raw.get("image_path") or raw.get("path") or "").strip()
+                prompt = str(raw.get("prompt") or raw.get("description") or "").strip()
+                if not path:
+                    continue
+                clean_items.append({"image_path": path, "prompt": prompt})
+
+            if not clean_items:
+                self._emit_log("GROK: Khong co du lieu anh hop le.")
+                return
+
+            self._emit_log(f"Khoi dong GROK Reference Image | jobs={len(clean_items)}")
+            run_grok_create_image_reference_jobs(
+                items=clean_items,
+                max_concurrency=self._max_concurrency,
+                image_count=self._image_count,
+                download_dir=self._output_dir,
+                offscreen_chrome=bool(self._offscreen_chrome),
+                stop_event=self._stop_event,
+                on_status=self._on_status,
+                on_progress=self._on_progress,
+                on_image=self._on_image,
+                on_info=self._emit_log,
+            )
+            if self._stop_event.is_set():
+                self._emit_log("GROK Reference Image da dung.")
+            else:
+                self._emit_log("GROK Reference Image hoan tat.")
+        except Exception as exc:
+            self._emit_log(f"Loi GROK Reference Image: {exc}")
         finally:
             try:
                 self.automation_complete.emit()

@@ -584,11 +584,12 @@ class MainWindow(QMainWindow):
         self.tab_grok_image.sub_tabs.setTabText(0, t('tab_single_image'))
         self.tab_grok_image.sub_tabs.tabBar().setVisible(False)
         
-        self.tab_grok_create_image = CreateImageFromPromptTab()
         self.tab_grok_settings = GrokSettingsTab(config=self._cfg)
+        self.tab_grok_char_sync = CharacterSyncTab()
         
         self.grok_tabs.addTab(self.tab_grok_text, icon(''), t('tab_text_to_video'))
         self.grok_tabs.addTab(self.tab_grok_image, icon(''), t('tab_image_to_video'))
+        self.grok_tabs.addTab(self.tab_grok_char_sync, icon(''), "Video Tham Chiếu Nhân Vật")
         self.grok_tabs.addTab(self.tab_grok_settings, icon(''), t('tab_settings'))
         
         grok_main = QWidget()
@@ -856,9 +857,7 @@ class MainWindow(QMainWindow):
                 self.btn_start.setText(f'{platform_prefix} — Image from Prompt')
             self.btn_start.setObjectName('Accent')
 
-        elif cur is self.tab_grok_create_image:
-            self.btn_start.setText(f'{platform_prefix} — Image from Prompt')
-            self.btn_start.setObjectName('Accent')
+
 
         elif cur is self.tab_image or cur is self.tab_grok_image:
             mode = 'single'
@@ -879,7 +878,7 @@ class MainWindow(QMainWindow):
             self.btn_start.setText(f'{platform_prefix} — {t("tab_idea_to_video")}')
             self.btn_start.setObjectName('Accent')
 
-        elif cur is self.tab_char_sync:
+        elif cur is self.tab_char_sync or cur is self.tab_grok_char_sync:
             self.btn_start.setText(f'{platform_prefix} — {t("tab_character_sync")}')
             self.btn_start.setObjectName('Accent')
 
@@ -905,10 +904,11 @@ class MainWindow(QMainWindow):
             return 'idea_to_video'
         if cur is self.tab_create_image:
             return 'create_image'
-        if cur is self.tab_grok_create_image:
-            return 'grok_create_image_prompt'
+
         if cur is self.tab_grok_settings:
             return 'grok_settings'
+        if cur is self.tab_grok_char_sync:
+            return 'grok_character_sync'
         if cur is self.tab_char_sync:
             return 'character_sync'
         if cur is self.tab_settings:
@@ -1182,20 +1182,8 @@ class MainWindow(QMainWindow):
             self._enqueue_payload(payload)
             return
 
-        if flow_name == 'grok_create_image_prompt':
-            prompts = self.tab_grok_create_image.get_prompts()
-            if not prompts:
-                QMessageBox.warning(self, 'Không có prompt', 'Hãy nhập ít nhất một prompt ở tab GROK > Tạo Ảnh.')
-                return
-                
-            items = []
-            for i, p in enumerate(prompts):
-                if str(p).strip():
-                    items.append({'id': str(i + 1), 'description': str(p)})
-                    
-            payload = self.status.enqueue_generate_image_from_prompts(items)
-            self._enqueue_payload(payload)
-            return
+
+
 
         if flow_name == 'grok_settings':
             QMessageBox.information(self, 'Cài đặt GROK', 'Tab Cài đặt GROK không chạy workflow.')
@@ -1280,6 +1268,61 @@ class MainWindow(QMainWindow):
                 QMessageBox.warning(self, 'Thiếu ảnh', f'Mode Tạo Video Từ Ảnh yêu cầu ảnh đầu vào cho mỗi dòng.\nDòng thiếu: {preview}{more}')
                 return
                 
+            payload = self.status.enqueue_grok_image_to_video(items)
+            self._enqueue_payload(payload)
+            return
+
+        if flow_name == 'grok_character_sync':
+            prompts = self.tab_grok_char_sync.get_prompts()
+            if not prompts:
+                QMessageBox.warning(self, 'Thiếu prompt', 'Hãy nhập ít nhất 1 prompt ở tab Video Tham Chiếu Nhân Vật.')
+                return
+                
+            characters = self.tab_grok_char_sync.get_character_items()
+            if not characters:
+                QMessageBox.warning(self, 'Thiếu ảnh nhân vật', 'Hãy thêm ít nhất 1 ảnh nhân vật ở tab Video Tham Chiếu Nhân Vật.')
+                return
+                
+            missing_names = []
+            for idx, ch in enumerate(characters):
+                if not str(ch.get('name') or '').strip():
+                    missing_names.append(idx + 1)
+                    
+            if missing_names:
+                preview = ', '.join(str(x) for x in missing_names[:8])
+                more = '...' if len(missing_names) > 8 else ''
+                QMessageBox.warning(self, 'Thiếu tên nhân vật', f'Các ảnh chưa đặt tên nhân vật: {preview}{more}')
+                return
+                
+            items = []
+            unmatched_prompts = []
+            for prompt_text in prompts:
+                prompt_lower = prompt_text.lower()
+                matched_images = []
+                for ch in characters:
+                    name = str(ch.get('name') or '').strip()
+                    if name and name.lower() in prompt_lower:
+                        path_str = str(ch.get('path') or '').strip()
+                        if path_str and not any(path_str in item for item in matched_images):
+                            matched_images.append(f"{name}={path_str}")
+                        
+                if matched_images:
+                    items.append({
+                        "prompt": prompt_text,
+                        "image_link": "|".join(matched_images)
+                    })
+                else:
+                    unmatched_prompts.append(prompt_text)
+                    
+            if unmatched_prompts:
+                preview = '\\n- '.join(unmatched_prompts[:3])
+                more = '\\n...' if len(unmatched_prompts) > 3 else ''
+                QMessageBox.warning(self, 'Prompt không chứa tên nhân vật', f'Các prompt sau không chứa tên nhân vật nào đã khai báo và sẽ bị bỏ qua:\\n- {preview}{more}')
+                
+            if not items:
+                return
+                
+            # Delegate to standard grok_image_to_video queue but with auto-mapped images
             payload = self.status.enqueue_grok_image_to_video(items)
             self._enqueue_payload(payload)
             return

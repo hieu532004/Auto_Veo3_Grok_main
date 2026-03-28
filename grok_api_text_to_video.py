@@ -1,16 +1,37 @@
+"""
+Grok Text-to-Video API — Direct HTTP approach (ported from AutoGrok).
+
+Instead of running fetch() inside the browser via page.evaluate(),
+this module makes direct HTTP calls using httpx with captured headers/cookies.
+The browser is only used for authentication and header capture.
+"""
+from __future__ import annotations
+
 import asyncio
 import datetime
 import json
-from dataclasses import dataclass
+import re
+import uuid
+from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
+from grok_chrome_manager import open_chrome_session
+from watermark_remover import remove_watermark
+import httpx
 
+# ── Constants ──────────────────────────────────────────────────────────
 GROK_BASE = "https://grok.com"
+ASSETS_BASE = "https://assets.grok.com/"
 
 ENDPOINT_CREATE_POST = f"{GROK_BASE}/rest/media/post/create"
 ENDPOINT_CONVO_NEW = f"{GROK_BASE}/rest/app-chat/conversations/new"
 ENDPOINT_UPSCALE = f"{GROK_BASE}/rest/media/video/upscale"
+ENDPOINT_POST_FOLDERS = f"{GROK_BASE}/rest/media/post/folders"
+
+MAX_RETRIES = 3
+RETRY_DELAY_BASE = 10  # seconds
+MAX_RELOGIN_ATTEMPTS = 2
 
 
 def _mask(value: str | None) -> str:
@@ -21,6 +42,7 @@ def _mask(value: str | None) -> str:
     return f"{value[:60]}...({len(value)} chars)"
 
 
+# ── Config ─────────────────────────────────────────────────────────────
 @dataclass(frozen=True)
 class VideoGenConfig:
     aspect_ratio: str = "9:16"
@@ -29,13 +51,617 @@ class VideoGenConfig:
 
     def as_dict(self) -> dict[str, Any]:
         resolution = str(self.resolution_name or "480p").strip().lower()
-        if resolution not in {"480p", "720p"}:
+        if resolution not in {"480p", "720p", "1080p"}:
             resolution = "480p"
         return {
             "aspectRatio": self.aspect_ratio,
             "videoLength": int(self.video_length_seconds),
+            "isVideoEdit": False,
             "resolutionName": resolution,
         }
+
+
+# ── Session Data ───────────────────────────────────────────────────────
+@dataclass
+class GrokSession:
+    """Holds captured auth data from browser."""
+    email: str = ""
+    acc_idx: int = 0
+    captured_headers: dict = field(default_factory=dict)
+    cookies: list[dict] = field(default_factory=list)
+    statsig_id: str = ""
+    timestamp: float = 0.0
+
+    @property
+    def cookie_str(self) -> str:
+        return "; ".join(f"{c['name']}={c['value']}" for c in self.cookies if 'name' in c and 'value' in c)
+
+    def build_headers(self, referer: str | None = None) -> dict:
+        """Build HTTP request headers from captured browser headers."""
+        headers = {}
+        for k, v in self.captured_headers.items():
+            if not k.startswith(":"):
+                headers[k] = v
+        headers["content-type"] = "application/json"
+        headers["x-xai-request-id"] = str(uuid.uuid4())
+        headers["cookie"] = self.cookie_str
+        if referer:
+            headers["referer"] = referer
+        # Remove unwanted headers
+        for key in ("host", "content-length"):
+            headers.pop(key, None)
+        return headers
+
+    def build_download_headers(self) -> dict:
+        """Build headers for downloading video files."""
+        headers = {}
+        for k, v in self.captured_headers.items():
+            if not k.startswith(":"):
+                headers[k] = v
+        headers["cookie"] = self.cookie_str
+        headers["referer"] = f"{GROK_BASE}/"
+        headers["origin"] = GROK_BASE
+        headers["accept"] = "*/*"
+        for key in ("host", "content-length", "content-type"):
+            headers.pop(key, None)
+        return headers
+
+
+# ── Header Capture from Browser ────────────────────────────────────────
+async def capture_session_from_page(page, email: str = "", acc_idx: int = 0) -> GrokSession | None:
+    """
+    Navigate to grok.com and capture headers + cookies from the browser page.
+    This replaces the old auto_discover_statsig_headers (which only got x-statsig-id).
+    Now captures ALL request headers for full session authentication.
+    """
+    loop = asyncio.get_running_loop()
+    future: asyncio.Future = loop.create_future()
+    captured_headers: dict | None = None
+
+    def on_request(req):
+        nonlocal captured_headers
+        try:
+            h = req.headers or {}
+            if not isinstance(h, dict):
+                return
+            statsig = h.get("x-statsig-id")
+            if statsig and captured_headers is None:
+                captured_headers = dict(h)
+                if not future.done():
+                    future.set_result(captured_headers)
+        except Exception:
+            pass
+
+    page.on("request", on_request)
+    try:
+        # Navigate to grok.com to trigger requests with auth headers
+        try:
+            await page.goto(f"{GROK_BASE}/", wait_until="domcontentloaded", timeout=30000)
+        except Exception:
+            pass
+
+        # Wait for headers
+        try:
+            await asyncio.wait_for(future, timeout=15)
+        except asyncio.TimeoutError:
+            pass
+
+        # Retry if not captured
+        if captured_headers is None:
+            print("🔄 Retry header capture — reloading grok.com...")
+            retry_future = loop.create_future()
+
+            def on_request_retry(req):
+                nonlocal captured_headers
+                try:
+                    h = req.headers or {}
+                    if not isinstance(h, dict):
+                        return
+                    statsig = h.get("x-statsig-id")
+                    if statsig and captured_headers is None:
+                        captured_headers = dict(h)
+                        if not retry_future.done():
+                            retry_future.set_result(captured_headers)
+                except Exception:
+                    pass
+
+            page.on("request", on_request_retry)
+            try:
+                await page.reload(wait_until="domcontentloaded", timeout=30000)
+            except Exception:
+                pass
+            try:
+                await asyncio.wait_for(retry_future, timeout=15)
+            except asyncio.TimeoutError:
+                pass
+            try:
+                page.remove_listener("request", on_request_retry)
+            except Exception:
+                pass
+
+        if captured_headers is None:
+            print("❌ Failed to capture headers")
+            return None
+
+        # Extract cookies
+        browser_context = page.context
+        cookies = await browser_context.cookies(f"{GROK_BASE}")
+        print(f"✅ Captured {len(captured_headers)} headers, {len(cookies)} cookies")
+
+        session = GrokSession(
+            email=email,
+            acc_idx=acc_idx,
+            captured_headers=captured_headers,
+            cookies=[{"name": c["name"], "value": c["value"]} for c in cookies],
+            statsig_id=captured_headers.get("x-statsig-id", ""),
+            timestamp=asyncio.get_event_loop().time(),
+        )
+        return session
+
+    finally:
+        try:
+            page.remove_listener("request", on_request)
+        except Exception:
+            pass
+
+
+# ── Compatibility wrapper ──────────────────────────────────────────────
+async def auto_discover_statsig_headers(
+    page,
+    cache_path: Path,
+    profile_name: str,
+    force: bool = False,
+    persist: bool = False,
+) -> dict:
+    """
+    Backward-compatible wrapper. Returns headers dict like the old API,
+    but internally captures the full session.
+    """
+    session = await capture_session_from_page(page)
+    if session is None:
+        return {}
+    return session.captured_headers
+
+
+# ── API: Create Post ───────────────────────────────────────────────────
+async def create_post(prompt: str, session: GrokSession) -> dict:
+    """Create a media post (required before video generation)."""
+    try:
+        async with httpx.AsyncClient(timeout=30) as client:
+            res = await client.post(
+                ENDPOINT_CREATE_POST,
+                json={"mediaType": "MEDIA_POST_TYPE_VIDEO", "prompt": prompt},
+                headers=session.build_headers(),
+            )
+        if res.status_code != 200:
+            return {
+                "error": f"createPost HTTP {res.status_code}",
+                "errorDetail": res.text[:500],
+            }
+        data = res.json()
+        post_id = data.get("post", {}).get("id")
+        if not post_id:
+            return {"error": "no postId returned"}
+        return {"postId": post_id}
+    except Exception as e:
+        return {"error": str(e)}
+
+
+# ── API: Generate Video (streaming) ───────────────────────────────────
+def _build_video_body(prompt: str, parent_post_id: str, cfg: VideoGenConfig) -> dict:
+    """Build the conversation/new request body for video generation."""
+    return {
+        "temporary": True,
+        "modelName": "grok-3",
+        "message": f"{prompt} --mode=custom",
+        "toolOverrides": {"videoGen": True},
+        "enableSideBySide": True,
+        "responseMetadata": {
+            "experiments": [],
+            "modelConfigOverride": {
+                "modelMap": {
+                    "videoGenModelConfig": {
+                        "parentPostId": parent_post_id,
+                        **cfg.as_dict(),
+                    }
+                }
+            },
+        },
+    }
+
+
+def _parse_stream_line(line: str, result: dict) -> None:
+    """Parse one NDJSON line from the streaming response."""
+    if not line.strip():
+        return
+    try:
+        j = json.loads(line)
+    except json.JSONDecodeError:
+        return
+
+    # Title
+    if j.get("result", {}).get("title", {}).get("newTitle"):
+        result["title"] = j["result"]["title"]["newTitle"]
+
+    # Errors
+    for err_source in [
+        j.get("error"),
+        j.get("result", {}).get("error"),
+        j.get("result", {}).get("response", {}).get("modelResponse", {}).get("error"),
+    ]:
+        if err_source and not result.get("error"):
+            msg = err_source if isinstance(err_source, str) else (
+                err_source.get("message", json.dumps(err_source)) if isinstance(err_source, dict) else str(err_source)
+            )
+            result["error"] = msg
+
+    # Content blocking
+    mr = j.get("result", {}).get("response", {}).get("modelResponse", {})
+    if (mr.get("isSoftBlock") or mr.get("isDisallowed")) and not result.get("error"):
+        result["error"] = f"Content blocked: softBlock={mr.get('isSoftBlock')}, disallowed={mr.get('isDisallowed')}"
+
+    # Video progress
+    vr = j.get("result", {}).get("response", {}).get("streamingVideoGenerationResponse")
+    if vr:
+        result["progress"] = vr.get("progress", result.get("progress", 0))
+        if vr.get("videoId"):
+            result["videoId"] = vr["videoId"]
+        if vr.get("assetId") and not result.get("videoId"):
+            result["videoId"] = vr["assetId"]
+        if vr.get("videoUrl"):
+            result["videoUrl"] = vr["videoUrl"]
+        if vr.get("parentPostId"):
+            result["parentPostId_from_stream"] = vr["parentPostId"]
+        if vr.get("error") and not result.get("error"):
+            err = vr["error"]
+            result["error"] = err if isinstance(err, str) else str(err)
+
+
+async def generate_video(
+    prompt: str,
+    session: GrokSession,
+    cfg: VideoGenConfig,
+    on_progress: Callable[[int, int], None] | None = None,
+    job_index: int = 0,
+) -> dict:
+    """
+    Generate a single video via direct HTTP.
+    Steps: create post → stream conversation → parse result.
+    Retries on 429 (rate limit) and network errors.
+    """
+    for attempt in range(MAX_RETRIES + 1):
+        try:
+            # Step 1: Create post
+            suffix = f" (retry {attempt}/{MAX_RETRIES})" if attempt > 0 else ""
+            print(f"[VideoAPI] Creating post: {prompt[:50]}...{suffix}")
+
+            post = await create_post(prompt, session)
+            if post.get("error"):
+                if "HTTP 403" in str(post.get("error", "")) and attempt < MAX_RETRIES:
+                    print(f"[VideoAPI] ⚠️ 403 from createPost, will retry...")
+                    await asyncio.sleep(RETRY_DELAY_BASE * (attempt + 1))
+                    continue
+                return {
+                    "prompt": prompt,
+                    "title": "",
+                    "videoUrl": None,
+                    "videoId": None,
+                    "progress": 0,
+                    "error": post.get("error"),
+                    "parentPostId": None,
+                    "createStatus": 0,
+                    "convoStatus": 0,
+                }
+
+            parent_post_id = post["postId"]
+            print(f"[VideoAPI] Post created: {parent_post_id}")
+
+            # Step 2: Generate video (streaming)
+            result = {
+                "prompt": prompt,
+                "title": "",
+                "videoUrl": None,
+                "videoId": None,
+                "progress": 0,
+                "error": None,
+                "parentPostId": parent_post_id,
+                "createStatus": 200,
+                "convoStatus": 0,
+            }
+
+            body = _build_video_body(prompt, parent_post_id, cfg)
+            headers = session.build_headers()
+
+            async with httpx.AsyncClient(timeout=httpx.Timeout(300.0, connect=30.0)) as client:
+                async with client.stream(
+                    "POST",
+                    ENDPOINT_CONVO_NEW,
+                    json=body,
+                    headers=headers,
+                ) as response:
+                    result["convoStatus"] = response.status_code
+
+                    # Handle error status codes
+                    if response.status_code == 429 and attempt < MAX_RETRIES:
+                        wait = RETRY_DELAY_BASE * (attempt + 1) + 5
+                        print(f"[VideoAPI] ⚠️ Rate limited (429), retry in {wait}s...")
+                        await asyncio.sleep(wait)
+                        continue
+
+                    if response.status_code == 403 and attempt < MAX_RETRIES:
+                        print(f"[VideoAPI] ⚠️ 403 Forbidden, retry...")
+                        await asyncio.sleep(RETRY_DELAY_BASE * (attempt + 1))
+                        continue
+
+                    if response.status_code != 200:
+                        body_text = ""
+                        async for chunk in response.aiter_text():
+                            body_text += chunk
+                            if len(body_text) > 500:
+                                break
+                        result["error"] = f"HTTP {response.status_code}"
+                        result["errorDetail"] = body_text[:500]
+                        return result
+
+                    # Parse streaming NDJSON response
+                    buffer = ""
+                    last_reported = 0
+                    async for chunk in response.aiter_text():
+                        buffer += chunk
+                        lines = buffer.split("\n")
+                        buffer = lines.pop()  # keep incomplete line
+
+                        for line in lines:
+                            _parse_stream_line(line, result)
+                            pct = int(result.get("progress", 0))
+                            if pct > last_reported and on_progress:
+                                on_progress(job_index, pct)
+                                last_reported = pct
+
+                    # Process remaining buffer
+                    if buffer.strip():
+                        _parse_stream_line(buffer, result)
+
+            # Fallback: use videoId as download key
+            if not result.get("videoUrl") and result.get("videoId"):
+                result["videoUrl"] = result["videoId"]
+                print(f"[VideoAPI] Using videoId as download key: {result['videoId']}")
+
+            if not result.get("videoUrl") and not result.get("error"):
+                result["error"] = f"Video gen stopped at {result.get('progress', 0)}% - no video URL"
+
+            return result
+
+        except (httpx.ConnectError, httpx.ReadTimeout, httpx.ConnectTimeout, httpx.WriteTimeout, httpx.RemoteProtocolError) as e:
+            if attempt < MAX_RETRIES:
+                wait = RETRY_DELAY_BASE * (attempt + 1)
+                print(f"[VideoAPI] ⚠️ Network error: {e}, retry in {wait}s...")
+                await asyncio.sleep(wait)
+                continue
+            return {
+                "prompt": prompt,
+                "title": "",
+                "videoUrl": None,
+                "videoId": None,
+                "progress": 0,
+                "error": str(e),
+                "parentPostId": None,
+                "createStatus": 0,
+                "convoStatus": 0,
+            }
+
+
+# ── API: Upscale Video ────────────────────────────────────────────────
+async def upscale_video(video_id: str, session: GrokSession, max_retries: int = 3) -> str | None:
+    """Request HD upscale for a video. Returns hdMediaUrl or None."""
+    vid = (video_id or "").strip()
+    if not vid:
+        return None
+
+    for attempt in range(1, max_retries + 1):
+        try:
+            async with httpx.AsyncClient(timeout=30) as client:
+                res = await client.post(
+                    ENDPOINT_UPSCALE,
+                    json={"videoId": vid},
+                    headers=session.build_headers(),
+                )
+            if res.status_code == 200:
+                data = res.json()
+                hd_url = data.get("hdMediaUrl")
+                if hd_url:
+                    return str(hd_url)
+            if attempt < max_retries:
+                await asyncio.sleep(2 * attempt)
+        except Exception:
+            if attempt < max_retries:
+                await asyncio.sleep(2 * attempt)
+    return None
+
+
+# ── API: Download Video ───────────────────────────────────────────────
+async def download_video(
+    video_url: str,
+    session: GrokSession,
+    out_path: Path,
+    timeout_seconds: int = 180,
+    max_attempts: int = 15,
+    retry_delay: int = 5,
+) -> bool:
+    """Download a video file to disk. Returns True on success.
+    Uses aggressive polling (15 attempts × 5s) matching AutoGrok's downloadVideo()
+    because video may not be ready immediately after stream ends.
+    """
+    target = (video_url or "").strip()
+    if not target:
+        return False
+
+    # Build full URL if needed
+    if not target.startswith("http"):
+        target = f"{ASSETS_BASE}{target}"
+
+    headers = session.build_download_headers()
+
+    for attempt in range(1, max_attempts + 1):
+        try:
+            print(f"⬇️ Downloading ({attempt}/{max_attempts}): {target[:80]}...")
+            async with httpx.AsyncClient(timeout=timeout_seconds, follow_redirects=True) as client:
+                res = await client.get(target, headers=headers)
+
+            if res.status_code == 200 and len(res.content) > 1000:
+                # Verify it looks like an MP4
+                is_mp4 = len(res.content) > 12 and res.content[4:8] == b"ftyp"
+                ct = (res.headers.get("content-type") or "").lower()
+                if is_mp4 or "video" in ct or "octet-stream" in ct:
+                    out_path.parent.mkdir(parents=True, exist_ok=True)
+                    out_path.write_bytes(res.content)
+                    size_mb = len(res.content) / (1024 * 1024)
+                    print(f"⬇️ Saved: {out_path} ({size_mb:.1f} MB)")
+                    return True
+
+            if res.status_code in (404, 403) and attempt < max_attempts:
+                print(f"⏳ Video not ready ({res.status_code}), retry {attempt}/{max_attempts}...")
+                await asyncio.sleep(retry_delay)
+                continue
+
+            print(f"⚠️ Download HTTP {res.status_code} ({len(res.content)} bytes)")
+        except Exception as e:
+            print(f"⚠️ Download error: {str(e)[:60]}")
+            if attempt < max_attempts:
+                await asyncio.sleep(retry_delay)
+                continue
+    return False
+
+
+# ── Batch Processing ──────────────────────────────────────────────────
+async def run_batch_text_to_video(
+    prompts: list[str],
+    session: GrokSession,
+    cfg: VideoGenConfig,
+    concurrency: int = 5,
+    download_dir: Path | None = None,
+    on_progress: Callable[[int, int], None] | None = None,
+    on_status: Callable[[int, str], None] | None = None,
+    on_video: Callable[[int, str], None] | None = None,
+    on_info: Callable[[str], None] | None = None,
+) -> list[dict]:
+    """
+    Run multiple video generations concurrently.
+    Uses worker pool pattern from AutoGrok.
+    """
+    N = len(prompts)
+    sem = asyncio.Semaphore(max(1, concurrency))
+    results: list[dict] = [None] * N  # type: ignore
+
+    def _safe(cb, *args):
+        try:
+            if cb:
+                cb(*args)
+        except Exception:
+            pass
+
+    async def process_one(idx: int, prompt: str):
+        async with sem:
+            _safe(on_status, idx, "Tạo post")
+            _safe(on_info, f"[GROK-T2V {idx+1}] bắt đầu job")
+
+            result = await generate_video(prompt, session, cfg, on_progress, idx)
+
+            # Handle 403 - try refreshing session won't work in this context
+            # The caller should handle re-auth
+            convo_status = result.get("convoStatus", 0)
+            if convo_status == 403:
+                _safe(on_status, idx, "Lỗi 403")
+                _safe(on_info, f"[GROK-T2V {idx+1}] lỗi 403 - cần login lại")
+                results[idx] = result
+                return
+
+            if result.get("error") and not result.get("videoUrl"):
+                _safe(on_status, idx, "Lỗi")
+                _safe(on_info, f"[GROK-T2V {idx+1}] lỗi: {result.get('error', '')[:80]}")
+                results[idx] = result
+                return
+
+            # Update progress
+            pct = int(result.get("progress", 0))
+            if pct >= 100:
+                _safe(on_status, idx, "Tạo xong")
+                _safe(on_progress, idx, 100)
+
+            # Upscale if not 720p
+            parent_id = result.get("parentPostId", "")
+            is_720p = str(cfg.resolution_name or "").lower() == "720p"
+            hd_url = None
+
+            if pct >= 100 and parent_id and not is_720p:
+                _safe(on_status, idx, "Đang upscale")
+                _safe(on_info, f"[GROK-T2V {idx+1}] upscale...")
+                hd_url = await upscale_video(parent_id, session)
+                if hd_url:
+                    result["hdMediaUrl"] = hd_url
+                    result["usedUpscale"] = True
+
+            # Download video
+            source_url = hd_url or result.get("videoUrl")
+            if not source_url and parent_id:
+                # Fallback: construct public download URL
+                source_url = (
+                    f"https://imagine-public.x.ai/imagine-public/share-videos/"
+                    f"{parent_id}.mp4?cache=1&dl=1"
+                )
+
+            if source_url and download_dir:
+                _safe(on_status, idx, "Tải video")
+                ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+                pr_short = re.sub(r"[^A-Za-z0-9._-]+", "_", (prompt[:40] or "")).strip("._- ")
+                filename = f"{idx+1:03d}_{pr_short}_{ts}.mp4"
+                out_path = download_dir / filename
+
+                ok = await download_video(source_url, session, out_path)
+                if ok:
+                    try:
+                        remove_watermark(str(out_path), log_callback=lambda m: _safe(on_info, m))
+                    except Exception as e:
+                        _safe(on_info, f"[GROK-T2V {idx+1}] Lỗi xoá logo: {e}")
+                    result["savedFile"] = str(out_path)
+                    _safe(on_video, idx, str(out_path))
+                    _safe(on_status, idx, "Hoàn thành")
+                    _safe(on_info, f"[GROK-T2V {idx+1}] hoàn thành")
+                else:
+                    # Retry with upscale
+                    if parent_id:
+                        fresh_hd = await upscale_video(parent_id, session)
+                        if fresh_hd:
+                            ok2 = await download_video(fresh_hd, session, out_path)
+                            if ok2:
+                                try:
+                                    remove_watermark(str(out_path), log_callback=lambda m: _safe(on_info, m))
+                                except Exception as e:
+                                    _safe(on_info, f"[GROK-T2V {idx+1}] Lỗi xoá logo: {e}")
+                                result["savedFile"] = str(out_path)
+                                _safe(on_video, idx, str(out_path))
+                                _safe(on_status, idx, "Hoàn thành")
+                                _safe(on_info, f"[GROK-T2V {idx+1}] hoàn thành sau retry")
+                                results[idx] = result
+                                return
+                    _safe(on_status, idx, "Lỗi tải")
+                    _safe(on_info, f"[GROK-T2V {idx+1}] tải thất bại")
+            else:
+                if convo_status == 200 and pct >= 100:
+                    _safe(on_status, idx, "Hoàn thành")
+                else:
+                    _safe(on_status, idx, f"Lỗi {convo_status}")
+
+            results[idx] = result
+
+    tasks = [asyncio.create_task(process_one(i, p)) for i, p in enumerate(prompts)]
+    await asyncio.gather(*tasks, return_exceptions=True)
+
+    return [r or {"error": "task failed"} for r in results]
+
+
+# ── Legacy compatibility functions ─────────────────────────────────────
+# These maintain backward compatibility with existing code that uses them
 
 
 def payload_create_post(prompt: str) -> dict[str, Any]:
@@ -43,25 +669,14 @@ def payload_create_post(prompt: str) -> dict[str, Any]:
 
 
 def payload_conversation_new(prompt: str, parent_post_id: str, cfg: VideoGenConfig) -> dict[str, Any]:
-    return {
-        "temporary": True,
-        "modelName": "grok-3",
-        "message": prompt,
-        "toolOverrides": {"videoGen": True},
-        "enableSideBySide": True,
-        "responseMetadata": {
-            "experiments": [],
-            "modelConfigOverride": {
-                "modelMap": {"videoGenModelConfig": {**cfg.as_dict(), "parentPostId": parent_post_id}},
-            },
-        },
-    }
+    return _build_video_body(prompt, parent_post_id, cfg)
 
 
 def payload_upscale(video_id: str) -> dict[str, Any]:
     return {"videoId": video_id}
 
 
+# ── Legacy cache functions (still used by some callers) ────────────────
 def _load_cache(cache_path: Path) -> dict:
     try:
         if cache_path.exists():
@@ -95,7 +710,6 @@ def get_cached_headers(cache_path: Path, profile_name: str) -> dict:
 def set_cached_headers(cache_path: Path, profile_name: str, headers: dict) -> None:
     headers = dict(headers or {})
     headers.pop("x-xai-request-id", None)
-
     cache = _load_cache(cache_path)
     if not isinstance(cache, dict):
         cache = {}
@@ -103,7 +717,6 @@ def set_cached_headers(cache_path: Path, profile_name: str, headers: dict) -> No
     if not isinstance(profiles, dict):
         profiles = {}
         cache["profiles"] = profiles
-
     entry = profiles.get(profile_name)
     if not isinstance(entry, dict):
         entry = {}
@@ -131,688 +744,51 @@ def profile_cache_age_seconds(cache_path: Path, profile_name: str) -> float | No
         return None
 
 
-async def auto_discover_statsig_headers(
-  page,
-  cache_path: Path,
-  profile_name: str,
-  force: bool = False,
-  persist: bool = False,
-) -> dict:
-    cached = get_cached_headers(cache_path, profile_name)
-    if cached and not force:
-        return cached
-
-    loop = asyncio.get_running_loop()
-    future: asyncio.Future = loop.create_future()
-
-    def on_request(req):
-        try:
-            headers = req.headers or {}
-            if not isinstance(headers, dict):
-                return
-            statsig = headers.get("x-statsig-id")
-            if statsig and not future.done():
-                future.set_result(statsig)
-        except Exception:
-            return
-
-    page.on("request", on_request)
-    try:
-        try:
-            await page.goto(f"{GROK_BASE}/imagine", wait_until="domcontentloaded", timeout=20000)
-        except Exception:
-            pass
-
-        statsig = None
-        try:
-            statsig = await asyncio.wait_for(future, timeout=12)
-        except asyncio.TimeoutError:
-            statsig = None
-
-        if isinstance(statsig, str) and statsig.strip():
-            custom = {"x-statsig-id": statsig.strip()}
-            if persist:
-                set_cached_headers(cache_path, profile_name, custom)
-            print(f"✅ Auto-discovered x-statsig-id: {_mask(custom.get('x-statsig-id'))}")
-            if persist:
-                print(f"💾 Saved cache: {cache_path}")
-            return custom
-
-        statsig = await page.evaluate(
-            """() => {
-              try { return localStorage.getItem('x-statsig-id'); } catch (e) { return null; }
-            }"""
-        )
-        if isinstance(statsig, str) and statsig.strip():
-            custom = {"x-statsig-id": statsig.strip()}
-            if persist:
-                set_cached_headers(cache_path, profile_name, custom)
-            print("✅ Derived x-statsig-id from localStorage")
-            if persist:
-                print(f"💾 Saved cache: {cache_path}")
-            return custom
-
-        print("⚠️ Không auto-discover được x-statsig-id")
-        return {}
-    finally:
-        try:
-            page.off("request", on_request)
-        except Exception:
-            pass
-
+# ── Legacy page.evaluate functions (kept for backward compat) ──────────
+# These are no longer the primary path but kept so old callers don't break
 
 async def api_run_single_job_in_page(
-    page,
-    prompt: str,
-    statsig_headers: dict,
-    cfg: VideoGenConfig,
-    timeout_seconds: int,
-    job_index: int,
+    page, prompt: str, statsig_headers: dict, cfg: VideoGenConfig,
+    timeout_seconds: int, job_index: int,
 ) -> dict:
-    """API call sequence run inside the authenticated browser page.
-
-    - Create video post -> returns parentPostId
-    - Start conversation -> stream progress
-    - Upscale -> returns hdMediaUrl
-
-    Expects workflow to expose globalThis.py_progress for progress updates.
-    """
-
-    payload = {
-        "prompt": prompt,
-        "statsigHeaders": statsig_headers or {},
-        "cfg": cfg.as_dict(),
-        "timeoutSeconds": int(timeout_seconds),
-        "jobIndex": int(job_index),
-    }
-
-    result = await page.evaluate(
-        """(async ({ prompt, statsigHeaders, cfg, timeoutSeconds, jobIndex }) => {
-          function parseJsonObjectsFromBuffer(buffer) {
-            const out = [];
-            let depth = 0;
-            let inString = false;
-            let escape = false;
-            let start = -1;
-            for (let i = 0; i < buffer.length; i++) {
-              const ch = buffer[i];
-              if (start === -1) {
-                if (ch === '{') { start = i; depth = 1; inString = false; escape = false; }
-                continue;
-              }
-              if (inString) {
-                if (escape) escape = false;
-                else if (ch && ch.charCodeAt(0) === 92) escape = true;
-                else if (ch === '"') inString = false;
-                continue;
-              }
-              if (ch === '"') { inString = true; continue; }
-              if (ch === '{') depth++;
-              else if (ch === '}') {
-                depth--;
-                if (depth === 0) {
-                  const slice = buffer.slice(start, i + 1);
-                  try { out.push(JSON.parse(slice)); } catch (e) {}
-                  start = -1;
-                }
-              }
-            }
-            let tail = '';
-            if (start !== -1) tail = buffer.slice(start);
-            return { objects: out, tail };
-          }
-
-          function pickLastProgressEvent(objects) {
-            let last = null;
-            for (const obj of objects) {
-              const svr = obj && obj.result && obj.result.response && obj.result.response.streamingVideoGenerationResponse;
-              if (svr && typeof svr.progress === 'number') {
-                last = { progress: svr.progress, videoUrl: svr.videoUrl || null, parentPostId: svr.parentPostId || null };
-              }
-            }
-            return last;
-          }
-
-          function reportProgress(pct, videoUrl) {
-            try {
-              if (typeof globalThis.py_progress === 'function') {
-                globalThis.py_progress({ index: jobIndex, progress: pct, videoUrl: videoUrl || null });
-              }
-            } catch (e) {}
-          }
-
-          async function createPost() {
-            const res = await fetch('https://grok.com/rest/media/post/create', {
-              method: 'POST',
-              headers: Object.assign({ 'content-type': 'application/json' }, statsigHeaders || {}),
-              credentials: 'include',
-              body: JSON.stringify({ mediaType: 'MEDIA_POST_TYPE_VIDEO', prompt }),
-            });
-            const data = await res.json().catch(() => null);
-            const id = data && data.post && data.post.id;
-            return { status: res.status, parentPostId: id || null, data };
-          }
-
-          async function startConversation(parentPostId) {
-            const requestId = (crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()) + Math.random();
-            const convoPayload = {
-              temporary: true,
-              modelName: 'grok-3',
-              message: prompt,
-              toolOverrides: { videoGen: true },
-              enableSideBySide: true,
-              responseMetadata: {
-                experiments: [],
-                modelConfigOverride: {
-                  modelMap: { videoGenModelConfig: Object.assign({ parentPostId }, cfg) },
-                },
-              },
-            };
-
-            const controller = new AbortController();
-            const t = setTimeout(() => controller.abort(), Math.max(1, timeoutSeconds) * 1000);
-
-            let res;
-            try {
-              res = await fetch('https://grok.com/rest/app-chat/conversations/new', {
-                method: 'POST',
-                headers: Object.assign({ 'content-type': 'application/json', 'x-xai-request-id': requestId }, statsigHeaders || {}),
-                credentials: 'include',
-                body: JSON.stringify(convoPayload),
-                signal: controller.signal,
-              });
-            } catch (e) {
-              clearTimeout(t);
-              return { status: 0, error: String(e), lastEvent: null, objectsHead: [] };
-            }
-
-            const status = res.status;
-            const objectsHead = [];
-            let lastEvent = null;
-
-            try {
-              if (!res.body) {
-                const text = await res.text();
-                const parsed = parseJsonObjectsFromBuffer(text);
-                if (parsed.objects.length) objectsHead.push(...parsed.objects.slice(0, 2));
-                lastEvent = pickLastProgressEvent(parsed.objects);
-                if (lastEvent) reportProgress(lastEvent.progress, lastEvent.videoUrl);
-                clearTimeout(t);
-                return { status, lastEvent, objectsHead };
-              }
-
-              const reader = res.body.getReader();
-              const decoder = new TextDecoder('utf-8');
-              let buffer = '';
-
-              while (true) {
-                const { value, done } = await reader.read();
-                if (done) break;
-                if (!value) continue;
-
-                buffer += decoder.decode(value, { stream: true });
-                const parsed = parseJsonObjectsFromBuffer(buffer);
-                buffer = parsed.tail;
-                if (parsed.objects.length) {
-                  if (objectsHead.length < 2) objectsHead.push(...parsed.objects.slice(0, 2 - objectsHead.length));
-                  const ev = pickLastProgressEvent(parsed.objects);
-                  if (ev) {
-                    lastEvent = ev;
-                    reportProgress(lastEvent.progress, lastEvent.videoUrl);
-                    if (lastEvent.progress >= 100 && lastEvent.videoUrl) break;
-                  }
-                }
-              }
-
-              clearTimeout(t);
-              return { status, lastEvent, objectsHead };
-            } catch (e) {
-              clearTimeout(t);
-              return { status, error: String(e), lastEvent, objectsHead };
-            }
-          }
-
-          async function upscaleVideo(videoId, maxRetries = 3) {
-            for (let attempt = 1; attempt <= maxRetries; attempt++) {
-              try {
-                const res = await fetch('https://grok.com/rest/media/video/upscale', {
-                  method: 'POST',
-                  headers: Object.assign({ 'content-type': 'application/json' }, statsigHeaders || {}),
-                  credentials: 'include',
-                  body: JSON.stringify({ videoId }),
-                });
-                const data = await res.json().catch(() => null);
-                const hdMediaUrl = (data && data.hdMediaUrl) ? data.hdMediaUrl : null;
-                
-                if (res.status === 200 && hdMediaUrl) {
-                  return { status: res.status, hdMediaUrl, data, attempt };
-                }
-                
-                if (attempt < maxRetries) {
-                  await new Promise(r => setTimeout(r, 2000 * attempt));
-                  continue;
-                }
-                return { status: res.status, hdMediaUrl, data, attempt };
-              } catch (e) {
-                if (attempt < maxRetries) {
-                  await new Promise(r => setTimeout(r, 2000 * attempt));
-                  continue;
-                }
-                return { status: 0, hdMediaUrl: null, data: null, error: String(e), attempt };
-              }
-            }
-            return { status: 0, hdMediaUrl: null, data: null, attempt: maxRetries };
-          }
-
-          const created = await createPost();
-          if (!created.parentPostId) {
-            return { prompt, createStatus: created.status, parentPostId: null, convoStatus: 0, lastEvent: null, upscaleStatus: 0, hdMediaUrl: null, objectsHead: [created.data || null] };
-          }
-
-          const convo = await startConversation(created.parentPostId);
-          let upscale = null;
-          let finalMediaUrl = (convo && convo.lastEvent && convo.lastEvent.videoUrl) ? convo.lastEvent.videoUrl : null;
-          const is720p = String((cfg && cfg.resolutionName) || '').toLowerCase() === '720p';
-          let usedUpscale = false;
-          if (convo && convo.status === 200 && convo.lastEvent && typeof convo.lastEvent.progress === 'number' && convo.lastEvent.progress >= 100) {
-            if (!is720p) {
-              upscale = await upscaleVideo(created.parentPostId, 3);
-              if (upscale && upscale.hdMediaUrl) {
-                finalMediaUrl = upscale.hdMediaUrl;
-                usedUpscale = true;
-              }
-            }
-          }
-
-          return {
-            prompt,
-            createStatus: created.status,
-            parentPostId: created.parentPostId,
-            convoStatus: convo.status,
-            lastEvent: convo.lastEvent || null,
-            objectsHead: convo.objectsHead || [],
-            upscaleStatus: upscale ? upscale.status : 0,
-            usedUpscale,
-            mediaUrl: finalMediaUrl || null,
-            hdMediaUrl: usedUpscale ? (upscale ? (upscale.hdMediaUrl || null) : null) : null,
-            upscaleData: upscale ? (upscale.data || null) : null,
-          };
-        })""",
-        payload,
+    """Legacy: now wraps direct HTTP call instead of page.evaluate()."""
+    # Build a minimal session from statsig_headers + page cookies
+    browser_context = page.context
+    cookies = await browser_context.cookies(GROK_BASE)
+    session = GrokSession(
+        captured_headers=statsig_headers,
+        cookies=[{"name": c["name"], "value": c["value"]} for c in cookies],
+        statsig_id=statsig_headers.get("x-statsig-id", ""),
     )
-
-    return result if isinstance(result, dict) else {"error": "unexpected", "raw": result}
+    result = await generate_video(prompt, session, cfg, job_index=job_index)
+    return result
 
 
 async def api_run_jobs_in_page(
-    page,
-    prompts: list[str],
-    statsig_headers: dict,
-    cfg: VideoGenConfig,
-    timeout_seconds: int,
-    index_offset: int = 0,
+    page, prompts: list[str], statsig_headers: dict, cfg: VideoGenConfig,
+    timeout_seconds: int, index_offset: int = 0,
 ) -> list[dict]:
-    """Run multiple video generations concurrently inside ONE page.
+    """Legacy: now wraps direct HTTP batch call instead of page.evaluate()."""
+    browser_context = page.context
+    cookies = await browser_context.cookies(GROK_BASE)
+    session = GrokSession(
+        captured_headers=statsig_headers,
+        cookies=[{"name": c["name"], "value": c["value"]} for c in cookies],
+        statsig_id=statsig_headers.get("x-statsig-id", ""),
+    )
 
-    This avoids opening extra tabs/pages and still runs jobs in parallel using browser fetch.
-    """
-
-    payload = {
-        "prompts": prompts,
-        "statsigHeaders": statsig_headers or {},
-        "cfg": cfg.as_dict(),
-        "timeoutSeconds": int(timeout_seconds),
-        "indexOffset": int(index_offset or 0),
-    }
-
-    js = """(async ({ prompts, statsigHeaders, cfg, timeoutSeconds, indexOffset }) => {
-          function log(jobIndex, message, data) {
-            try {
-              if (typeof globalThis.py_log === 'function') {
-                globalThis.py_log({
-                  index: (indexOffset || 0) + jobIndex,
-                  message: String(message || ''),
-                  data: (data === undefined ? null : data),
-                  ts: Date.now(),
-                });
-              }
-            } catch (e) {}
-          }
-
-          function parseJsonObjectsFromBuffer(buffer) {
-            const out = [];
-            let depth = 0;
-            let inString = false;
-            let escape = false;
-            let start = -1;
-            for (let i = 0; i < buffer.length; i++) {
-              const ch = buffer[i];
-              if (start === -1) {
-                if (ch === '{') { start = i; depth = 1; inString = false; escape = false; }
-                continue;
-              }
-              if (inString) {
-                if (escape) escape = false;
-                else if (ch && ch.charCodeAt(0) === 92) escape = true;
-                else if (ch === '"') inString = false;
-                continue;
-              }
-              if (ch === '"') { inString = true; continue; }
-              if (ch === '{') depth++;
-              else if (ch === '}') {
-                depth--;
-                if (depth === 0) {
-                  const slice = buffer.slice(start, i + 1);
-                  try { out.push(JSON.parse(slice)); } catch (e) {}
-                  start = -1;
-                }
-              }
-            }
-            let tail = '';
-            if (start !== -1) tail = buffer.slice(start);
-            return { objects: out, tail };
-          }
-
-          function pickLastProgressEvent(objects) {
-            let last = null;
-            for (const obj of objects) {
-              const svr = obj && obj.result && obj.result.response && obj.result.response.streamingVideoGenerationResponse;
-              if (svr && typeof svr.progress === 'number') {
-                last = { progress: svr.progress, videoUrl: svr.videoUrl || null, parentPostId: svr.parentPostId || null };
-              }
-            }
-            return last;
-          }
-
-          function reportProgress(jobIndex, pct, videoUrl) {
-            try {
-              if (typeof globalThis.py_progress === 'function') {
-                globalThis.py_progress({ index: (indexOffset || 0) + jobIndex, progress: pct, videoUrl: videoUrl || null });
-              }
-            } catch (e) {}
-          }
-
-          async function createPost(prompt) {
-            const res = await fetch('https://grok.com/rest/media/post/create', {
-              method: 'POST',
-              headers: Object.assign({ 'content-type': 'application/json' }, statsigHeaders || {}),
-              credentials: 'include',
-              body: JSON.stringify({ mediaType: 'MEDIA_POST_TYPE_VIDEO', prompt }),
-            });
-            const data = await res.json().catch(() => null);
-            const id = data && data.post && data.post.id;
-            return { status: res.status, parentPostId: id || null, data };
-          }
-
-          async function upscaleVideo(videoId, jobIndex, maxRetries = 3) {
-            // Retry up to maxRetries times
-            for (let attempt = 1; attempt <= maxRetries; attempt++) {
-              try {
-                const res = await fetch('https://grok.com/rest/media/video/upscale', {
-                  method: 'POST',
-                  headers: Object.assign({ 'content-type': 'application/json' }, statsigHeaders || {}),
-                  credentials: 'include',
-                  body: JSON.stringify({ videoId }),
-                });
-                const data = await res.json().catch(() => null);
-                const hdMediaUrl = (data && data.hdMediaUrl) ? data.hdMediaUrl : null;
-                
-                // Success if status=200 and hdMediaUrl exists
-                if (res.status === 200 && hdMediaUrl) {
-                  return { status: res.status, hdMediaUrl, data, attempt };
-                }
-                
-                // Failed but can retry
-                if (attempt < maxRetries) {
-                  log(jobIndex, 'upscale_retry', { attempt, status: res.status, hdMediaUrl: hdMediaUrl || null });
-                  await new Promise(r => setTimeout(r, 2000 * attempt)); // Wait 2s, 4s before retry
-                  continue;
-                }
-                
-                // Last attempt failed
-                return { status: res.status, hdMediaUrl, data, attempt };
-              } catch (e) {
-                if (attempt < maxRetries) {
-                  log(jobIndex, 'upscale_retry_error', { attempt, error: String(e) });
-                  await new Promise(r => setTimeout(r, 2000 * attempt));
-                  continue;
-                }
-                return { status: 0, hdMediaUrl: null, data: null, error: String(e), attempt };
-              }
-            }
-            return { status: 0, hdMediaUrl: null, data: null, attempt: maxRetries };
-          }
-
-          async function startConversation(prompt, parentPostId, jobIndex) {
-            log(jobIndex, 'conversation_start', { parentPostId });
-            const requestId = (crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()) + Math.random();
-            const convoPayload = {
-              temporary: true,
-              modelName: 'grok-3',
-              message: prompt,
-              toolOverrides: { videoGen: true },
-              enableSideBySide: true,
-              responseMetadata: {
-                experiments: [],
-                modelConfigOverride: {
-                  modelMap: { videoGenModelConfig: Object.assign({ parentPostId }, cfg) },
-                },
-              },
-            };
-
-            const controller = new AbortController();
-            const t = setTimeout(() => controller.abort(), Math.max(1, timeoutSeconds) * 1000);
-
-            let res;
-            try {
-              res = await fetch('https://grok.com/rest/app-chat/conversations/new', {
-                method: 'POST',
-                headers: Object.assign({ 'content-type': 'application/json', 'x-xai-request-id': requestId }, statsigHeaders || {}),
-                credentials: 'include',
-                body: JSON.stringify(convoPayload),
-                signal: controller.signal,
-              });
-            } catch (e) {
-              clearTimeout(t);
-              log(jobIndex, 'conversation_fetch_error', { error: String(e) });
-              return { status: 0, error: String(e), lastEvent: null, objectsHead: [] };
-            }
-
-            const status = res.status;
-            log(jobIndex, 'conversation_status', { status });
-            const objectsHead = [];
-            let lastEvent = null;
-
-            try {
-              if (!res.body) {
-                const text = await res.text();
-                const parsed = parseJsonObjectsFromBuffer(text);
-                if (parsed.objects.length) objectsHead.push(...parsed.objects.slice(0, 2));
-                lastEvent = pickLastProgressEvent(parsed.objects);
-                if (lastEvent) reportProgress(jobIndex, lastEvent.progress, lastEvent.videoUrl);
-                clearTimeout(t);
-                return { status, lastEvent, objectsHead };
-              }
-
-              const reader = res.body.getReader();
-              const decoder = new TextDecoder('utf-8');
-              let buffer = '';
-
-              while (true) {
-                const { value, done } = await reader.read();
-                if (done) break;
-                if (!value) continue;
-
-                buffer += decoder.decode(value, { stream: true });
-                const parsed = parseJsonObjectsFromBuffer(buffer);
-                buffer = parsed.tail;
-                if (parsed.objects.length) {
-                  if (objectsHead.length < 2) objectsHead.push(...parsed.objects.slice(0, 2 - objectsHead.length));
-                  const ev = pickLastProgressEvent(parsed.objects);
-                  if (ev) {
-                    lastEvent = ev;
-                    reportProgress(jobIndex, lastEvent.progress, lastEvent.videoUrl);
-                    if (lastEvent.progress >= 100 && lastEvent.videoUrl) break;
-                  }
-                }
-              }
-
-              clearTimeout(t);
-              return { status, lastEvent, objectsHead };
-            } catch (e) {
-              clearTimeout(t);
-              log(jobIndex, 'conversation_parse_error', { error: String(e) });
-              return { status, error: String(e), lastEvent, objectsHead };
-            }
-          }
-
-          const createResults = await Promise.all((prompts || []).map((p, i) => {
-            log(i, 'create_post_start');
-            return createPost(p);
-          }));
-          const results = await Promise.all(createResults.map(async (cr, i) => {
-            const prompt = prompts[i];
-            const parentPostId = cr.parentPostId;
-            log(i, 'create_post_done', { status: cr.status, parentPostId: parentPostId || null });
-            if (!parentPostId) {
-              return { prompt, createStatus: cr.status, parentPostId: null, convoStatus: 0, lastEvent: null, upscaleStatus: 0, hdMediaUrl: null, objectsHead: [cr.data || null] };
-            }
-
-            const convo = await startConversation(prompt, parentPostId, i);
-            if (convo && convo.lastEvent && typeof convo.lastEvent.progress === 'number' && convo.lastEvent.progress >= 100) {
-              log(i, 'video_generated', { parentPostId, videoUrl: convo.lastEvent.videoUrl || null });
-            }
-            let upscale = null;
-            let finalMediaUrl = (convo && convo.lastEvent && convo.lastEvent.videoUrl) ? convo.lastEvent.videoUrl : null;
-            const is720p = String((cfg && cfg.resolutionName) || '').toLowerCase() === '720p';
-            let usedUpscale = false;
-
-            if (convo && convo.status === 200 && convo.lastEvent && typeof convo.lastEvent.progress === 'number' && convo.lastEvent.progress >= 100) {
-              if (is720p) {
-                log(i, 'upscale_skip', { reason: 'already_720p', mediaUrl: finalMediaUrl || null });
-              } else {
-                log(i, 'upscale_start', { videoId: parentPostId });
-                upscale = await upscaleVideo(parentPostId, i, 3);
-                log(i, 'upscale_done', { status: upscale.status, hdMediaUrl: upscale.hdMediaUrl || null, attempt: upscale.attempt || 1 });
-                if (upscale && upscale.hdMediaUrl) {
-                  finalMediaUrl = upscale.hdMediaUrl;
-                  usedUpscale = true;
-                }
-              }
-            }
-
-            return {
-              prompt,
-              createStatus: cr.status,
-              parentPostId,
-              convoStatus: convo.status,
-              lastEvent: convo.lastEvent || null,
-              objectsHead: convo.objectsHead || [],
-              upscaleStatus: upscale ? upscale.status : 0,
-              usedUpscale,
-              mediaUrl: finalMediaUrl || null,
-              hdMediaUrl: usedUpscale ? (upscale ? (upscale.hdMediaUrl || null) : null) : null,
-              upscaleData: upscale ? (upscale.data || null) : null,
-            };
-          }));
-
-          return results;
-        })"""
-
-    # Playwright can throw: "Execution context was destroyed" if the page navigates/reloads.
-    # This happens occasionally if Grok refreshes, Cloudflare kicks in, or the user clicks around.
-    last_exc: Exception | None = None
-    for attempt in range(1, 4):
-        try:
-            result = await page.evaluate(js, payload)
-            return result if isinstance(result, list) else []
-        except Exception as exc:
-            last_exc = exc
-            msg = str(exc)
-            is_ctx_destroyed = (
-                "Execution context was destroyed" in msg
-                or "Most likely the page has been closed" in msg
-                or "Navigation" in msg
-            )
-            if not is_ctx_destroyed or attempt >= 3:
-                raise
-
-            # wait for navigation to settle, then try to get back to the imagine page
-            try:
-                await page.wait_for_load_state("domcontentloaded", timeout=30000)
-            except Exception:
-                pass
-            try:
-                await page.goto("https://grok.com/imagine", wait_until="domcontentloaded", timeout=30000)
-            except Exception:
-                pass
-            try:
-                import asyncio
-
-                await asyncio.sleep(0.6 * attempt)
-            except Exception:
-                pass
-
-    # unreachable, but keep mypy happy
-    if last_exc is not None:
-        raise last_exc
-    return []
+    results = []
+    for i, prompt in enumerate(prompts):
+        result = await generate_video(prompt, session, cfg, job_index=index_offset + i)
+        results.append(result)
+    return results
 
 
 async def download_mp4(context, url: str, out_path: Path, timeout_ms: int) -> bool:
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-
-    def looks_like_mp4(buf: bytes) -> bool:
-        return isinstance(buf, (bytes, bytearray)) and len(buf) > 12 and buf[4:8] == b"ftyp"
-
-    target = (url or "").strip()
-    if not target:
-        print("⚠️ Download failed: empty URL")
-        return False
-
-    headers = {
-        "accept": "video/mp4,application/octet-stream,*/*",
-        "referer": f"{GROK_BASE}/imagine",
-    }
-
-    max_attempts = 3
-    last_body: bytes | None = None
-    last_status: int | None = None
-    last_ctype: str | None = None
-    last_exc: Exception | None = None
-
-    for attempt in range(1, max_attempts + 1):
-      print(f"⬇️ Downloading ({attempt}/{max_attempts}): {target}")
-      try:
-        resp = await context.request.get(target, timeout=timeout_ms, headers=headers)
-        body = await resp.body()
-        ctype = (resp.headers.get("content-type") or "").lower()
-        last_body = body
-        last_status = getattr(resp, "status", None)
-        last_ctype = ctype
-
-        if resp.status == 200 and ("video" in ctype or "octet-stream" in ctype) and looks_like_mp4(body):
-          out_path.write_bytes(body)
-          print(f"⬇️ Saved: {out_path}")
-          return True
-
-        sample = body[:200].decode("utf-8", errors="replace") if body else ""
-        print(
-          f"⚠️ Download failed: status={resp.status} ctype={ctype} url={target} sample={sample!r}"
-        )
-      except Exception as exc:
-        last_exc = exc
-        print(f"⚠️ Download exception: {exc}")
-
-      if attempt < max_attempts:
-        # small backoff for flaky CDN / transient network errors
-        try:
-          import asyncio
-
-          await asyncio.sleep(0.8 * attempt)
-        except Exception:
-          pass
-
-    # Final failure: no file logging (per UI requirement)
-    print(f"⚠️ Download failed after {max_attempts} attempts (status={last_status} ctype={last_ctype} exc={last_exc})")
-    return False
+    """Legacy download function - now uses httpx instead of Playwright context."""
+    # Create a minimal session with empty headers (downloads may not need auth)
+    cookies = await context.cookies(GROK_BASE)
+    session = GrokSession(
+        cookies=[{"name": c["name"], "value": c["value"]} for c in cookies],
+    )
+    return await download_video(url, session, out_path, timeout_seconds=timeout_ms // 1000)

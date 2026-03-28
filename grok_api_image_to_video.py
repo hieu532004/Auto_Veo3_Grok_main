@@ -1,37 +1,43 @@
 """
-Grok API: Image to Video
-- Upload image (base64)
-- Create video from image
-- Poll progress until completion
-- Upscale to HD
-"""
+Grok Image-to-Video API — Direct HTTP approach (ported from AutoGrok I2VService).
 
+Instead of running fetch() inside the browser via page.evaluate(),
+this module makes direct HTTP calls using httpx with captured headers/cookies.
+"""
+from __future__ import annotations
+
+import asyncio
 import base64
 import datetime
 import json
 import mimetypes
-import os
+import re
+import uuid
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
+import httpx
 
-GROK_BASE = "https://grok.com"
-GROK_ASSETS_BASE = "https://assets.grok.com"
+from grok_api_text_to_video import (
+    ASSETS_BASE,
+    GROK_BASE,
+    GrokSession,
+    MAX_RETRIES,
+    RETRY_DELAY_BASE,
+    download_video,
+    upscale_video,
+)
+from watermark_remover import remove_watermark
 
+# ── Constants ──────────────────────────────────────────────────────────
 ENDPOINT_UPLOAD_FILE = f"{GROK_BASE}/rest/app-chat/upload-file"
 ENDPOINT_POST_CREATE = f"{GROK_BASE}/rest/media/post/create"
 ENDPOINT_CONVO_NEW = f"{GROK_BASE}/rest/app-chat/conversations/new"
 ENDPOINT_UPSCALE = f"{GROK_BASE}/rest/media/video/upscale"
-UPLOAD_FILE_SOURCE = "SELF_UPLOAD_FILE_SOURCE"
-REQUEST_LOG_PATH = Path(
-  os.getenv(
-    "GROK_REQUEST_LOG_PATH",
-    str(Path(__file__).resolve().parent / "Workflows" / "default_project" / "grok_request.json"),
-  )
-)
 
 
+# ── Config ─────────────────────────────────────────────────────────────
 @dataclass(frozen=True)
 class ImageToVideoConfig:
     aspect_ratio: str = "9:16"
@@ -51,48 +57,577 @@ class ImageToVideoConfig:
         }
 
 
+# ── Helper Functions ───────────────────────────────────────────────────
 def image_to_base64(image_path: Path) -> str:
-    """Convert image file to base64 string."""
     with open(image_path, "rb") as f:
         return base64.b64encode(f.read()).decode("utf-8")
 
 
 def get_mime_type(image_path: Path) -> str:
-    """Get MIME type from file extension."""
     mime, _ = mimetypes.guess_type(str(image_path))
     return mime or "image/png"
 
 
+def _extract_user_id_from_file_uri(file_uri: str | None) -> str:
+    raw = str(file_uri or "").strip().lstrip("/")
+    parts = [p for p in raw.split("/") if p]
+    if len(parts) >= 2 and parts[0] == "users":
+        return parts[1]
+    return ""
+
+
+def _extract_user_and_generated_from_video_url(video_url: str | None) -> tuple[str, str]:
+    raw = str(video_url or "").strip()
+    if not raw:
+        return "", ""
+    m = re.search(r"/users/([^/]+)/generated/([^/]+)/", raw)
+    if m:
+        return m.group(1), m.group(2)
+    return "", ""
+
+
+def _build_generated_video_urls(user_id: str, generated_id: str) -> dict[str, str]:
+    uid = str(user_id or "").strip()
+    gid = str(generated_id or "").strip()
+    if not uid or not gid:
+        return {"direct": "", "hd": ""}
+    base = f"https://assets.grok.com/users/{uid}/generated/{gid}"
+    return {
+        "direct": f"{base}/generated_video.mp4?cache=1&dl=1",
+        "hd": f"{base}/generated_video_hd.mp4?cache=1&dl=1",
+    }
+
+
+# ── API: Upload Image ─────────────────────────────────────────────────
+async def upload_image(image_path: Path, session: GrokSession) -> dict:
+    """Upload an image file to Grok and get fileMetadataId."""
+    try:
+        content_b64 = image_to_base64(image_path)
+        mime_type = get_mime_type(image_path)
+        ext = image_path.suffix.lower().lstrip(".")
+        file_name = f"{uuid.uuid4()}.{ext if ext != 'jpg' else 'jpeg'}"
+    except Exception as e:
+        return {"error": f"Failed to read image: {e}"}
+
+    try:
+        async with httpx.AsyncClient(timeout=60) as client:
+            res = await client.post(
+                ENDPOINT_UPLOAD_FILE,
+                json={
+                    "fileName": file_name,
+                    "fileMimeType": mime_type,
+                    "content": content_b64,
+                    "fileSource": "IMAGINE_SELF_UPLOAD_FILE_SOURCE",
+                },
+                headers=session.build_headers(referer=f"{GROK_BASE}/imagine"),
+            )
+
+        if res.status_code != 200:
+            return {
+                "error": f"upload HTTP {res.status_code}",
+                "errorDetail": res.text[:500],
+            }
+
+        data = res.json()
+        file_metadata_id = data.get("fileMetadataId")
+        file_uri = data.get("fileUri")
+
+        if not file_metadata_id:
+            return {"error": "no fileMetadataId", "errorDetail": json.dumps(data)[:500]}
+
+        print(f"[I2V-API] ✅ Upload OK: {file_metadata_id}")
+        return {"fileMetadataId": file_metadata_id, "fileUri": file_uri, "data": data}
+    except Exception as e:
+        return {"error": str(e)}
+
+
+# ── API: Create Media Post ─────────────────────────────────────────────
+async def create_media_post(image_url: str, session: GrokSession) -> dict:
+    """Create media post (required step before I2V generation)."""
+    try:
+        async with httpx.AsyncClient(timeout=30) as client:
+            res = await client.post(
+                ENDPOINT_POST_CREATE,
+                json={
+                    "mediaType": "MEDIA_POST_TYPE_IMAGE",
+                    "mediaUrl": image_url,
+                },
+                headers=session.build_headers(referer=f"{GROK_BASE}/imagine"),
+            )
+
+        if res.status_code != 200:
+            return {
+                "error": f"post/create HTTP {res.status_code}",
+                "errorDetail": res.text[:500],
+            }
+
+        data = res.json()
+        post_id = data.get("post", {}).get("id")
+        print(f"[I2V-API] ✅ post/create OK: postId={post_id}")
+        return {"postId": post_id, "data": data}
+    except Exception as e:
+        return {"error": str(e)}
+
+async def create_text_post(prompt: str, session: GrokSession) -> dict:
+    """Create a media post for TEXT-TO-VIDEO generation."""
+    try:
+        async with httpx.AsyncClient(timeout=30) as client:
+            res = await client.post(
+                ENDPOINT_POST_CREATE,
+                json={"mediaType": "MEDIA_POST_TYPE_VIDEO", "prompt": prompt},
+                headers=session.build_headers(),
+            )
+        if res.status_code != 200:
+            return {"error": f"create_text_post HTTP {res.status_code}"}
+        post_id = res.json().get("post", {}).get("id")
+        return {"postId": post_id}
+    except Exception as e:
+        return {"error": str(e)}
+
+
+# ── API: Generate I2V (streaming) ─────────────────────────────────────
+def _build_i2v_body(
+    prompt: str,
+    file_metadata_ids: list[str],
+    image_names_urls: list[tuple[str, str]],
+    cfg: ImageToVideoConfig,
+    parent_post_id: str,
+) -> dict:
+    """Build the conversation/new request body for I2V generation."""
+    
+    modified_prompt = prompt
+    images_ref = []
+    
+    # We need to preserve the original 1-indexed order based on the initial list
+    # so that @Image1 corresponds to image_names_urls[0], etc.
+    images_ref = []
+    modified_prompt = prompt
+    
+    # Sort names by length descending to prevent partial replacements (e.g. nv1, nv10)
+    sorted_names_with_idx = sorted([(i, name, url) for i, (name, url) in enumerate(image_names_urls) if name], key=lambda x: len(x[1]), reverse=True)
+    
+    import re
+    for idx, name, url in sorted_names_with_idx:
+        # Thay thế nv1 thành @Image1 (chú ý: idx + 1 để 1-indexed)
+        pattern = re.compile(rf'(@)?\b{re.escape(name)}\b', re.IGNORECASE)
+        modified_prompt = pattern.sub(f"@Image{idx + 1}", modified_prompt)
+        
+    # Populate images_ref strictly in the original order matching @Image1, @Image2...
+    for name, url in image_names_urls:
+        images_ref.append(url)
+
+    message = f"{modified_prompt} --mode=custom"
+
+
+
+    if len(image_names_urls) <= 1:
+        # Standard Single Image-To-Video
+        model_map_config = {
+            "parentPostId": parent_post_id,
+            **cfg.as_dict(),
+        }
+    else:
+        # Multi-Character Reference-To-Video (from intercepted payload)
+        model_map_config = {
+            "parentPostId": parent_post_id,
+            "isReferenceToVideo": True,
+            "imageReferences": images_ref,
+            **cfg.as_dict(),
+        }
+
+    return {
+        "temporary": True,
+        "modelName": "grok-3",
+        "message": message,
+        "fileAttachments": file_metadata_ids,
+        "toolOverrides": {"videoGen": True},
+        "enableSideBySide": True,
+        "responseMetadata": {
+            "experiments": [],
+            "modelConfigOverride": {
+                "modelMap": {
+                    "videoGenModelConfig": model_map_config
+                }
+            },
+        },
+    }
+
+
+async def generate_i2v(
+    image_path: Path,
+    prompt: str,
+    session: GrokSession,
+    cfg: ImageToVideoConfig,
+    on_progress: Callable[[int, int], None] | None = None,
+    job_index: int = 0,
+    on_status: Callable[[int, str], None] | None = None,
+) -> dict:
+    """
+    Generate a single image-to-video via direct HTTP.
+    Steps: upload image → create media post → stream conversation → parse result.
+    """
+    for attempt in range(MAX_RETRIES + 1):
+        try:
+            suffix = f" (retry {attempt}/{MAX_RETRIES})" if attempt > 0 else ""
+
+            parsed_paths = []
+            for raw_p in str(image_path).split("|"):
+                raw_p = raw_p.strip()
+                if not raw_p: continue
+                if "=" in raw_p:
+                    pname, ppath = raw_p.split("=", 1)
+                    parsed_paths.append((pname.strip(), Path(ppath.strip())))
+                else:
+                    parsed_paths.append(("", Path(raw_p)))
+
+            if not parsed_paths:
+                return {"error": "no valid images selected"}
+                
+            file_metadata_ids = []
+            image_names_urls = []
+            
+            for p_idx, (p_name, p_path) in enumerate(parsed_paths):
+                msg = f"Tải NV {p_idx+1}/{len(parsed_paths)}{suffix}"
+                if on_status:
+                    on_status(job_index, msg)
+                print(f"[I2V-API] 📤 Uploading image {p_idx+1}/{len(parsed_paths)} ({p_name or 'unnamed'}): {p_path.name}...{suffix}")
+                upload = await upload_image(p_path, session)
+
+                if upload.get("error"):
+                    if "HTTP 403" in str(upload.get("error", "")) and attempt < MAX_RETRIES:
+                        print(f"[I2V-API] ⚠️ 403 from upload, will retry...")
+                        await asyncio.sleep(RETRY_DELAY_BASE * (attempt + 1))
+                        continue # type: ignore
+                    return {
+                        "prompt": prompt,
+                        "imagePath": str(image_path),
+                        "videoUrl": None,
+                        "progress": 0,
+                        "error": upload.get("error"),
+                    }
+
+                file_metadata_id = upload["fileMetadataId"]
+                file_uri = upload.get("fileUri", "")
+                image_url = f"{ASSETS_BASE}{file_uri}" if file_uri else None
+                
+                file_metadata_ids.append(file_metadata_id)
+
+                print(f"[I2V-API] 📝 Creating media post {p_idx+1}/{len(parsed_paths)}...")
+                if image_url:
+                    image_names_urls.append((p_name, image_url))
+                    
+            if len(parsed_paths) <= 1:
+                # Standard Image-to-Video: animates exactly the first provided reference
+                print(f"[I2V-API] 📝 Creating media post for standard I2V...")
+                post = await create_media_post(image_names_urls[0][1], session)
+                if post.get("error"):
+                    if "HTTP 403" in str(post.get("error", "")) and attempt < MAX_RETRIES:
+                        print(f"[I2V-API] ⚠️ 403 from createMediaPost, will retry...")
+                        await asyncio.sleep(RETRY_DELAY_BASE * (attempt + 1))
+                        continue # type: ignore
+                    return {"prompt": prompt, "imagePath": str(image_path), "videoUrl": None, "progress": 0, "error": post.get("error")}
+                auto_parent_post_id = file_metadata_ids[0]
+            else:
+                # Text-to-Video Multi-Character Reference: requires text post base
+                print(f"[I2V-API] 📝 Creating text post for multi-character T2V reference...")
+                post = await create_text_post(prompt, session)
+                if post.get("error"):
+                    if "HTTP 403" in str(post.get("error", "")) and attempt < MAX_RETRIES:
+                        print(f"[I2V-API] ⚠️ 403 from create_text_post, will retry...")
+                        await asyncio.sleep(RETRY_DELAY_BASE * (attempt + 1))
+                        continue # type: ignore
+                    return {"prompt": prompt, "imagePath": str(image_path), "videoUrl": None, "progress": 0, "error": post.get("error")}
+                auto_parent_post_id = post.get("postId", "")
+
+            # Step 3: Generate video (streaming)
+            print(f"[I2V-API] 🎬 Generating video (stream) using parentPostId: {auto_parent_post_id}")
+            body = _build_i2v_body(prompt, file_metadata_ids, image_names_urls, cfg, auto_parent_post_id)
+            headers = session.build_headers(referer=f"{GROK_BASE}/imagine")
+
+            result = {
+                "prompt": prompt,
+                "imagePath": str(image_path),
+                "title": "",
+                "videoUrl": None,
+                "videoId": None,
+                "userId": None,
+                "progress": 0,
+                "error": None,
+                "fileMetadataId": file_metadata_ids[0] if file_metadata_ids else "",
+                "convoStatus": 0,
+            }
+
+            async with httpx.AsyncClient(timeout=httpx.Timeout(300.0, connect=30.0)) as client:
+                async with client.stream(
+                    "POST",
+                    ENDPOINT_CONVO_NEW,
+                    json=body,
+                    headers=headers,
+                ) as response:
+                    result["convoStatus"] = response.status_code
+
+                    if response.status_code == 429 and attempt < MAX_RETRIES:
+                        wait = RETRY_DELAY_BASE * (attempt + 1) + 5
+                        print(f"[I2V-API] ⚠️ Rate limited (429), retry in {wait}s...")
+                        await asyncio.sleep(wait)
+                        continue
+
+                    if response.status_code == 403 and attempt < MAX_RETRIES:
+                        print(f"[I2V-API] ⚠️ 403 Forbidden, retry...")
+                        await asyncio.sleep(RETRY_DELAY_BASE * (attempt + 1))
+                        continue
+
+                    if response.status_code != 200:
+                        body_text = ""
+                        async for chunk in response.aiter_text():
+                            body_text += chunk
+                            if len(body_text) > 500:
+                                break
+                        result["error"] = f"HTTP {response.status_code}"
+                        result["errorDetail"] = body_text[:500]
+                        return result
+
+                    # Parse streaming NDJSON
+                    buffer = ""
+                    last_logged = 0
+                    async for chunk in response.aiter_text():
+                        buffer += chunk
+                        lines = buffer.split("\n")
+                        buffer = lines.pop()
+
+                        for line in lines:
+                            if not line.strip():
+                                continue
+                            try:
+                                j = json.loads(line)
+                            except json.JSONDecodeError:
+                                continue
+
+                            # Title
+                            if j.get("result", {}).get("title", {}).get("newTitle"):
+                                result["title"] = j["result"]["title"]["newTitle"]
+
+                            # Errors
+                            for err_src in [
+                                j.get("error"),
+                                j.get("result", {}).get("error"),
+                                j.get("result", {}).get("response", {}).get("modelResponse", {}).get("error"),
+                            ]:
+                                if err_src and not result.get("error"):
+                                    result["error"] = str(err_src) if isinstance(err_src, str) else json.dumps(err_src)[:200]
+
+                            # Content blocking
+                            mr = j.get("result", {}).get("response", {}).get("modelResponse", {})
+                            if (mr.get("isSoftBlock") or mr.get("isDisallowed")) and not result.get("error"):
+                                result["error"] = f"Content blocked"
+
+                            # Video progress
+                            vr = j.get("result", {}).get("response", {}).get("streamingVideoGenerationResponse")
+                            if vr:
+                                if vr.get("videoId"):
+                                    result["videoId"] = vr["videoId"]
+                                if vr.get("assetId") and not result.get("videoId"):
+                                    result["videoId"] = vr["assetId"]
+                                if vr.get("imageReference") and not result.get("userId"):
+                                    m = re.search(r"/users/([^/]+)/", vr["imageReference"])
+                                    if m:
+                                        result["userId"] = m.group(1)
+
+                                pct = vr.get("progress", result.get("progress", 0))
+                                if pct > result.get("progress", 0):
+                                    result["progress"] = pct
+                                    if pct - last_logged >= 20:
+                                        print(f"[I2V-API] Progress: {pct}%")
+                                        last_logged = pct
+                                        if on_progress:
+                                            on_progress(job_index, pct)
+
+                                if vr.get("videoUrl"):
+                                    result["videoUrl"] = vr["videoUrl"]
+                                    print(f"[I2V-API] 🎉 Video ready! url={result['videoUrl'][:50]}")
+
+                    # Process remaining buffer
+                    if buffer.strip():
+                        try:
+                            j = json.loads(buffer)
+                            vr = j.get("result", {}).get("response", {}).get("streamingVideoGenerationResponse")
+                            if vr:
+                                result["progress"] = vr.get("progress", result.get("progress", 0))
+                                if vr.get("videoUrl"):
+                                    result["videoUrl"] = vr["videoUrl"]
+                        except json.JSONDecodeError:
+                            pass
+
+            # Fallback
+            if not result.get("videoUrl") and result.get("videoId"):
+                result["videoUrl"] = result["videoId"]
+                print(f"[I2V-API] Using videoId as download key: {result['videoId']}")
+
+            if not result.get("videoUrl") and not result.get("error"):
+                result["error"] = f"Video gen stopped at {result.get('progress', 0)}% - no video URL"
+
+            return result
+
+        except (httpx.ConnectError, httpx.ReadTimeout, httpx.ConnectTimeout, httpx.WriteTimeout, httpx.RemoteProtocolError) as e:
+            if attempt < MAX_RETRIES:
+                wait = RETRY_DELAY_BASE * (attempt + 1)
+                print(f"[I2V-API] ⚠️ Network error: {e}, retry in {wait}s...")
+                await asyncio.sleep(wait)
+                continue
+            return {
+                "prompt": prompt,
+                "imagePath": str(image_path),
+                "videoUrl": None,
+                "progress": 0,
+                "error": str(e),
+            }
+
+
+# ── Batch Processing ──────────────────────────────────────────────────
+async def run_batch_image_to_video(
+    items: list[dict],
+    session: GrokSession,
+    cfg: ImageToVideoConfig,
+    concurrency: int = 3,
+    download_dir: Path | None = None,
+    on_progress: Callable[[int, int], None] | None = None,
+    on_status: Callable[[int, str], None] | None = None,
+    on_video: Callable[[int, str], None] | None = None,
+    on_info: Callable[[str], None] | None = None,
+) -> list[dict]:
+    """
+    Run multiple I2V generations concurrently.
+    items: list of {"image_path": str, "prompt": str}
+    """
+    N = len(items)
+    sem = asyncio.Semaphore(max(1, min(concurrency, 5)))  # Cap at 5 for I2V
+    results: list[dict] = [None] * N  # type: ignore
+
+    def _safe(cb, *args):
+        try:
+            if cb:
+                cb(*args)
+        except Exception:
+            pass
+
+    async def process_one(idx: int, item: dict):
+        async with sem:
+            image_path_str = str(item.get("image_path") or item.get("image_link") or "").strip()
+            prompt = str(item.get("prompt") or "").strip()
+
+            if not image_path_str:
+                _safe(on_status, idx, "Lỗi: không có ảnh")
+                results[idx] = {"error": "no image path"}
+                return
+
+            image_path = Path(image_path_str)
+            _safe(on_status, idx, "Chuẩn bị tải ảnh")
+            _safe(on_info, f"[GROK-I2V {idx+1}] bắt đầu job")
+
+            result = await generate_i2v(image_path, prompt, session, cfg, on_progress, idx, on_status)
+
+            convo_status = result.get("convoStatus", 0)
+            if convo_status == 403:
+                _safe(on_status, idx, "Lỗi 403")
+                _safe(on_info, f"[GROK-I2V {idx+1}] lỗi 403 - cần login lại")
+                results[idx] = result
+                return
+
+            if result.get("error") and not result.get("videoUrl"):
+                _safe(on_status, idx, "Lỗi")
+                _safe(on_info, f"[GROK-I2V {idx+1}] lỗi: {result.get('error', '')[:80]}")
+                results[idx] = result
+                return
+
+            pct = int(result.get("progress", 0))
+            if pct >= 100:
+                _safe(on_status, idx, "Tạo xong")
+                _safe(on_progress, idx, 100)
+
+            # Upscale
+            parent_id = result.get("fileMetadataId", "")
+            is_720p = str(cfg.resolution_name or "").lower() == "720p"
+            hd_url = None
+
+            if pct >= 100 and parent_id and not is_720p:
+                _safe(on_status, idx, "Đang upscale")
+                hd_url = await upscale_video(parent_id, session)
+                if hd_url:
+                    result["hdMediaUrl"] = hd_url
+
+            # Download
+            source_url = hd_url or result.get("videoUrl")
+            # Build direct URL from userId/videoId if available
+            if not source_url:
+                user_id = result.get("userId", "")
+                video_id = result.get("videoId", "")
+                if user_id and video_id:
+                    urls = _build_generated_video_urls(user_id, video_id)
+                    source_url = urls.get("direct")
+
+            if source_url and download_dir:
+                _safe(on_status, idx, "Tải video")
+                ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+                pr_short = re.sub(r"[^A-Za-z0-9._-]+", "_", (prompt[:40] or "")).strip("._- ")
+                filename = f"{idx+1:03d}_i2v_{pr_short}_{ts}.mp4"
+                out_path = download_dir / filename
+
+                ok = await download_video(source_url, session, out_path)
+                if ok:
+                    try:
+                        remove_watermark(str(out_path), log_callback=lambda m: _safe(on_info, m))
+                    except Exception as e:
+                        _safe(on_info, f"[GROK-I2V {idx+1}] Lỗi xoá logo: {e}")
+                    result["savedFile"] = str(out_path)
+                    _safe(on_video, idx, str(out_path))
+                    _safe(on_status, idx, "Hoàn thành")
+                    _safe(on_info, f"[GROK-I2V {idx+1}] hoàn thành")
+                else:
+                    # Retry with fresh upscale
+                    if parent_id:
+                        fresh_hd = await upscale_video(parent_id, session)
+                        if fresh_hd:
+                            ok2 = await download_video(fresh_hd, session, out_path)
+                            if ok2:
+                                try:
+                                    remove_watermark(str(out_path), log_callback=lambda m: _safe(on_info, m))
+                                except Exception as e:
+                                    _safe(on_info, f"[GROK-I2V {idx+1}] Lỗi xoá logo: {e}")
+                                result["savedFile"] = str(out_path)
+                                _safe(on_video, idx, str(out_path))
+                                _safe(on_status, idx, "Hoàn thành")
+                                results[idx] = result
+                                return
+                    _safe(on_status, idx, "Lỗi tải")
+            else:
+                if convo_status == 200 and pct >= 100:
+                    _safe(on_status, idx, "Hoàn thành")
+                else:
+                    _safe(on_status, idx, f"Lỗi {convo_status}")
+
+            results[idx] = result
+
+    tasks = [asyncio.create_task(process_one(i, item)) for i, item in enumerate(items)]
+    await asyncio.gather(*tasks, return_exceptions=True)
+
+    return [r or {"error": "task failed"} for r in results]
+
+
+# ── Legacy compatibility ───────────────────────────────────────────────
+# Keep backward-compatible function signatures for existing callers
+
 def payload_upload_image(image_path: Path) -> dict[str, Any]:
-    """Create payload for uploading image."""
     return {
         "fileName": image_path.name,
         "fileMimeType": get_mime_type(image_path),
         "content": image_to_base64(image_path),
-    "fileSource": UPLOAD_FILE_SOURCE,
+        "fileSource": "IMAGINE_SELF_UPLOAD_FILE_SOURCE",
     }
 
 
-def payload_image_to_video(
-    prompt: str,
-    file_metadata_id: str,
-    file_uri: str,
-    cfg: ImageToVideoConfig,
-) -> dict[str, Any]:
-    """Create payload for generating video from image.
-    
-    Args:
-        prompt: Text prompt for video generation
-        file_metadata_id: ID returned from upload (fileMetadataId)
-        file_uri: URI returned from upload (fileUri)
-        cfg: Video generation config
-    """
-    # Build full asset URL
-    asset_url = f"{GROK_ASSETS_BASE}/{file_uri}"
-    
-    # Message format: asset_url + space + prompt
+def payload_image_to_video(prompt: str, file_metadata_id: str, file_uri: str, cfg: ImageToVideoConfig) -> dict[str, Any]:
+    asset_url = f"https://assets.grok.com/{file_uri}"
     message = f"{asset_url}  {prompt}"
-    
     return {
         "temporary": True,
         "modelName": "grok-3",
@@ -115,851 +650,69 @@ def payload_image_to_video(
 
 
 def payload_upscale(video_id: str) -> dict[str, Any]:
-    """Create payload for upscaling video."""
     return {"videoId": video_id}
 
 
-def _extract_user_id_from_file_uri(file_uri: str | None) -> str:
-  raw = str(file_uri or "").strip().lstrip("/")
-  parts = [p for p in raw.split("/") if p]
-  if len(parts) >= 2 and parts[0] == "users":
-    return parts[1]
-  return ""
-
-
-def _normalize_assets_url(url_or_uri: str | None, *, add_download_query: bool = False) -> str:
-  raw = str(url_or_uri or "").strip()
-  if not raw:
-    return ""
-
-  if raw.startswith("http://") or raw.startswith("https://"):
-    url = raw
-  else:
-    url = f"{GROK_ASSETS_BASE}/{raw.lstrip('/')}"
-
-  if add_download_query and "?" not in url:
-    url = f"{url}?cache=1&dl=1"
-  return url
-
-
-def _extract_user_and_generated_from_video_url(video_url: str | None) -> tuple[str, str]:
-  raw = str(video_url or "").strip()
-  if not raw:
-    return "", ""
-
-  normalized = raw
-  if normalized.startswith("http://") or normalized.startswith("https://"):
-    try:
-      from urllib.parse import urlparse
-
-      normalized = urlparse(normalized).path
-    except Exception:
-      normalized = raw
-
-  parts = [p for p in str(normalized).split("/") if p]
-  # users/<uid>/generated/<generated_id>/generated_video.mp4
-  if len(parts) >= 5 and parts[0] == "users" and parts[2] == "generated":
-    return parts[1], parts[3]
-  return "", ""
-
-
-def _build_generated_video_urls(user_id: str, generated_id: str) -> dict[str, str]:
-  uid = str(user_id or "").strip()
-  gid = str(generated_id or "").strip()
-  if not uid or not gid:
-    return {"direct": "", "hd": ""}
-  base = f"https://assets.grok.com/users/{uid}/generated/{gid}"
-  return {
-    "direct": f"{base}/generated_video.mp4?cache=1&dl=1",
-    "hd": f"{base}/generated_video_hd.mp4?cache=1&dl=1",
-  }
-
-
-def _append_request_log(record: dict[str, Any]) -> None:
-  """Append one debug record into pretty JSON file grok_request.json."""
-  try:
-    REQUEST_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
-
-    existing: list[dict[str, Any]] = []
-    if REQUEST_LOG_PATH.exists():
-      try:
-        raw = json.loads(REQUEST_LOG_PATH.read_text(encoding="utf-8"))
-        if isinstance(raw, list):
-          existing = [item for item in raw if isinstance(item, dict)]
-      except Exception:
-        existing = []
-
-    existing.append(record)
-    REQUEST_LOG_PATH.write_text(
-      json.dumps(existing, ensure_ascii=False, indent=2),
-      encoding="utf-8",
+# Legacy page.evaluate wrappers - now redirect to direct HTTP
+async def api_upload_image_in_page(page, image_path: Path, statsig_headers: dict) -> dict:
+    """Legacy wrapper - now uses direct HTTP."""
+    from grok_api_text_to_video import GrokSession
+    cookies = await page.context.cookies(GROK_BASE)
+    session = GrokSession(
+        captured_headers=statsig_headers,
+        cookies=[{"name": c["name"], "value": c["value"]} for c in cookies],
     )
-  except Exception:
-    pass
-
-
-async def api_upload_image_in_page(
-    page,
-    image_path: Path,
-    statsig_headers: dict,
-) -> dict:
-    """Upload image via browser page.
-    
-    Returns dict with:
-        - status: HTTP status code
-        - fileMetadataId: ID to use for video generation
-        - fileUri: URI for asset URL
-        - data: Full response data
-    """
-    
-    # Read and encode image
-    try:
-        content_b64 = image_to_base64(image_path)
-        mime_type = get_mime_type(image_path)
-        file_name = image_path.name
-    except Exception as e:
-        return {"status": 0, "error": f"Failed to read image: {e}", "fileMetadataId": None}
-    
-    payload = {
-        "fileName": file_name,
-        "fileMimeType": mime_type,
-        "content": content_b64,
-      "fileSource": UPLOAD_FILE_SOURCE,
-        "statsigHeaders": statsig_headers or {},
-    }
-
-    upload_request_debug = {
-      "endpoint": ENDPOINT_UPLOAD_FILE,
-      "payload": {
-        "fileName": file_name,
-        "fileMimeType": mime_type,
-        "fileSource": UPLOAD_FILE_SOURCE,
-        "contentLength": len(content_b64 or ""),
-      },
-      "headers": dict(statsig_headers or {}),
-    }
-    
-    result = await page.evaluate(
-        """(async ({ fileName, fileMimeType, content, fileSource, statsigHeaders }) => {
-        function pickStringAny(root, keys) {
-          const queue = [root];
-          const seen = new Set();
-          while (queue.length) {
-            const cur = queue.shift();
-            if (!cur || typeof cur !== 'object' || seen.has(cur)) continue;
-            seen.add(cur);
-            for (const k of keys) {
-              const v = cur[k];
-              if (typeof v === 'string' && v.trim()) return v.trim();
-            }
-            for (const v of Object.values(cur)) {
-              if (v && typeof v === 'object') queue.push(v);
-            }
-          }
-          return null;
-        }
-
-            try {
-                const res = await fetch('https://grok.com/rest/app-chat/upload-file', {
-                    method: 'POST',
-                    headers: Object.assign({ 'content-type': 'application/json' }, statsigHeaders || {}),
-                    credentials: 'include',
-                    body: JSON.stringify({ fileName, fileMimeType, content, fileSource }),
-                });
-                const data = await res.json().catch(() => null);
-          const fileMetadataId = pickStringAny(data, ['fileMetadataId', 'file_metadata_id', 'metadataId']);
-          const fileUri = pickStringAny(data, ['fileUri', 'fileURL', 'uri', 'assetUri', 'assetUrl', 'url']);
-          const parentPostId = pickStringAny(data, ['parentPostId', 'postId', 'id', 'fileMetadataId']);
-                return {
-                    status: res.status,
-            fileMetadataId,
-            fileUri,
-            parentPostId,
-                    fileName: data && data.fileName ? data.fileName : null,
-                    data: data,
-                };
-            } catch (e) {
-                return { status: 0, error: String(e), fileMetadataId: null };
-            }
-        })""",
-        payload,
-    )
-
-    normalized = result if isinstance(result, dict) else {"error": "unexpected", "raw": result}
-    _append_request_log(
-      {
-        "ts": datetime.datetime.now().isoformat(timespec="seconds"),
-        "kind": "image_to_video_upload_image",
-        "request": upload_request_debug,
-        "response": {
-          "status": normalized.get("status"),
-          "error": normalized.get("error"),
-          "fileMetadataId": normalized.get("fileMetadataId"),
-          "fileUri": normalized.get("fileUri"),
-          "parentPostId": normalized.get("parentPostId"),
-          "data": normalized.get("data"),
-        },
-      }
-    )
-    return normalized
+    return await upload_image(image_path, session)
 
 
 async def api_image_to_video_in_page(
-    page,
-    prompt: str,
-    file_metadata_id: str,
-    file_uri: str,
-    parent_post_id: str | None,
-    statsig_headers: dict,
-    cfg: ImageToVideoConfig,
-    timeout_seconds: int,
-    job_index: int = 0,
+    page, prompt: str, file_metadata_id: str, file_uri: str,
+    parent_post_id: str | None, statsig_headers: dict,
+    cfg: ImageToVideoConfig, timeout_seconds: int, job_index: int = 0,
 ) -> dict:
-    """Generate video from uploaded image.
-    
-    Streams progress and returns when video is complete or timeout.
-    """
-    
-    # Build asset URL and message (tolerate full URL or relative URI or missing URI)
-    raw_uri = str(file_uri or "").strip()
-    if raw_uri.startswith("http://") or raw_uri.startswith("https://"):
-      asset_url = raw_uri
-    elif raw_uri:
-      asset_url = f"https://assets.grok.com/{raw_uri.lstrip('/')}"
-    else:
-      asset_url = ""
-
-    prompt_text = str(prompt or "").strip()
-    message = f"{asset_url}  {prompt_text}".strip() if asset_url else prompt_text
-
-    parent_id = str(parent_post_id or "").strip() or str(file_metadata_id or "").strip()
-    attachment_id = parent_id or str(file_metadata_id or "").strip()
-    
-    payload = {
-        "message": message,
-        "fileMetadataId": file_metadata_id,
-        "attachmentId": attachment_id,
-        "parentPostId": parent_id,
-        "cfg": cfg.as_dict(),
-        "statsigHeaders": statsig_headers or {},
-        "timeoutSeconds": int(timeout_seconds),
-        "jobIndex": int(job_index),
+    """Legacy wrapper - now uses direct HTTP."""
+    from grok_api_text_to_video import GrokSession
+    cookies = await page.context.cookies(GROK_BASE)
+    session = GrokSession(
+        captured_headers=statsig_headers,
+        cookies=[{"name": c["name"], "value": c["value"]} for c in cookies],
+    )
+    image_path = Path("")  # Not available in legacy call
+    result = await generate_i2v(image_path, prompt, session, cfg, job_index=job_index)
+    # Map to legacy format
+    last_event = {
+        "progress": result.get("progress", 0),
+        "videoUrl": result.get("videoUrl"),
+        "videoId": result.get("videoId"),
     }
-
-    request_debug = {
-      "endpoint": ENDPOINT_CONVO_NEW,
-      "temporary": True,
-      "modelName": "grok-3",
-      "message": message,
-      "fileAttachments": [attachment_id],
-      "toolOverrides": {"videoGen": True},
-      "enableSideBySide": True,
-      "responseMetadata": {
-        "experiments": [],
-        "modelConfigOverride": {
-          "modelMap": {
-            "videoGenModelConfig": {
-              "parentPostId": parent_id or file_metadata_id,
-              **cfg.as_dict(),
-            }
-          }
-        },
-      },
-    }
-    
-    result = await page.evaluate(
-        """(async ({ message, fileMetadataId, attachmentId, parentPostId, cfg, statsigHeaders, timeoutSeconds, jobIndex }) => {
-          function log(msg, data) {
-            try {
-              if (typeof globalThis.py_log === 'function') {
-                globalThis.py_log({ index: jobIndex, message: msg, data: data || null, ts: Date.now() });
-              }
-            } catch (e) {}
-          }
-
-          function parseJsonObjectsFromBuffer(buffer) {
-            const out = [];
-            let depth = 0;
-            let inString = false;
-            let escape = false;
-            let start = -1;
-            for (let i = 0; i < buffer.length; i++) {
-              const ch = buffer[i];
-              if (start === -1) {
-                if (ch === '{') { start = i; depth = 1; inString = false; escape = false; }
-                continue;
-              }
-              if (inString) {
-                if (escape) escape = false;
-                else if (ch && ch.charCodeAt(0) === 92) escape = true;
-                else if (ch === '"') inString = false;
-                continue;
-              }
-              if (ch === '"') { inString = true; continue; }
-              if (ch === '{') depth++;
-              else if (ch === '}') {
-                depth--;
-                if (depth === 0) {
-                  const slice = buffer.slice(start, i + 1);
-                  try { out.push(JSON.parse(slice)); } catch (e) {}
-                  start = -1;
-                }
-              }
-            }
-            let tail = '';
-            if (start !== -1) tail = buffer.slice(start);
-            return { objects: out, tail };
-          }
-
-          function pickLastProgressEvent(objects) {
-            let last = null;
-            for (const obj of objects) {
-              const svr = obj && obj.result && obj.result.response && obj.result.response.streamingVideoGenerationResponse;
-              if (!svr || typeof svr !== 'object') continue;
-
-              const hasProgress = (typeof svr.progress === 'number');
-              const hasVideoUrl = !!(svr.videoUrl);
-              const hasVideoId = !!(svr.videoId || svr.videoPostId);
-              const hasParent = !!(svr.parentPostId);
-              const hasResolution = !!(svr.resolutionName);
-              if (!hasProgress && !hasVideoUrl && !hasVideoId && !hasParent && !hasResolution) continue;
-
-              const prevProgress = (last && typeof last.progress === 'number') ? last.progress : 0;
-              const nextProgress = hasProgress ? svr.progress : prevProgress;
-              const candidateVideoUrl =
-                svr.videoUrl ||
-                svr.generatedVideoUrl ||
-                svr.generatedVideoUri ||
-                svr.mediaUrl ||
-                (last ? last.videoUrl : null) ||
-                null;
-              last = {
-                progress: nextProgress,
-                videoUrl: candidateVideoUrl,
-                videoId: svr.videoId || svr.videoPostId || (last ? last.videoId : null) || null,
-                parentPostId: svr.parentPostId || (last ? last.parentPostId : null) || null,
-                resolutionName: svr.resolutionName || (last ? last.resolutionName : null) || null,
-                imageReference: svr.imageReference || (last ? last.imageReference : null) || null,
-              };
-            }
-            return last;
-          }
-
-          function reportProgress(pct, videoUrl) {
-            try {
-              if (typeof globalThis.py_progress === 'function') {
-                globalThis.py_progress({ index: jobIndex, progress: pct, videoUrl: videoUrl || null });
-              }
-            } catch (e) {}
-          }
-
-          log('conversation_start', { fileMetadataId, parentPostId, hasMessage: !!message, messagePreview: String(message || '').slice(0, 120) });
-
-          const requestId = (crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()) + Math.random();
-          const convoPayload = {
-            temporary: true,
-            modelName: 'grok-3',
-            message: message,
-            fileAttachments: [attachmentId || fileMetadataId],
-            toolOverrides: { videoGen: true },
-            enableSideBySide: true,
-            responseMetadata: {
-              experiments: [],
-              modelConfigOverride: {
-                modelMap: {
-                  videoGenModelConfig: Object.assign({ parentPostId: parentPostId || fileMetadataId }, cfg),
-                },
-              },
-            },
-          };
-
-          log('conversation_payload_ready', {
-            hasFileAttachment: !!(attachmentId || fileMetadataId),
-            parentPostId: parentPostId || fileMetadataId || null,
-            resolutionName: cfg && cfg.resolutionName,
-            videoLength: cfg && cfg.videoLength,
-          });
-
-          const controller = new AbortController();
-          const t = setTimeout(() => controller.abort(), Math.max(1, timeoutSeconds) * 1000);
-
-          let res;
-          try {
-            res = await fetch('https://grok.com/rest/app-chat/conversations/new', {
-              method: 'POST',
-              headers: Object.assign({ 'content-type': 'application/json', 'x-xai-request-id': requestId }, statsigHeaders || {}),
-              credentials: 'include',
-              body: JSON.stringify(convoPayload),
-              signal: controller.signal,
-            });
-          } catch (e) {
-            clearTimeout(t);
-            log('conversation_fetch_error', { error: String(e) });
-            return { status: 0, error: String(e), lastEvent: null };
-          }
-
-          const status = res.status;
-          log('conversation_status', { status });
-          let lastEvent = null;
-
-          try {
-            if (!res.body) {
-              const text = await res.text();
-              const parsed = parseJsonObjectsFromBuffer(text);
-              lastEvent = pickLastProgressEvent(parsed.objects);
-              if (lastEvent) reportProgress(lastEvent.progress, lastEvent.videoUrl);
-              clearTimeout(t);
-              return { status, lastEvent };
-            }
-
-            const reader = res.body.getReader();
-            const decoder = new TextDecoder('utf-8');
-            let buffer = '';
-
-            while (true) {
-              const { value, done } = await reader.read();
-              if (done) break;
-              if (!value) continue;
-
-              buffer += decoder.decode(value, { stream: true });
-              const parsed = parseJsonObjectsFromBuffer(buffer);
-              buffer = parsed.tail;
-              if (parsed.objects.length) {
-                const ev = pickLastProgressEvent(parsed.objects);
-                if (ev) {
-                  lastEvent = ev;
-                  reportProgress(lastEvent.progress, lastEvent.videoUrl);
-                  if ((lastEvent.progress >= 95 && lastEvent.videoUrl) || (lastEvent.videoUrl && !('progress' in lastEvent))) {
-                    log('video_generated', { videoUrl: lastEvent.videoUrl, videoId: lastEvent.videoId });
-                    break;
-                  }
-                }
-              }
-            }
-
-            clearTimeout(t);
-            return { status, lastEvent };
-          } catch (e) {
-            clearTimeout(t);
-            log('conversation_parse_error', { error: String(e) });
-            return { status, error: String(e), lastEvent };
-          }
-        })""",
-        payload,
-    )
-
-    normalized = result if isinstance(result, dict) else {"error": "unexpected", "raw": result}
-    last_event = normalized.get("lastEvent") if isinstance(normalized.get("lastEvent"), dict) else {}
-    stream_video_url = _normalize_assets_url(last_event.get("videoUrl"), add_download_query=False)
-    if stream_video_url:
-      last_event["videoUrl"] = stream_video_url
-
-    stream_user_id, stream_generated_id = _extract_user_and_generated_from_video_url(stream_video_url)
-    generated_id = str(
-      last_event.get("videoId")
-      or stream_generated_id
-      or last_event.get("parentPostId")
-      or parent_id
-      or file_metadata_id
-      or ""
-    ).strip()
-    user_id = str(_extract_user_id_from_file_uri(file_uri) or stream_user_id).strip()
-    urls = _build_generated_video_urls(user_id, generated_id)
-
-    normalized["userId"] = user_id
-    normalized["generatedId"] = generated_id
-    normalized["directVideoUrl"] = urls["direct"]
-    normalized["hdVideoUrlCandidate"] = urls["hd"]
-
-    _append_request_log(
-      {
-        "ts": datetime.datetime.now().isoformat(timespec="seconds"),
-        "kind": "image_to_video_conversation_new",
-        "jobIndex": int(job_index),
-        "prompt": str(prompt or ""),
-        "request": request_debug,
-        "response": {
-          "status": normalized.get("status"),
-          "error": normalized.get("error"),
-          "lastEvent": last_event,
-          "userId": normalized.get("userId"),
-          "generatedId": normalized.get("generatedId"),
-          "directVideoUrl": normalized.get("directVideoUrl"),
-          "hdVideoUrlCandidate": normalized.get("hdVideoUrlCandidate"),
-        },
-      }
-    )
-    return normalized
-
-
-async def api_create_image_post_in_page(
-    page,
-    media_url: str,
-    statsig_headers: dict,
-    job_index: int = 0,
-) -> dict:
-    """Create image post before creating conversation/new.
-
-    Expected request:
-      POST /rest/media/post/create
-      {"mediaType":"MEDIA_POST_TYPE_IMAGE","mediaUrl":"https://assets.grok.com/.../content"}
-    """
-    clean_media_url = str(media_url or "").strip()
-    payload = {
-        "mediaType": "MEDIA_POST_TYPE_IMAGE",
-        "mediaUrl": clean_media_url,
-        "statsigHeaders": statsig_headers or {},
-    }
-
-    request_debug = {
-      "endpoint": ENDPOINT_POST_CREATE,
-      "payload": {
-        "mediaType": "MEDIA_POST_TYPE_IMAGE",
-        "mediaUrl": clean_media_url,
-      },
-      "headers": dict(statsig_headers or {}),
-    }
-
-    result = await page.evaluate(
-        """(async ({ mediaType, mediaUrl, statsigHeaders }) => {
-          function pickStringAny(root, keys) {
-            const queue = [root];
-            const seen = new Set();
-            while (queue.length) {
-              const cur = queue.shift();
-              if (!cur || typeof cur !== 'object' || seen.has(cur)) continue;
-              seen.add(cur);
-              for (const k of keys) {
-                const v = cur[k];
-                if (typeof v === 'string' && v.trim()) return v.trim();
-              }
-              for (const v of Object.values(cur)) {
-                if (v && typeof v === 'object') queue.push(v);
-              }
-            }
-            return null;
-          }
-
-          try {
-            const res = await fetch('https://grok.com/rest/media/post/create', {
-              method: 'POST',
-              headers: Object.assign({ 'content-type': 'application/json' }, statsigHeaders || {}),
-              credentials: 'include',
-              body: JSON.stringify({ mediaType, mediaUrl }),
-            });
-            const data = await res.json().catch(() => null);
-            const postId = pickStringAny(data, ['id', 'postId', 'parentPostId']);
-            const postMediaUrl = pickStringAny(data, ['mediaUrl', 'url']);
-            return {
-              status: res.status,
-              postId,
-              mediaUrl: postMediaUrl,
-              data,
-            };
-          } catch (e) {
-            return { status: 0, error: String(e), postId: null, mediaUrl: null };
-          }
-        })""",
-        payload,
-    )
-
-    normalized = result if isinstance(result, dict) else {"error": "unexpected", "raw": result}
-    _append_request_log(
-      {
-        "ts": datetime.datetime.now().isoformat(timespec="seconds"),
-        "kind": "image_to_video_create_post",
-        "jobIndex": int(job_index),
-        "request": request_debug,
-        "response": {
-          "status": normalized.get("status"),
-          "error": normalized.get("error"),
-          "postId": normalized.get("postId"),
-          "mediaUrl": normalized.get("mediaUrl"),
-          "data": normalized.get("data"),
-        },
-      }
-    )
-    return normalized
-
-
-async def api_upscale_video_in_page(
-    page,
-    video_id: str,
-    statsig_headers: dict,
-    job_index: int = 0,
-    max_retries: int = 3,
-) -> dict:
-    """Upscale video to HD with retry logic.
-    
-    Returns dict with:
-        - status: HTTP status code
-        - hdMediaUrl: HD video URL if successful
-        - attempt: Which attempt succeeded (or last attempt if failed)
-    """
-    
-    payload = {
-        "videoId": video_id,
-        "statsigHeaders": statsig_headers or {},
-        "jobIndex": int(job_index),
-        "maxRetries": int(max_retries),
-    }
-    
-    result = await page.evaluate(
-        """(async ({ videoId, statsigHeaders, jobIndex, maxRetries }) => {
-          function log(msg, data) {
-            try {
-              if (typeof globalThis.py_log === 'function') {
-                globalThis.py_log({ index: jobIndex, message: msg, data: data || null, ts: Date.now() });
-              }
-            } catch (e) {}
-          }
-
-          function pickStringAny(root, keys) {
-            const queue = [root];
-            const seen = new Set();
-            while (queue.length) {
-              const cur = queue.shift();
-              if (!cur || typeof cur !== 'object' || seen.has(cur)) continue;
-              seen.add(cur);
-              for (const k of keys) {
-                const v = cur[k];
-                if (typeof v === 'string' && v.trim()) return v.trim();
-              }
-              for (const v of Object.values(cur)) {
-                if (v && typeof v === 'object') queue.push(v);
-              }
-            }
-            return null;
-          }
-
-          for (let attempt = 1; attempt <= maxRetries; attempt++) {
-            try {
-              log('upscale_attempt', { attempt, videoId });
-              
-              const res = await fetch('https://grok.com/rest/media/video/upscale', {
-                method: 'POST',
-                headers: Object.assign({ 'content-type': 'application/json' }, statsigHeaders || {}),
-                credentials: 'include',
-                body: JSON.stringify({ videoId }),
-              });
-              const data = await res.json().catch(() => null);
-              const hdMediaUrl = pickStringAny(data, ['hdMediaUrl', 'hdVideoUrl', 'videoUrl', 'url']);
-              
-              if (res.status === 200 && hdMediaUrl) {
-                log('upscale_success', { attempt, hdMediaUrl });
-                return { status: res.status, hdMediaUrl, data, attempt };
-              }
-              
-              if (attempt < maxRetries) {
-                log('upscale_retry', { attempt, status: res.status, hdMediaUrl });
-                await new Promise(r => setTimeout(r, 2000 * attempt));
-                continue;
-              }
-              
-              return { status: res.status, hdMediaUrl, data, attempt };
-            } catch (e) {
-              if (attempt < maxRetries) {
-                log('upscale_retry_error', { attempt, error: String(e) });
-                await new Promise(r => setTimeout(r, 2000 * attempt));
-                continue;
-              }
-              return { status: 0, hdMediaUrl: null, error: String(e), attempt };
-            }
-          }
-          return { status: 0, hdMediaUrl: null, attempt: maxRetries };
-        })""",
-        payload,
-    )
-
-    normalized = result if isinstance(result, dict) else {"error": "unexpected", "raw": result}
-    _append_request_log(
-      {
-        "ts": datetime.datetime.now().isoformat(timespec="seconds"),
-        "kind": "image_to_video_upscale",
-        "jobIndex": int(job_index),
-        "request": {
-          "endpoint": ENDPOINT_UPSCALE,
-          "payload": {"videoId": str(video_id or "").strip()},
-          "headers": dict(statsig_headers or {}),
-          "maxRetries": int(max_retries),
-        },
-        "response": {
-          "status": normalized.get("status"),
-          "error": normalized.get("error"),
-          "attempt": normalized.get("attempt"),
-          "hdMediaUrl": normalized.get("hdMediaUrl"),
-          "data": normalized.get("data"),
-        },
-      }
-    )
-
-    return normalized
-
-
-async def api_run_image_to_video_job(
-    page,
-    image_path: Path,
-    prompt: str,
-    statsig_headers: dict,
-    cfg: ImageToVideoConfig,
-    timeout_seconds: int,
-    job_index: int = 0,
-) -> dict:
-    """Complete image-to-video pipeline:
-    1. Upload image
-    2. Generate video
-    3. Upscale to HD
-    
-    Returns full result dict.
-    """
-    
-    # Step 1: Upload image
-    upload_result = await api_upload_image_in_page(page, image_path, statsig_headers)
-    
-    if not upload_result.get("fileMetadataId"):
-        return {
-            "prompt": prompt,
-            "imagePath": str(image_path),
-            "uploadStatus": upload_result.get("status", 0),
-            "uploadError": upload_result.get("error"),
-            "fileMetadataId": None,
-            "convoStatus": 0,
-            "lastEvent": None,
-            "upscaleStatus": 0,
-            "hdMediaUrl": None,
-        }
-    
-    file_metadata_id = upload_result["fileMetadataId"]
-    file_uri = upload_result.get("fileUri", "")
-    parent_post_id = upload_result.get("parentPostId", "")
-    upload_media_url = _normalize_assets_url(file_uri, add_download_query=False)
-
-    # Step 2: Create image post (required before conversation/new)
-    create_post_result = await api_create_image_post_in_page(
-      page,
-      media_url=upload_media_url,
-      statsig_headers=statsig_headers,
-      job_index=job_index,
-    )
-    created_post_id = str(create_post_result.get("postId") or "").strip()
-    created_media_url = str(create_post_result.get("mediaUrl") or "").strip()
-    if not created_post_id:
-      return {
-        "prompt": prompt,
-        "imagePath": str(image_path),
-        "uploadStatus": upload_result.get("status", 0),
-        "createPostStatus": create_post_result.get("status", 0),
-        "createPostError": create_post_result.get("error"),
-        "fileMetadataId": file_metadata_id,
-        "fileUri": file_uri,
-        "parentPostId": "",
-        "convoStatus": 0,
-        "lastEvent": None,
-        "upscaleStatus": 0,
-        "hdMediaUrl": None,
-      }
-    if created_post_id:
-      parent_post_id = created_post_id
-    if created_media_url:
-      file_uri = created_media_url
-    
-    # Step 3: Generate video
-    video_result = await api_image_to_video_in_page(
-        page,
-        prompt=prompt,
-        file_metadata_id=file_metadata_id,
-        file_uri=file_uri,
-        parent_post_id=parent_post_id,
-        statsig_headers=statsig_headers,
-        cfg=cfg,
-        timeout_seconds=timeout_seconds,
-        job_index=job_index,
-    )
-    
-    last_event = video_result.get("lastEvent") or {}
-    video_id = last_event.get("videoId")
-    direct_video_url = str(video_result.get("directVideoUrl") or "").strip()
-    hd_video_candidate = str(video_result.get("hdVideoUrlCandidate") or "").strip()
-    has_generation_signal = bool(
-      (isinstance(last_event, dict) and (last_event.get("videoUrl") or last_event.get("videoId")))
-      or direct_video_url
-      or hd_video_candidate
-      or (isinstance(last_event, dict) and int(last_event.get("progress") or 0) >= 95)
-    )
-    
-    # Step 4: Upscale if video generated successfully
-    upscale_result = None
-    if (
-      video_result.get("status") == 200
-      and has_generation_signal
-      and (
-        last_event.get("progress", 0) >= 95
-        or bool(last_event.get("videoUrl"))
-        or bool(last_event.get("videoId"))
-      )
-      and bool(video_id)
-    ):
-        upscale_result = await api_upscale_video_in_page(
-            page,
-            video_id=video_id,
-            statsig_headers=statsig_headers,
-            job_index=job_index,
-            max_retries=3,
-        )
-    
     return {
-        "prompt": prompt,
-        "imagePath": str(image_path),
-        "uploadStatus": upload_result.get("status", 0),
-        "createPostStatus": create_post_result.get("status", 0),
-        "fileMetadataId": file_metadata_id,
-        "fileUri": file_uri,
-        "parentPostId": parent_post_id,
-        "convoStatus": video_result.get("status", 0),
+        "status": result.get("convoStatus", 0),
         "lastEvent": last_event,
-        "videoId": video_id,
-      "userId": video_result.get("userId", ""),
-      "generatedId": video_result.get("generatedId", ""),
-      "directVideoUrl": direct_video_url,
-      "hdVideoUrlCandidate": hd_video_candidate,
-        "upscaleStatus": upscale_result.get("status", 0) if upscale_result else 0,
-        "hdMediaUrl": upscale_result.get("hdMediaUrl") if upscale_result else None,
-        "upscaleAttempt": upscale_result.get("attempt", 0) if upscale_result else 0,
-      "downloadUrl": (
-        str(upscale_result.get("hdMediaUrl") or "").strip() if upscale_result else ""
-      ) or direct_video_url or str(last_event.get("videoUrl") or "").strip(),
+        "userId": result.get("userId"),
+        "generatedId": result.get("videoId"),
+        "directVideoUrl": "",
+        "hdVideoUrlCandidate": "",
     }
 
 
-async def api_run_image_to_video_jobs(
-    page,
-    jobs: list[dict],  # List of {"image_path": Path, "prompt": str}
-    statsig_headers: dict,
-    cfg: ImageToVideoConfig,
-    timeout_seconds: int,
-) -> list[dict]:
-    """Run multiple image-to-video jobs concurrently.
-    
-    Each job dict should have:
-        - image_path: Path to image file
-        - prompt: Text prompt for video
-    """
-    
-    import asyncio
-    
-    async def run_one(idx: int, job: dict) -> dict:
-        image_path = Path(job["image_path"])
-        prompt = job.get("prompt", "")
-        return await api_run_image_to_video_job(
-            page,
-            image_path=image_path,
-            prompt=prompt,
-            statsig_headers=statsig_headers,
-            cfg=cfg,
-            timeout_seconds=timeout_seconds,
-            job_index=idx,
-        )
-    
-    tasks = [run_one(i, job) for i, job in enumerate(jobs)]
-    results = await asyncio.gather(*tasks)
-    return list(results)
+async def api_create_image_post_in_page(page, media_url: str, statsig_headers: dict, job_index: int = 0) -> dict:
+    """Legacy wrapper - now uses direct HTTP."""
+    from grok_api_text_to_video import GrokSession
+    cookies = await page.context.cookies(GROK_BASE)
+    session = GrokSession(
+        captured_headers=statsig_headers,
+        cookies=[{"name": c["name"], "value": c["value"]} for c in cookies],
+    )
+    return await create_media_post(media_url, session)
+
+
+async def api_upscale_video_in_page(page, video_id: str, statsig_headers: dict, job_index: int = 0, max_retries: int = 3) -> dict:
+    """Legacy wrapper - now uses direct HTTP."""
+    from grok_api_text_to_video import GrokSession
+    cookies = await page.context.cookies(GROK_BASE)
+    session = GrokSession(
+        captured_headers=statsig_headers,
+        cookies=[{"name": c["name"], "value": c["value"]} for c in cookies],
+    )
+    hd_url = await upscale_video(video_id, session, max_retries)
+    return {"status": 200 if hd_url else 0, "hdMediaUrl": hd_url, "attempt": 1}

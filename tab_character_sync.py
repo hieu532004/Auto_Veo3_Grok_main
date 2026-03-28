@@ -293,7 +293,8 @@ class CharacterSyncTab(QWidget):
                 continue
             if len(self._items) >= 10:
                 break
-            self._items.append({"path": str(p), "name": ""})
+            next_num = len(self._items) + 1
+            self._items.append({"path": str(p), "name": f"@Image{next_num}"})
 
         # If user selected more than remaining, tell them we've hit the cap.
         if len(paths) > len(truncated) and len(self._items) >= 10:

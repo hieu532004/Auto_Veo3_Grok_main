@@ -1,0 +1,28 @@
+{
+    "temporary": true,
+    "modelName": "grok-3",
+    "message": "ba người đi siêu xe --mode=custom",
+    "toolOverrides": {
+        "videoGen": true
+    },
+    "enableSideBySide": true,
+    "responseMetadata": {
+        "experiments": [],
+        "modelConfigOverride": {
+            "modelMap": {
+                "videoGenModelConfig": {
+                    "parentPostId": "e8e6b4ea-7a5d-4752-aab1-556ffd0cd02d",
+                    "aspectRatio": "9:16",
+                    "videoLength": 10,
+                    "resolutionName": "720p",
+                    "isReferenceToVideo": true,
+                    "imageReferences": [
+                        "https://assets.grok.com/users/ae21af90-9a7d-4700-ab0d-952835813146/3dcbdebc-fd77-4e15-a547-1923ee65b236/content",
+                        "https://assets.grok.com/users/ae21af90-9a7d-4700-ab0d-952835813146/b10befb1-269b-4fba-b1fa-16dd62d1694e/content",
+                        "https://assets.grok.com/users/ae21af90-9a7d-4700-ab0d-952835813146/a13d508d-172c-456f-94a8-48fcd39a2bdb/content"
+                    ]
+                }
+            }
+        }
+    }
+}
