@@ -25,7 +25,7 @@ FLOW_URL = "https://labs.google/fx/vi/tools/flow"
 CHROME_EXTRA_ARGS = [
     "--no-first-run",
     "--no-default-browser-check",
-    "--disable-extensions",
+    # ✅ FIX: KHÔNG disable-extensions vì cần proxy auth extension
     "--disable-sync",
     "--disable-default-apps",
     "--remote-allow-origins=*",
@@ -165,6 +165,32 @@ def start_chrome_debug(
     if isinstance(extra_args, list) and extra_args:
         merged_args.extend([str(arg) for arg in extra_args if str(arg or "").strip()])
     cmd.extend(merged_args)
+
+    # ✅ FIX: Inject proxy vào MỌI Chrome launch (bao gồm "Mở Profile Chrome")
+    _has_proxy_ext = False
+    try:
+        from shoplike_proxy import resolve_proxy_for_chrome
+        proxy_str = resolve_proxy_for_chrome()
+        if proxy_str:
+            spar = proxy_str.split(':')
+            if len(spar) >= 2:
+                cmd.append(f"--proxy-server=http://{spar[0]}:{spar[1]}")
+                print(f"🌐 Chrome profile: Proxy={spar[0]}:{spar[1]}")
+                if len(spar) >= 4:
+                    # Proxy có user:pass → cần extension auth
+                    from chrome_process_manager import ChromeProcessManager
+                    ext_path = ChromeProcessManager.create_proxy_extension(spar[0], spar[1], spar[2], spar[3])
+                    if ext_path:
+                        cmd.append(f"--load-extension={ext_path}")
+                        _has_proxy_ext = True
+                        print(f"🔑 Chrome profile: Proxy auth extension loaded")
+    except Exception as e:
+        print(f"⚠️ Proxy injection error: {e}")
+
+    # ✅ Chỉ disable extensions nếu KHÔNG cần proxy auth extension
+    if not _has_proxy_ext:
+        cmd.append("--disable-extensions")
+
     cmd.append(str(url or FLOW_URL))
     # IMPORTANT: launch Chrome visibly for profile open / auto-login UX.
     # Do not use CREATE_NO_WINDOW or SW_HIDE here, otherwise Chrome may not

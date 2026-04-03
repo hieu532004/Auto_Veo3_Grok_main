@@ -1,6 +1,6 @@
 {
   "project_name": "default_project",
-  "updated_at": 1774721102,
+  "updated_at": 1775235793,
   "rows": [
     {
       "row": 0,
@@ -27,16 +27,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 1)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\1_1_28032026_231253.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\1_1_28032026_231255.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 1,
@@ -63,16 +59,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 2)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\2_1_28032026_231233.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\2_1_28032026_231235.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 2,
@@ -99,16 +91,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 3)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\3_1_28032026_231253.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\3_1_28032026_231256.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 3,
@@ -135,16 +123,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 4)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\4_1_28032026_231233.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\4_1_28032026_231235.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 4,
@@ -171,16 +155,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 5)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\5_1_28032026_231233.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\5_1_28032026_231235.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 5,
@@ -207,16 +187,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 6)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\6_1_28032026_231216.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\6_1_28032026_231218.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 6,
@@ -243,16 +219,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 7)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\7_1_28032026_231253.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\7_1_28032026_231256.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 7,
@@ -279,16 +251,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 8)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\8_1_28032026_231306.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\8_1_28032026_231308.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 8,
@@ -315,16 +283,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 9)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\9_1_28032026_231253.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\9_1_28032026_231255.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 9,
@@ -351,16 +315,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 10)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\10_1_28032026_231306.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\10_1_28032026_231308.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 10,
@@ -387,16 +347,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 11)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\11_1_28032026_231322.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\11_1_28032026_231324.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 11,
@@ -423,16 +379,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 12)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\12_1_28032026_231335.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\12_1_28032026_231337.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 12,
@@ -459,16 +411,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 13)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\13_1_28032026_231335.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\13_1_28032026_231337.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 13,
@@ -495,16 +443,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 14)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\14_1_28032026_231402.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\14_1_28032026_231404.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 14,
@@ -531,16 +475,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 15)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\15_1_28032026_231402.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\15_1_28032026_231403.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 15,
@@ -567,16 +507,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 16)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\16_1_28032026_231402.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\16_1_28032026_231404.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 16,
@@ -603,16 +539,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 17)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\17_1_28032026_231345.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\17_1_28032026_231346.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 17,
@@ -639,16 +571,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 18)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\18_1_28032026_231415.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\18_1_28032026_231417.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 18,
@@ -675,16 +603,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 19)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\19_1_28032026_231415.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\19_1_28032026_231417.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 19,
@@ -711,16 +635,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 20)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\20_1_28032026_231430.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\20_1_28032026_231432.jpg"
-      }
+      "media_map": {},
+      "preview_map": {}
     },
     {
       "row": 20,
@@ -747,39 +667,12 @@
         ],
         "prompt": "@Image1, @Image2, @Image3 đi chơi"
       },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
+      "status_code": "PENDING",
+      "status_text": "Đang chờ (vị trí 21)",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\video\\21_1_28032026_231440.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\image\\21_1_28032026_231442.jpg"
-      }
-    },
-    {
-      "row": 21,
-      "stt": "022",
-      "prompt_id": "22",
-      "prompt": "@Image1, @Image2, @Image3 đi chơi",
-      "mode_key": "grok_image_to_video",
-      "mode_label": "GROK - Tạo video từ Ảnh",
-      "mode_name": "GROK - Tạo video từ Ảnh",
-      "mode_payload": {
-        "image_link": "@Image1=C:/Users/ADMIN/Downloads/hinh-nen-ronaldo-2.jpg|@Image2=C:/Users/ADMIN/Downloads/anh-messi-4k-argentina-3.jpg|@Image3=C:/Users/ADMIN/Downloads/Hinh-anh-avatar-em-be-gai-de-thuong-1-666x1024.jpg",
-        "prompt": "@Image1, @Image2, @Image3 đi chơi"
-      },
-      "status_code": "SUCCESSFUL",
-      "status_text": "Hoàn thành",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\grok_video\\001_i2v_Image1_Image2_Image3_i_ch_i_20260329_010459_624895.mp4"
-      },
-      "preview_map": {
-        "1": "C:\\Users\\ADMIN\\Downloads\\Telegram Desktop\\grok_video\\001_i2v_Image1_Image2_Image3_i_ch_i_20260329_010459_624895.mp4"
-      }
+      "media_map": {},
+      "preview_map": {}
     }
   ]
 }

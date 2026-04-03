@@ -4,11 +4,12 @@ import os
 import sys
 import dataclasses
 from dataclasses import dataclass
-from PyQt6.QtCore import Qt, QUrl, QTimer
+from PyQt6.QtCore import Qt, QUrl, QTimer, pyqtSignal
 from PyQt6.QtGui import QDesktopServices, QIcon, QFont
 from PyQt6.QtWidgets import (QApplication, QComboBox, QFileDialog, QGridLayout, QHBoxLayout,
                              QLabel, QLineEdit, QMainWindow, QPushButton, QSplitter,
-                             QTabWidget, QVBoxLayout, QWidget, QMessageBox, QFrame)
+                             QTabWidget, QVBoxLayout, QWidget, QMessageBox, QFrame,
+                             QDialog, QStackedWidget, QPlainTextEdit)
 import status_panel
 from status_panel import StatusPanel
 import tab_text_to_video
@@ -98,6 +99,183 @@ class _ClickPickLineEdit(QLineEdit):
             except Exception:
                 pass
         super().mousePressEvent(event)
+
+class ProxyManagerDialog(QDialog):
+    test_result_signal = pyqtSignal(str, str)
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("🌐 Quản Lý Fake IP (Proxy)")
+        self.test_result_signal.connect(self._on_test_result_ui)
+        self.resize(500, 450)
+        
+        layout = QVBoxLayout(self)
+        
+        from shoplike_proxy import (
+            PROXY_MODE_NONE, PROXY_MODE_HTTP, PROXY_MODE_SHOPLIKE, PROXY_MODE_PROXYVN,
+            PROXY_MODE_LABELS, get_current_proxy_mode, set_proxy_mode,
+            load_shoplike_keys, save_shoplike_keys, load_proxyvn_keys, save_proxyvn_keys
+        )
+        self.set_proxy_mode = set_proxy_mode
+        self.save_shoplike_keys = save_shoplike_keys
+        self.save_proxyvn_keys = save_proxyvn_keys
+        
+        # Mode Selection
+        mode_lay = QHBoxLayout()
+        mode_lay.addWidget(QLabel("Chế Độ Proxy:"))
+        self.combo_mode = QComboBox()
+        for v, l in PROXY_MODE_LABELS.items():
+            self.combo_mode.addItem(l, v)
+        idx = self.combo_mode.findData(get_current_proxy_mode())
+        if idx >= 0: self.combo_mode.setCurrentIndex(idx)
+        mode_lay.addWidget(self.combo_mode, 1)
+        layout.addLayout(mode_lay)
+        
+        self.stack = QStackedWidget()
+        layout.addWidget(self.stack, 1)
+        
+        # Page 0: None
+        page_none = QWidget()
+        page_none.setLayout(QVBoxLayout())
+        page_none.layout().addWidget(QLabel("✅ Không Fake IP, dùng mạng trực tiếp của máy tính."))
+        self.stack.addWidget(page_none)
+        
+        # Page 1: HTTP
+        page_http = QWidget()
+        http_lay = QVBoxLayout(page_http)
+        http_lay.addWidget(QLabel("Danh sách Proxy HTTP/SOCKS5 (Mỗi dòng 1 proxy)\nĐịnh dạng: IP:PORT hoặc IP:PORT:USER:PASS"))
+        self.txt_http = QPlainTextEdit()
+        import os
+        from settings_manager import DATA_GENERAL_DIR
+        self.proxy_file = os.path.join(DATA_GENERAL_DIR, 'proxies.txt')
+        if os.path.isfile(self.proxy_file):
+            with open(self.proxy_file, 'r', encoding='utf-8') as f:
+                self.txt_http.setPlainText(f.read())
+        http_lay.addWidget(self.txt_http)
+        self.stack.addWidget(page_http)
+        
+        # Page 2: ShopLike
+        page_sl = QWidget()
+        sl_lay = QVBoxLayout(page_sl)
+        sl_lay.addWidget(QLabel("Danh sách API Key ShopLike (proxy.shoplike.vn)"))
+        self.txt_sl = QPlainTextEdit()
+        self.txt_sl.setPlainText("\n".join(load_shoplike_keys()))
+        sl_lay.addWidget(self.txt_sl)
+        self.stack.addWidget(page_sl)
+        
+        # Page 3: ProxyVN
+        page_pvn = QWidget()
+        pvn_lay = QVBoxLayout(page_pvn)
+        pvn_lay.addWidget(QLabel("Danh sách API Key Proxy.vn (proxyxoay.shop/proxy.vn)"))
+        self.txt_pvn = QPlainTextEdit()
+        self.txt_pvn.setPlainText("\n".join(load_proxyvn_keys()))
+        pvn_lay.addWidget(self.txt_pvn)
+        self.stack.addWidget(page_pvn)
+        
+        self.combo_mode.currentIndexChanged.connect(self._on_mode_change)
+        self._on_mode_change()
+        
+        # Buttons
+        btn_lay = QHBoxLayout()
+        
+        self.btn_test = QPushButton("⚡ Kiểm Tra (Test Proxy)")
+        self.btn_test.setObjectName("Warning")
+        self.btn_test.clicked.connect(self._test_proxy)
+        
+        btn_save = QPushButton("💾 Lưu Cài Đặt")
+        btn_save.setObjectName("Accent")
+        btn_save.clicked.connect(lambda: self._save(close_dialog=True))
+        
+        btn_close = QPushButton("Đóng")
+        btn_close.clicked.connect(self.accept)
+        
+        btn_lay.addWidget(self.btn_test)
+        btn_lay.addStretch()
+        btn_lay.addWidget(btn_close)
+        btn_lay.addWidget(btn_save)
+        layout.addLayout(btn_lay)
+        
+    def _on_mode_change(self):
+        v = self.combo_mode.currentData()
+        mapping = {'none': 0, 'http': 1, 'shoplike': 2, 'proxyvn': 3}
+        self.stack.setCurrentIndex(mapping.get(v, 0))
+        
+    def _test_proxy(self):
+        self.btn_test.setEnabled(False)
+        self.btn_test.setText("Đang kiểm tra...")
+        
+        self._save(close_dialog=False)
+        
+        import threading
+        
+        def run_test():
+            from shoplike_proxy import resolve_proxy_for_chrome
+            import requests
+            
+            try:
+                proxy_str = resolve_proxy_for_chrome()
+                proxies = None
+                
+                if proxy_str:
+                    parts = proxy_str.split(':')
+                    if len(parts) >= 4:
+                        host, port, user, pwd = parts[0], parts[1], parts[2], parts[3]
+                        proxy_url = f"http://{user}:{pwd}@{host}:{port}"
+                    elif len(parts) >= 2:
+                        host, port = parts[0], parts[1]
+                        proxy_url = f"http://{host}:{port}"
+                    else:
+                        proxy_url = proxy_str
+                        
+                    proxies = {
+                        "http": proxy_url,
+                        "https": proxy_url
+                    }
+                
+                res = requests.get("http://api.ipify.org?format=json", proxies=proxies, timeout=10)
+                ip_data = res.json()
+                public_ip = ip_data.get("ip", "Unknown")
+                
+                msg = f"✅ Kết nối thành công!\nIP hiện tại: {public_ip}"
+                if proxy_str:
+                    msg += f"\nProxy đang dùng: {proxy_str.split(':')[0]}"
+                else:
+                    msg += "\nĐang dùng mạng gốc (Không Fake IP)"
+                    
+                self.test_result_signal.emit("Thành công", msg)
+            except Exception as e:
+                self.test_result_signal.emit("Lỗi kết nối", f"⚠️ Không thể kết nối qua Proxy:\n{e}\n\nIP/Key Proxy có thể đã chết hoặc cấu hình sai!")
+        
+        threading.Thread(target=run_test, daemon=True).start()
+        
+    def _on_test_result_ui(self, title, msg):
+        from PyQt6.QtWidgets import QMessageBox
+        QMessageBox.information(self, title, msg)
+        self.btn_test.setEnabled(True)
+        self.btn_test.setText("⚡ Kiểm Tra (Test Proxy)")
+
+    def _save(self, close_dialog=True):
+        try:
+            v = self.combo_mode.currentData()
+            self.set_proxy_mode(v)
+            
+            os.makedirs(os.path.dirname(self.proxy_file), exist_ok=True)
+            with open(self.proxy_file, 'w', encoding='utf-8') as f:
+                f.write(self.txt_http.toPlainText().strip())
+            
+            sl_keys = [k.strip() for k in self.txt_sl.toPlainText().splitlines() if k.strip()]
+            self.save_shoplike_keys(sl_keys)
+            
+            pvn_keys = [k.strip() for k in self.txt_pvn.toPlainText().splitlines() if k.strip()]
+            self.save_proxyvn_keys(pvn_keys)
+            
+            if close_dialog:
+                from PyQt6.QtWidgets import QMessageBox
+                QMessageBox.information(self, "Thành công", "Đã lưu cài đặt Fake IP!")
+                self.accept()
+        except Exception as e:
+            from PyQt6.QtWidgets import QMessageBox
+            QMessageBox.critical(self, "Lỗi lưu", f"Không thể lưu cài đặt:\n{e}")
 
 @dataclass
 class AppConfig:
@@ -637,6 +815,11 @@ class MainWindow(QMainWindow):
         self.btn_view.setIcon(icon('file-open.png'))
         self.btn_view.clicked.connect(self._open_output_folder)
         btn_row.addWidget(self.btn_view, 2)
+        
+        self.btn_proxy = QPushButton("🌐 Proxy")
+        self.btn_proxy.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.btn_proxy.clicked.connect(self._show_proxy_manager)
+        btn_row.addWidget(self.btn_proxy, 1)
         
         b.addLayout(btn_row)
         
@@ -1410,6 +1593,10 @@ class MainWindow(QMainWindow):
         self._update_start_button_for_tab()
         self.btn_start.setEnabled(True)
         self.btn_stop.setEnabled(True)
+
+    def _show_proxy_manager(self):
+        dlg = ProxyManagerDialog(self)
+        dlg.exec()
 
     def closeEvent(self, event) -> None:
         self.status.shutdown(timeout_ms=2200)

@@ -5,8 +5,65 @@ import time
 import shutil
 import json
 import asyncio
+import random
 from pathlib import Path
 from settings_manager import DATA_GENERAL_DIR
+
+
+def _generate_fingerprint_args(port_or_index=0):
+    """Tạo Chrome args ngẫu nhiên để mỗi instance có dấu vân tay khác nhau.
+    Mỗi lần gọi tạo fingerprint MỚI hoàn toàn (không cache/seed theo port)."""
+    # Random User-Agent (Chrome versions 120-135 trên Windows 10/11)
+    chrome_versions = [
+        "120.0.6099.130", "121.0.6167.85", "122.0.6261.94",
+        "123.0.6312.86", "124.0.6367.91", "125.0.6422.76",
+        "126.0.6478.127", "127.0.6533.72", "128.0.6613.84",
+        "129.0.6668.70", "130.0.6723.58", "131.0.6778.86",
+        "132.0.6834.83", "133.0.6943.53", "134.0.6998.62",
+        "135.0.7049.42",
+    ]
+    win_versions = ["10.0", "10.0", "10.0", "11.0"]  # Weighted toward Win10
+    cv = random.choice(chrome_versions)
+    wv = random.choice(win_versions)
+    
+    # Random platform token
+    platforms = ["Win64; x64", "WOW64"]
+    plat = random.choice(platforms)
+    ua = f"Mozilla/5.0 (Windows NT {wv}; {plat}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/{cv} Safari/537.36"
+
+    # Random viewport (common resolutions)
+    viewports = [
+        (1366, 768), (1440, 900), (1536, 864), (1600, 900),
+        (1920, 1080), (1280, 720), (1280, 800), (1360, 768),
+        (1680, 1050), (1920, 1200), (2560, 1440),
+    ]
+    w, h = random.choice(viewports)
+
+    # Random language preferences
+    langs = ["en-US", "en-US,en", "en-GB,en-US", "en,en-US", "vi,en-US", "vi-VN,vi,en-US"]
+    lang = random.choice(langs)
+    
+    # Random timezone
+    tzs = [
+        "America/New_York", "America/Chicago", "America/Denver",
+        "America/Los_Angeles", "Europe/London", "Europe/Berlin",
+        "Asia/Tokyo", "Asia/Singapore",
+    ]
+    tz = random.choice(tzs)
+
+    args = [
+        f"--user-agent={ua}",
+        f"--window-size={w},{h}",
+        f"--lang={lang}",
+        f"--timezone={tz}",
+        "--disable-blink-features=AutomationControlled",
+        "--disable-features=IsolateOrigins,site-per-process",
+    ]
+    return args
+
+# ✅ Global counter để mỗi Chrome instance lấy proxy KHÁC NHAU
+_proxy_call_index = 0
+_proxy_call_lock = __import__('threading').Lock()
 
 
 def _win_hidden_kwargs() -> dict:
@@ -44,6 +101,73 @@ class ChromeProcessManager:
     _log_callback = None
     # Lưu tên profile Chrome để biết là Chrome nào được khởi động
     _chrome_profile_name = None
+    
+    @staticmethod
+    def create_proxy_extension(proxy_host, proxy_port, proxy_user, proxy_pass):
+        try:
+            import os
+            import json
+            from pathlib import Path
+            from settings_manager import DATA_GENERAL_DIR
+            
+            ext_dir = Path(DATA_GENERAL_DIR) / "proxy_ext"
+            ext_dir.mkdir(parents=True, exist_ok=True)
+            
+            manifest_json = {
+                "version": "1.0.0",
+                "manifest_version": 3,
+                "name": "AutoVeo Proxy Auth",
+                "permissions": [
+                    "proxy",
+                    "unlimitedStorage",
+                    "storage",
+                    "webRequest",
+                    "webRequestAuthProvider"
+                ],
+                "host_permissions": ["<all_urls>"],
+                "background": {
+                    "service_worker": "background.js"
+                }
+            }
+            
+            background_js = f"""
+            var config = {{
+                mode: "fixed_servers",
+                rules: {{
+                    singleProxy: {{
+                        scheme: "http",
+                        host: "{proxy_host}",
+                        port: parseInt({proxy_port})
+                    }},
+                    bypassList: ["localhost", "127.0.0.1"]
+                }}
+            }};
+            
+            chrome.proxy.settings.set({{value: config, scope: "regular"}}, function() {{}});
+            
+            chrome.webRequest.onAuthRequired.addListener(
+                function(details) {{
+                    return {{
+                        authCredentials: {{
+                            username: "{proxy_user}",
+                            password: "{proxy_pass}"
+                        }}
+                    }};
+                }},
+                {{urls: ["<all_urls>"]}},
+                ['asyncBlocking']
+            );
+            """
+            
+            with open(ext_dir / "manifest.json", "w") as f:
+                json.dump(manifest_json, f)
+            with open(ext_dir / "background.js", "w") as f:
+                f.write(background_js)
+                
+            return str(ext_dir)
+        except Exception as e:
+            ChromeProcessManager.log(f"⚠️ Failed to create proxy extension: {e}")
+            return None
     
     @staticmethod
     def set_log_callback(callback):
@@ -434,12 +558,29 @@ class ChromeProcessManager:
             # 🎯 Không hiện First Run UI
             cmd.append("--no-first-run")
             cmd.append("--no-default-browser-check")
-            cmd.append("--lang=en-US")
             # 🎯 Disable DBSC để cookies có thể share giữa các pool profiles
             cmd.append("--disable-features=DeviceBoundSessionCredentials")
             
-            # 🎯 Set kích thước cố định nhỏ hơn (1200x800)
-            cmd.append("--window-size=1200,800")
+            # 🎯 Random fingerprint cho mỗi Chrome instance
+            fp_args = _generate_fingerprint_args(debug_port)
+            cmd.extend(fp_args)
+            ChromeProcessManager.log(f"🔒 Fingerprint: port={debug_port} | UA={[a for a in fp_args if '--user-agent' in a][0][-30:]}")
+            
+            # --- TÍCH HỢP PROXY TỰ ĐỘNG ---
+            try:
+                from shoplike_proxy import resolve_proxy_for_chrome
+                proxy_str = resolve_proxy_for_chrome()
+                if proxy_str:
+                    spar = proxy_str.split(':')
+                    if len(spar) >= 2:
+                        cmd.append(f"--proxy-server=http://{spar[0]}:{spar[1]}")
+                        ChromeProcessManager.log(f"🌐 Đã gán Proxy Mạng: http://{spar[0]}:{spar[1]}")
+                        if len(spar) >= 4:
+                            ext_path = ChromeProcessManager.create_proxy_extension(spar[0], spar[1], spar[2], spar[3])
+                            if ext_path:
+                                cmd.append(f"--load-extension={ext_path}")
+            except Exception as e:
+                ChromeProcessManager.log(f"⚠️ Lỗi load proxy: {e}")
             
             if not headless:
                 cmd.append("https://labs.google/fx/vi/tools/flow")
@@ -576,6 +717,14 @@ class ChromeProcessManager:
             hide_window: Đưa window ra ngoài màn hình (chỉ áp dụng khi headless=False)
         """
         try:
+            # ✅ Override hide_window từ config global (để test proxy)
+            try:
+                from A_workflow_get_token import hide_window_config
+                if not hide_window_config:
+                    hide_window = False  # Force hiện Chrome
+            except Exception:
+                pass
+            
             # ✅ Nếu Chrome đang chạy, chỉ mở URL trong instance đó
             if ChromeProcessManager.is_chrome_running(debug_port):
                 opened = ChromeProcessManager.open_url_in_running_chrome(url, debug_port=debug_port)
@@ -610,8 +759,10 @@ class ChromeProcessManager:
             extra_args = extra_args or []
             has_window_size = any(str(arg).startswith("--window-size") for arg in extra_args)
 
+            # 🎯 Random fingerprint
+            fp_args = _generate_fingerprint_args(debug_port)
+
             if headless:
-                # ✅ Flags cần thiết cho headless mode (đặc biệt trên Windows)
                 cmd.append("--headless=new")
                 cmd.append("--no-sandbox")
                 cmd.append("--disable-gpu")
@@ -620,18 +771,42 @@ class ChromeProcessManager:
                 cmd.append("--disable-default-apps")
                 cmd.append("--window-size=1200,800")
             elif hide_window:
-                # ✅ Non-headless nhưng ẩn window (đưa ra ngoài màn hình)
                 cmd.append("--window-position=-32000,-32000")
                 cmd.append("--disable-infobars")
-                cmd.append("--disable-blink-features=AutomationControlled")
             else:
-                # ✅ Non-headless, không ẩn - đặt kích thước cố định nếu không có window-size custom
                 if not has_window_size:
-                    cmd.append("--window-size=1100,700")
+                    pass  # fingerprint sẽ thêm window-size
             
-            cmd.append("--lang=en-US")
-            cmd.append("--disable-extensions")
+            # Thêm fingerprint args (user-agent, window-size, lang, anti-detection)
+            for arg in fp_args:
+                # Không ghi đè window-size nếu headless hoặc đã có custom
+                if "--window-size" in arg and (headless or has_window_size):
+                    continue
+                cmd.append(arg)
+            
             cmd.append("--disable-plugins")
+            
+            # --- TÍCH HỢP PROXY TỰ ĐỘNG ---
+            _proxy_ext_loaded = False
+            try:
+                from shoplike_proxy import resolve_proxy_for_chrome
+                proxy_str = resolve_proxy_for_chrome()
+                if proxy_str:
+                    spar = proxy_str.split(':')
+                    if len(spar) >= 2:
+                        cmd.append(f"--proxy-server=http://{spar[0]}:{spar[1]}")
+                        ChromeProcessManager.log(f"🌐 Đã gán Proxy Mạng: http://{spar[0]}:{spar[1]}")
+                        if len(spar) >= 4:
+                            ext_path = ChromeProcessManager.create_proxy_extension(spar[0], spar[1], spar[2], spar[3])
+                            if ext_path:
+                                cmd.append(f"--load-extension={ext_path}")
+                                _proxy_ext_loaded = True
+            except Exception as e:
+                ChromeProcessManager.log(f"⚠️ Lỗi load proxy: {e}")
+            
+            if not _proxy_ext_loaded:
+                cmd.append("--disable-extensions")
+
             cmd.extend(extra_args)
             cmd.append(url)
             

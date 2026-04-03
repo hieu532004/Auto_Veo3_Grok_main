@@ -386,7 +386,7 @@ class ImageToVideoWorkflow(QThread):
 				error_code_str = str(response.get("status", ""))
 			
 			consecutive_403 = prompt_retry_counts.get(f"{prompt_id}_403_count", 0) + (1 if error_code_str == "403" else 0)
-			is_auth_error = error_code_str in ("16", "401") or "authentication credentials" in str(error_message).lower() or (error_code_str == "403" and consecutive_403 >= 2)
+			is_auth_error = error_code_str in ("16", "401") or "authentication credentials" in str(error_message).lower()
 
 			if (not response.get("ok", True) or error_code_str) and (error_code_str in retryable_errors or is_auth_error):
 				if is_auth_error:
