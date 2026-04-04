@@ -1370,10 +1370,10 @@ class TextToVideoWorkflow(QThread):
 							break
 
 						self._log(f"📨 Resend create video (prompt {prompt_id}), operations: {len(operations)}")
-						self._scene_status[scene_id] = {
-							"status": "MEDIA_GENERATION_STATUS_PENDING",
-							"operation_name": "",
-						}
+						if scene_id not in self._scene_status:
+							self._scene_status[scene_id] = {}
+						self._scene_status[scene_id]["status"] = "MEDIA_GENERATION_STATUS_PENDING"
+						self._scene_status[scene_id]["operation_name"] = ""
 						self._scene_to_prompt[scene_id] = {"prompt_id": prompt_id, "index": idx}
 
 						for op in operations:
@@ -1746,11 +1746,6 @@ class TextToVideoWorkflow(QThread):
 		self._prompt_scene_order[prompt_id] = scene_ids
 		for idx, scene_id in enumerate(scene_ids):
 			self._scene_to_prompt[scene_id] = {"prompt_id": prompt_id, "index": idx}
-			self._scene_status[scene_id] = {
-				"status": "MEDIA_GENERATION_STATUS_PENDING",
-				"operation_name": "",
-			}
-			self._scene_next_check_at[scene_id] = time.time() + 999999
 		return scene_ids
 
 	def _discard_scene_ids(self, prompt_id, scene_ids):
@@ -1820,6 +1815,8 @@ class TextToVideoWorkflow(QThread):
 			if not operation_name or (response and not response.get("ok", True)):
 				status = "MEDIA_GENERATION_STATUS_FAILED"
 				
+			if scene_id not in self._scene_status:
+				self._scene_status[scene_id] = {}
 			self._scene_status[scene_id]["status"] = status
 			self._scene_status[scene_id]["operation_name"] = operation_name
 			self._last_status_change_ts = time.time()

@@ -955,12 +955,6 @@ class CharacterSyncWorkflow(QThread):
             req["metadata"] = metadata
             scene_ids.append(scene_id)
             self._scene_to_prompt[scene_id] = {"prompt_id": str(prompt_id), "index": idx}
-            self._scene_status[scene_id] = {
-                "status": "MEDIA_GENERATION_STATUS_PENDING",
-                "operation_name": "",
-            }
-            self._scene_next_check_at[scene_id] = time.time() + 999999
-            self._scene_status_change_ts[scene_id] = time.time()
         return scene_ids
 
     def _handle_create_response(self, prompt_id, prompt_text, scene_ids, operations):
@@ -978,6 +972,8 @@ class CharacterSyncWorkflow(QThread):
             if not op_name:
                 status = "MEDIA_GENERATION_STATUS_FAILED"
                 
+            if scene_id not in self._scene_status:
+                self._scene_status[scene_id] = {}
             self._scene_status[scene_id]["status"] = status
             self._scene_status[scene_id]["operation_name"] = op_name
             self._scene_next_check_at[scene_id] = time.time() + 6
